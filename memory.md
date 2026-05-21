@@ -32,7 +32,7 @@
 ## Gemini
 ### Yaptıkları
 - **APK Dağıtım Merkezi:** GT-Launcher projesi için resmi APK dağıtım kanalı v4.2.14 sürümü ile güncellendi.
-- `public/gt-launcher-v4.2.14.apk` eklendi ve `src/content/projects/GT-Launcher.md` üzerinden siteye entegre edildi.
+- `public/GT-Launcher-v4.2.14.apk` eklendi ve `src/content/projects/GT-Launcher.md` üzerinden siteye entegre edildi.
 - AppList UI, Tema Senkronizasyonu ve CommsCard Refactor içeren yeni build yayına alındı.
 ### Yapacakları
 - —
