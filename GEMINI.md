@@ -64,8 +64,28 @@ Standart yok, her iş için en iyi araç. ECC (Everything Claude Code) standartl
 - Yapı: `Dev_Ops_New\[Kategori]\[Proje Adı]`.
 - **Yeni Kategori Yetkisi:** Eğer mevcut kategoriler yetmiyorsa, ajan yeni bir kategori klasörü (Örn: 12_Robotics) oluşturup MASTER.md ve mempalace.yaml'ı güncelleyebilir.
 
+### Yeni Proje Kuralları
+Her yeni projede otomatik:
+1. Dev_Ops_New'a klasör aç (yapı: /code, /reference, /public)
+2. `gitrepo.md` oluştur: repo URL, açıklama, tarih
+3. `README.md` oluştur (detaylı, gerçek dosya yapısını yansıtsın)
+4. `SIGMAP.md` oluştur: `sigmap` aracı ile üretilmiş güncel imza haritası
+5. GitHub'da repo oluştur, ilk commit at
+6. Vault'da `Projeler/` klasörüne proje notu ekle (frontmatter: date, tags, kategori, durum, stack, yerel-yol, github)
+7. `memory.md` oluştur (**İngilizce olmalı**)
+8. `Proje Atlası.md` güncelle
+9. `entities.json`'a projeyi ekle
+
+### Git Kuralları
+- `gitrepo.md` her projede zorunlu: GitHub URL, açıklama, son güncelleme
+- Major değişiklikte README.md ve SIGMAP.md güncelle — proje completion = kapsamlı README + güncel SIGMAP
+- Commit mesajı: İngilizce, kısa, net
+- Push etmeyi unutma
+- git init eksikse hemen ekle
+
 ### Memory & Instinct Sistemi
 Her projede `memory.md` zorunludur. ECC'nin "Instinct" sistemi sayesinde memory artık statik değil, dinamiktir.
+- **SIGMAP (Context Optimization):** Her projede `SIGMAP.md` bulunması zorunludur. Token kullanımını optimize etmek için `sigmap` aracı ile düzenli olarak güncellenmelidir.
 - **Instincts:** Her session sonunda `continuous-learning-v2` ile oturum çıkarımları global hafızaya eklenir.
 
 Format:
@@ -112,3 +132,4 @@ Aşağıdaki kural dizinleri MASTER'ı tamamlar ve tüm ajanlar için geçerlidi
 
 ---
 **Göktuğ için en iyisi, her zaman en güncel ve en hızlı olanıdır.**
+dır.**

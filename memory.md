@@ -31,11 +31,11 @@
 
 ## Gemini
 ### Yaptıkları
-- **APK Dağıtım Merkezi:** GT-Launcher projesi için resmi APK dağıtım kanalı v4.1.5 sürümü ile güncellendi.
-- `public/gt-launcher-v4.1.5.apk` eklendi ve `src/content/projects/GT-Launcher.md` üzerinden siteye entegre edildi.
-- İzin hataları giderilmiş ve stabilize edilmiş yeni build yayına alındı.
+- **APK Dağıtım Merkezi:** GT-Launcher projesi için resmi APK dağıtım kanalı v4.2.14 sürümü ile güncellendi.
+- `public/gt-launcher-v4.2.14.apk` eklendi ve `src/content/projects/GT-Launcher.md` üzerinden siteye entegre edildi.
+- AppList UI, Tema Senkronizasyonu ve CommsCard Refactor içeren yeni build yayına alındı.
 ### Yapacakları
-- GT-Launcher: Müzik kartı albüm kapağı ve medya kontrollerinin çalışmama sorunu düzeltilecek.
+- —
 ### Notlar
 - —
 
@@ -91,3 +91,5 @@
 | 2026-04-30 | Antigravity | DevOps README.md Enjeksiyonu | Proje sayfalarının içeriğini gerçek verilerle zenginleştirmek için DevOps dizinini tarayıp içeriği markdown dosyalarına enjekte ettik |
 | 2026-05-01 | Antigravity | Crucix & AG-Manager Kaldırıldı | Kullanıcıya ait olmayan projeler sistemden tamamen temizlendi |
 | 2026-05-11 | Gemini | GT-Launcher v4.1.5 Yayınlandı | İzin hatalarının giderilmesi ve yeni build entegrasyonu |
+alarının giderilmesi ve yeni build entegrasyonu |
+| 2026-05-21 | Gemini | GT-Launcher v4.2.14 Yayınlandı | AppList UI, Tema Senkronizasyonu ve CommsCard Refactor |
