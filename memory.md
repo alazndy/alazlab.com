@@ -68,11 +68,11 @@
 - [x] SEO (Sitemap, Robots, OG tags)
 - [x] Crucix ve AG-Manager projelerinin temizlenmesi
 - [x] GT-Launcher v4.1.5 Release
+- [x] GT-Launcher v4.2.15 Release
 
 ### Devam Edenler
 - [ ] Dil desteği ince ayarları
 - [ ] Proje sayfaları final kontrolleri
-- [ ] GT-Launcher: Müzik kartı/medya kontrolü hatası fix
 
 ### Sıradakiler
 - [ ] Klasör adını manuel olarak alazlab.com yap (VS Code kapalıyken)
@@ -91,5 +91,6 @@
 | 2026-04-30 | Antigravity | DevOps README.md Enjeksiyonu | Proje sayfalarının içeriğini gerçek verilerle zenginleştirmek için DevOps dizinini tarayıp içeriği markdown dosyalarına enjekte ettik |
 | 2026-05-01 | Antigravity | Crucix & AG-Manager Kaldırıldı | Kullanıcıya ait olmayan projeler sistemden tamamen temizlendi |
 | 2026-05-11 | Gemini | GT-Launcher v4.1.5 Yayınlandı | İzin hatalarının giderilmesi ve yeni build entegrasyonu |
-alarının giderilmesi ve yeni build entegrasyonu |
 | 2026-05-21 | Gemini | GT-Launcher v4.2.14 Yayınlandı | AppList UI, Tema Senkronizasyonu ve CommsCard Refactor |
+| 2026-05-22 | Gemini | GT-Launcher v4.2.15 Yayınlandı | Performans optimizasyonu ve ImageBitmap entegrasyonu |
+
