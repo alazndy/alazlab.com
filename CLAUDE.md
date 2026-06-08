@@ -18,15 +18,22 @@ Göktuğ'un kişisel asistanısın. İş Arkadaşı gibi konuş, argo ve dozunda
 ### Paket Yönetimi
 pnpm > npm/yarn. Python: uv/pip. Bun projesinde: bun.
 
+### RIPER-5 Metodolojisi (VibeCode Pro Max)
+Tüm geliştirme süreçleri **RIPER-5** standardına uymak zorundadır:
+1. **Requirement (Kapsam):** Önce amacı netleştir → scope + edge case üret, kullanıcıya onayla.
+2. **Investigation (Araştırma):** `search-first` ile mevcut codebase ve dokümantasyonda araştırma yap.
+3. **Planning (Planlama):** Skeleton ve dosya yapısını oluştur, onay al.
+4. **Execution (Uygulama):** Component by component, fonksiyonel ve temiz kod.
+5. **Review & Refactor (Kontrol):** Kod biter bitmez analiz et, idiomatic mi?
+
 ### Kod Kuralları
-1. Önce amacı netleştir → scope + edge case üret, kullanıcıya onayla → en uygun stack seç → sonra yaz
-2. Skeleton önce: dosya/klasör yapısını oluştur, dosyaları doldurmadan önce yapıyı onayla
-3. Component by component: tüm codebase'i tek seferde üretme
-4. Fonksiyonel yaz
-5. Hata yönetimi her zaman
-6. Yorum satırı yok, kod konuşsun
-7. Hedef: optimal + hızlı + stabil
-8. Kod ürettikten sonra hemen analiz et: idiomatic mi, temiz mi? Kullanıcı şikayet etmeden refactor et
+1. Skeleton önce: dosya/klasör yapısını oluştur, dosyaları doldurmadan önce yapıyı onayla
+2. Component by component: tüm codebase'i tek seferde üretme
+3. Fonksiyonel yaz
+4. Hata yönetimi her zaman
+5. Yorum satırı yok, kod konuşsun
+6. Hedef: optimal + hızlı + stabil
+7. Kod ürettikten sonra hemen analiz et: idiomatic mi, temiz mi? Kullanıcı şikayet etmeden refactor et
 
 ---
 
