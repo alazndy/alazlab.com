@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import {
   ArrowLeft,
   ShieldCheck,
@@ -18,11 +18,11 @@ import {
   KeyRound,
   Fingerprint,
   Layers,
-  GitMerge,
-  Database,
+  Activity,
   Terminal,
   LayoutPanelLeft,
   Settings2,
+  ChevronRight,
 } from 'lucide-react';
 import { Typewriter } from '@/components/ui/Typewriter';
 import { cn } from '@/lib/utils';
@@ -33,6 +33,92 @@ const fadeUp = {
   viewport: { once: true, margin: '-80px' },
   transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
 };
+
+const LOG_LINES = [
+  '[audit] chain verified — 0 tampering detected',
+  '[cortex] resident worker warm — hnsw index synced',
+  '[swarm] lock released — file:src/kernel.rs',
+  '[scheduler] cron job completed — daily-health-scan',
+  '[security] egress check — api.anthropic.com allowed',
+  '[handoff] claude → codex-kaira — status: success',
+  '[trace] fix recalled — 1 match before retry',
+];
+
+function CountUp({ to, suffix = '', duration = 1.4 }: { to: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
+  const [val, setVal] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let start: number | null = null;
+    let raf: number;
+    const step = (ts: number) => {
+      if (start === null) start = ts;
+      const progress = Math.min((ts - start) / (duration * 1000), 1);
+      setVal(Math.floor(progress * to));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, to, duration]);
+
+  return <span ref={ref}>{val}{suffix}</span>;
+}
+
+function LogTicker() {
+  const doubled = [...LOG_LINES, ...LOG_LINES];
+  return (
+    <div className="relative overflow-hidden border-y border-border bg-black/60 py-2.5">
+      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      <motion.div
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ repeat: Infinity, duration: 28, ease: 'linear' }}
+        className="flex gap-10 whitespace-nowrap font-mono text-[11px] text-foreground/35"
+      >
+        {doubled.map((line, i) => (
+          <span key={i} className="flex items-center gap-2">
+            <span className="w-1 h-1 rounded-full bg-lcars-green" />
+            {line}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+function ProgressRing({ percent, size = 56 }: { percent: number; size?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+  const r = (size - 6) / 2;
+  const c = 2 * Math.PI * r;
+
+  return (
+    <div ref={ref} className="relative shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} stroke="currentColor" strokeWidth={4} fill="none" className="text-foreground/10" />
+        <motion.circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          stroke="currentColor"
+          strokeWidth={4}
+          fill="none"
+          strokeLinecap="round"
+          className="text-lcars-green"
+          strokeDasharray={c}
+          initial={{ strokeDashoffset: c }}
+          animate={{ strokeDashoffset: inView ? c - (percent / 100) * c : c }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black text-foreground">
+        {percent}%
+      </div>
+    </div>
+  );
+}
 
 export function RaiosClient({ techStack }: { techStack: string[] }) {
   return (
@@ -121,61 +207,87 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
         </motion.div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 space-y-16 relative z-10">
+      <LogTicker />
 
-        {/* ── METRICS ── */}
+      <div className="max-w-5xl mx-auto px-6 pt-16 space-y-16 relative z-10">
+
+        {/* ── METRICS — asymmetric bento ── */}
         <motion.div {...fadeUp} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: 'Kernel Sürümü', val: 'v3.6.0', icon: ShieldCheck, color: 'text-lcars-red' },
-            { label: 'Roadmap', val: '26 / 26 Faz', icon: GitMerge, color: 'text-lcars-green' },
-            { label: 'Protokoller', val: '3 (TCP/MCP/HTTP)', icon: RadioTower, color: 'text-lcars-cyan' },
-            { label: 'Portfolio', val: '140+ Proje', icon: Database, color: 'text-lcars-purple' },
-          ].map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{ y: -4 }}
-              className="glass p-6 rounded-2xl border-border flex flex-col items-center text-center space-y-3"
-            >
-              <m.icon className={`w-6 h-6 ${m.color}`} />
-              <div>
-                <div className="text-lg font-black text-foreground tracking-tight">{m.val}</div>
-                <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">{m.label}</div>
-              </div>
-            </motion.div>
-          ))}
+          <div className="col-span-2 md:col-span-2 glass p-6 rounded-2xl border-border flex items-center gap-5">
+            <div className="relative shrink-0">
+              <Activity className="w-9 h-9 text-lcars-red" />
+              <motion.span
+                animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                transition={{ repeat: Infinity, duration: 1.8 }}
+                className="absolute inset-0 rounded-full border border-lcars-red"
+              />
+            </div>
+            <div>
+              <div className="text-2xl font-black text-foreground tracking-tight">v3.6.0</div>
+              <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Kernel Sürümü — Aktif Geliştirme</div>
+            </div>
+          </div>
+
+          <div className="glass p-6 rounded-2xl border-border flex items-center gap-4">
+            <ProgressRing percent={100} />
+            <div>
+              <div className="text-lg font-black text-foreground tracking-tight">26/26</div>
+              <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Roadmap Fazı</div>
+            </div>
+          </div>
+
+          <div className="glass p-6 rounded-2xl border-border flex flex-col items-center text-center justify-center space-y-2">
+            <div className="text-lg font-black text-foreground tracking-tight"><CountUp to={140} suffix="+" /></div>
+            <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Portfolio Proje</div>
+          </div>
         </motion.div>
 
-        {/* ── SECURITY KERNEL — 4 LAYERS ── */}
+        {/* ── SECURITY KERNEL — pipeline ── */}
         <div className="space-y-8">
           <motion.div {...fadeUp} className="text-center space-y-2">
             <h2 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight">Security Kernel</h2>
-            <p className="text-foreground/40 text-sm font-mono uppercase tracking-widest">Zero-Trust — 4 Katman, Tamamı Test Edilmiş</p>
+            <p className="text-foreground/40 text-sm font-mono uppercase tracking-widest">Zero-Trust — Her Çağrı Bu 4 Katmandan Geçer</p>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: FolderLock, title: 'FS Sandbox', desc: 'Path canonicalization ile traversal (../../) engellenir. .ssh, AppData gibi klasörler tamamen kapalı.' },
-              { icon: ListChecks, title: 'Policy Manager', desc: 'raios-policy.toml ile allow/deny/confirm kuralları. Headless modda onaysız işlemler fail-closed reddedilir.' },
-              { icon: Link2, title: 'Audit Chain', desc: 'SHA-256 hash-chained SQLite ledger. Tek satır silinirse zincir bozulur, raios verify-chain ile doğrulanır.' },
-              { icon: Globe2, title: 'Egress Filter', desc: 'Domain allowlist/blocklist ile HTTP/HTTPS çağrıları kısıtlanır. Tanınmayan domain fail-closed reddedilir.' },
-            ].map((item, i) => (
+
+          <div className="relative">
+            {/* connecting line + traveling pulse (desktop only) */}
+            <div className="hidden lg:block absolute top-11 left-[12.5%] right-[12.5%] h-px bg-border">
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                className="glass p-6 rounded-3xl border-border space-y-4 hover:border-lcars-red/30 transition-colors"
-              >
-                <item.icon className="w-7 h-7 text-lcars-red" />
-                <h3 className="text-sm font-black text-foreground uppercase tracking-tight">{item.title}</h3>
-                <p className="text-xs text-foreground/50 leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+                animate={{ left: ['0%', '100%'] }}
+                transition={{ repeat: Infinity, duration: 3.2, ease: 'linear' }}
+                className="absolute -top-[3px] w-2 h-2 rounded-full bg-lcars-red shadow-[0_0_10px_2px_rgba(255,59,59,0.7)]"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { icon: FolderLock, title: 'FS Sandbox', desc: 'Path canonicalization ile traversal (../../) engellenir. .ssh, AppData gibi klasörler tamamen kapalı.' },
+                { icon: ListChecks, title: 'Policy Manager', desc: 'raios-policy.toml ile allow/deny/confirm kuralları. Headless modda onaysız işlemler fail-closed reddedilir.' },
+                { icon: Link2, title: 'Audit Chain', desc: 'SHA-256 hash-chained SQLite ledger. Tek satır silinirse zincir bozulur, raios verify-chain ile doğrulanır.' },
+                { icon: Globe2, title: 'Egress Filter', desc: 'Domain allowlist/blocklist ile HTTP/HTTPS çağrıları kısıtlanır. Tanınmayan domain fail-closed reddedilir.' },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  className="relative"
+                >
+                  <div className="hidden lg:flex w-8 h-8 rounded-full bg-black border border-lcars-red/40 items-center justify-center text-[10px] font-mono text-lcars-red font-bold mb-3 mx-auto relative z-10">
+                    {i + 1}
+                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.03, y: -4 }}
+                    className="glass p-6 rounded-3xl border-border space-y-4 hover:border-lcars-red/30 transition-colors h-full"
+                  >
+                    <item.icon className="w-7 h-7 text-lcars-red" />
+                    <h3 className="text-sm font-black text-foreground uppercase tracking-tight">{item.title}</h3>
+                    <p className="text-xs text-foreground/50 leading-relaxed">{item.desc}</p>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -203,12 +315,18 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
               <p className="text-xs text-foreground/40 leading-relaxed">Argümansız çağrıldığında Ratatui TUI&apos;yi başlatır; subcommand algılanırsa cli::run()&apos;a devreder.</p>
             </motion.div>
 
-            <div className="flex flex-col items-center text-center space-y-2">
+            <div className="relative flex flex-col items-center text-center space-y-2">
               <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ repeat: Infinity, duration: 2 }}>
                 <RadioTower className="w-6 h-6 text-lcars-red" />
               </motion.div>
               <div className="text-xs font-mono text-lcars-red uppercase tracking-widest">Tri-Protocol Bus</div>
-              <div className="h-0.5 w-16 bg-gradient-to-r from-lcars-red to-transparent hidden md:block" />
+              <div className="relative h-0.5 w-16 bg-gradient-to-r from-lcars-red to-transparent hidden md:block">
+                <motion.span
+                  animate={{ left: ['0%', '90%'] }}
+                  transition={{ repeat: Infinity, duration: 1.6, ease: 'linear' }}
+                  className="absolute -top-[3px] w-2 h-2 rounded-full bg-lcars-red shadow-[0_0_8px_2px_rgba(255,59,59,0.6)]"
+                />
+              </div>
             </div>
 
             <motion.div
@@ -238,19 +356,19 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
         {/* ── DEEP SYSTEM ANALYSIS (tabbed) ── */}
         <DeepSystemAnalysis />
 
-        {/* ── YENİ NESİL MODÜLLER ── */}
+        {/* ── YENİ NESİL MODÜLLER — bento ── */}
         <div className="space-y-8">
           <motion.h2 {...fadeUp} className="text-3xl font-black text-foreground uppercase tracking-tight text-center">
             Yeni Nesil Modüller
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:auto-rows-fr">
             {[
-              { icon: BrainCircuit, iconClass: 'text-lcars-purple', hoverClass: 'hover:border-lcars-purple/30', title: 'Trace Memory', desc: <>Hata ve düzeltmesi yerelde SQLite&apos;a kaydedilir; aynı hata tekrar oluşmadan önce hatırlanır. Başarılı fix&apos;ler instinct adayına dönüşür.</> },
-              { icon: Clock, iconClass: 'text-lcars-cyan', hoverClass: 'hover:border-lcars-cyan/30', title: 'Autonomous Scheduler', desc: <><code className="text-xs">raios cron add/list/pause/resume</code> — control plane üzerinde atomik claim ile çalışan zamanlanmış görevler.</> },
-              { icon: KeyRound, iconClass: 'text-lcars-orange', hoverClass: 'hover:border-lcars-orange/30', title: 'Secret Leasing', desc: <>TTL&apos;li otomatik iptal ile <code className="text-xs">raios secret grant/revoke</code>; her araç için sabit pencereli rate limiting.</> },
-              { icon: Fingerprint, iconClass: 'text-lcars-green', hoverClass: 'hover:border-lcars-green/30', title: 'Tool Pinning', desc: <>Araç manifestosu SHA-256 ile imzalanır; uyuşmazlıkta çağrı reddedilir. Drift anında yakalanır.</> },
-              { icon: Layers, iconClass: 'text-lcars-red', hoverClass: 'hover:border-lcars-red/30', title: 'Layered Memory', desc: <>L0→L3 hiyerarşisi: atomik gerçek → günlük sahne → persona. <code className="text-xs">mem_nodes</code>/<code className="text-xs">mem_lineage</code> ile gerçek izlenebilirlik.</> },
-              { icon: RadioTower, iconClass: 'text-lcars-purple', hoverClass: 'hover:border-lcars-purple/30', title: 'Resident Cortex', desc: <>fastembed (all-MiniLM-L6-v2) gerçek embedding&apos;leri aiosd içinde kalıcı worker olarak yaşar — semantic search ~1s&apos;de.</> },
+              { icon: BrainCircuit, iconClass: 'text-lcars-purple', hoverClass: 'hover:border-lcars-purple/30', title: 'Trace Memory', big: true, desc: <>Hata ve düzeltmesi yerelde SQLite&apos;a kaydedilir; aynı hata tekrar oluşmadan önce hatırlanır. <code className="text-xs">raios evolve from-traces</code> başarılı fix&apos;leri instinct adayına çevirir.</> },
+              { icon: Clock, iconClass: 'text-lcars-cyan', hoverClass: 'hover:border-lcars-cyan/30', title: 'Autonomous Scheduler', big: false, desc: <><code className="text-xs">raios cron add/list/pause/resume</code> — control plane üzerinde atomik claim ile çalışan zamanlanmış görevler.</> },
+              { icon: KeyRound, iconClass: 'text-lcars-orange', hoverClass: 'hover:border-lcars-orange/30', title: 'Secret Leasing', big: false, desc: <>TTL&apos;li otomatik iptal ile <code className="text-xs">raios secret grant/revoke</code>; her araç için sabit pencereli rate limiting.</> },
+              { icon: Fingerprint, iconClass: 'text-lcars-green', hoverClass: 'hover:border-lcars-green/30', title: 'Tool Pinning', big: false, desc: <>Araç manifestosu SHA-256 ile imzalanır; uyuşmazlıkta çağrı reddedilir. Drift anında yakalanır.</> },
+              { icon: Layers, iconClass: 'text-lcars-red', hoverClass: 'hover:border-lcars-red/30', title: 'Layered Memory', big: false, desc: <>L0→L3 hiyerarşisi: atomik gerçek → günlük sahne → persona. <code className="text-xs">mem_nodes</code>/<code className="text-xs">mem_lineage</code> ile gerçek izlenebilirlik.</> },
+              { icon: RadioTower, iconClass: 'text-lcars-purple', hoverClass: 'hover:border-lcars-purple/30', title: 'Resident Cortex', big: true, desc: <>fastembed (all-MiniLM-L6-v2) gerçek embedding&apos;leri aiosd içinde kalıcı worker olarak yaşar — semantic search ~1.0s&apos;de (öncesi 4-6s idi).</> },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
@@ -259,11 +377,17 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
                 viewport={{ once: true }}
                 transition={{ delay: (i % 3) * 0.1 }}
                 whileHover={{ y: -4 }}
-                className={cn('glass p-8 rounded-3xl border-border space-y-4 transition-colors', item.hoverClass)}
+                className={cn(
+                  'glass p-8 rounded-3xl border-border space-y-4 transition-colors',
+                  item.hoverClass,
+                  item.big && 'md:col-span-2 md:row-span-1 flex md:flex-row md:items-center md:gap-8 md:space-y-0'
+                )}
               >
-                <item.icon className={cn('w-8 h-8', item.iconClass)} />
-                <h3 className="text-lg font-black text-foreground uppercase tracking-tight">{item.title}</h3>
-                <p className="text-foreground/50 text-sm leading-relaxed">{item.desc}</p>
+                <item.icon className={cn('w-8 h-8 shrink-0', item.iconClass)} />
+                <div className="space-y-2">
+                  <h3 className="text-lg font-black text-foreground uppercase tracking-tight">{item.title}</h3>
+                  <p className="text-foreground/50 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -335,14 +459,21 @@ function DeepSystemAnalysis() {
               key={tab.id}
               onClick={() => setActive(tab.id)}
               className={cn(
-                'flex items-center gap-2 px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-all duration-200 border cursor-pointer rounded-lg',
+                'relative flex items-center gap-2 px-4 py-2 text-[11px] font-mono uppercase tracking-widest transition-colors duration-200 border cursor-pointer rounded-lg overflow-hidden',
                 isActive
-                  ? 'bg-lcars-red/10 border-lcars-red/50 text-lcars-red'
+                  ? 'border-lcars-red/50 text-lcars-red'
                   : 'bg-transparent border-border text-foreground/40 hover:border-foreground/30 hover:text-foreground/70'
               )}
             >
-              <Icon size={12} />
-              {tab.label}
+              {isActive && (
+                <motion.span
+                  layoutId="raios-tab-bg"
+                  className="absolute inset-0 bg-lcars-red/10"
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+                />
+              )}
+              <Icon size={12} className="relative z-10" />
+              <span className="relative z-10">{tab.label}</span>
             </button>
           );
         })}
@@ -391,8 +522,8 @@ function DeepSystemAnalysis() {
               CLI katmanı komut satırı argümanlarını çözümler. Geçerli bir subcommand algılanırsa <code className="text-lcars-orange">cli::run()</code> modülüne devreder; argümansız çağrılırsa otomatik TUI moduna geçer.
             </p>
             <div className="bg-foreground/5 border border-border p-4 rounded-xl text-[12px] space-y-1">
-              <div className="flex justify-between border-b border-border pb-1"><span>raios &lt;subcommand&gt;</span> <span className="text-foreground/40">→ cli::run()</span></div>
-              <div className="flex justify-between pt-1"><span>raios (boş)</span> <span className="text-foreground/40">→ TUI</span></div>
+              <div className="flex justify-between border-b border-border pb-1"><span>raios &lt;subcommand&gt;</span> <span className="text-foreground/40 flex items-center gap-1">cli::run() <ChevronRight size={12} /></span></div>
+              <div className="flex justify-between pt-1"><span>raios (boş)</span> <span className="text-foreground/40 flex items-center gap-1">TUI <ChevronRight size={12} /></span></div>
             </div>
           </div>
         )}
@@ -409,10 +540,16 @@ function DeepSystemAnalysis() {
             <div>
               <span className="text-foreground/40 text-[11px] uppercase tracking-wider block mb-2">14 Paralel Dashboard Paneli</span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] text-foreground/50">
-                {['dashboard_main', 'menu', 'header', 'content', 'tasks', 'agents', 'inbox', 'logs', 'scheduler', 'timeline', 'recent', 'stats', 'rules', 'help'].map(p => (
-                  <div key={p} className="bg-foreground/5 border border-border px-2 py-1 flex items-center gap-2 rounded">
+                {['dashboard_main', 'menu', 'header', 'content', 'tasks', 'agents', 'inbox', 'logs', 'scheduler', 'timeline', 'recent', 'stats', 'rules', 'help'].map((p, idx) => (
+                  <motion.div
+                    key={p}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: idx * 0.03 }}
+                    className="bg-foreground/5 border border-border px-2 py-1 flex items-center gap-2 rounded"
+                  >
                     <span className="text-lcars-green">■</span> {p}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
