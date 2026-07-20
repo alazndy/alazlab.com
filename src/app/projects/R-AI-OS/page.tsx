@@ -45,17 +45,31 @@ export default async function RAIOSPage() {
               Universal AI Agent Kernel
             </div>
 
-            {/* Project Cover Image */}
-            {project?.metadata?.image && (
-              <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
-                <img
-                  src={project.metadata.image}
-                  alt={project.metadata.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+            {/* Terminal Mockup — native visual, not a screenshot of the marketing site */}
+            <div className="relative w-full rounded-[32px] overflow-hidden border border-border mb-12 bg-[#050505] shadow-2xl">
+              <div className="flex items-center gap-2 px-5 py-3 border-b border-border bg-black/40">
+                <span className="w-2.5 h-2.5 rounded-full bg-lcars-red/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-lcars-orange/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-lcars-green/70" />
+                <span className="ml-3 text-[10px] uppercase tracking-widest text-foreground/30 font-mono">raios — kernel v3.6.0</span>
               </div>
-            )}
+              <div className="p-6 font-mono text-[11px] sm:text-xs leading-relaxed overflow-x-auto">
+                <pre className="text-lcars-red font-bold leading-[1.15] whitespace-pre mb-6">
+{`██████╗        █████╗ ██╗      ██████╗ ███████╗
+██╔══██╗      ██╔══██╗██║     ██╔═══██╗██╔════╝
+██████╔╝█████╗███████║██║     ██║   ██║███████╗
+██╔══██╗╚════╝██╔══██║██║     ██║   ██║╚════██║
+██║  ██║      ██║  ██║██║     ╚██████╔╝███████║
+╚═╝  ╚═╝      ╚═╝  ╚═╝╚═╝      ╚═════╝ ╚══════╝`}
+                </pre>
+                <div className="space-y-1.5 text-foreground/50">
+                  <div><span className="text-foreground/30">$</span> raios health <span className="text-lcars-green">→ 140+ proje taranıyor...</span></div>
+                  <div><span className="text-foreground/30">$</span> raios verify-chain <span className="text-lcars-green">→ audit chain intact ✓</span></div>
+                  <div><span className="text-foreground/30">$</span> raios search &quot;agent handoff&quot; <span className="text-lcars-cyan">→ 1.0s (resident cortex)</span></div>
+                  <div className="text-foreground/25 pt-1">■ aiosd daemon — :42069 :42070 :42071 listening</div>
+                </div>
+              </div>
+            </div>
 
             <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-foreground drop-shadow-[0_0_15px_rgba(255,59,59,0.2)]">R-AI-OS</h1>
             <p className="text-xl md:text-2xl text-foreground/60 font-light leading-relaxed">
@@ -123,7 +137,7 @@ export default async function RAIOSPage() {
                 <div className="font-black text-foreground">raios binary</div>
                 <div className="text-[10px] font-mono text-foreground/50 uppercase mt-1">TUI + CLI Entrypoint</div>
               </div>
-              <p className="text-xs text-foreground/40 leading-relaxed">Argümansız çağrıldığında Ratatui TUI'yi başlatır; subcommand algılanırsa cli::run()'a devreder.</p>
+              <p className="text-xs text-foreground/40 leading-relaxed">Argümansız çağrıldığında Ratatui TUI&apos;yi başlatır; subcommand algılanırsa cli::run()&apos;a devreder.</p>
             </div>
 
             <div className="flex flex-col items-center text-center space-y-2">
