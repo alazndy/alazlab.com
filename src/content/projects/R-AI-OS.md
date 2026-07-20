@@ -3,14 +3,14 @@ image: "/projects/R-AI-OS.png"
 title: "R-AI-OS"
 category: "Security"
 status: "Active"
-summary: "Rust tabanlı, çoklu AI ajan sürülerini (Claude, Codex, OpenCode, Antigravity) tek güvenlik ve orkestrasyon çekirdeği altında toplayan Universal AI Agent Kernel & Terminal Control Center."
-techStack: ["Rust", "Tokio", "Ratatui", "Clap", "Axum", "SQLite", "MCP"]
+summary: "Rust tabanlı, çoklu AI ajan sürülerini (Claude, Codex, OpenCode, Antigravity) tek güvenlik ve orkestrasyon çekirdeği altında toplayan Universal AI Agent Kernel & Terminal Control Center. Kernel v3.6.0 — 26 tamamlanmış roadmap fazı."
+techStack: ["Rust", "Tokio", "Ratatui", "Axum", "SQLite", "MCP", "fastembed"]
 github: "https://github.com/alazndy/R-AI-OS"
 ---
 
 ## 🧠 Sistem Özeti
 
-Kaos yerine denetimli sürü. Birden fazla AI ajanı paralel çalışmaya başladığında ortaya çıkan riskleri — yanlış dosya silme, gizli anahtarların log'a düşmesi, izinsiz sunuculara istek atılması — tek bir hardened Rust çekirdeğinde toplayıp politikaya bağlayan workspace orchestration engine.
+Kaos yerine denetimli sürü. Birden fazla AI ajanı paralel çalışmaya başladığında ortaya çıkan riskleri — yanlış dosya silme, gizli anahtarların log'a düşmesi, izinsiz sunuculara istek atılması — tek bir hardened Rust çekirdeğinde toplayıp politikaya bağlayan workspace orchestration engine. **Kernel v3.6.0**, 140+ proje üzerinde çalışıyor ve 26 roadmap fazının tamamı tamamlanmış durumda.
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-12">
   <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
@@ -25,8 +25,8 @@ Kaos yerine denetimli sürü. Birden fazla AI ajanı paralel çalışmaya başla
     <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-6 group-hover:scale-110 transition-transform">
       <span class="text-3xl">🧭</span>
     </div>
-    <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">Cortex</h3>
-    <p class="text-sm text-white/40 leading-relaxed">Sigmap imza haritası ve BM25 + vektör hibrit arama ile %97 token tasarrufu. Ajanlar tüm codebase'i okumadan bağlam kazanır.</p>
+    <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">Resident Cortex</h3>
+    <p class="text-sm text-white/40 leading-relaxed">Sigmap imza haritası, gerçek fastembed (all-MiniLM-L6-v2) embedding'leri ve aiosd içinde yaşayan kalıcı worker sayesinde %97 token tasarrufu, ~1s'de semantic search.</p>
   </div>
 
   <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
@@ -42,7 +42,7 @@ Kaos yerine denetimli sürü. Birden fazla AI ajanı paralel çalışmaya başla
       <span class="text-3xl">📊</span>
     </div>
     <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">Portfolio Intelligence</h3>
-    <p class="text-sm text-white/40 leading-relaxed">Health scanner, GitHub senkronizasyonu ve auto-discovery ile tüm workspace'in sağlığını tek komutla raporlar.</p>
+    <p class="text-sm text-white/40 leading-relaxed">140+ proje üzerinde health scanner, GitHub senkronizasyonu ve auto-discovery ile tüm workspace'in sağlığını tek komutla raporlar.</p>
   </div>
 </div>
 
@@ -68,11 +68,9 @@ Sen → [ R-AI-OS ÇEKİRDEĞİ ] → Ajan Sürüsü
 
 ### Protokol Üçlüsü
 
-| Port | Protokol | Görev |
-|------|----------|-------|
-| `:42069` | TCP | CLI ↔ Daemon IPC (UUID token auth) |
-| `:42070` | MCP-over-TCP | Ajan araç çağrıları, politika kapılı |
-| `:42071` | HTTP/WS | VS Code extension + dış entegrasyonlar |
+- **`:42069` TCP** — CLI ↔ Daemon IPC (UUID token auth)
+- **`:42070` MCP-over-TCP** — Ajan araç çağrıları, politika kapılı
+- **`:42071` HTTP/WS** — VS Code extension + dış entegrasyonlar
 
 ---
 
@@ -101,24 +99,41 @@ raios handoff --to codex-kaira --status success --msg "iskelet hazır, auth hand
 
 ---
 
+## 🧬 Yeni Nesil Modüller
+
+Son fazlarda eklenen ve kernel'i sıradan bir CLI'dan gerçek bir işletim katmanına taşıyan modüller:
+
+- **Trace Memory** — `raios trace record/search`, bir hatayı ve onun düzeltmesini yerelde SQLite'a kaydeder; aynı hata tekrar oluşmadan önce hatırlanır. `raios evolve from-traces` başarılı fix'leri instinct adayına çevirir.
+- **Autonomous Scheduler** — `raios cron add/list/remove/pause/resume/run`, control-plane'de atomik claim ile çalışan zamanlanmış görevler.
+- **Secret Leasing & Rate Limiting** — `raios secret grant/list/revoke <tool> <ENV_VAR>` TTL'li otomatik iptal ile; `raios rate-status` her araç için sabit pencereli sayaç limiti.
+- **Tool Pinning & Drift Detection** — Araç manifestosu SHA-256 ile imzalanır; uyuşmazlıkta çağrı reddedilir, `raios pin-status` / `raios pin-reset` ile yönetilir.
+- **Layered Memory (L0→L3)** — `mem_nodes`/`mem_lineage` ile gerçek izlenebilirlik; `raios mem history --layer` ile atomik gerçek → günlük sahne → persona hiyerarşisi.
+
+---
+
 ## 🖥️ TUI Dashboard & VS Code Extension
 
 `src/app/` ve `src/ui/` altında yaşayan terminal arayüzü, **14 paralel dashboard paneli** barındırır: `dashboard_main`, `menu`, `header`, `content`, `tasks`, `agents`, `inbox`, `logs`, `scheduler`, `timeline`, `recent`, `stats`, `rules`, `help`.
 
-VS Code Extension (v0.6.0), sidebar üzerinden tam bir kontrol paneli sunar — git durumu, planlar, görevler, Swarm kartları. **TokenBridge proxy** sayesinde session token hiçbir zaman Webview'a gitmez (XSS koruması).
+VS Code Extension (**v0.8.0**), sidebar üzerinden tam bir kontrol paneli sunar — Git Status, Plans, Tasks, Swarm (inline Approve) ve Quick Actions kartları. **TokenBridge proxy** sayesinde session token hiçbir zaman Webview'a gitmez (XSS koruması); `DaemonManager` soket dinlemiyorsa `aiosd`'yi otomatik başlatır.
+
+```bash
+code --install-extension vscode-extension/raios-0.8.0.vsix --force
+```
 
 ---
 
 ## ⌨️ CLI Referansı
 
 ```
-raios health                    raios verify-chain              raios run claude
-raios search "<sorgu>"          raios secret grant/revoke        raios run codex
-raios new "ProjeAdı"            raios quarantine list            raios run opencode
-raios task "<açıklama>"         raios handoff --to <ajan>        raios run agy
-raios usage                     raios swarm start/list           raios git status/commit
+raios health                    raios verify-chain              raios secret grant/revoke
+raios search "<sorgu>"          raios quarantine list/approve    raios rate-status
+raios locate "<pattern>"        raios swarm start/list/approve   raios pin-status / pin-reset
+raios new "ProjeAdı"            raios handoff --to <ajan>        raios trace record/search
+raios task "<açıklama>"         raios git status/log/commit      raios cron add/list/run
+raios usage                     raios bootstrap                 raios run claude/codex/opencode/agy
 ```
 
 ---
 
-*Bu proje Alaz Lab altyapısının kendi kernel'idir — tüm diğer projeler bu çekirdeğin üzerinde koordine edilir.*
+*Bu proje Alaz Lab altyapısının kendi kernel'idir — tüm diğer projeler bu çekirdeğin üzerinde koordine edilir. Kernel v3.6.0 · 26/26 roadmap fazı tamamlandı.*
