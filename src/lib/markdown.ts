@@ -7,8 +7,10 @@ const PROJECTS_PATH = path.join(process.cwd(), 'src', 'content', 'projects');
 export interface ProjectMetadata {
   title: string;
   category: string;
+  area?: 'muhendislik' | 'lab';
   status: string;
   summary: string;
+  neden?: string;
   techStack?: string[];
   date?: string;
   github?: string;
