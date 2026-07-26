@@ -17,9 +17,28 @@ const BANNED_LITERALS = [
 ];
 
 const BANNED_PATTERNS = [
-  { name: 'fabricated-uptime-percent', re: /\d+(\.\d+)?%\s*(Uptime|uptime)/g },
-  { name: 'fake-node-count', re: /\d+\s*ACTIVE\s*nodes?/gi },
-  { name: 'roleplay-level-rank', re: /Level[_ ]0?\d\b/g },
+  { name: 'roleplay-level-rank', re: /Level[_ ]\d+\b/g },
+];
+
+// Order/position-agnostic checks: flag a line when a value (percent or count)
+// AND a relevant keyword both appear anywhere on the same line, regardless of
+// adjacency or which one comes first. This survives literal-string renames
+// (e.g. "Uptime_Index" -> "Uptime") that the strict single regex above missed.
+const BANNED_LINE_RULES = [
+  {
+    name: 'fabricated-uptime-percent',
+    valueRe: /\d+(\.\d+)?%/,
+    keywordRe: /uptime/i,
+  },
+  {
+    name: 'fake-node-count',
+    valueRe: /\d+/,
+    // Case-sensitive on purpose: the roleplay/LCARS styling in this codebase
+    // renders this stat as literal all-caps "ACTIVE" (e.g. "46 ACTIVE").
+    // A case-insensitive "active" or a bare "nodes?" keyword would false-positive
+    // on ordinary tech mentions like "Node.js 20+", "Node-RED", or "Edge Node".
+    keywordRe: /\bACTIVE\b/,
+  },
 ];
 
 function walk(dir, exts, out = []) {
@@ -46,6 +65,11 @@ function lintFile(filePath) {
     for (const { name, re } of BANNED_PATTERNS) {
       re.lastIndex = 0;
       if (re.test(line)) {
+        hits.push(`${filePath}:${i + 1}: matched banned pattern "${name}" — "${line.trim()}"`);
+      }
+    }
+    for (const { name, valueRe, keywordRe } of BANNED_LINE_RULES) {
+      if (valueRe.test(line) && keywordRe.test(line)) {
         hits.push(`${filePath}:${i + 1}: matched banned pattern "${name}" — "${line.trim()}"`);
       }
     }
