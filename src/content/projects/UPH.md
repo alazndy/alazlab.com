@@ -2,6 +2,7 @@
 image: "/projects/UPH.webp"
 title: "UPH"
 category: "Diğer"
+area: "lab"
 status: "Pending"
 summary: "Centralized project tracking platform with Gantt charts, EVM (Earned Value Management) analysis, and multi-platform support."
 techStack: ["Next.js 16", "TypeScript", "EVM", "Zustand", "Recharts"]

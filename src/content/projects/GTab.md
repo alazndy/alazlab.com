@@ -2,7 +2,9 @@
 image: "/projects/GTab.png"
 title: GTab
 category: Browser Extensions
+area: lab
 status: Live
+version: v4.3.0
 summary: A highly customizable new tab page for Chrome with Google Tasks, Calendar, and Weather integration — all in a modular drag-and-drop grid.
 techStack: [JavaScript, Chrome Extension API, Google OAuth 2.0, Google Tasks API, Google Calendar API, HTML/CSS]
 date: 2026-01-10

@@ -2,6 +2,7 @@
 image: "/projects/Renderci.webp"
 title: "Renderci"
 category: "İletişim & Sosyal"
+area: "lab"
 status: "Pending"
 summary: "Otomatik 3D görselleştirme boru hattı. (Three.js, Blender Python API)."
 techStack: []

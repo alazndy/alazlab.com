@@ -2,7 +2,9 @@
 image: "/projects/R-AI-OS.png"
 title: "R-AI-OS"
 category: "Security"
+area: "lab"
 status: "Active"
+version: "v3.7.1"
 summary: "Rust tabanlı, çoklu AI ajan sürülerini (Claude, Codex, OpenCode, Antigravity) tek güvenlik ve orkestrasyon çekirdeği altında toplayan Universal AI Agent Kernel & Terminal Control Center. Kernel v3.6.0 — 26 tamamlanmış roadmap fazı."
 techStack: ["Rust", "Tokio", "Ratatui", "Axum", "SQLite", "MCP", "fastembed"]
 github: "https://github.com/alazndy/R-AI-OS"

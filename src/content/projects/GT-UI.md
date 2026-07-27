@@ -1,7 +1,9 @@
 ---
 title: "GT-UI"
 category: "Diğer"
-status: "Pending"
+area: "lab"
+status: "Live"
+version: "v1.1.1"
 summary: "Cinematic React component library featuring 8 distinct aesthetic modes (Retro, Industrial, Glassmorphism, etc.) for high-end web applications."
 techStack: ["React", "TypeScript", "Native CSS"]
 ---

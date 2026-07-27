@@ -2,6 +2,7 @@
 image: "/projects/UCC-APP.png"
 title: "UCC APP"
 category: "AI & Veri"
+area: "muhendislik"
 status: "Active"
 summary: "Professional mobile interface for managing ESP32-based radar systems via Wi-Fi. Provides real-time tracking and configuration for automotive radar units."
 techStack: ["Flutter", "Dart"]

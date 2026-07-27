@@ -2,6 +2,7 @@
 image: "/projects/T-SA.webp"
 title: "T-SA"
 category: "Diğer"
+area: "lab"
 status: "Pending"
 summary: "AI destekli otomatik dökümantasyon ve rapor üretici."
 techStack: []

@@ -1,7 +1,9 @@
 ---
 title: UniControl
 category: Hardware & Embedded
+area: muhendislik
 status: Active
+version: v5.1.0
 summary: An ESP32-S3 based advanced vehicle safety and control system for Opel Astra J — integrating Brigade radar, Nextion HMI, and OBD-II diagnostics over CAN Bus.
 techStack: [ESP32-S3, ESP-IDF, FreeRTOS, C/C++, CAN Bus, UDS, Nextion HMI, Brigade Radar]
 date: 2025-10-12

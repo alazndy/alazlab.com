@@ -73,11 +73,6 @@ export const categoryConfig: Record<string, CategoryConfig> = {
     glow: 'bg-violet-500/20', badge: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
     hero: 'design', gradient: 'from-violet-950/70 via-black/60 to-transparent',
   },
-  'Crucix': {
-    icon: Shield, accent: 'text-red-400', accentBg: 'bg-red-400',
-    glow: 'bg-red-500/20', badge: 'bg-red-500/10 text-red-400 border-red-500/20',
-    hero: 'default', gradient: 'from-red-950/80 via-black/60 to-transparent',
-  },
 };
 
 export const defaultConfig: CategoryConfig = {

@@ -2,6 +2,7 @@
 image: "/projects/tek-ui.png"
 title: tek-ui
 category: UI Infrastructure
+area: lab
 status: Stable
 summary: A private design system and component library powering all T-Ecosystem applications — built on React 19, Tailwind v4, and Radix UI primitives.
 techStack: [React 19, TypeScript, Tailwind CSS v4, Radix UI, Framer Motion, Storybook, pnpm Workspaces]

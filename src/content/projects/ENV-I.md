@@ -2,6 +2,7 @@
 image: "/projects/ENV-I.webp"
 title: ENV-I
 category: Web & Apps
+area: lab
 status: Active
 summary: A cross-platform inventory and stock management module for the T-Ecosystem — with real-time sync, offline support, and a barcode scanning interface.
 techStack: [Next.js 16, React 19, TypeScript, Tailwind v4, Zustand, Firebase Firestore, next-intl, Capacitor, Electron]
