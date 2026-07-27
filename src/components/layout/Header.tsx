@@ -3,7 +3,6 @@
 import { Menu, Sun, Moon, Command } from 'lucide-react';
 import { useEffect, useState, memo, useCallback } from 'react';
 import { useTheme } from 'next-themes';
-import { useI18n } from '@/lib/i18n';
 import { useMobileNav } from './mobile-nav-context';
 
 const Clock = memo(function Clock() {
@@ -36,17 +35,6 @@ const ThemeToggle = memo(function ThemeToggle() {
   );
 });
 
-const LangToggle = memo(function LangToggle() {
-  const { lang, setLang } = useI18n();
-  return (
-    <button onClick={() => setLang(lang === 'tr' ? 'en' : 'tr')}
-      className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-foreground/8 transition-colors"
-    >
-      <span className="text-[10px] font-mono font-black text-foreground/40 uppercase">{lang}</span>
-    </button>
-  );
-});
-
 export const Header = memo(function Header() {
   const { toggle } = useMobileNav();
 
@@ -71,7 +59,6 @@ export const Header = memo(function Header() {
 
       {/* Right: toggles + clock + cmd palette */}
       <div className="flex items-center gap-2">
-        <LangToggle />
         <ThemeToggle />
 
         <button
