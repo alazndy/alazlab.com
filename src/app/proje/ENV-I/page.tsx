@@ -53,8 +53,8 @@ export default async function ENVIPage() {
         {/* ── METRICS DASHBOARD ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: 'Uptime', val: '99.9%', icon: Shield, color: 'text-lcars-green' },
-            { label: 'Latency', val: '< 50ms', icon: Globe, color: 'text-lcars-cyan' },
+            { label: 'Stack', val: 'Next.js + Firebase', icon: Shield, color: 'text-lcars-green' },
+            { label: 'Access Control', val: 'RBAC', icon: Globe, color: 'text-lcars-cyan' },
             { label: 'Localization', val: 'TR / EN', icon: LayoutDashboard, color: 'text-lcars-orange' },
             { label: 'Sync', val: 'Realtime', icon: Database, color: 'text-lcars-purple' },
           ].map((m, i) => (
