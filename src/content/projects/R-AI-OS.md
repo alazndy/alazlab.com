@@ -5,7 +5,7 @@ category: "Security"
 area: "lab"
 status: "Active"
 version: "v3.7.1"
-summary: "Rust tabanlı, çoklu AI ajan sürülerini (Claude, Codex, OpenCode, Antigravity) tek güvenlik ve orkestrasyon çekirdeği altında toplayan Universal AI Agent Kernel & Terminal Control Center. Kernel v3.6.0 — 26 tamamlanmış roadmap fazı."
+summary: "Rust tabanlı, çoklu AI ajan sürülerini (Claude, Codex, OpenCode, Antigravity) tek güvenlik ve orkestrasyon çekirdeği altında toplayan Universal AI Agent Kernel & Terminal Control Center. Kernel v3.7.1 — v3.7.0 sürümünde 732/732 test geçti."
 techStack: ["Rust", "Tokio", "Ratatui", "Axum", "SQLite", "MCP", "fastembed"]
 github: "https://github.com/alazndy/R-AI-OS"
 ---
@@ -39,4 +39,4 @@ raios usage                     raios bootstrap                 raios run claude
 
 ---
 
-*Bu proje Alaz Lab altyapısının kendi kernel'idir — tüm diğer projeler bu çekirdeğin üzerinde koordine edilir. Kernel v3.6.0 · 26/26 roadmap fazı tamamlandı.*
+*Bu proje Alaz Lab altyapısının kendi kernel'idir — tüm diğer projeler bu çekirdeğin üzerinde koordine edilir. Kernel v3.7.1 · v3.7.0 sürümünde 732/732 test geçti.*

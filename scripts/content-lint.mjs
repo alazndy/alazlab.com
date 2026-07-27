@@ -81,6 +81,7 @@ function lintFile(filePath) {
 const targets = [
   ...walk(path.join(ROOT, 'src', 'content', 'projects'), ['.md']),
   ...walk(path.join(ROOT, 'src', 'app'), ['.tsx']),
+  ...walk(path.join(ROOT, 'src', 'components'), ['.tsx']),
 ];
 
 const allHits = targets.flatMap(lintFile);

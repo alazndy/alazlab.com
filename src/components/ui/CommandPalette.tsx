@@ -82,7 +82,7 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
                   {filteredProjects.map((p) => (
                     <button
                       key={p.slug}
-                      onClick={() => navigate(`/projects/${p.slug}`)}
+                      onClick={() => navigate(`/proje/${p.slug}`)}
                       className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-all group text-left border border-transparent hover:border-white/5"
                     >
                       <div className="flex items-center gap-4">

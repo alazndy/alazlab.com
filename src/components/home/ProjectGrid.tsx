@@ -40,7 +40,7 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx }: {
   const cat  = categoryConfig[project.category] ?? defaultConfig;
   const sc   = statusConfig[project.status] ?? statusConfig['Early'];
   const dot  = statusDot[project.status] ?? statusDot['Early'];
-  const href = project.slug === 'GTab' ? '/gtab' : `/projects/${project.slug}`;
+  const href = project.slug === 'GTab' ? '/gtab' : `/proje/${project.slug}`;
   const dim  = project.status === 'Legacy' || project.status === 'Pending';
 
   if (size === 'xs') {

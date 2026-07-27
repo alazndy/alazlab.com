@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import {
@@ -33,60 +33,6 @@ const fadeUp = {
   viewport: { once: true, margin: '-80px' },
   transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
 };
-
-const LOG_LINES = [
-  '[audit] chain verified — 0 tampering detected',
-  '[cortex] resident worker warm — hnsw index synced',
-  '[swarm] lock released — file:src/kernel.rs',
-  '[scheduler] cron job completed — daily-health-scan',
-  '[security] egress check — api.anthropic.com allowed',
-  '[handoff] claude → codex-kaira — status: success',
-  '[trace] fix recalled — 1 match before retry',
-];
-
-function CountUp({ to, suffix = '', duration = 1.4 }: { to: number; suffix?: string; duration?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
-  const [val, setVal] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    let start: number | null = null;
-    let raf: number;
-    const step = (ts: number) => {
-      if (start === null) start = ts;
-      const progress = Math.min((ts - start) / (duration * 1000), 1);
-      setVal(Math.floor(progress * to));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, to, duration]);
-
-  return <span ref={ref}>{val}{suffix}</span>;
-}
-
-function LogTicker() {
-  const doubled = [...LOG_LINES, ...LOG_LINES];
-  return (
-    <div className="relative overflow-hidden border-y border-border bg-black/60 py-2.5">
-      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-      <motion.div
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ repeat: Infinity, duration: 28, ease: 'linear' }}
-        className="flex gap-10 whitespace-nowrap font-mono text-[11px] text-foreground/35"
-      >
-        {doubled.map((line, i) => (
-          <span key={i} className="flex items-center gap-2">
-            <span className="w-1 h-1 rounded-full bg-lcars-green" />
-            {line}
-          </span>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
 
 function ProgressRing({ percent, size = 56 }: { percent: number; size?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -166,7 +112,7 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
                 <span className="w-2.5 h-2.5 rounded-full bg-lcars-red/70" />
                 <span className="w-2.5 h-2.5 rounded-full bg-lcars-orange/70" />
                 <span className="w-2.5 h-2.5 rounded-full bg-lcars-green/70" />
-                <span className="ml-3 text-[10px] uppercase tracking-widest text-foreground/30 font-mono">raios — kernel v3.6.0</span>
+                <span className="ml-3 text-[10px] uppercase tracking-widest text-foreground/30 font-mono">raios — kernel v3.7.1</span>
                 <span className="ml-auto flex items-center gap-1.5 text-[10px] font-mono text-lcars-green">
                   <motion.span
                     animate={{ opacity: [1, 0.3, 1] }}
@@ -186,7 +132,7 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
 ╚═╝  ╚═╝      ╚═╝  ╚═╝╚═╝      ╚═════╝ ╚══════╝`}
                 </pre>
                 <div className="space-y-1.5 text-foreground/50">
-                  <div><span className="text-foreground/30">$</span> raios health <span className="text-lcars-green">→ 140+ proje taranıyor...</span></div>
+                  <div><span className="text-foreground/30">$</span> raios health <span className="text-lcars-green">→ workspace taranıyor...</span></div>
                   <div><span className="text-foreground/30">$</span> raios verify-chain <span className="text-lcars-green">→ audit chain intact ✓</span></div>
                   <div className="flex items-center gap-1">
                     <span className="text-foreground/30">$</span> raios search &quot;agent handoff&quot;
@@ -207,13 +153,11 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
         </motion.div>
       </div>
 
-      <LogTicker />
-
       <div className="max-w-5xl mx-auto px-6 pt-16 space-y-16 relative z-10">
 
-        {/* ── METRICS — asymmetric bento ── */}
-        <motion.div {...fadeUp} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="col-span-2 md:col-span-2 glass p-6 rounded-2xl border-border flex items-center gap-5">
+        {/* ── METRICS — sourced from CHANGELOG.md v3.7.0/v3.7.1 ── */}
+        <motion.div {...fadeUp} className="grid grid-cols-2 gap-4">
+          <div className="glass p-6 rounded-2xl border-border flex items-center gap-5">
             <div className="relative shrink-0">
               <Activity className="w-9 h-9 text-lcars-red" />
               <motion.span
@@ -223,7 +167,7 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
               />
             </div>
             <div>
-              <div className="text-2xl font-black text-foreground tracking-tight">v3.6.0</div>
+              <div className="text-2xl font-black text-foreground tracking-tight">v3.7.1</div>
               <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Kernel Sürümü — Aktif Geliştirme</div>
             </div>
           </div>
@@ -231,14 +175,9 @@ export function RaiosClient({ techStack }: { techStack: string[] }) {
           <div className="glass p-6 rounded-2xl border-border flex items-center gap-4">
             <ProgressRing percent={100} />
             <div>
-              <div className="text-lg font-black text-foreground tracking-tight">26/26</div>
-              <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Roadmap Fazı</div>
+              <div className="text-lg font-black text-foreground tracking-tight">732/732</div>
+              <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Testler Geçti — v3.7.0</div>
             </div>
-          </div>
-
-          <div className="glass p-6 rounded-2xl border-border flex flex-col items-center text-center justify-center space-y-2">
-            <div className="text-lg font-black text-foreground tracking-tight"><CountUp to={140} suffix="+" /></div>
-            <div className="text-[10px] font-mono text-foreground/40 uppercase tracking-widest">Portfolio Proje</div>
           </div>
         </motion.div>
 
@@ -446,7 +385,7 @@ function DeepSystemAnalysis() {
           Aşırı Detaylı Sistem Analizi
         </h3>
         <p className="text-[11px] font-mono text-foreground/40 uppercase tracking-wider">
-          Kernel v3.6.0 — /home/alaz/dev/core/R-AI-OS
+          Kernel v3.7.1 — /home/alaz/dev/core/R-AI-OS
         </p>
       </div>
 
