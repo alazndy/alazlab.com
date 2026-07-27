@@ -12,6 +12,8 @@ const dictionaries: Record<Language, Dictionary> = {
   tr: {
     'nav.home': 'Hub / Ana Sayfa',
     'nav.about': 'Hakkımda',
+    'nav.muhendislik': 'Mühendislik',
+    'nav.lab': 'Lab',
     'nav.portfolio': 'Portfolio Veritabanı',
     'nav.systems': 'Sistemler Aktif',
     'header.search': 'Sistemde Ara (Ctrl+K)...',
@@ -32,6 +34,8 @@ const dictionaries: Record<Language, Dictionary> = {
   en: {
     'nav.home': 'Hub / Ana Sayfa',
     'nav.about': 'Hakkımda',
+    'nav.muhendislik': 'Mühendislik',
+    'nav.lab': 'Lab',
     'nav.portfolio': 'Portfolio Veritabanı',
     'nav.systems': 'Sistemler Aktif',
     'header.search': 'Sistemde Ara (Ctrl+K)...',

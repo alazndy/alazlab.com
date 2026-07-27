@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Home, User, ChevronRight, ChevronDown, Folder,
-  BrainCircuit, Factory, Palette, Zap, Smartphone,
-  MonitorPlay, Wrench, Globe, LayoutGrid, X
+  Wrench, Terminal, X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ProjectMetadata } from '@/lib/markdown';
@@ -15,16 +14,9 @@ import { useMobileNav } from './mobile-nav-context';
 import type { LucideIcon } from 'lucide-react';
 
 const categoryIcons: Record<string, { icon: LucideIcon; color: string }> = {
-  'AI & Veri':                       { icon: BrainCircuit, color: 'bg-lcars-cyan' },
-  'Endüstriyel & Saha':              { icon: Factory,      color: 'bg-lcars-orange' },
-  'UI Altyapısı':                    { icon: Palette,      color: 'bg-lcars-purple' },
-  'Kişisel Üretkenlik':              { icon: Zap,          color: 'bg-lcars-gold' },
-  'Mobil & Oyun':                    { icon: Smartphone,   color: 'bg-lcars-red' },
-  'Medya & Ses':                     { icon: MonitorPlay,  color: 'bg-lcars-cyan' },
-  'Tasarım & Geliştirici Araçları':  { icon: Wrench,       color: 'bg-white' },
-  'Web Platformları':                { icon: Globe,        color: 'bg-lcars-green' },
-  'Sistem Araçları':                 { icon: LayoutGrid,   color: 'bg-lcars-blue' },
-  'Diğer':                           { icon: Folder,       color: 'bg-white/50' },
+  'Mühendislik':        { icon: Wrench,  color: 'bg-lcars-orange' },
+  'Lab':                { icon: Terminal, color: 'bg-lcars-cyan' },
+  'Diğer Çalışmalar':   { icon: Folder,  color: 'bg-white/50' },
 };
 
 const getCat = (cat: string) => categoryIcons[cat] ?? { icon: Folder, color: 'bg-white/50' };
@@ -68,7 +60,7 @@ const CategorySection = memo(function CategorySection({ category, projects, isOp
       {(isOpen || isActive) && (
         <div className="mt-1 mb-2 ml-4 border-l border-border pl-2 space-y-0.5">
           {projects.map(p => {
-            const url = p.slug === 'GTab' ? '/gtab' : `/projects/${p.slug}`;
+            const url = p.slug === 'GTab' ? '/gtab' : `/proje/${p.slug}`;
             return <ProjectLink key={p.slug} project={p} url={url} isActive={pathname === url} color={color} />;
           })}
         </div>
@@ -83,12 +75,13 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
   const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
 
   const { grouped, sorted } = useMemo(() => {
-    const g = projects.reduce((acc, p) => {
-      (acc[p.category] ??= []).push(p);
-      return acc;
-    }, {} as Record<string, ProjectMetadata[]>);
-    const s = Object.keys(g).sort((a, b) => a === 'Diğer' ? 1 : b === 'Diğer' ? -1 : a.localeCompare(b));
-    return { grouped: g, sorted: s };
+    const g: Record<string, ProjectMetadata[]> = { 'Mühendislik': [], 'Lab': [], 'Diğer Çalışmalar': [] };
+    projects.forEach(p => {
+      const key = p.area === 'muhendislik' ? 'Mühendislik' : p.area === 'lab' ? 'Lab' : 'Diğer Çalışmalar';
+      g[key].push(p);
+    });
+    const sorted = ['Mühendislik', 'Lab', 'Diğer Çalışmalar'].filter(k => g[k].length > 0);
+    return { grouped: g, sorted };
   }, [projects]);
 
   const toggle = useCallback((cat: string) => setOpenCats(p => ({ ...p, [cat]: !p[cat] })), []);
@@ -114,8 +107,10 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
       <div className="flex-1 overflow-y-auto py-4 flex flex-col custom-scrollbar">
         <nav className="px-3 space-y-0.5 mb-5">
           {[
-            { href: '/',       label: t('nav.home'),  accent: 'bg-lcars-orange', icon: Home },
-            { href: '/about',  label: t('nav.about'), accent: 'bg-lcars-gold',   icon: User },
+            { href: '/',            label: t('nav.home'),        accent: 'bg-lcars-orange', icon: Home },
+            { href: '/muhendislik', label: t('nav.muhendislik'), accent: 'bg-lcars-orange', icon: Wrench },
+            { href: '/lab',         label: t('nav.lab'),         accent: 'bg-lcars-cyan',   icon: Terminal },
+            { href: '/hakkimda',    label: t('nav.about'),       accent: 'bg-lcars-gold',   icon: User },
           ].map(({ href, label, accent, icon: Icon }) => (
             <Link key={href} href={href} onClick={close}
               className={cn(
@@ -136,7 +131,7 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
             {sorted.map(cat => (
               <CategorySection key={cat} category={cat} projects={grouped[cat]}
                 isOpen={!!openCats[cat]}
-                isActive={grouped[cat].some(p => pathname === (p.slug === 'GTab' ? '/gtab' : `/projects/${p.slug}`))}
+                isActive={grouped[cat].some(p => pathname === (p.slug === 'GTab' ? '/gtab' : `/proje/${p.slug}`))}
                 onToggle={() => toggle(cat)} pathname={pathname}
               />
             ))}
