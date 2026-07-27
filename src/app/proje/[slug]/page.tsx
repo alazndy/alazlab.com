@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${title} — Göktuğ Turhan`,
       description,
-      url: `https://alazlab.com/projects/${slug}`,
+      url: `https://alazlab.com/proje/${slug}`,
       siteName: 'alazlab.com',
       type: 'article',
       ...(image ? { images: [{ url: `https://alazlab.com${image}` }] } : {}),
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       ...(image ? { images: [`https://alazlab.com${image}`] } : {}),
     },
-    alternates: { canonical: `https://alazlab.com/projects/${slug}` },
+    alternates: { canonical: `https://alazlab.com/proje/${slug}` },
   };
 }
 
@@ -188,7 +188,7 @@ export default async function ProjectPage({ params }: Props) {
               </div>
               <div className="space-y-2">
                 {related.map(r => (
-                  <Link key={r.slug} href={`/projects/${r.slug}`}
+                  <Link key={r.slug} href={`/proje/${r.slug}`}
                     className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-white/5 transition-colors group border border-transparent hover:border-white/5"
                   >
                     <span className="text-xs font-semibold text-white/50 group-hover:text-white/80 transition-colors">{r.title}</span>
