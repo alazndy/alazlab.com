@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Layers, Palette, Terminal, Box, Component } from 'lucide-react';
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 export default async function TekUIPage() {
   const project = getProjectBySlug('tek-ui');
@@ -40,7 +41,7 @@ export default async function TekUIPage() {
 
           <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-foreground">TEK-UI</h1>
               <p className="text-xl text-foreground/60 font-light leading-relaxed">
-                T-Ecosystem'in kurumsal tasarım sistemi ve component kütüphanesi. Radix UI primitives ve Tailwind CSS v4 mimarisi.
+                T-Ecosystem&apos;in kurumsal tasarım sistemi ve component kütüphanesi. Radix UI primitives ve Tailwind CSS v4 mimarisi.
               </p>
             </div>
             
@@ -86,7 +87,7 @@ export default async function TekUIPage() {
             <Component className="w-8 h-8 text-foreground" />
             <h3 className="font-bold text-foreground uppercase tracking-tight">Glassmorphism</h3>
             <p className="text-sm text-foreground/50 leading-relaxed">
-              T-Ecosystem'in imza niteliğindeki "backdrop-blur" ve yarı saydam glass yüzey dokusu.
+              T-Ecosystem&apos;in imza niteliğindeki &quot;backdrop-blur&quot; ve yarı saydam glass yüzey dokusu.
             </p>
           </div>
         </div>
@@ -125,6 +126,7 @@ export default async function TekUIPage() {
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+        {project && <ProjectResourceSections project={project.metadata} />}
       </div>
     </div>
   );

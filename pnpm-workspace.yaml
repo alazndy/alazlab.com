@@ -1,3 +1,6 @@
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+overrides:
+  ip-address@<=10.1.0: ^10.1.1
+  ip-address@<=10.3.0: ^10.3.1

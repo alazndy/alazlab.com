@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Cpu, Activity, ShieldAlert, Cpu as Microchip, TableProperties, Wrench } from 'lucide-react';
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 export default async function UniControlPage() {
   const project = getProjectBySlug('UniControl');
@@ -139,6 +140,7 @@ export default async function UniControlPage() {
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+        {project && <ProjectResourceSections project={project.metadata} />}
       </div>
     </div>
   );

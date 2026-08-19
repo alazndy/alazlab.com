@@ -73,10 +73,12 @@
 ### Devam Edenler
 - [ ] Dil desteği ince ayarları
 - [ ] Proje sayfaları final kontrolleri
+- [ ] Her proje için detaylı açıklama, kılavuz, indirme, galeri ve video içeriklerini gerçek kaynaklarla doldurmak
 
 ### Sıradakiler
 - [ ] Klasör adını manuel olarak alazlab.com yap (VS Code kapalıyken)
 - [ ] Vercel DNS ve Search Console doğrulamaları
+- [ ] Öncelikli projelerin içerik kaynaklarını tek tek doğrulayıp detay sayfalarına eklemek
 
 ## Karar Günlüğü
 | Tarih | Agent | Karar | Neden |
@@ -93,4 +95,4 @@
 | 2026-05-11 | Gemini | GT-Launcher v4.1.5 Yayınlandı | İzin hatalarının giderilmesi ve yeni build entegrasyonu |
 | 2026-05-21 | Gemini | GT-Launcher v4.2.14 Yayınlandı | AppList UI, Tema Senkronizasyonu ve CommsCard Refactor |
 | 2026-05-22 | Gemini | GT-Launcher v4.2.15 Yayınlandı | Performans optimizasyonu ve ImageBitmap entegrasyonu |
-
+| 2026-08-19 | Codex Kaira | Proje detay kaynakları için ortak içerik şeması eklendi | İndirme, kılavuz, galeri ve video bölümleri yalnızca gerçek kaynak olduğunda görünür olacak |

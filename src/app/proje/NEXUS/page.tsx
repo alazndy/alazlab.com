@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Cpu, Network, RadioTower, Database, CloudFog } from 'lucide-react';
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 export default async function NexusPage() {
   const project = getProjectBySlug('NEXUS');
@@ -152,6 +153,7 @@ export default async function NexusPage() {
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+        {project && <ProjectResourceSections project={project.metadata} />}
       </div>
     </div>
   );

@@ -5,6 +5,12 @@ category: "Diğer"
 area: "lab"
 status: "Active"
 download: "/GT-Launcher-v4.2.15.apk"
+downloads:
+  - title: "GT-Launcher APK"
+    href: "/GT-Launcher-v4.2.15.apk"
+    description: "Android için yayınlanan mevcut APK paketi."
+    version: "v4.2.15"
+    format: "APK"
 version: "v4.9.4"
 summary: "Fully functional, highly customizable Android home screen launcher with Star Trek LCARS aesthetics and OBD-II/OCR integrations."
 techStack: ["Kotlin", "Jetpack Compose", "OBD-II BLE", "ML Kit OCR", "Room"]

@@ -4,6 +4,34 @@ import matter from 'gray-matter';
 
 const PROJECTS_PATH = path.join(process.cwd(), 'src', 'content', 'projects');
 
+export interface ProjectDownload {
+  title: string;
+  href: string;
+  description?: string;
+  version?: string;
+  format?: string;
+}
+
+export interface ProjectManual {
+  title: string;
+  href: string;
+  description?: string;
+  format?: string;
+}
+
+export interface ProjectGalleryItem {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+export interface ProjectVideo {
+  title: string;
+  src: string;
+  description?: string;
+  thumbnail?: string;
+}
+
 export interface ProjectMetadata {
   title: string;
   category: string;
@@ -16,9 +44,116 @@ export interface ProjectMetadata {
   github?: string;
   live?: string;
   download?: string;
+  downloads?: ProjectDownload[];
+  manuals?: ProjectManual[];
+  gallery?: ProjectGalleryItem[];
+  videos?: ProjectVideo[];
   version?: string;
   image?: string;
   slug: string;
+}
+
+type FrontmatterRecord = Record<string, unknown>;
+
+function asRecord(value: unknown): FrontmatterRecord | null {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+    ? value as FrontmatterRecord
+    : null;
+}
+
+function asString(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim() ? value.trim() : undefined;
+}
+
+function isSafeResourceHref(href: string): boolean {
+  if (href.startsWith('/') && !href.startsWith('//') && !href.includes('\\')) return true;
+
+  try {
+    const url = new URL(href);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+function parseDownloads(value: unknown): ProjectDownload[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((entry) => {
+    const item = asRecord(entry);
+    const title = item && (asString(item.title) ?? asString(item.label));
+    const href = item && asString(item.href);
+    if (!title || !href || !isSafeResourceHref(href)) return [];
+
+    return [{
+      title,
+      href,
+      description: item && asString(item.description),
+      version: item && asString(item.version),
+      format: item && asString(item.format),
+    }];
+  });
+}
+
+function parseManuals(value: unknown): ProjectManual[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((entry) => {
+    const item = asRecord(entry);
+    const title = item && (asString(item.title) ?? asString(item.label));
+    const href = item && asString(item.href);
+    if (!title || !href || !isSafeResourceHref(href)) return [];
+
+    return [{
+      title,
+      href,
+      description: item && asString(item.description),
+      format: item && asString(item.format),
+    }];
+  });
+}
+
+function parseGallery(value: unknown): ProjectGalleryItem[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((entry) => {
+    const item = asRecord(entry);
+    const src = item && asString(item.src);
+    const alt = item && asString(item.alt);
+    if (!src || !alt || !isSafeResourceHref(src)) return [];
+
+    return [{ src, alt, caption: item && asString(item.caption) }];
+  });
+}
+
+function parseVideos(value: unknown): ProjectVideo[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((entry) => {
+    const item = asRecord(entry);
+    const title = item && (asString(item.title) ?? asString(item.label));
+    const src = item && asString(item.src);
+    const thumbnail = item && asString(item.thumbnail);
+    if (!title || !src || !isSafeResourceHref(src)) return [];
+
+    return [{
+      title,
+      src,
+      description: item && asString(item.description),
+      thumbnail: thumbnail && isSafeResourceHref(thumbnail) ? thumbnail : undefined,
+    }];
+  });
+}
+
+function normalizeMetadata(data: FrontmatterRecord, slug: string): ProjectMetadata {
+  return {
+    ...data,
+    slug,
+    downloads: parseDownloads(data.downloads),
+    manuals: parseManuals(data.manuals),
+    gallery: parseGallery(data.gallery),
+    videos: parseVideos(data.videos),
+  } as ProjectMetadata;
 }
 
 export function getAllProjects(): ProjectMetadata[] {
@@ -31,7 +166,7 @@ export function getAllProjects(): ProjectMetadata[] {
       const slug = file.replace(/\.md$/, '');
       const fileContent = fs.readFileSync(path.join(PROJECTS_PATH, file), 'utf8');
       const { data } = matter(fileContent);
-      return { ...data, slug } as ProjectMetadata;
+      return normalizeMetadata(data, slug);
     })
     .sort((a, b) => {
       if (a.date && b.date) return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -47,7 +182,7 @@ export function getProjectBySlug(slug: string) {
   const { data, content } = matter(fileContent);
 
   return {
-    metadata: { ...data, slug } as ProjectMetadata,
+    metadata: normalizeMetadata(data, slug),
     content,
   };
 }

@@ -1,6 +1,7 @@
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
 import { RaiosClient } from './RaiosClient';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 const DEFAULT_STACK = ['Rust', 'Tokio', 'Ratatui', 'Axum', 'SQLite', 'MCP', 'fastembed'];
 
@@ -22,6 +23,7 @@ export default async function RAIOSPage() {
           />
         </div>
       </div>
+      {project && <ProjectResourceSections project={project.metadata} />}
     </div>
   );
 }

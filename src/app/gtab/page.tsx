@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import { ArrowLeft, LayoutDashboard, ShieldCheck, Globe, Code2 } from 'lucide-react';
+import { getProjectBySlug } from '@/lib/markdown';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 export default function GTabPage() {
+  const project = getProjectBySlug('GTab');
+
   return (
     <div className="min-h-screen py-20 px-6 max-w-5xl mx-auto animate-in fade-in duration-1000 space-y-16">
       
@@ -90,6 +94,8 @@ export default function GTabPage() {
           View Privacy Policy
         </Link>
       </div>
+
+      {project && <ProjectResourceSections project={project.metadata} />}
 
     </div>
   );

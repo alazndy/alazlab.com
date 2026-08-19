@@ -1,4 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# alazlab.com
+
+Göktuğ Turhan'ın kişisel portföyü ve proje arşivi. Site, Next.js App Router üzerinde çalışır ve her projeyi kendi detay, dokümantasyon, medya ve indirme kaynaklarıyla yayınlar.
+
+## Project content model
+
+Project metadata lives in `src/content/projects/*.md`. The Markdown body contains the human-readable project story, architecture, installation steps and usage guide. Optional structured resources are declared in frontmatter:
+
+```yaml
+downloads:
+  - title: "Release package"
+    href: "/projects/example/release.zip"
+    description: "The latest verified release."
+    version: "v1.0.0"
+    format: "ZIP"
+manuals:
+  - title: "Installation guide"
+    href: "/projects/example/installation.pdf"
+    format: "PDF"
+gallery:
+  - src: "/projects/example/dashboard.png"
+    alt: "Project dashboard"
+    caption: "Main dashboard view."
+videos:
+  - title: "Product walkthrough"
+    src: "https://www.youtube.com/watch?v=..."
+    description: "A short overview of the main workflow."
+```
+
+The shared route at `/proje/[slug]` renders these sections only when real data exists. Local files belong under `public/projects/<slug>/`; YouTube and Vimeo embeds are supported through the allowlisted video URL parser. Legacy single-file `download` metadata remains supported for backwards compatibility.
 
 ## Getting Started
 
@@ -8,10 +37,7 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

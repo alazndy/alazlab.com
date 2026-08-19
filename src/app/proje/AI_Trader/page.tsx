@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, LineChart, Cpu, Zap, ActivitySquare, Server, BrainCircuit } from 'lucide-react';
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 export default async function AITraderPage() {
   const project = getProjectBySlug('AI_Trader');
@@ -136,6 +137,7 @@ export default async function AITraderPage() {
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+        {project && <ProjectResourceSections project={project.metadata} />}
       </div>
     </div>
   );

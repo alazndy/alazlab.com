@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Database, Shield, Globe, ScanLine, LayoutDashboard, FileSpreadsheet, Lock } from 'lucide-react';
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 export default async function ENVIPage() {
   const project = getProjectBySlug('ENV-I');
@@ -99,7 +100,7 @@ export default async function ENVIPage() {
             </h2>
             <div className="space-y-4 relative z-10">
               <p className="text-foreground/60 leading-relaxed text-sm">
-                Kesin sınırlarla çizilmiş Role-Based Access Control (RBAC). Admin, Manager ve Viewer rolleri için özel Firestore kuralları (Rules) ve indekslemeler (Indexes) kullanılarak veri güvenliği day 0'dan sağlandı.
+                Kesin sınırlarla çizilmiş Role-Based Access Control (RBAC). Admin, Manager ve Viewer rolleri için özel Firestore kuralları (Rules) ve indekslemeler (Indexes) kullanılarak veri güvenliği day 0&apos;dan sağlandı.
               </p>
               <div className="pt-4 space-y-2">
                 <div className="flex justify-between text-xs font-mono border-b border-border py-2">
@@ -151,6 +152,7 @@ export default async function ENVIPage() {
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+        {project && <ProjectResourceSections project={project.metadata} />}
       </div>
     </div>
   );

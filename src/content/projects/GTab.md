@@ -10,6 +10,10 @@ techStack: [JavaScript, Chrome Extension API, Google OAuth 2.0, Google Tasks API
 date: 2026-01-10
 github: https://github.com/alazndy/GTab
 live: https://chromewebstore.google.com/detail/gtab-ki%C5%9Fiselle%C5%9Ftirilebili/ablekgbicginadinndchdojklkojgbdb
+gallery:
+  - src: "/projects/GTab.png"
+    alt: "GTab Chrome yeni sekme paneli önizlemesi"
+    caption: "Modüler widget ızgarası ve kişiselleştirilebilir yeni sekme deneyimi."
 ---
 
 ## Overview

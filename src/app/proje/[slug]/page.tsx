@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { ProjectHero } from '@/components/projects/ProjectHero';
-import { ProjectDashboard } from '@/components/projects/ProjectDashboard';
+import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -94,11 +94,6 @@ export default async function ProjectPage({ params }: Props) {
         variant={cat.hero}
         gradient={cat.gradient}
       />
-
-      {/* Dashboard (Visual System Metrics) */}
-      <div className="mb-16">
-        <ProjectDashboard slug={slug} category={metadata.category} />
-      </div>
 
       {/* Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -201,6 +196,8 @@ export default async function ProjectPage({ params }: Props) {
 
         </aside>
       </div>
+
+      <ProjectResourceSections project={metadata} />
     </article>
   );
 }
