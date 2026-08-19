@@ -96,3 +96,8 @@
 | 2026-05-21 | Gemini | GT-Launcher v4.2.14 Yayınlandı | AppList UI, Tema Senkronizasyonu ve CommsCard Refactor |
 | 2026-05-22 | Gemini | GT-Launcher v4.2.15 Yayınlandı | Performans optimizasyonu ve ImageBitmap entegrasyonu |
 | 2026-08-19 | Codex Kaira | Proje detay kaynakları için ortak içerik şeması eklendi | İndirme, kılavuz, galeri ve video bölümleri yalnızca gerçek kaynak olduğunda görünür olacak |
+| 2026-08-19 | Codex Kaira | UCC APP ve UniControl içerikleri kaynak kod/repository dokümanlarıyla düzeltildi | Eski mDNS/API/UDS/maliyet iddiaları kaldırıldı; gerçek endpoint, V1/V2 durumu ve public teknik dokümanlar eklendi |
+| 2026-08-19 | Codex Kaira | NEXUS ve Oyuntd sayfaları gerçek README/source bilgileriyle zenginleştirildi | IoT gateway gibi hatalı NEXUS tanımı kaldırıldı; iki projeye kurulum kılavuzu ve mevcut görsel galerisi eklendi |
+| 2026-08-19 | Codex Kaira | Weave, UPH, t-Market ve cisem_ogrenci_takip sayfaları kaynak README/modüllerle zenginleştirildi | Her sayfaya gerçek teknoloji, kurulum, public doküman ve mevcut görsel bilgisi eklendi; dağıtım iddiaları sınırlı tutuldu |
+| 2026-08-19 | Codex Kaira | AI Trader, tek-ui ve R-AI-OS sayfaları güncel repository durumuna çekildi | AI Trader canlı işlem iddiası kaldırıldı; GT-UI paket adı ve R-AI-OS v3.9.0/kılavuzları eklendi |
+| 2026-08-19 | Codex Kaira | ADC Web Sitesi aktif adc-web-sitesi- repository’sine göre düzeltildi | Eski Express/SQLite tanımı yerine Next.js 16, Firebase, SSR/SSG katalog ve SEO/AI crawler altyapısı işlendi |

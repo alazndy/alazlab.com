@@ -80,7 +80,7 @@ export default async function UniControlPage() {
                 </div>
                 <h3 className="text-lg font-black text-foreground uppercase tracking-tight">Radar Integration</h3>
                 <p className="text-sm text-foreground/50 leading-relaxed">
-                  Brigade Radar üzerinden gelen verilerin CAN Bus iletişim protokolü ile milisaniyeler içerisinde işlenmesi ve çarpışma önleme algoritmaları.
+                  Brigade radar ve ultrasonik sensörlerden gelen özel CAN mesajlarının işlenmesi ve uyarı mantığına aktarılması.
                 </p>
               </div>
               <div className="space-y-4">
@@ -104,14 +104,14 @@ export default async function UniControlPage() {
               Donanım Maliyet & BOM
             </h2>
             <p className="text-foreground/60 text-sm leading-relaxed">
-              Tüm proje, tedarik zinciri kesintilerine karşı optimize edilmiş BOM (Bill of Materials) listesiyle yönetilmektedir. Direnc.net entegrasyonuyla canlı maliyet takibi (sensörler hariç ~5.900 TL) Excel mimarisinde hesaplanır.
+              Donanım çalışması; güç koruması, CAN arayüzü, güvenli çıkış kapatma ve carrier tasarımı gibi başlıkları birlikte ele alan bir BOM ve tasarım inceleme süreciyle ilerlemektedir. Üretim BOM&#39;u ve otomotiv doğrulaması henüz tamamlanmış değildir.
             </p>
             <div className="flex items-center gap-4 text-xs font-mono mt-4">
               <span className="px-3 py-1.5 bg-foreground/5 border border-border rounded-lg text-foreground/80 flex items-center gap-2">
                 <TableProperties className="w-4 h-4 text-lcars-green" /> BOM Excel
               </span>
               <span className="px-3 py-1.5 bg-foreground/5 border border-border rounded-lg text-foreground/80 flex items-center gap-2">
-                <Wrench className="w-4 h-4 text-lcars-orange" /> Cost Active
+                <Wrench className="w-4 h-4 text-lcars-orange" /> Design Review
               </span>
             </div>
           </div>

@@ -2,97 +2,63 @@
 image: "/projects/ADC-Web-Sitesi.png"
 title: "ADC Web Sitesi"
 category: "Tasarım & Geliştirici Araçları"
+area: "muhendislik"
 status: "Active"
-summary: "High-performance corporate platform with automated data management for industrial safety systems. Features an AI-enhanced product catalog."
-techStack: ["React 19", "TypeScript", "Tailwind CSS v4", "Express", "SQLite", "Google GenAI"]
+summary: "ADC Tasarım için Brigade Electronics Türkiye ürün kataloğu, çözüm ve sektör sayfaları, rehber içerikleri ve SEO/AI crawler görünürlüğünü birleştiren Next.js kurumsal web sitesi."
+techStack: [Next.js 16, React 19, TypeScript, Firebase, Tailwind CSS 4, Radix UI, Vitest, Playwright]
+date: 2026-02-01
+github: https://github.com/alazndy/adc-web-sitesi-
+manuals:
+  - title: "ADC Web Sitesi README"
+    href: "https://github.com/alazndy/adc-web-sitesi-/blob/main/README.md"
+    description: "Çalıştırma, staging/live kapısı, SEO yapısı ve ortam değişkenleri."
+    format: "Markdown"
+  - title: "Canlı İçerik Haritası"
+    href: "https://github.com/alazndy/adc-web-sitesi-/blob/main/public/llms-full.txt"
+    description: "ADC Tasarım ve Brigade Türkiye çözüm/kategori içeriğinin agent-friendly özeti."
+    format: "Text"
+gallery:
+  - src: "/projects/ADC-Web-Sitesi.png"
+    alt: "ADC Tasarım kurumsal web sitesi"
+    caption: "Endüstriyel araç güvenlik çözümleri ve ürün kataloğu için kurumsal web deneyimi."
 ---
 
-## Overview
+## Genel Bakış
 
-High-performance corporate platform with automated data management for industrial safety systems. Features an AI-enhanced product catalog.
+ADC Web Sitesi, ADC Tasarım’ın Brigade Electronics Türkiye distribütörlüğü kapsamındaki ürün, çözüm ve sektör iletişimini yöneten kurumsal web uygulamasıdır. Ürün kataloğu, araç/sektör rehberleri, referans çalışmaları ve iletişim akışlarını tek bir Next.js projesinde toplar.
 
-## Proje Detayları (README)
+## İçerik ve SEO Yapısı
 
+- **Çözüm sayfaları:** AI yaya algılama, 360° çevresel görüntüleme ve radar engel algılama gibi çözüm aileleri.
+- **Sektör sayfaları:** Maden araç güvenliği ve savunma sanayi araç kamera sistemleri gibi kullanım bağlamları.
+- **Teknoloji sayfaları:** Çözüm ailelerini ve ZoneSafe RFID yakınlık sistemini ayrı içerik rotalarıyla sunma.
+- **Kurumsal akış:** Ürün kataloğu, referanslar, servis/iletişim ve müşteri talep formları.
+- **Crawler görünürlüğü:** Ham HTML metadata, structured data, robots, sitemap, hreflang ve `llms.txt` dosyaları.
 
+## Canlı ve Staging Modu
 
-ADC şirketi için geliştirilmiş, AI entegrasyonlu kurumsal web sitesi ve ürün kataloğu; Express arka ucu ve SQLite veritabanı ile tam yığın uygulama.
-
----
-
-## Özellikler
-
-- **Ürün kataloğu** — SQLite veritabanında tutulan ürün listesi, CSV içe aktarma ve dinamik güncelleme desteği
-- **AI entegrasyonu** — Google Genai (Gemini) ile akıllı içerik ve soru-cevap özelliği
-- **Akıcı animasyonlar** — anime.js v4 ile sayfa geçişleri ve etkileşimli görsel efektler
-- **Express arka ucu** — Ürün verisi, katalog yönetimi ve API endpoint'leri
-- **Duyarlı tasarım** — Radix UI bileşenleri ve Tailwind CSS ile mobil uyumlu arayüz
-- **TypeScript desteği** — Ön yüz ve sunucu tarafında tip güvenliği
-- **Ortam değişkeni yönetimi** — dotenv ile API anahtarları ve yapılandırma
-
-## Teknoloji Yığını
-
-| Katman | Teknoloji |
-|---|---|
-| Ön yüz | React 19, TypeScript, Vite |
-| Stil | Tailwind CSS v4, Radix UI |
-| Animasyon | anime.js v4, Motion |
-| AI | @google/genai (Gemini) |
-| Arka uç | Express, better-sqlite3 |
-| Yönlendirme | react-router-dom v7 |
-| Yardımcılar | clsx, tailwind-merge, lucide-react |
-
-## Proje Yapısı
-
-```
-adc-web-sitesi-/
-├── src/                    # React ön yüz kaynak kodu
-├── dist/                   # Derlenmiş ön yüz çıktısı
-├── parser.js               # Katalog veri ayrıştırıcısı
-├── updateCatalog.js        # Ürün kataloğu güncelleme betiği
-├── metadata.json           # Site meta verisi
-├── package.json
-└── vite.config.ts
-```
+`NEXT_PUBLIC_SITE_LIVE=false` açıkça ayarlandığında bakım kapısı tüm trafiği “Yapım Aşamasında” sayfasına yönlendirir ve arama motorlarına noindex/Disallow sinyali verir. Değişken unset veya `true` olduğunda site canlı ve indekslenebilir çalışır. Preview secret ile staging içeriği önizlenebilir.
 
 ## Kurulum
 
-Gereksinimler: **Node.js 20+**, **pnpm**
+Gereksinimler: Node.js ve pnpm.
 
 ```bash
-# Bağımlılıkları kur
 pnpm install
-
-# .env.example dosyasını kopyala ve API anahtarlarını gir
-cp .env.example .env
-```
-
-## Geliştirme
-
-```bash
-# Ön yüzü geliştirme modunda başlat (port 3000)
+cp .env.example .env.local
 pnpm dev
-
-# TypeScript tip denetimi
-pnpm lint
 ```
 
-## Derleme ve Sunucu
+Production build ve test komutları:
 
 ```bash
-# Ön yüzü derle
 pnpm build
-
-# Express arka ucunu başlat
-node server.js
-
-# Ürün kataloğunu güncelle
-node updateCatalog.js
+pnpm lint
+pnpm test
 ```
 
-## Ortam Değişkenleri
+Firebase client bilgileri, `PREVIEW_SECRET` ve `NEXT_PUBLIC_SITE_LIVE` ortam değişkenleri için repository README’sindeki tablo kullanılmalıdır.
 
-`.env.example` dosyasına bakarak gerekli değişkenleri ayarla. Minimum gereksinim: Google Genai API anahtarı.
+## Durum
 
-
-
-*This project was dynamically imported and enriched from the master portfolio database.*
+Aktif geliştirme. Site yapısı, içerik rotaları ve SEO/AI görünürlük altyapısı mevcut; katalog içeriği, locale kapsamı ve yayın operasyonları geliştikçe güncellenmektedir.

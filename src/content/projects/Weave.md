@@ -1,86 +1,59 @@
 ---
 image: "/projects/Weave.webp"
 title: "Weave"
-category: "Medya & Ses"
-area: "lab"
+category: "Hardware & Embedded"
+area: "muhendislik"
 status: "Active"
-summary: "AI-enhanced circuit and document design tool. Analyzes PDF schematics and provides a professional workflow for electronics engineering."
-techStack: ["React 19", "TypeScript", "Electron", "Capacitor", "PDF.js", "Google GenAI"]
+summary: "T-Ecosystem için çok sayfalı elektrik şeması ve kablolama tasarım aracı; canvas düzenleme, komponent kütüphanesi, otomatik bağlantı rotalama, BOM ve export akışlarını birleştirir."
+techStack: [React 19, TypeScript, Vite, Tailwind CSS 4, Radix UI, Firebase, PDF.js, html2canvas, Electron, Capacitor]
+github: https://github.com/alazndy/Weave
+manuals:
+  - title: "Weave README"
+    href: "https://github.com/alazndy/Weave/blob/main/README.md"
+    description: "Mimari, temel özellikler, geliştirme komutları ve test akışları."
+    format: "Markdown"
+gallery:
+  - src: "/projects/Weave.webp"
+    alt: "Weave şematik tasarım arayüzü"
+    caption: "Çok sayfalı teknik çizimler için canvas tabanlı çalışma alanı."
 ---
 
-## Overview
+## Genel Bakış
 
-AI-enhanced circuit and document design tool. Analyzes PDF schematics and provides a professional workflow for electronics engineering.
+Weave, T-Ecosystem içindeki elektrik şeması ve kablolama tasarım aracıdır. Çok sayfalı teknik çizimleri, tekrar kullanılabilir komponent şablonlarını ve proje çıktısını tek çalışma alanında toplar.
 
-## Proje Detayları (README)
+## Tasarım Akışı
 
+- **Canvas çalışma alanı:** Komponentleri yerleştirme, bağlantı çizme ve sayfalar arasında çalışma.
+- **Komponent kütüphanesi:** Ürün ve blok şablonlarını yeniden kullanma, içe/dışa aktarma.
+- **Bağlantı rotalama:** Ortogonal otomatik rotalama ve bağlantı görünümünü düzenleme.
+- **Proje çıktıları:** Aktif sayfadan görsel export, UPH export ve BOM üretimi.
+- **Entegrasyon:** ENV-I envanter bağlantısı ve Google Drive yedekleme akışları.
+- **Geçmiş:** Snapshot tabanlı undo/redo ve proje dosyası işlemleri.
 
+AI analizi, Firebase ve senkronizasyon katmanları kod tabanında bulunan entegrasyonlardır; üretim ortamındaki kullanım için ilgili kimlik bilgileri ve yapılandırma gerekir.
 
-AI destekli devre ve doküman tasarım aracı; PDF iş akışları, masaüstü ve mobil platform desteğiyle profesyonel şematik çalışma ortamı.
+## Teknik Yapı
 
----
+React 19 ve TypeScript tabanlı arayüz Vite ile geliştirilir. Canvas, layout, kütüphane ve modal katmanları ayrı bileşenlere ayrılmıştır. Masaüstü için Electron, mobil paketleme için Capacitor yapılandırması bulunur. PDF okuma ve görsel dışa aktarma akışlarında `pdfjs-dist` ve `html2canvas` kullanılır.
 
-## Özellikler
+## Kurulum
 
-- **AI destekli devre tasarımı** — Google Genai entegrasyonu ile akıllı bileşen önerileri ve tasarım yardımı
-- **PDF içe/dışa aktarma** — pdfjs-dist ile PDF okuma, jsPDF + html2canvas ile dışa aktarma
-- **Masaüstü uygulaması** — Electron ile paketlenmiş, Windows yükleyici olarak dağıtılıyor (`T-Weave Setup 1.0.0.exe`)
-- **Mobil destek** — Capacitor ile Android/iOS platformlarına taşınabilir
-- **Otomatik test altyapısı** — Playwright ile uçtan uca test kapsamı
-- **Hızlı geliştirme ortamı** — Vite HMR ile anında yenileme
-- **Modern bileşen seti** — Radix UI erişilebilir bileşenleri ve Tailwind CSS
-
-## Teknoloji Yığını
-
-| Katman | Teknoloji |
-|---|---|
-| Ön yüz | React 19, TypeScript, Vite |
-| Masaüstü kabuğu | Electron, electron-builder |
-| Mobil | Capacitor (Android / iOS) |
-| Stil | Tailwind CSS, Radix UI |
-| AI | @google/genai (Gemini) |
-| PDF işleme | pdfjs-dist, jsPDF, html2canvas |
-| Test | Playwright |
-
-## Proje Yapısı
-
-Bu dizin Weave'in üretim çıktısını (derleme + yükleyici) içermektedir. Aktif geliştirme **Weave-main (t-weave)** dalında sürmektedir. GitHub: [alazndy/Weave](https://github.com/alazndy/Weave)
-
-```
-Weave/
-├── T-Weave Setup 1.0.0.exe   # Windows yükleyici (üretim)
-├── win-unpacked/             # Yükleyicisiz çalıştırılabilir
-└── builder-debug.yml         # electron-builder yapılandırması
-```
-
-## Kurulum ve Geliştirme
-
-Gereksinimler: **Node.js 20+**, **pnpm**
+Gereksinimler: Node.js 18+ ve npm veya pnpm.
 
 ```bash
-# Kaynak koda geç (Weave-main / t-weave dalı)
-cd weave-main
-
-# Bağımlılıkları kur
-pnpm install
-
-# Geliştirme modunda başlat
-pnpm dev
-
-# Electron uygulaması olarak derle
-pnpm build
+npm install
+npm run dev
 ```
 
-## Üretim Kurulumu
+Üretim derlemesi için:
 
-Windows için hazır yükleyiciyi çalıştır:
-
-```
-T-Weave Setup 1.0.0.exe
+```bash
+npm run build
 ```
 
-Yükleyici, uygulamayı sistem genelinde kurar ve başlat menüsüne kısayol ekler.
+Test komutları ve güncel mimari notları repository README’sinde yer alır. Hazır Windows yükleyicisi bu portföy sayfasında doğrudan dağıtılmıyor; indirme yerine kaynak repository ve kurulum kılavuzu sunuluyor.
 
+## Durum
 
-
-*This project was dynamically imported and enriched from the master portfolio database.*
+Aktif geliştirme. Temel canvas, proje dosyası, sayfa, komponent, export ve entegrasyon akışları mevcut; Firebase, AI analizi ve bulut senkronizasyonu için ek production hardening çalışmaları gerekiyor.

@@ -1,38 +1,68 @@
 ---
 image: "/projects/tek-ui.png"
-title: tek-ui
-category: UI Infrastructure
-area: lab
-status: Stable
-summary: A private design system and component library powering all T-Ecosystem applications — built on React 19, Tailwind v4, and Radix UI primitives.
-techStack: [React 19, TypeScript, Tailwind CSS v4, Radix UI, Framer Motion, Storybook, pnpm Workspaces]
+title: "tek-ui"
+category: "UI Infrastructure"
+area: "lab"
+status: "Stable"
+summary: "T-Ecosystem arayüzleri için GT-UI adıyla geliştirilen; React ve TypeScript tabanlı, native CSS temalı FUI component library ve design system."
+techStack: [React 19, TypeScript, Native CSS, Vite, Storybook, Vitest, Framer Motion, Lucide React, pnpm]
 date: 2025-08-01
 github: https://github.com/alazndy/tek-ui
+manuals:
+  - title: "GT-UI README"
+    href: "https://github.com/alazndy/tek-ui/blob/master/README.md"
+    description: "Kurulum, provider kullanımı, tema yapısı ve component kataloğu."
+    format: "Markdown"
+  - title: "Component Reference"
+    href: "https://github.com/alazndy/tek-ui/blob/master/COMPONENTS.md"
+    description: "Kütüphanedeki bileşenlerin referans dokümanı."
+    format: "Markdown"
+gallery:
+  - src: "/projects/tek-ui.png"
+    alt: "GT-UI retro-industrial component library"
+    caption: "FUI temaları, teknik paneller ve yeniden kullanılabilir React bileşenleri."
 ---
 
-## Overview
+## Genel Bakış
 
-tek-ui is the shared UI foundation for all projects in the T-Ecosystem. Rather than rebuilding components from scratch in each project, tek-ui provides a consistent, accessible, and themeable component set that can be consumed as a package.
+tek-ui, repository içinde **GT-UI: Retro-Industrial Glass OS** adıyla geliştirilen React component library’dir. T-Ecosystem projelerinde tekrar eden arayüz parçalarını; tema, erişilebilirlik ve etkileşim davranışlarıyla birlikte ortak bir pakette toplamayı amaçlar.
 
-## Design Principles
+## Tasarım Sistemi
 
-- **Accessibility first** — All interactive components are built on Radix UI primitives, which handle focus management, keyboard navigation, and ARIA attributes out of the box.
-- **Composable** — Components are small and composable rather than large and opinionated. A `Button` is a `Button`; complex patterns are assembled from primitives.
-- **Themeable** — The design token system uses CSS custom properties, making dark/light mode and brand-specific themes trivial to implement.
+- **Temalar:** Default, LCARS, Aperture, TVA, eDEX, Vitruvian, JazzNoir, Archer ve Cyber.
+- **Varyantlar:** Solid, outline, ghost, glass ve neon görsel varyantları.
+- **Provider katmanı:** `GTProvider` ile tema, ses efektleri ve CRT overlay ayarları.
+- **Bileşen grupları:** Layout, form, navigation, feedback, overlay, data display ve chart bileşenleri.
+- **Premium FUI:** VitalsMonitor, HexagonGrid, Commlink, ThemeBuilder ve CommandCenter gibi özel bileşenler.
 
-## Component Categories
+## Kullanım
 
-- **Layout** — Container, Grid, Stack, Divider
-- **Inputs** — Button, Input, Select, Checkbox, Switch, Slider
-- **Feedback** — Toast, Alert, Badge, Progress
-- **Overlay** — Modal, Drawer, Tooltip, Popover, DropdownMenu
-- **Data Display** — Table, Card, Avatar, Stat
-- **Navigation** — Tabs, Breadcrumb, Pagination
+Paket metadata’sı `@alazndy/gt-ui` adını ve `dist` çıktısını tanımlar. README’deki temel kullanım:
 
-## Tooling
+```bash
+pnpm add @alazndy/gt-ui
+```
 
-Components are developed and documented in Storybook. The library is distributed via pnpm workspaces, with each consuming project importing directly from source for zero-bundle overhead.
+```tsx
+import "@alazndy/gt-ui/dist/gt-ui.css";
+import { GTProvider } from "@alazndy/gt-ui";
 
-## Status
+<GTProvider defaultTheme="dark" soundEnabled crtOverlay>
+  <App />
+</GTProvider>
+```
 
-Stable. Used in production across ENV-I and other active projects.
+## Geliştirme
+
+```bash
+pnpm install
+pnpm build
+pnpm storybook
+pnpm test
+```
+
+Storybook örnekleri component davranışlarını ve tema kombinasyonlarını incelemek için kullanılır. MIT lisans bilgisi repository package metadata’sında yer alır.
+
+## Durum
+
+Stable. Paket build’i, type declaration üretimi, Storybook ve test komutları repository’de tanımlı; bileşen kapsamı ve entegrasyonlar geliştikçe genişletilmektedir.
