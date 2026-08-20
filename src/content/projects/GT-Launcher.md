@@ -27,6 +27,9 @@ gallery:
   - src: "/projects/GT-Launcher/theme-creator.jpg"
     alt: "Engineering Panel içindeki Theme Creator ekranı"
     caption: "Theme Creator — Flat/Glass/Neo/Clay/Minimal/Neon stilleri ve saat/pil/hava durumuna göre otomatik tema geçişi."
+  - src: "/projects/GT-Launcher/radial-menu.jpg"
+    alt: "Bir karta uzun basışla açılan radial kısayol menüsü"
+    caption: "Radial menü — herhangi bir karta uzun basışla açılan, kişiye özel kısayol çemberi."
 ---
 
 ## 🚀 Sistem Özeti
@@ -94,6 +97,12 @@ GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirileb
 - **Güvenilir görsel varlıklar:** Seçilen kart, ana ekran ve ön plan görselleri launcher'a ait depolamaya kopyalanır — sağlayıcı URI izinleri kalıcılığı bozamaz.
 
 <div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/sidebar-demo.gif" alt="Kaydırma hareketiyle açılan yan menü demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
+
+Ana ekranın herhangi bir yerinden sağa kaydırmak, hızlı erişim çubuğunu açar: Ana Ekran, Ayarlar, Dosyalar, Arama, Sürüş Modu ve Finans kısayolları — kartların kendi kaydırma eylemlerini engellemeden, arka planın kendi jest algılayıcısı üzerinden çalışır.
+
+<div class="my-10 flex justify-center">
   <img src="/projects/GT-Launcher/app-drawer-demo.gif" alt="Slide List uygulama çekmecesinde kategori filtreleme demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
 </div>
 
@@ -103,6 +112,10 @@ Yukarıdaki demo, çekmecenin canlı kategori filtrelemesini gösteriyor: **ALL 
 ---
 
 ## 🔎 OmniSearch — Komuta Güvertesi
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/omnisearch-demo.gif" alt="OmniSearch'te canlı yazarken sonuçların anında güncellenmesi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
 
 Tam ekran arama; sonuçlar duyarlı GT Launcher kartları olarak gruplanır:
 
@@ -127,6 +140,10 @@ Her görsel stil kendi tasarım sözleşmesini takip eder:
 | **Clay** | Yumuşak derinlik + highlight kombinasyonu |
 | **Minimal** | Düşük vurgulu, ince kenarlıklar |
 | **Neon** | Ayarlanabilir parlaklıkta glow-border |
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/theme-style-demo.gif" alt="Theme Creator'da görsel stiller arasında canlı geçiş" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
 
 Her stil tokeni Theme Creator'da tek tek düzenlenebilir ve **profil yedekleme/geri yükleme** ile birlikte taşınır. Tema otomasyonu tek bir stratejiyle sınırlıdır (manuel, saatlik, pil ya da hava durumu bazlı) — çakışan otomasyon anahtarları birbirini geçersiz kılmaz; son manuel palet hatırlanır ve son otomasyon değişikliği geri alınabilir.
 

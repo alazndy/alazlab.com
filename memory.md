@@ -101,3 +101,6 @@
 | 2026-08-19 | Codex Kaira | Weave, UPH, t-Market ve cisem_ogrenci_takip sayfaları kaynak README/modüllerle zenginleştirildi | Her sayfaya gerçek teknoloji, kurulum, public doküman ve mevcut görsel bilgisi eklendi; dağıtım iddiaları sınırlı tutuldu |
 | 2026-08-19 | Codex Kaira | AI Trader, tek-ui ve R-AI-OS sayfaları güncel repository durumuna çekildi | AI Trader canlı işlem iddiası kaldırıldı; GT-UI paket adı ve R-AI-OS v3.9.0/kılavuzları eklendi |
 | 2026-08-19 | Codex Kaira | ADC Web Sitesi aktif adc-web-sitesi- repository’sine göre düzeltildi | Eski Express/SQLite tanımı yerine Next.js 16, Firebase, SSR/SSG katalog ve SEO/AI crawler altyapısı işlendi |
+| 2026-08-20 | Codex Kaira | GT-Launcher proje sayfasına gerçek etkileşim demoları ve radial menü galerisi eklendi | Sidebar, OmniSearch ve Theme Creator GIF’leri ile radial-menu.jpg mevcut proje içeriğine bağlandı; content lint ve canlı route doğrulandı |
+## Instincts
+- Before a signed commit, verify that a local GPG secret key exists for the configured author email; if absent, preserve staged changes and request key setup instead of creating an unsigned commit.
