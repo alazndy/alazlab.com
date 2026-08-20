@@ -24,7 +24,7 @@ const ProjectRow = memo(function ProjectRow({
 
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={`/proje/${project.slug}`}
       className="group flex items-center gap-4 px-4 py-3 rounded-xl border border-transparent hover:border-foreground/5 hover:bg-foreground/5 transition-all duration-150"
     >
       {project.image ? (

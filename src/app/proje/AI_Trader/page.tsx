@@ -56,7 +56,7 @@ export default async function AITraderPage() {
 
           <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-foreground">AI Trader</h1>
             <p className="text-xl md:text-2xl text-foreground/60 font-light max-w-2xl leading-relaxed">
-              Yapay zeka destekli, düşük gecikmeli algoritmik ticaret motoru. Pazar sinyallerini gerçek zamanlı analiz eder ve otonom işlemler yürütür.
+              Yapay zeka ve teknik analiz göstergelerini birleştiren araştırma ve piyasa analiz platformu. FastAPI ve Next.js mimarisiyle paper-trading ve backtest süreçlerini yönetir.
             </p>
           </div>
         </div>
@@ -99,20 +99,20 @@ export default async function AITraderPage() {
             <div className="space-y-4 max-w-lg">
               <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
                 <Zap className="w-6 h-6 text-lcars-cyan" />
-                Execution Layer
+                Paper-Trading & Backtest Engine
               </h2>
               <p className="text-foreground/50 text-sm leading-relaxed">
-                Broker API entegrasyonuyla pozisyon yönetimi ve otomatik işlem emirleri. Ağ kopmalarına karşı Retry Logic ve sermaye koruması için Circuit Breaker algoritmaları devreye girer.
+                Tarihsel veriler üzerinde strateji testleri ve paper-trading simülasyonları. Risk kontrolü ve sinyal doğruluğunu analiz eden deneysel mimari.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-black/40 p-4 rounded-xl border border-border flex flex-col items-center">
-                <span className="text-lcars-red font-mono font-bold">Stop-Loss</span>
-                <span className="text-xs text-foreground/40 uppercase mt-1">Per-trade</span>
+                <span className="text-lcars-cyan font-mono font-bold">Paper Trade</span>
+                <span className="text-xs text-foreground/40 uppercase mt-1">Simulated</span>
               </div>
               <div className="bg-black/40 p-4 rounded-xl border border-border flex flex-col items-center">
-                <span className="text-lcars-orange font-mono font-bold">Drawdown</span>
-                <span className="text-xs text-foreground/40 uppercase mt-1">Limits</span>
+                <span className="text-lcars-orange font-mono font-bold">Backtest</span>
+                <span className="text-xs text-foreground/40 uppercase mt-1">Signals</span>
               </div>
             </div>
           </div>

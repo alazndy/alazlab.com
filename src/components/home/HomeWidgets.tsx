@@ -27,37 +27,32 @@ export const HomeWidgets = memo(function HomeWidgets() {
         </p>
         <div className="grid grid-cols-2 gap-2 mt-4">
           <div className="p-2.5 bg-foreground/5 rounded-lg text-center">
-            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">Yetki</div>
-            <div className="text-xs font-black text-lcars-cyan">Seviye 5</div>
+            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">Gündüz</div>
+            <div className="text-xs font-black text-lcars-orange">ADC Tasarım</div>
           </div>
           <div className="p-2.5 bg-foreground/5 rounded-lg text-center">
-            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">Rütbe</div>
-            <div className="text-xs font-black text-lcars-orange">Mimar</div>
+            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">Gece</div>
+            <div className="text-xs font-black text-lcars-cyan">Alaz Lab</div>
           </div>
         </div>
       </div>
 
-      {/* Metrics */}
+      {/* Areas */}
       <div className="glass rounded-2xl p-6 border-border">
         <div className="flex items-center gap-2 mb-5">
           <Activity className="w-4 h-4 text-lcars-cyan" />
-          <span className="text-xs font-black text-foreground/50 uppercase tracking-widest">{t('home.tech')}</span>
+          <span className="text-xs font-black text-foreground/50 uppercase tracking-widest">Uzmanlık Alanları</span>
         </div>
         <div className="space-y-4">
           {[
-            { label: 'Cloud & Altyapı', val: 94, color: 'text-lcars-cyan', bar: 'bg-lcars-cyan' },
-            { label: 'Güvenlik', val: 100, color: 'text-lcars-green', bar: 'bg-lcars-green' },
-            { label: 'Donanım & Gömülü', val: 88, color: 'text-lcars-orange', bar: 'bg-lcars-orange' },
-            { label: 'AI & ML', val: 92, color: 'text-lcars-purple', bar: 'bg-lcars-purple' },
+            { label: 'Gömülü Sistemler & ESP32 / CAN-Bus', color: 'text-lcars-orange' },
+            { label: 'Full-Stack Web & Next.js', color: 'text-lcars-cyan' },
+            { label: 'AI Agent Altyapıları & Rust', color: 'text-lcars-green' },
+            { label: 'Mobil & UI/UX Tasarım Sistemleri', color: 'text-lcars-purple' },
           ].map(m => (
-            <div key={m.label} className="space-y-1.5">
-              <div className="flex justify-between text-[10px] font-mono">
-                <span className="text-foreground/50">{m.label}</span>
-                <span className={cn("font-black", m.color)}>{m.val}%</span>
-              </div>
-              <div className="w-full h-1 bg-foreground/10 rounded-full overflow-hidden">
-                <div className={cn("h-full opacity-60", m.bar)} style={{ width: `${m.val}%` }} />
-              </div>
+            <div key={m.label} className="flex items-center gap-2 text-xs">
+              <span className={cn("w-1.5 h-1.5 rounded-full bg-current", m.color)} />
+              <span className="text-foreground/70 font-medium">{m.label}</span>
             </div>
           ))}
         </div>
@@ -71,10 +66,10 @@ export const HomeWidgets = memo(function HomeWidgets() {
         </div>
         <div className="space-y-2">
           {[
-            { name: 'GTab', cat: 'Productivity', href: '/gtab' },
-            { name: 'AI Trader', cat: 'Finance', href: '/projects/AI_Trader' },
-            { name: 'tek-ui', cat: 'Infrastructure', href: '/projects/tek-ui' },
-            { name: 'ENV-I', cat: 'Industrial', href: '/projects/ENV-I' },
+            { name: 'GTab', cat: 'Verimlilik', href: '/gtab' },
+            { name: 'UniControl', cat: 'Mühendislik', href: '/proje/UniControl' },
+            { name: 'R-AI-OS', cat: 'Lab', href: '/proje/R-AI-OS' },
+            { name: 'GT-Launcher', cat: 'Mobil', href: '/proje/GT-Launcher' },
           ].map((item) => (
             <Link
               key={item.name}
