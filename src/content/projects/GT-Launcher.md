@@ -4,94 +4,177 @@ title: "GT-Launcher"
 category: "Diğer"
 area: "lab"
 status: "Active"
-download: "/GT-Launcher-v4.2.15.apk"
+github: "https://github.com/alazndy/GT-Launcher"
+download: "https://github.com/alazndy/GT-Launcher/releases/latest"
 downloads:
-  - title: "GT-Launcher APK"
-    href: "/GT-Launcher-v4.2.15.apk"
-    description: "Android için yayınlanan mevcut APK paketi."
-    version: "v4.2.15"
+  - title: "Tüm sürümler"
+    href: "https://github.com/alazndy/GT-Launcher/releases"
+    description: "Önceki paketler ve sürüm notlarıyla birlikte tüm GT-Launcher release geçmişi."
     format: "APK"
-version: "v4.9.4"
-summary: "Fully functional, highly customizable Android home screen launcher with Star Trek LCARS aesthetics and OBD-II/OCR integrations."
-techStack: ["Kotlin", "Jetpack Compose", "OBD-II BLE", "ML Kit OCR", "Room"]
+version: "v4.10.0"
+summary: "Star Trek LCARS estetiğinde, tamamen modüler kart sistemine sahip bir Android ana ekranı: kapasite tabanlı kart üretici, OmniSearch komuta güvertesi, Niagara uygulama çekmecesi ve OBD-II destekli Drive Mode ile."
+techStack: ["Kotlin", "Jetpack Compose", "Room", "OBD-II BLE", "ML Kit OCR", "Gson"]
+gallery:
+  - src: "/projects/GT-Launcher/home.jpg"
+    alt: "GT-Launcher ana ekranı, LCARS temalı modüler kartlarla"
+    caption: "Ana ekran — finans, medya, iletişim ve galeri kartları tek bakışta."
+  - src: "/projects/GT-Launcher/app-drawer.jpg"
+    alt: "Niagara stili uygulama çekmecesi, kategori filtreleri ve alfabetik indeks"
+    caption: "Niagara uygulama çekmecesi — kategori sekmeleri, son kullanılanlar ve A-Z indeks."
+  - src: "/projects/GT-Launcher/omnisearch.jpg"
+    alt: "OmniSearch komuta güvertesi arama sonuçları ekranı"
+    caption: "OmniSearch — tek arama kutusundan web, Play Store ve kurulu uygulamalara erişim."
+  - src: "/projects/GT-Launcher/theme-creator.jpg"
+    alt: "Engineering Panel içindeki Theme Creator ekranı"
+    caption: "Theme Creator — Flat/Glass/Neo/Clay/Minimal/Neon stilleri ve saat/pil/hava durumuna göre otomatik tema geçişi."
 ---
 
 ## 🚀 Sistem Özeti
 
-Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next Generation" estetiğine sadık, "Secure by Design" felsefesiyle geliştirilmiş elit bir ana ekran deneyimi.
+Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next Generation" estetiğine sadık, "Secure by Design" felsefesiyle geliştirilmiş, tamamen modüler bir ana ekran deneyimi.
 
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-12">
-  <div className="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
-    <div className="w-14 h-14 rounded-2xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20 mb-6 group-hover:scale-110 transition-transform">
-      <span className="text-3xl">🏎️</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-12">
+  <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
+    <div class="w-14 h-14 rounded-2xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20 mb-6 group-hover:scale-110 transition-transform">
+      <span class="text-3xl">🧩</span>
     </div>
-    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">Drive Mode</h3>
-    <p className="text-sm text-white/40 leading-relaxed">Sürüşe başladığınızda otomatik aktif olan, GPS telemetrisi ve müzik görselleştirici barındıran kokpit arayüzü.</p>
-  </div>
-  
-  <div className="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
-    <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-6 group-hover:scale-110 transition-transform">
-      <span className="text-3xl">📡</span>
-    </div>
-    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">OBD-II BLE</h3>
-    <p className="text-sm text-white/40 leading-relaxed">vLinker ve ELM327 adaptörlerle tam entegrasyon. RPM, hız ve motor verilerini gerçek zamanlı takip edin.</p>
+    <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">Kapasite Tabanlı Kartlar</h3>
+    <p class="text-sm text-white/40 leading-relaxed">Her kart, tek bir sabit tipe değil; birleştirilebilir "capability"lere (uygulama başlatma, bildirim, galeri, finans, not, hava durumu...) dayanır. Uyumsuz kombinasyonlar editör içinde engellenir.</p>
   </div>
 
-  <div className="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
-    <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 mb-6 group-hover:scale-110 transition-transform">
-      <span className="text-3xl">🧩</span>
+  <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
+    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-6 group-hover:scale-110 transition-transform">
+      <span class="text-3xl">🔎</span>
     </div>
-    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">Dynamic Drawer</h3>
-    <p className="text-sm text-white/40 leading-relaxed">Tamamen özelleştirilebilir uygulama departmanları ve anahtar kelimeye göre otomatik sıralama.</p>
+    <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">OmniSearch</h3>
+    <p class="text-sm text-white/40 leading-relaxed">Tam ekran komuta güvertesi: web araması, Play Store, kurulu uygulamalar ve uygulama içi kısayollar tek arama kutusundan, tekilleştirilmiş LCARS kartları olarak gelir.</p>
   </div>
 
-  <div className="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
-    <div className="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-6 group-hover:scale-110 transition-transform">
-      <span className="text-3xl">🔒</span>
+  <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
+    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 mb-6 group-hover:scale-110 transition-transform">
+      <span class="text-3xl">🎨</span>
     </div>
-    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">Güvenlik</h3>
-    <p className="text-sm text-white/40 leading-relaxed">İmza doğrulamalı özel mülkiyet lisansı ve kişisel Alaz koruma protokolleri.</p>
+    <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">6 Görsel Stil</h3>
+    <p class="text-sm text-white/40 leading-relaxed">Flat, Glass, Neo, Clay, Minimal ve Neon — her biri kendi tasarım sözleşmesine sahip, Theme Creator'da uçtan uca özelleştirilebilir ve profil yedeğiyle birlikte taşınır.</p>
+  </div>
+
+  <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
+    <div class="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-6 group-hover:scale-110 transition-transform">
+      <span class="text-3xl">🏎️</span>
+    </div>
+    <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">Drive Mode</h3>
+    <p class="text-sm text-white/40 leading-relaxed">OBD-II BLE telemetrisi, GPS hız göstergesi ve OCR destekli yakıt takibiyle sürüş deneyimini bir yıldız gemisi kokpitine dönüştüren yatay mod.</p>
   </div>
 </div>
 
 ---
 
-## 🛠️ Teknik Derinlik
+## 🧩 Capability Builder — Modüler Kart Mimarisi
 
-### 🏎️ Drive Mode — "Interceptor"
-Sürüş deneyiminizi bir yıldız gemisi kokpitine dönüştürün.
-- **Landscape Exclusive:** Sürüş için optimize edilmiş yatay arayüz.
-- **GPS Telemetry:** Gerçek zamanlı GPS hız göstergesi ve Geocode entegrasyonu.
-- **FFT Audio Visualizer:** Müziğinizle gerçek zamanlı etkileşime giren neon ses spektrumu.
+GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirilebilir yeteneklerden (capability) inşa edilir.
 
-### 📡 OBD-II Telemetry
-- **Bağlantı:** Bluetooth Low Energy GATT.
-- **Canlı Göstergeler:** RPM, Araç Hızı, Soğutma Suyu, Turbo Boost, Motor Yükü.
-- **Yakıt Tüketimi:** PID 5E ve MAF bazlı anlık tüketim hesabı.
-- **DTC Desteği:** Mode 03 hata kodları okuma ve tanımlama.
+- **Sekmeli üretici:** Yeni kart oluşturma akışı `FUNCTION` → `BEHAVIOR` → `APPEARANCE` → `LAYOUT` → `VISUAL` aşamalarından geçer.
+- **Uyumluluk kontrolü:** Birbiriyle çakışan capability'ler editör içinde daha kayıt anında engellenir, çalışma zamanında hataya düşülmez.
+- **Canlı önizleme:** İkon, vurgu rengi, metin rengi ve builder kimliği kaydetmeden önce anında önizlenir.
+- **Otomatik geriye dönük yükseltme:** Eski tip kartlar ilk açılışta kapasite tabanlı JSON'a otomatik taşınır — elle müdahale gerekmez.
 
-### 🗺️ Trip Manager & OCR
-- **Otomatik Kayıt:** Her sürüşü mesafe ve maliyet bazlı asenkron olarak kaydeder.
-- **Yakıt Fişi OCR:** ML Kit ile yakıt fişlerini tarayarak birim fiyatı otomatik günceller.
+### Card katalogundaki başlıca yetenekler
+`APP_LAUNCH` · `NOTIFICATIONS` · `COMMS` · `MEDIA_CONTROL` · `GALLERY` · `APP_DRAWER` · `CLOCK` · `WEATHER` · `CALENDAR` · `TIMER` · `NOTE` · `FLASHLIGHT` · `STEP_COUNTER` · `FINANCE` · `CAMERA` · `SYSTEM_STATS` · `WIDGET` · `DECK`
+
+**Finance kartı** hisse, kripto ve döviz varlıklarını canlı fiyat akışıyla takip eder, portföy kâr/zarar toplamını gösterir — hiçbir aracı kurum girişi veya hesap bağlama gerektirmez. **Camera Control kartı** her yöne özel bir kamera modu (Fotoğraf, Video, Selfie, Portre, Pro, Panorama, Slow-Mo, Gece) bağlar.
 
 ---
 
-## 🎨 Tasarım ve Estetik
-- **AMOLED Optimizasyonu:** Saf siyah tabanlı enerji tasarruflu arayüz.
-- **Dinamik Temalar:** Pil durumuna, hava durumuna ve saate göre değişen adaptif renk paletleri.
-- **Sidebar:** Asimetrik köşe yuvarlaklığı ve kaydırma hareketlerine duyarlı butonlar.
+## 🖥️ Ana Ekran ve Kişiselleştirme
+
+- **Dinamik kartlar:** Serbest boyutlandırma, yeniden sıralama ve renklendirme; kart başına özel arka plan fotoğrafı desteği.
+- **Radial menü:** Herhangi bir karta uzun basış veya kaydırmayla açılan, kişiye özel kısayol çemberi (kişi arama, fonksiyon tetikleme, rota açma).
+- **Sıfır gecikmeli ikon yükleme:** Arka planda `ImageBitmap` ön-dönüşümüyle akıcı medya geçişleri.
+- **Sistem teması senkronu:** Android Açık/Koyu ve Sistem varsayılanıyla derin entegrasyon.
+- **Güvenilir görsel varlıklar:** Seçilen kart, ana ekran ve ön plan görselleri launcher'a ait depolamaya kopyalanır — sağlayıcı URI izinleri kalıcılığı bozamaz.
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/app-drawer-demo.gif" alt="Niagara uygulama çekmecesinde kategori filtreleme demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
+
+### Niagara Uygulama Çekmecesi
+Yukarıdaki demo, çekmecenin canlı kategori filtrelemesini gösteriyor: **ALL / SOCIAL MEDIA / MEDIA / PRODUCTIVITY** sekmeleri arasında anında geçiş, sağda alfabetik hızlı indeks ve üstte gömülü OmniSearch kutusu. Departmanlar anahtar kelimeye göre otomatik sıralanır, kullanıcı istediği zaman elle geçersiz kılabilir.
 
 ---
 
-## 📥 Kurulum Rehberi
+## 🔎 OmniSearch — Komuta Güvertesi
+
+Tam ekran arama; sonuçlar duyarlı LCARS kartları olarak gruplanır:
+
+- **WEB:** Google, Maps ve Play Store'da arama — tekilleştirilmiş, tek tuşluk eylemler.
+- **Uygulama içi arama:** Android'in aranabilir kurulu uygulamaları (Kişiler, Mesajlar, Google Play services vb.) doğrudan sonuç listesinde.
+- **Uygulama sağlayıcılı kısayollar:** Uygulamaların kendi arama kısayolları da listeye dahil olur.
+- **Ayarlar sonuçları:** Android Ayarlar ve Launcher Ayarları sonuçları kendi simgeleriyle gelir ve tam olarak ilgili hedefe açılır.
+- **Klavye entegrasyonu:** Sonuçları sürüklemek, hem Compose hem Android IME yollarında yumuşak klavyeyi otomatik kapatır.
+- **Dil duyarlılığı:** Kategoriler, durum metinleri, eylemler ve takvim biçimlendirmesi seçili uygulama diline göre değişir.
+
+---
+
+## 🎨 Theme Engine — 6 Görsel Stil, Tek Sözleşme
+
+Her görsel stil kendi tasarım sözleşmesini takip eder:
+
+| Stil | Karakteristik |
+|---|---|
+| **Flat** | Kontrollü düz/ton-kaydırmalı yüzeyler |
+| **Glass** | Buzlu cam efekti ve shimmer |
+| **Neo** | Sert ofset gölgeler (neumorphism) |
+| **Clay** | Yumuşak derinlik + highlight kombinasyonu |
+| **Minimal** | Düşük vurgulu, ince kenarlıklar |
+| **Neon** | Ayarlanabilir parlaklıkta glow-border |
+
+Her stil tokeni Theme Creator'da tek tek düzenlenebilir ve **profil yedekleme/geri yükleme** ile birlikte taşınır. Tema otomasyonu tek bir stratejiyle sınırlıdır (manuel, saatlik, pil ya da hava durumu bazlı) — çakışan otomasyon anahtarları birbirini geçersiz kılmaz; son manuel palet hatırlanır ve son otomasyon değişikliği geri alınabilir.
+
+---
+
+## 🪐 İlk Kurulum ve Etkileşimli Eğitim
+
+- **Bridge Configuration:** Çalışma zamanı izinleri, isteğe bağlı Navigasyon Servisi açıklaması ve ilk kart seçimi — tüm adımlar atlanabilir, tek geçişte tamamlanır.
+- **Quick Setup:** Hazır kart preseti listesinden seçip tek ekranda hepsini işaretleme.
+- **Guided Setup:** Hiçbir şey önceden doldurulmamış gerçek Card Builder'ı açar; kullanıcı kapasite sistemini kendi kartını inşa ederek öğrenir, "bir tane daha ekle?" istemiyle döngüye girer.
+- **Tek Rehberli Tur:** Canlı arayüz üzerinde çalışan tek bir ışıklandırılmış adım dizisi — ayrı bir statik kılavuza ihtiyaç yok. Engineering Panel → `?`'den her zaman erişilebilir; tüm 10 dilde tam çevirili.
+
+---
+
+## 🚗 Drive Mode — "Interceptor"
+
+Sürüş deneyimini bir yıldız gemisi kokpitine dönüştürün.
+
+- **Yalnızca yatay:** Sürüş için optimize edilmiş arayüz.
+- **OBD-II BLE:** vLinker ve ELM327 adaptörleriyle tam entegrasyon — RPM, hız, soğutma suyu, turbo boost, motor yükü canlı göstergeleri; Mode 03 DTC hata kodu okuma.
+- **GPS Telemetrisi:** Gerçek zamanlı hız göstergesi ve Google Maps tabanlı navigasyon HUD entegrasyonu.
+- **FFT Ses Görselleştirici:** Müzikle gerçek zamanlı etkileşime giren neon ses spektrumu.
+- **Trip Manager & Yakıt OCR:** Her sürüşü mesafe ve maliyet bazlı asenkron kaydeder; ML Kit ile yakıt fişlerini tarayarak birim fiyatı otomatik günceller.
+
+---
+
+## 🌍 Yerelleştirme
+
+10 dilde tam çeviri — sadece üst menüler değil, her ekran, diyalog ve Card Builder'ın kendisi de dahil:
+
+Türkçe · English · Deutsch · Español · Français · Português (Brasil) · Bahasa Indonesia · 简体中文 · 日本語 · Italiano
+
+Dil, cihaz dilinden bağımsız olarak uygulama içinden (Engineering Panel → System) seçilir; değişiklik tüm arayüzü canlı olarak yeniden oluşturur — yeniden başlatma gerekmez.
+
+---
+
+## 📥 Kurulum ve İlk Ayar Rehberi
 
 > [!TIP]
-> En iyi deneyim için Android 10+ bir cihaz ve vLinker iCar Pro adaptörü önerilir.
+> En iyi deneyim için Android 10+ bir cihaz önerilir. Drive Mode için vLinker iCar Pro (veya uyumlu bir ELM327 BLE adaptörü) gerekir.
 
-1. **İndir:** Sayfanın başındaki **DOWNLOAD APK** butonuna tıklayın.
+1. **İndir:** Sayfa başındaki **GitHub Releases** bağlantısından en güncel APK'yı indirin.
 2. **Yükle:** Bilinmeyen kaynaklardan yükleme izni vererek APK'yı kurun.
-3. **İzinler:** Medya kontrolü için *Bildirim Erişimi*, navigasyon için *Erişilebilirlik* izinlerini tanımlayın.
-4. **Başla:** "Space, the final frontier..." 🖖
+3. **İlk Kurulum:** Bridge Configuration akışında izinleri tanımlayın; Quick Setup'tan hazır bir preset seçin ya da Guided Setup ile ilk kartınızı kendiniz oluşturun.
+4. **Ana Ekran Uygulaması Yap:** Android'in "Varsayılan uygulamalar → Ana Ekran" ayarından GT-Launcher'ı seçin.
+5. **İzinler:** Medya kontrolü için *Bildirim Erişimi*, navigasyon için isteğe bağlı *Erişilebilirlik* izinlerini Engineering Panel → Sistem'den tanımlayın.
+6. **Kişiselleştir:** Engineering Panel → Görünüm'den Theme Creator'ı açıp stilinizi seçin; Sistem → Yedekleme'den profilinizi dışa/içe aktararak cihazlar arasında taşıyın.
+7. **Başla:** "Space, the final frontier..." 🖖
 
 ---
 
