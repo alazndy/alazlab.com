@@ -12,15 +12,15 @@ downloads:
     description: "Önceki paketler ve sürüm notlarıyla birlikte tüm GT-Launcher release geçmişi."
     format: "APK"
 version: "v4.10.0"
-summary: "Star Trek LCARS estetiğinde, tamamen modüler kart sistemine sahip bir Android ana ekranı: kapasite tabanlı kart üretici, OmniSearch komuta güvertesi, Niagara uygulama çekmecesi ve OBD-II destekli Drive Mode ile."
+summary: "Star Trek esintili bir estetikte, tamamen modüler kart sistemine sahip bir Android ana ekranı: kapasite tabanlı kart üretici, OmniSearch komuta güvertesi, Slide List uygulama çekmecesi ve OBD-II destekli Drive Mode ile."
 techStack: ["Kotlin", "Jetpack Compose", "Room", "OBD-II BLE", "ML Kit OCR", "Gson"]
 gallery:
   - src: "/projects/GT-Launcher/home.jpg"
-    alt: "GT-Launcher ana ekranı, LCARS temalı modüler kartlarla"
+    alt: "GT-Launcher ana ekranı, retro-fütüristik modüler kartlarla"
     caption: "Ana ekran — finans, medya, iletişim ve galeri kartları tek bakışta."
   - src: "/projects/GT-Launcher/app-drawer.jpg"
-    alt: "Niagara stili uygulama çekmecesi, kategori filtreleri ve alfabetik indeks"
-    caption: "Niagara uygulama çekmecesi — kategori sekmeleri, son kullanılanlar ve A-Z indeks."
+    alt: "Slide List stili uygulama çekmecesi, kategori filtreleri ve alfabetik indeks"
+    caption: "Slide List uygulama çekmecesi — kategori sekmeleri, son kullanılanlar ve A-Z indeks."
   - src: "/projects/GT-Launcher/omnisearch.jpg"
     alt: "OmniSearch komuta güvertesi arama sonuçları ekranı"
     caption: "OmniSearch — tek arama kutusundan web, Play Store ve kurulu uygulamalara erişim."
@@ -47,7 +47,7 @@ Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next
       <span class="text-3xl">🔎</span>
     </div>
     <h3 class="text-xl font-black text-white uppercase tracking-tight mb-3">OmniSearch</h3>
-    <p class="text-sm text-white/40 leading-relaxed">Tam ekran komuta güvertesi: web araması, Play Store, kurulu uygulamalar ve uygulama içi kısayollar tek arama kutusundan, tekilleştirilmiş LCARS kartları olarak gelir.</p>
+    <p class="text-sm text-white/40 leading-relaxed">Tam ekran komuta güvertesi: web araması, Play Store, kurulu uygulamalar ve uygulama içi kısayollar tek arama kutusundan, tekilleştirilmiş GT Launcher kartları olarak gelir.</p>
   </div>
 
   <div class="p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-all group hover:scale-[1.02]">
@@ -94,17 +94,17 @@ GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirileb
 - **Güvenilir görsel varlıklar:** Seçilen kart, ana ekran ve ön plan görselleri launcher'a ait depolamaya kopyalanır — sağlayıcı URI izinleri kalıcılığı bozamaz.
 
 <div class="my-10 flex justify-center">
-  <img src="/projects/GT-Launcher/app-drawer-demo.gif" alt="Niagara uygulama çekmecesinde kategori filtreleme demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+  <img src="/projects/GT-Launcher/app-drawer-demo.gif" alt="Slide List uygulama çekmecesinde kategori filtreleme demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
 </div>
 
-### Niagara Uygulama Çekmecesi
+### Slide List Uygulama Çekmecesi
 Yukarıdaki demo, çekmecenin canlı kategori filtrelemesini gösteriyor: **ALL / SOCIAL MEDIA / MEDIA / PRODUCTIVITY** sekmeleri arasında anında geçiş, sağda alfabetik hızlı indeks ve üstte gömülü OmniSearch kutusu. Departmanlar anahtar kelimeye göre otomatik sıralanır, kullanıcı istediği zaman elle geçersiz kılabilir.
 
 ---
 
 ## 🔎 OmniSearch — Komuta Güvertesi
 
-Tam ekran arama; sonuçlar duyarlı LCARS kartları olarak gruplanır:
+Tam ekran arama; sonuçlar duyarlı GT Launcher kartları olarak gruplanır:
 
 - **WEB:** Google, Maps ve Play Store'da arama — tekilleştirilmiş, tek tuşluk eylemler.
 - **Uygulama içi arama:** Android'in aranabilir kurulu uygulamaları (Kişiler, Mesajlar, Google Play services vb.) doğrudan sonuç listesinde.
