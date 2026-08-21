@@ -30,6 +30,9 @@ gallery:
   - src: "/projects/GT-Launcher/radial-menu.jpg"
     alt: "Bir karta uzun basışla açılan radial kısayol menüsü"
     caption: "Radial menü — herhangi bir karta uzun basışla açılan, kişiye özel kısayol çemberi."
+  - src: "/projects/GT-Launcher/drive-mode.jpg"
+    alt: "Drive Mode 'Interceptor' telemetri, OBD-II ve harita HUD kokpiti"
+    caption: "Drive Mode — 'Interceptor' telemetri, OBD-II ve harita HUD kokpiti."
 ---
 
 ## 🚀 Sistem Özeti
@@ -83,6 +86,10 @@ GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirileb
 
 ### Card katalogundaki başlıca yetenekler
 `APP_LAUNCH` · `NOTIFICATIONS` · `COMMS` · `MEDIA_CONTROL` · `GALLERY` · `APP_DRAWER` · `CLOCK` · `WEATHER` · `CALENDAR` · `TIMER` · `NOTE` · `FLASHLIGHT` · `STEP_COUNTER` · `FINANCE` · `CAMERA` · `SYSTEM_STATS` · `WIDGET` · `DECK`
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/card-builder-demo.gif" alt="Card Builder ve yetenek (capability) modülü seçimi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
 
 **Finance kartı** hisse, kripto ve döviz varlıklarını canlı fiyat akışıyla takip eder, portföy kâr/zarar toplamını gösterir — hiçbir aracı kurum girişi veya hesap bağlama gerektirmez. **Camera Control kartı** her yöne özel bir kamera modu (Fotoğraf, Video, Selfie, Portre, Pro, Panorama, Slow-Mo, Gece) bağlar.
 
@@ -156,9 +163,17 @@ Her stil tokeni Theme Creator'da tek tek düzenlenebilir ve **profil yedekleme/g
 - **Guided Setup:** Hiçbir şey önceden doldurulmamış gerçek Card Builder'ı açar; kullanıcı kapasite sistemini kendi kartını inşa ederek öğrenir, "bir tane daha ekle?" istemiyle döngüye girer.
 - **Tek Rehberli Tur:** Canlı arayüz üzerinde çalışan tek bir ışıklandırılmış adım dizisi — ayrı bir statik kılavuza ihtiyaç yok. Engineering Panel → `?`'den her zaman erişilebilir; tüm 10 dilde tam çevirili.
 
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/engineering-demo.gif" alt="Engineering Panel alt sekmeleri ve canlı ızgara/kart boyutlandırma ayarları" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
+
 ---
 
 ## 🚗 Drive Mode — "Interceptor"
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/drive-mode.jpg" alt="Drive Mode 'Interceptor' telemetri ve harita kokpit arayüzü" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 w-full" />
+</div>
 
 Sürüş deneyimini bir yıldız gemisi kokpitine dönüştürün.
 
