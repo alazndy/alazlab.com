@@ -102,11 +102,19 @@ GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirileb
 - **Sistem teması senkronu:** Android Açık/Koyu ve Sistem varsayılanıyla derin entegrasyon.
 - **Güvenilir görsel varlıklar:** Seçilen kart, ana ekran ve ön plan görselleri launcher'a ait depolamaya kopyalanır — sağlayıcı URI izinleri kalıcılığı bozamaz.
 
-<div class="my-10 flex justify-center">
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
   <img src="/projects/GT-Launcher/sidebar-demo.gif" alt="Kaydırma hareketiyle açılan yan menü demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+  <img src="/projects/GT-Launcher/card-edit-resize-demo.gif" alt="Düzenleme modunda altın köşebent kollarıyla canlı kart boyutlandırma" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
 </div>
 
 Ana ekranın herhangi bir yerinden sağa kaydırmak, hızlı erişim çubuğunu açar: Ana Ekran, Ayarlar, Dosyalar, Arama, Sürüş Modu ve Finans kısayolları — kartların kendi kaydırma eylemlerini engellemeden, arka planın kendi jest algılayıcısı üzerinden çalışır.
+
+### Özelleştirilebilir Başlık (Header Widgets)
+Header alanı bağımsız sol ve sağ sütun yığınlarından oluşur: Saat (XS-XL boyut seçenekleri), Stardate/Tarih, Hava Durumu, Pil ve özel metin widget'ları tek tek boyutlandırılıp sıraya dizilebilir.
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/header-widgets-demo.gif" alt="Header widget yönetimi, dijital saat boyutlandırma ve sütun yerleşimi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
 
 ### GPU Tabanlı Ön Plan ve Arka Plan Dilimleme (Parallax Grid Slice)
 Tek bir yüksek çözünürlüklü duvar kağıdı ya da şeffaf ön plan PNG görseli seçildiğinde sistem her kart için ayrı bir bitmap kopyalamaz. Bunun yerine `Canvas.drawImage(srcOffset, srcSize, dstSize)` seviyesinde GPU UV koordinat kırpması yapılır; bellek tüketimi minimumda tutulurken kaydırma ve yeniden boyutlandırma 60/120 FPS akıcılıkta kalır.
@@ -168,8 +176,9 @@ Her görsel stil kendi tasarım sözleşmesini takip eder:
 | **Minimal** | Düşük vurgulu, ince kenarlıklar |
 | **Neon** | Ayarlanabilir parlaklıkta glow-border |
 
-<div class="my-10 flex justify-center">
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
   <img src="/projects/GT-Launcher/theme-style-demo.gif" alt="Theme Creator'da görsel stiller arasında canlı geçiş" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+  <img src="/projects/GT-Launcher/theme-creator-demo.gif" alt="Theme Creator HSV renk çarkı ve armoni modları canlı önizleme" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
 </div>
 
 Her stil tokeni Theme Creator'da tek tek düzenlenebilir ve **profil yedekleme/geri yükleme** ile birlikte taşınır. Tema otomasyonu tek bir stratejiyle sınırlıdır (manuel, saatlik, pil ya da hava durumu bazlı) — çakışan otomasyon anahtarları birbirini geçersiz kılmaz; son manuel palet hatırlanır ve son otomasyon değişikliği geri alınabilir.
@@ -201,6 +210,10 @@ Launcher'ın tüm derin parametreleri tek bir çatı altında 8 taktiksel alt g�
 - **Quick Setup:** Hazır kart preseti listesinden seçip tek ekranda hepsini işaretleme.
 - **Guided Setup:** Hiçbir şey önceden doldurulmamış gerçek Card Builder'ı açar; kullanıcı kapasite sistemini kendi kartını inşa ederek öğrenir, "bir tane daha ekle?" istemiyle döngüye girer.
 - **Tek Rehberli Tur:** Canlı arayüz üzerinde çalışan tek bir ışıklandırılmış adım dizisi — ayrı bir statik kılavuza ihtiyaç yok. Engineering Panel → `?`'den her zaman erişilebilir; tüm 10 dilde tam çevirili.
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/interactive-tour-demo.gif" alt="Tactical Academy canlı rehberli interaktif eğitim turu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
 
 ---
 
