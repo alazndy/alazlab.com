@@ -98,7 +98,6 @@ GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirileb
 ## 🖥️ Ana Ekran ve Kişiselleştirme
 
 - **Dinamik kartlar:** Serbest boyutlandırma, yeniden sıralama ve renklendirme; kart başına özel arka plan fotoğrafı desteği.
-- **Radial menü:** Herhangi bir karta uzun basış veya kaydırmayla açılan, kişiye özel kısayol çemberi (kişi arama, fonksiyon tetikleme, rota açma).
 - **Sıfır gecikmeli ikon yükleme:** Arka planda `ImageBitmap` ön-dönüşümüyle akıcı medya geçişleri.
 - **Sistem teması senkronu:** Android Açık/Koyu ve Sistem varsayılanıyla derin entegrasyon.
 - **Güvenilir görsel varlıklar:** Seçilen kart, ana ekran ve ön plan görselleri launcher'a ait depolamaya kopyalanır — sağlayıcı URI izinleri kalıcılığı bozamaz.
@@ -109,12 +108,33 @@ GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirileb
 
 Ana ekranın herhangi bir yerinden sağa kaydırmak, hızlı erişim çubuğunu açar: Ana Ekran, Ayarlar, Dosyalar, Arama, Sürüş Modu ve Finans kısayolları — kartların kendi kaydırma eylemlerini engellemeden, arka planın kendi jest algılayıcısı üzerinden çalışır.
 
+### GPU Tabanlı Ön Plan ve Arka Plan Dilimleme (Parallax Grid Slice)
+Tek bir yüksek çözünürlüklü duvar kağıdı ya da şeffaf ön plan PNG görseli seçildiğinde sistem her kart için ayrı bir bitmap kopyalamaz. Bunun yerine `Canvas.drawImage(srcOffset, srcSize, dstSize)` seviyesinde GPU UV koordinat kırpması yapılır; bellek tüketimi minimumda tutulurken kaydırma ve yeniden boyutlandırma 60/120 FPS akıcılıkta kalır.
+
+---
+
+## ⭕ Radial Menü — Kişiye Özel Kısayol Çemberi
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/radial-menu.jpg" alt="Radial kısayol menüsü ile tek dokunuşta arama, arama, uygulama ve fonksiyon tetikleme" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
+
+Herhangi bir karta uzun basıldığında parmağın etrafında retro-fütüristik bir LCARS halkası açılır:
+
+- **Tek Jest Akışı:** Parmağı kaldırmadan ilgili dilime (wedge) kaydırıp bırakmak eylemi anında tetikler.
+- **Dilim Eylem Çeşitliliği:** Uygulama başlatma (`APP`), derin kısayol (`SHORTCUT`), launcher işlevi (`FUNCTION` — Fener, Arama, Çekmece vb.), doğrudan kişi arama/mesajlaşma (`CONTACT_DIAL` / `CONTACT_SMS`), kayıtlı Google Haritalar rotası (`ROUTE`) veya özel URL.
+- **Dokunsal Geri Bildirim:** Her dilim geçişinde hassas `HapticFeedback` snap titreşimi üretilir.
+- **Jest Çakışma Koruması:** Radial menü oturumu aktifken kartın altındaki kaydırma ve flip jestleri kilitlenir; istemsiz sayfa veya kart kaymaları engellenir.
+
+---
+
+## 📱 Slide List Uygulama Çekmecesi
+
 <div class="my-10 flex justify-center">
   <img src="/projects/GT-Launcher/app-drawer-demo.gif" alt="Slide List uygulama çekmecesinde kategori filtreleme demosu" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
 </div>
 
-### Slide List Uygulama Çekmecesi
-Yukarıdaki demo, çekmecenin canlı kategori filtrelemesini gösteriyor: **ALL / SOCIAL MEDIA / MEDIA / PRODUCTIVITY** sekmeleri arasında anında geçiş, sağda alfabetik hızlı indeks ve üstte gömülü OmniSearch kutusu. Departmanlar anahtar kelimeye göre otomatik sıralanır, kullanıcı istediği zaman elle geçersiz kılabilir.
+Çekmece, Niagara tarzı akıcı bir liste ile klasik LCARS departman filtrelemesini birleştirir: **ALL / SOCIAL MEDIA / MEDIA / PRODUCTIVITY** sekmeleri arasında anında geçiş, sağda alfabetik hızlı indeks ve üstte gömülü OmniSearch kutusu. Departmanlar anahtar kelimelere ve kullanım sıklığına göre otomatik sınıflandırılır.
 
 ---
 
@@ -156,16 +176,31 @@ Her stil tokeni Theme Creator'da tek tek düzenlenebilir ve **profil yedekleme/g
 
 ---
 
+## 🛠️ Engineering Panel — Canlı Ayar Laboratuvarı
+
+<div class="my-10 flex justify-center">
+  <img src="/projects/GT-Launcher/engineering-demo.gif" alt="Engineering Panel alt sekmeleri ve canlı ızgara/kart boyutlandırma ayarları" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+</div>
+
+Launcher'ın tüm derin parametreleri tek bir çatı altında 8 taktiksel alt güverteye ayrılmıştır:
+
+1. **APPEARANCE (Görünüm):** 6 görsel stil seçimi, Theme Creator renk tekeri, neon iç/dış glow yoğunluğu ve tema otomasyonu (Saat/Pil/Hava durumu).
+2. **HOME (Ana Ekran):** Grid ve Free-Form modları, sütun sayısı (2-12), hücre yüksekliği (dp), kart aralıkları (gap), kenar boşlukları, başlık widget'ları ve duvar kağıdı / ön plan konumlandırıcı.
+3. **SIDEBAR (Yan Menü):** Sol/Sağ yerleşim konumu, çubuk genişliği, sayfa ve buton sıralaması, otomatik gizlenme süresi ve sade mod (Clean Mode).
+4. **APPS (Uygulamalar):** Slide List vs Klasik Çekmece modu, kategori sınıflandırıcı, gizli uygulamalar ve arama motoru kaynak öncelikleri.
+5. **DRIVE (Sürüş Modu):** OBD-II BLE adaptör eşleme, telefon yatay çevrildiğinde otomatik sürüş modunu başlatma, HUD yazı boyutu ölçekleyici ve ekran açık tutma tercihi.
+6. **ADAPTIVE (Adaptif Mod):** Zaman ve kullanım alışkanlıklarına göre kart düzenini otomatik uyarlayan akıllı profil motoru.
+7. **SYSTEM (Sistem & Donanım):** Canlı RAM/Depolama/Pil telemetrisi, 10 dilde anında yerelleştirme seçimi, profil dışa/içe aktarma (JSON backup).
+8. **ABOUT (Hakkında & İzinler):** Bildirim, erişilebilirlik ve Bluetooth izin denetimleri, rehberli eğitim turunu yeniden başlatma.
+
+---
+
 ## 🪐 İlk Kurulum ve Etkileşimli Eğitim
 
 - **Bridge Configuration:** Çalışma zamanı izinleri, isteğe bağlı Navigasyon Servisi açıklaması ve ilk kart seçimi — tüm adımlar atlanabilir, tek geçişte tamamlanır.
 - **Quick Setup:** Hazır kart preseti listesinden seçip tek ekranda hepsini işaretleme.
 - **Guided Setup:** Hiçbir şey önceden doldurulmamış gerçek Card Builder'ı açar; kullanıcı kapasite sistemini kendi kartını inşa ederek öğrenir, "bir tane daha ekle?" istemiyle döngüye girer.
 - **Tek Rehberli Tur:** Canlı arayüz üzerinde çalışan tek bir ışıklandırılmış adım dizisi — ayrı bir statik kılavuza ihtiyaç yok. Engineering Panel → `?`'den her zaman erişilebilir; tüm 10 dilde tam çevirili.
-
-<div class="my-10 flex justify-center">
-  <img src="/projects/GT-Launcher/engineering-demo.gif" alt="Engineering Panel alt sekmeleri ve canlı ızgara/kart boyutlandırma ayarları" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-</div>
 
 ---
 
