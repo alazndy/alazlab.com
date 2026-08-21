@@ -77,21 +77,86 @@ Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next
 
 ## 🧩 Capability Builder — Modüler Kart Mimarisi
 
-GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birleştirilebilir yeteneklerden (capability) inşa edilir.
+GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birbiriyle birleştirilebilir bağımsız yeteneklerden (**capability**) inşa edilir.
 
-- **Sekmeli üretici:** Yeni kart oluşturma akışı `FUNCTION` → `BEHAVIOR` → `APPEARANCE` → `LAYOUT` → `VISUAL` aşamalarından geçer.
-- **Uyumluluk kontrolü:** Birbiriyle çakışan capability'ler editör içinde daha kayıt anında engellenir, çalışma zamanında hataya düşülmez.
-- **Canlı önizleme:** İkon, vurgu rengi, metin rengi ve builder kimliği kaydetmeden önce anında önizlenir.
-- **Otomatik geriye dönük yükseltme:** Eski tip kartlar ilk açılışta kapasite tabanlı JSON'a otomatik taşınır — elle müdahale gerekmez.
+### 🛠️ 5 Sekmeli Card Builder Mimarisi (Kart Ekleme Akışı)
+Yeni bir kart oluştururken ya da var olan bir kartı düzenlerken 5 aşamalı taktiksel sihirbaz kullanılır:
 
-### Card katalogundaki başlıca yetenekler
-`APP_LAUNCH` · `NOTIFICATIONS` · `COMMS` · `MEDIA_CONTROL` · `GALLERY` · `APP_DRAWER` · `CLOCK` · `WEATHER` · `CALENDAR` · `TIMER` · `NOTE` · `FLASHLIGHT` · `STEP_COUNTER` · `FINANCE` · `CAMERA` · `SYSTEM_STATS` · `WIDGET` · `DECK`
+1. **`FUNCTION` (İşlev & Modüller):**
+   - **Başlangıç Şablonları (Presets):** Kartı hızlıca tohumlamak için 9 hazır şablon (`LAUNCHER`, `SYSTEM_STATS`, `WIDGET`, `COMMS`, `GALLERY`, `CAMERA`, `MEDIA`, `APP_DRAWER`, `NOTIFICATION`, `FINANCE`).
+   - **Modül Ekleme & Kaldırma:** Karta dilediğiniz yetenekleri ekleme, sırasını değiştirme ve silme.
+   - **Aktif Renk & Bildirim Tetikleyicisi:** Karta bildirim veya uyarı düştüğünde rengin dinamik olarak değişmesi (`activeColorHex`) ve neon puls animasyonu.
+2. **`BEHAVIOR` (Davranış & Jestler):**
+   - **6 Yönlü Jest Eşleme:** Tek dokunma (`Tap`), Çift dokunma (`Double Tap`), Yukarı (`Swipe Up`), Aşağı (`Swipe Down`), Sola (`Swipe Left`) ve Sağa (`Swipe Right`) eylemleri.
+   - **DECK Rotator Ayarları:** Kartta DECK capability'si varsa 3D geçiş tipi (`FLIP_H`, `FLIP_V`, `SLIDE`, `FADE`, `SCALE`) ve Snap kilidi.
+   - **Radial Menü Entegrasyonu:** Uzun basışta açılan kısayol halkasının rengi, dilimleri ve eylemleri.
+3. **`APPEARANCE` (Görünüm & Kimlik):**
+   - **Kimlik:** Özel kart başlığı, alt başlık ve LCARS durum metni.
+   - **Görsel Özelleştirme:** Kart vurgu rengi, arka plan dolgu opaklığı ve iç neon parlama (`Inner Glow`) yoğunluğu.
+4. **`LAYOUT` (Boyut & Izgara):**
+   - **Izgara Konumlandırma:** Sütun genişliği ($W$), satır yüksekliği ($H$), serbest modda piksel ofsetleri ($X, Y$) ve hücre span değerleri.
+5. **`VISUAL` (Görsel Katman):**
+   - **Özel Arka Plan Görseli:** Kart içine cihaz galerisinden kırpılmış bağımsız fotoğraf yerleştirme.
+   - **Parallax Duvar Kağıdı Dilimleme:** Ana ekran duvar kağıdının karta denk gelen UV koordinatını GPU seviyesinde dilimleme.
+   - **Stil Geçersiz Kılma:** Genel temadan bağımsız olarak sadece o karta özel görsel stil (`Flat`, `Glass`, `Neon` vb.) atama.
 
 <div class="my-10 flex justify-center">
   <img src="/projects/GT-Launcher/card-builder-demo.gif" alt="Card Builder ve yetenek (capability) modülü seçimi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
 </div>
 
-**Finance kartı** hisse, kripto ve döviz varlıklarını canlı fiyat akışıyla takip eder, portföy kâr/zarar toplamını gösterir — hiçbir aracı kurum girişi veya hesap bağlama gerektirmez. **Camera Control kartı** her yöne özel bir kamera modu (Fotoğraf, Video, Selfie, Portre, Pro, Panorama, Slow-Mo, Gece) bağlar.
+---
+
+### 📦 18 Modülün Eksiksiz Kataloğu
+
+| Grup | Modül | Tip Kodu | Açıklama & Parametreler |
+|---|---|---|---|
+| **PRIMARY** | **Uygulama Başlatıcı** | `APP_LAUNCH` | Belirlenen uygulamayı anında açar. İkincil uygulama çift dokunmaya atanabilir (`doubleTapPackage`), özel simge paketleri (Icon Pack) ile simge değiştirilebilir. |
+| **PRIMARY** | **Android Platform Widget** | `WIDGET` | Android'in yerel `AppWidgetHost` motorunu karta gömer. Spotify, Google Takvim vb. üçüncü parti widget'ları sorunsuz barındırır. |
+| **PRIMARY** | **Fotoğraf Galerisi** | `GALLERY` | Seçilen fotoğrafları karusel formatında canlı kaydırır. Kart içi albüm önizleyicisi sunar. |
+| **PRIMARY** | **Medya Oynatıcı** | `MEDIA_CONTROL` | Sistem `MediaSession` servisine bağlanır; albüm kapağı, parça adı, sanatçı bilgisi, oynat/duraklat ve parça atlama kontrolleri sağlar. |
+| **PRIMARY** | **Slide List Çekmece** | `APP_DRAWER` | Niagara tarzı akıcı alfabetik uygulama çekmecesini doğrudan ana ekran kartı yüzeyinde çalıştırır. |
+| **PRIMARY** | **Saat & Kronometre** | `CLOCK` | 24s/12s saat biçimi, saniye sayacı ve LCARS Stardate (uzay takvimi) gösterir; dokunulduğunda sistem alarmına geçer. |
+| **PRIMARY** | **Hava Durumu** | `WEATHER` | Cihaz konumundan anlık sıcaklık, hava koşulları ve taktiksel atmosfer telemetrisi sunar. |
+| **PRIMARY** | **Finans & Canlı Portföy** | `FINANCE` | Kripto (BTC, ETH, SOL...), Hisse ve FX kurlarını canlı fiyat akışıyla izler. Kâr/Zarar durumuna göre dinamik renk değişimi (Yeşil/Kırmızı PnL) uygular. |
+| **COMMUNICATION** | **Bildirim Monitörü** | `NOTIFICATIONS` | Belirlenen uygulamaların bildirimlerini kart içine yansıtır; rozet sayacı ve mesaj önizlemesi sunar. |
+| **COMMUNICATION** | **İletişim Hub'ı** | `COMMS` | WhatsApp, Telegram ve Telefon gibi kritik haberleşme uygulamalarının bildirimlerini tek yüzeyde toplar. |
+| **ACTION** | **Kamera Hızlı Çekim** | `CAMERA` | Tek dokunuş veya jestlerle Fotoğraf, Video, Selfie, Portre, Panorama veya Gece modunu doğrudan başlatır. |
+| **ACTION** | **Taktiksel Fener** | `FLASHLIGHT` | Cihazın kamera LED flaşını tek dokunuşla taktiksel fenere dönüştürür. |
+| **UTILITY** | **Sistem Telemetrisi** | `SYSTEM_STATS` | Canlı RAM kullanımı, dahili depolama doluluğu, pil yüzdesi ve hızlı sistem eylem butonları (Wi-Fi, Bluetooth, Ayarlar) sunar. |
+| **UTILITY** | **Takvim & Ajanda** | `CALENDAR` | Cihaz takvimindeki yaklaşan etkinlikleri gün ve saat bazında listeler. |
+| **UTILITY** | **Geri Sayım Sayacı** | `TIMER` | Kart üzerinde anlık çalışan geri sayım sayacı ve kronometre. |
+| **UTILITY** | **Taktiksel Not** | `NOTE` | Kart üzerinde saklanan, bağımsız font boyutu ayarlanabilir hızlı not defteri. |
+| **UTILITY** | **Adımsayar** | `STEP_COUNTER` | Donanımsal adım sensöründen gelen verilerle günlük adım sayısını ve hedef ilerleme çubuğunu gösterir. |
+| **UTILITY** | **Taktiksel Boşluk** | `SPACER` | Grid üzerinde estetik ve hizalama amaçlı boşluk bırakan yer tutucu modül. |
+| **UTILITY** | **3D DECK Rotator** | `DECK` | Kartı çok yüzeyli bir yığına dönüştürür; diğer modüller arasında 3D çevirme jesti sağlar. |
+
+---
+
+### 🔀 Modül Stackleme (Module Stacking) ve Çakışma Yönetimi
+
+GT-Launcher'da bir kart tek bir işleve mahkum değildir. Birden fazla yetenek tek bir kart gövdesinde birleştirilebilir (**Stacking**):
+
+- **Hibrit Yetenek Kombinasyonları:**
+  - `CLOCK` + `NOTIFICATIONS`: Büyük saat kartının üzerinde canlı bildirim rozetleri ve acil durum uyarıları belirir.
+  - `NOTE` + `FLASHLIGHT`: Not kartının sağ üst köşesinde tek dokunuşluk taktik fener anahtarı yer alır.
+  - `SYSTEM_STATS` + `APP_LAUNCH`: Sistem bellek kartına dokunulduğunda görev yöneticisi uygulaması tetiklenir.
+- **Akıllı Çakışma Matrisi (`conflictsWith`):**
+  Aynı render yüzeyini tam kaplayan büyük bileşenlerin (`WIDGET`, `GALLERY`, `CAMERA`, `APP_DRAWER`, `MEDIA_CONTROL`) birbiriyle çakışması `CardCapabilityRegistry` tarafından anında algılanır. Uyumsuz bir modül eklenmek istendiğinde buton kilitlenir ve kullanıcıya nedeni gösterilir (`"Conflicts with GALLERY"`).
+
+---
+
+### 🎲 DECK Rotator — 3D Kart Yığınlama & Yüzey Geçişleri
+
+Bir karta `DECK` capability'si eklendiğinde kart çok yüzlü 3D bir desteye dönüşür:
+
+- **Çoklu Yüzey Mimarisi (`Faces`):** Kartın içine `Face 1: CLOCK`, `Face 2: WEATHER`, `Face 3: FINANCE` gibi dilediğiniz sayıda bağımsız yüzey ekleyebilirsiniz.
+- **5 Farklı 3D Geçiş Türü:**
+  - `FLIP_H`: Yatay eksende akıcı 3D küp taklası.
+  - `FLIP_V`: Dikey eksende 3D takla.
+  - `SLIDE`: Kartların yan yana kayması.
+  - `FADE`: Şeffaflık erimesiyle geçiş.
+  - `SCALE`: Derinlik ölçekleme efekti.
+- **Yüzey Yönetimi:** Yüzeyler `Move Up` / `Move Down` butonlarıyla anında yeniden sıralanabilir; `Snap` kilidi ile parmak hareketine göre en yakın yüze yumuşakça kilitlenir.
 
 ---
 
