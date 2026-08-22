@@ -3,6 +3,10 @@ import { marked } from 'marked';
 import { RaiosClient } from './RaiosClient';
 import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
+export async function generateStaticParams() {
+  return [{ lang: 'tr' }, { lang: 'en' }];
+}
+
 const DEFAULT_STACK = ['Rust', 'Tokio', 'Ratatui', 'Axum', 'SQLite', 'MCP', 'fastembed'];
 
 export default async function RAIOSPage() {
@@ -23,6 +27,7 @@ export default async function RAIOSPage() {
           />
         </div>
       </div>
+
       {project && <ProjectResourceSections project={project.metadata} />}
     </div>
   );

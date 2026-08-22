@@ -10,14 +10,21 @@ import { ProjectHero } from '@/components/projects/ProjectHero';
 import { ProjectSidebar } from '@/components/projects/ProjectSidebar';
 import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
-interface Props { params: Promise<{ slug: string }> }
+interface Props { params: Promise<{ lang: string; slug: string }> }
 
 export async function generateStaticParams() {
-  return getAllProjects().map((p) => ({ slug: p.slug }));
+  const projects = getAllProjects();
+  const params: { lang: string; slug: string }[] = [];
+  for (const lang of ['tr', 'en']) {
+    for (const p of projects) {
+      params.push({ lang, slug: p.slug });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
@@ -31,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${title} — Göktuğ Turhan`,
       description,
-      url: `https://alazlab.com/proje/${slug}`,
+      url: `https://alazlab.com/${lang}/proje/${slug}`,
       siteName: 'alazlab.com',
       type: 'article',
       ...(image ? { images: [{ url: `https://alazlab.com${image}` }] } : {}),
@@ -42,12 +49,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       ...(image ? { images: [`https://alazlab.com${image}`] } : {}),
     },
-    alternates: { canonical: `https://alazlab.com/proje/${slug}` },
+    alternates: { canonical: `https://alazlab.com/${lang}/proje/${slug}` },
   };
 }
 
 export default async function ProjectPage({ params }: Props) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const isEn = lang === 'en';
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
@@ -67,9 +75,9 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* Back */}
       <div className="py-4">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-mono text-white/25 hover:text-white/60 transition-colors group">
+        <Link href={`/${lang}`} className="inline-flex items-center gap-1.5 text-xs font-mono text-white/25 hover:text-white/60 transition-colors group">
           <ChevronLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-          Tüm Projeler
+          {isEn ? 'All Projects' : 'Tüm Projeler'}
         </Link>
       </div>
 
@@ -120,7 +128,7 @@ export default async function ProjectPage({ params }: Props) {
             />
           ) : (
             <div className="py-12 text-center text-white/20 text-sm font-mono">
-              More details coming soon.
+              {isEn ? 'More details coming soon.' : 'Detaylar yakında eklenecek.'}
             </div>
           )}
         </div>

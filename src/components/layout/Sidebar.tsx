@@ -38,8 +38,8 @@ const ProjectLink = memo(function ProjectLink({ project, url, isActive, color }:
   );
 });
 
-const CategorySection = memo(function CategorySection({ category, displayLabel, projects, isOpen, isActive, onToggle, pathname }: {
-  category: string; displayLabel: string; projects: ProjectMetadata[]; isOpen: boolean; isActive: boolean; onToggle: () => void; pathname: string;
+const CategorySection = memo(function CategorySection({ category, displayLabel, projects, isOpen, isActive, onToggle, pathname, localizePath }: {
+  category: string; displayLabel: string; projects: ProjectMetadata[]; isOpen: boolean; isActive: boolean; onToggle: () => void; pathname: string; localizePath: (path: string) => string;
 }) {
   const { icon: Icon, color } = getCat(category);
   return (
@@ -60,7 +60,7 @@ const CategorySection = memo(function CategorySection({ category, displayLabel, 
       {(isOpen || isActive) && (
         <div className="mt-1 mb-2 ml-4 border-l border-border pl-2 space-y-0.5">
           {projects.map(p => {
-            const url = p.slug === 'GTab' ? '/gtab' : `/proje/${p.slug}`;
+            const url = p.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${p.slug}`);
             return <ProjectLink key={p.slug} project={p} url={url} isActive={pathname === url} color={color} />;
           })}
         </div>
@@ -70,7 +70,7 @@ const CategorySection = memo(function CategorySection({ category, displayLabel, 
 });
 
 function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; pathname: string }) {
-  const { t } = useI18n();
+  const { t, localizePath } = useI18n();
   const { close } = useMobileNav();
   const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
 
@@ -96,13 +96,13 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
     <>
       {/* Logo */}
       <div className="px-5 py-5 border-b border-border shrink-0 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-7 bg-lcars-orange rounded-full" />
+        <Link href={localizePath('/')} onClick={close} className="flex items-center gap-3 group">
+          <div className="w-2 h-7 bg-lcars-orange rounded-full group-hover:scale-y-110 transition-transform" />
           <div>
             <div className="text-sm font-black text-foreground tracking-widest uppercase">Göktuğ</div>
             <div className="text-[10px] font-mono text-foreground/30 uppercase tracking-wider">{t('hero.role').split('·')[0].trim()}</div>
           </div>
-        </div>
+        </Link>
         {/* Close button — mobile only */}
         <button onClick={close} className="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg hover:bg-foreground/8 transition-colors">
           <X className="w-4 h-4 text-foreground/40" />
@@ -113,22 +113,25 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
       <div className="flex-1 overflow-y-auto py-4 flex flex-col custom-scrollbar">
         <nav className="px-3 space-y-0.5 mb-5">
           {[
-            { href: '/',            label: t('nav.home'),        accent: 'bg-lcars-orange', icon: Home },
-            { href: '/muhendislik', label: t('nav.muhendislik'), accent: 'bg-lcars-orange', icon: Wrench },
-            { href: '/lab',         label: t('nav.lab'),         accent: 'bg-lcars-cyan',   icon: Terminal },
-            { href: '/hakkimda',    label: t('nav.about'),       accent: 'bg-lcars-gold',   icon: User },
-          ].map(({ href, label, accent, icon: Icon }) => (
-            <Link key={href} href={href} onClick={close}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all",
-                pathname === href ? "bg-foreground/10 text-foreground" : "text-foreground/40 hover:text-foreground/70 hover:bg-foreground/5"
-              )}
-            >
-              <div className={cn("w-1 h-4 rounded-full shrink-0", accent, pathname === href ? "opacity-100" : "opacity-0")} />
-              <Icon className="w-4 h-4 shrink-0" />
-              <span className="text-xs font-semibold">{label}</span>
-            </Link>
-          ))}
+            { href: localizePath('/'),            label: t('nav.home'),        accent: 'bg-lcars-orange', icon: Home },
+            { href: localizePath('/muhendislik'), label: t('nav.muhendislik'), accent: 'bg-lcars-orange', icon: Wrench },
+            { href: localizePath('/lab'),         label: t('nav.lab'),         accent: 'bg-lcars-cyan',   icon: Terminal },
+            { href: localizePath('/hakkimda'),    label: t('nav.about'),       accent: 'bg-lcars-gold',   icon: User },
+          ].map(({ href, label, accent, icon: Icon }) => {
+            const isActive = pathname === href;
+            return (
+              <Link key={href} href={href} onClick={close}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all",
+                  isActive ? "bg-foreground/10 text-foreground" : "text-foreground/40 hover:text-foreground/70 hover:bg-foreground/5"
+                )}
+              >
+                <div className={cn("w-1 h-4 rounded-full shrink-0", accent, isActive ? "opacity-100" : "opacity-0")} />
+                <Icon className="w-4 h-4 shrink-0" />
+                <span className="text-xs font-semibold">{label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="px-3">
@@ -137,8 +140,8 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
             {sorted.map(cat => (
               <CategorySection key={cat} category={cat} displayLabel={getCatLabel(cat)} projects={grouped[cat]}
                 isOpen={!!openCats[cat]}
-                isActive={grouped[cat].some(p => pathname === (p.slug === 'GTab' ? '/gtab' : `/proje/${p.slug}`))}
-                onToggle={() => toggle(cat)} pathname={pathname}
+                isActive={grouped[cat].some(p => pathname === (p.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${p.slug}`)))}
+                onToggle={() => toggle(cat)} pathname={pathname} localizePath={localizePath}
               />
             ))}
           </div>

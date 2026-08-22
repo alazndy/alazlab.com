@@ -5,6 +5,10 @@ import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
 import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
+export async function generateStaticParams() {
+  return [{ lang: 'tr' }, { lang: 'en' }];
+}
+
 export default async function AITraderPage() {
   const project = getProjectBySlug('AI_Trader');
   const contentHtml = await marked.parse(project?.content || '');

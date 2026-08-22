@@ -3,15 +3,21 @@ import { ArrowLeft, LayoutDashboard, ShieldCheck, Globe, Code2 } from 'lucide-re
 import { getProjectBySlug } from '@/lib/markdown';
 import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
-export default function GTabPage() {
+export async function generateStaticParams() {
+  return [{ lang: 'tr' }, { lang: 'en' }];
+}
+
+export default async function GTabPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const isEn = lang === 'en';
   const project = getProjectBySlug('GTab');
 
   return (
     <div className="min-h-screen py-20 px-6 max-w-5xl mx-auto animate-in fade-in duration-1000 space-y-16">
       
-      <Link href="/" className="inline-flex items-center gap-2 text-white/50 hover:text-lcars-cyan transition-colors font-mono tracking-widest uppercase text-sm">
+      <Link href={`/${lang}`} className="inline-flex items-center gap-2 text-white/50 hover:text-lcars-cyan transition-colors font-mono tracking-widest uppercase text-sm">
         <ArrowLeft className="w-4 h-4" />
-        Back to Dashboard
+        {isEn ? 'Back to Dashboard' : 'Ana Sayfaya Dön'}
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -23,7 +29,9 @@ export default function GTabPage() {
             </div>
             <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white">GTab</h1>
             <p className="text-xl text-white/60 leading-relaxed max-w-xl font-light">
-              A highly customizable, modular new tab page for Chrome. Organize your digital life with Google Tasks, Calendar, Weather, and dynamic widgets in a beautiful grid layout.
+              {isEn 
+                ? 'A highly customizable, modular new tab page for Chrome. Organize your digital life with Google Tasks, Calendar, Weather, and dynamic widgets in a beautiful grid layout.'
+                : 'Chrome için yüksek düzeyde özelleştirilebilir, modüler yeni sekme sayfası. Google Görevler, Takvim, Hava Durumu ve dinamik widget\'larla dijital hayatınızı düzenleyin.'}
             </p>
           </div>
 
@@ -35,7 +43,7 @@ export default function GTabPage() {
               className="inline-flex items-center gap-3 px-8 py-4 bg-lcars-cyan text-black font-black uppercase tracking-widest rounded-2xl hover:bg-white transition-all transform hover:scale-105"
             >
               <Globe className="w-5 h-5" />
-              Add to Chrome
+              {isEn ? 'Add to Chrome' : "Chrome'a Ekle"}
             </a>
             <a 
               href="https://github.com/alazndy/GTab" 
@@ -44,7 +52,7 @@ export default function GTabPage() {
               className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-white/10 border border-white/10 transition-all"
             >
               <Code2 className="w-5 h-5" />
-              Source Code
+              {isEn ? 'Source Code' : 'Kaynak Kod'}
             </a>
           </div>
         </div>
@@ -74,9 +82,18 @@ export default function GTabPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { title: "Modular Grid", desc: "Freely resize and drag widgets to build your perfect workspace." },
-          { title: "Google Integration", desc: "Securely connect Tasks and Calendar to manage your day directly from the new tab." },
-          { title: "Privacy First", desc: "All data stays local. No tracking, no external servers, complete transparency." }
+          { 
+            title: isEn ? "Modular Grid" : "Modüler Grid", 
+            desc: isEn ? "Freely resize and drag widgets to build your perfect workspace." : "Mükemmel çalışma alanınızı oluşturmak için bileşenleri serbestçe yeniden boyutlandırın ve sürükleyin." 
+          },
+          { 
+            title: isEn ? "Google Integration" : "Google Entegrasyonu", 
+            desc: isEn ? "Securely connect Tasks and Calendar to manage your day directly from the new tab." : "Gününüzü doğrudan yeni sekmeden yönetmek için Görevler ve Takvimi güvenle bağlayın." 
+          },
+          { 
+            title: isEn ? "Privacy First" : "Önce Gizlilik", 
+            desc: isEn ? "All data stays local. No tracking, no external servers, complete transparency." : "Tüm veriler yerel kalır. İzleme yok, harici sunucu yok, tam şeffaflık." 
+          }
         ].map(feature => (
           <div key={feature.title} className="glass p-8 rounded-3xl border-white/10 space-y-4 hover:border-lcars-cyan/30 transition-all group">
             <h3 className="text-lg font-black text-white uppercase tracking-tight group-hover:text-lcars-cyan transition-colors">{feature.title}</h3>
@@ -87,11 +104,11 @@ export default function GTabPage() {
 
       <div className="text-center pt-12 border-t border-white/5">
         <Link 
-          href="/gtab/privacy-policy" 
+          href={`/${lang}/gtab/privacy-policy`} 
           className="inline-flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all font-mono text-sm uppercase tracking-widest text-white/80"
         >
           <ShieldCheck className="w-4 h-4 text-lcars-orange" />
-          View Privacy Policy
+          {isEn ? 'View Privacy Policy' : 'Gizlilik Politikasını Görüntüle'}
         </Link>
       </div>
 

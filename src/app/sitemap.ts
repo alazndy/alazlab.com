@@ -2,24 +2,32 @@ import type { MetadataRoute } from 'next';
 import { getAllProjects } from '@/lib/markdown';
 
 const BASE_URL = 'https://alazlab.com';
+const locales = ['tr', 'en'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const projects = getAllProjects();
 
-  const projectUrls: MetadataRoute.Sitemap = projects.map(p => ({
-    url: `${BASE_URL}/proje/${p.slug}`,
-    lastModified: p.date ? new Date(p.date) : new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
+  const entries: MetadataRoute.Sitemap = [];
 
-  return [
-    { url: BASE_URL,                          lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
-    { url: `${BASE_URL}/hakkimda`,             lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/muhendislik`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/lab`,                  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/gtab`,                 lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/gtab/privacy-policy`,  lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
-    ...projectUrls,
-  ];
+  for (const lang of locales) {
+    entries.push(
+      { url: `${BASE_URL}/${lang}`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
+      { url: `${BASE_URL}/${lang}/hakkimda`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+      { url: `${BASE_URL}/${lang}/muhendislik`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+      { url: `${BASE_URL}/${lang}/lab`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+      { url: `${BASE_URL}/${lang}/gtab`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+      { url: `${BASE_URL}/${lang}/gtab/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 }
+    );
+
+    for (const p of projects) {
+      entries.push({
+        url: `${BASE_URL}/${lang}/proje/${p.slug}`,
+        lastModified: p.date ? new Date(p.date) : new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      });
+    }
+  }
+
+  return entries;
 }

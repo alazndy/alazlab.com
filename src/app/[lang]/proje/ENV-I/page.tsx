@@ -5,6 +5,10 @@ import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
 import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
 
+export async function generateStaticParams() {
+  return [{ lang: 'tr' }, { lang: 'en' }];
+}
+
 export default async function ENVIPage() {
   const project = getProjectBySlug('ENV-I');
   const contentHtml = await marked.parse(project?.content || '');

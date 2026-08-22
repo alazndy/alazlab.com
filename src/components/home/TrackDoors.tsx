@@ -3,12 +3,15 @@
 import Link from 'next/link';
 import { Wrench, Terminal, ArrowRight } from 'lucide-react';
 import type { ProjectMetadata } from '@/lib/markdown';
+import { useI18n } from '@/lib/i18n';
 
 interface TrackDoorsProps {
   projects: ProjectMetadata[];
 }
 
 export function TrackDoors({ projects }: TrackDoorsProps) {
+  const { t, lang, localizePath } = useI18n();
+  const isEn = lang === 'en';
   const muhendislikProjects = projects.filter(p => p.area === 'muhendislik');
   const labProjects = projects.filter(p => p.area === 'lab');
 
@@ -16,7 +19,7 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
     <section className="space-y-4 pt-2">
       <div className="flex items-center gap-4">
         <h2 className="text-[10px] font-black font-mono uppercase tracking-[0.25em] text-muted-foreground">
-          Ana Odaklar
+          {isEn ? 'CORE FOCUS AREAS' : 'ANA ODAKLAR'}
         </h2>
         <div className="flex-1 h-px bg-border" />
       </div>
@@ -24,7 +27,7 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Mühendislik Kapısı */}
         <Link
-          href="/muhendislik"
+          href={localizePath('/muhendislik')}
           className="group relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-8 hover:border-lcars-orange/50 transition-all duration-300 hover:shadow-xl hover:shadow-lcars-orange/5 flex flex-col justify-between space-y-6"
         >
           <div
@@ -38,17 +41,19 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
                 <Wrench className="w-6 h-6" />
               </div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-lcars-orange px-3 py-1 rounded-full bg-lcars-orange/10 border border-lcars-orange/20">
-                {muhendislikProjects.length} Proje
+                {muhendislikProjects.length} {t('stats.projects')}
               </span>
             </div>
 
             <div className="space-y-2">
               <h3 className="text-2xl font-black uppercase tracking-tight text-foreground group-hover:text-lcars-orange transition-colors flex items-center gap-2">
-                Mühendislik
+                {t('cat.engineering')}
                 <ArrowRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 leading-relaxed">
-                ADC Tasarım bünyesinde, gerçek donanıma bağlı, madenlerde ve ağır vasıtalarda sahada çalışan gömülü sistemler, CAN-bus radar ve HMI kontrol üniteleri.
+                {isEn 
+                  ? 'Hardware-linked embedded systems, CAN-bus radar, and HMI control units deployed in heavy vehicles, mines, and industrial sites at ADC Design.'
+                  : 'ADC Tasarım bünyesinde, gerçek donanıma bağlı, madenlerde ve ağır vasıtalarda sahada çalışan gömülü sistemler, CAN-bus radar ve HMI kontrol üniteleri.'}
               </p>
             </div>
           </div>
@@ -67,7 +72,7 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
 
         {/* Lab Kapısı */}
         <Link
-          href="/lab"
+          href={localizePath('/lab')}
           className="group relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-8 hover:border-lcars-cyan/50 transition-all duration-300 hover:shadow-xl hover:shadow-lcars-cyan/5 flex flex-col justify-between space-y-6"
         >
           <div
@@ -81,17 +86,19 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
                 <Terminal className="w-6 h-6" />
               </div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-lcars-cyan px-3 py-1 rounded-full bg-lcars-cyan/10 border border-lcars-cyan/20">
-                {labProjects.length} Proje
+                {labProjects.length} {t('stats.projects')}
               </span>
             </div>
 
             <div className="space-y-2">
               <h3 className="text-2xl font-black uppercase tracking-tight text-foreground group-hover:text-lcars-cyan transition-colors flex items-center gap-2">
-                Lab
+                {t('cat.lab')}
                 <ArrowRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
               </h3>
               <p className="text-xs sm:text-sm text-foreground/60 leading-relaxed">
-                Kişisel zamanda AI ajanlarıyla birlikte geliştirilen otonom yazılım ekosistemi: Rust kernel, Android launcher, npm tasarım sistemi ve üretkenlik araçları.
+                {isEn
+                  ? 'Autonomous software ecosystem developed with AI agents: Rust kernel, modular Android launcher, design systems, and productivity tools.'
+                  : 'Kişisel zamanda AI ajanlarıyla birlikte geliştirilen otonom yazılım ekosistemi: Rust kernel, Android launcher, npm tasarım sistemi ve üretkenlik araçları.'}
               </p>
             </div>
           </div>

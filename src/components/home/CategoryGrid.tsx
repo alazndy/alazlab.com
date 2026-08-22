@@ -14,9 +14,9 @@ interface CategoryGridProps {
 
 // Memoized project row — skips re-render unless its own props change
 const ProjectRow = memo(function ProjectRow({ 
-  project, idx 
+  project, idx, localizePath
 }: { 
-  project: ProjectMetadata; idx: number;
+  project: ProjectMetadata; idx: number; localizePath: (path: string) => string;
 }) {
   const cat = categoryConfig[project.category] ?? defaultConfig;
   const Icon = cat.icon;
@@ -24,7 +24,7 @@ const ProjectRow = memo(function ProjectRow({
 
   return (
     <Link
-      href={`/proje/${project.slug}`}
+      href={project.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${project.slug}`)}
       className="group flex items-center gap-4 px-4 py-3 rounded-xl border border-transparent hover:border-foreground/5 hover:bg-foreground/5 transition-all duration-150"
     >
       {project.image ? (
@@ -62,7 +62,7 @@ const ProjectRow = memo(function ProjectRow({
 
 export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryGridProps) {
   const allProjects = useMemo(() => Object.values(categories).flat(), [categories]);
-  const { t } = useI18n();
+  const { t, localizePath } = useI18n();
 
   return (
     <section className="space-y-4">
@@ -74,7 +74,7 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
 
       <div className="space-y-1">
         {allProjects.map((project, idx) => (
-          <ProjectRow key={project.slug} project={project} idx={idx} />
+          <ProjectRow key={project.slug} project={project} idx={idx} localizePath={localizePath} />
         ))}
       </div>
     </section>

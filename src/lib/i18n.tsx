@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export type Language = 'tr' | 'en';
 
@@ -70,6 +71,7 @@ export const dictionaries: Record<Language, Dictionary> = {
     'project.downloadApk': 'APK İNDİR',
     'project.detailsComingSoon': 'Detaylar yakında eklenecek.',
     'project.all': 'Tüm Projeler',
+    'project.back': 'Geri Dön',
 
     // Command Palette
     'cmd.placeholder': 'KOMUT ÇALIŞTIR VEYA SİSTEMDE ARA...',
@@ -151,6 +153,7 @@ export const dictionaries: Record<Language, Dictionary> = {
     'project.downloadApk': 'DOWNLOAD APK',
     'project.detailsComingSoon': 'More details coming soon.',
     'project.all': 'All Projects',
+    'project.back': 'Back',
 
     // Command Palette
     'cmd.placeholder': 'EXECUTE COMMAND OR SEARCH SYSTEMS...',
@@ -177,36 +180,75 @@ export interface I18nContextType {
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
+  localizePath: (path: string) => string;
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Language>('tr');
+  const pathname = usePathname() || '';
+  const router = useRouter();
+
+  // Detect language from URL pathname (starts with /en -> 'en', else 'tr')
+  const pathLang: Language = pathname.startsWith('/en') ? 'en' : 'tr';
+  const [lang, setLangState] = useState<Language>(pathLang);
 
   useEffect(() => {
-    const saved = localStorage.getItem('lang') as Language;
-    if (saved === 'tr' || saved === 'en') {
-      setLang(saved);
+    if (pathname.startsWith('/en')) {
+      setLangState('en');
+      try {
+        localStorage.setItem('lang', 'en');
+        document.cookie = 'lang=en; path=/; max-age=31536000';
+      } catch {}
+    } else if (pathname.startsWith('/tr')) {
+      setLangState('tr');
+      try {
+        localStorage.setItem('lang', 'tr');
+        document.cookie = 'lang=tr; path=/; max-age=31536000';
+      } catch {}
     }
-  }, []);
+  }, [pathname]);
 
-  const handleSetLang = useCallback((newLang: Language) => {
-    setLang(newLang);
-    localStorage.setItem('lang', newLang);
-  }, []);
+  const setLang = useCallback((newLang: Language) => {
+    try {
+      localStorage.setItem('lang', newLang);
+      document.cookie = `lang=${newLang}; path=/; max-age=31536000`;
+    } catch {}
+    setLangState(newLang);
 
-  // Memoize the t function so it only changes when lang changes
+    if (newLang === 'en') {
+      if (pathname.startsWith('/tr')) {
+        router.push(pathname.replace(/^\/tr/, '/en'));
+      } else if (!pathname.startsWith('/en')) {
+        router.push(`/en${pathname === '/' ? '' : pathname}`);
+      }
+    } else {
+      if (pathname.startsWith('/en')) {
+        router.push(pathname.replace(/^\/en/, '/tr'));
+      } else if (!pathname.startsWith('/tr')) {
+        router.push(`/tr${pathname === '/' ? '' : pathname}`);
+      }
+    }
+  }, [pathname, router]);
+
+  const localizePath = useCallback((path: string): string => {
+    const cleanPath = path.replace(/^\/(tr|en)/, '');
+    if (cleanPath === '' || cleanPath === '/') {
+      return `/${lang}`;
+    }
+    return `/${lang}${cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`}`;
+  }, [lang]);
+
   const t = useCallback((key: string): string => {
     return dictionaries[lang][key] || dictionaries['tr'][key] || key;
   }, [lang]);
 
-  // Memoize the context value to prevent unnecessary re-renders of consumers
   const value = useMemo(() => ({
     lang,
-    setLang: handleSetLang,
+    setLang,
     t,
-  }), [lang, handleSetLang, t]);
+    localizePath,
+  }), [lang, setLang, t, localizePath]);
 
   return (
     <I18nContext.Provider value={value}>

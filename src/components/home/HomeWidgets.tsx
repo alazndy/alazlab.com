@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
 
 export const HomeWidgets = memo(function HomeWidgets() {
-  const { t, lang } = useI18n();
+  const { t, lang, localizePath } = useI18n();
 
   const areas = lang === 'en' ? [
     { label: 'Embedded Systems & ESP32 / CAN-Bus', color: 'text-lcars-orange' },
@@ -86,7 +86,7 @@ export const HomeWidgets = memo(function HomeWidgets() {
           ].map((item) => (
             <Link
               key={item.name}
-              href={item.href}
+              href={localizePath(item.href)}
               className="flex items-center justify-between p-3 rounded-xl hover:bg-foreground/5 transition-all group"
             >
               <div className="flex items-center gap-3">

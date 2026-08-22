@@ -14,7 +14,7 @@ interface ProjectSidebarProps {
 }
 
 export function ProjectSidebar({ metadata, catAccent, statusClass, related }: ProjectSidebarProps) {
-  const { t } = useI18n();
+  const { t, localizePath } = useI18n();
 
   return (
     <aside className="lg:col-span-4 order-1 lg:order-2 space-y-5 lg:sticky lg:top-10">
@@ -76,7 +76,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
           </div>
           <div className="space-y-2">
             {related.map(r => (
-              <Link key={r.slug} href={`/proje/${r.slug}`}
+              <Link key={r.slug} href={r.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${r.slug}`)}
                 className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-white/5 transition-colors group border border-transparent hover:border-white/5"
               >
                 <span className="text-xs font-semibold text-white/50 group-hover:text-white/80 transition-colors">{r.title}</span>

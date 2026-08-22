@@ -16,7 +16,7 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const router = useRouter();
-  const { t } = useI18n();
+  const { t, localizePath } = useI18n();
 
   const toggle = useCallback(() => setIsOpen((prev) => !isOpen), []);
 
@@ -84,7 +84,7 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
                   {filteredProjects.map((p) => (
                     <button
                       key={p.slug}
-                      onClick={() => navigate(`/proje/${p.slug}`)}
+                      onClick={() => navigate(p.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${p.slug}`))}
                       className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-all group text-left border border-transparent hover:border-white/5"
                     >
                       <div className="flex items-center gap-4">
