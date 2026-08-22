@@ -168,7 +168,7 @@ export const Sidebar = memo(function Sidebar({ projects = [] }: { projects?: Pro
 
   return (
     <>
-      {/* ── MOBILE OVERLAY ── */}
+      {/*  MOBILE OVERLAY  */}
       {isOpen && (
         <div
           className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
@@ -177,7 +177,7 @@ export const Sidebar = memo(function Sidebar({ projects = [] }: { projects?: Pro
         />
       )}
 
-      {/* ── SIDEBAR PANEL ── */}
+      {/*  SIDEBAR PANEL  */}
       <aside className={cn(
         "flex flex-col h-full bg-background border-r border-border z-50 select-none transition-transform duration-300 ease-in-out",
         // Mobile: fixed drawer

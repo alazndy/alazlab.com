@@ -1,4 +1,4 @@
-# 🛡️ UniControl Pro v5.1.0
+#  UniControl Pro v5.1.0
 
 Automotive ADAS (Advanced Driver Assistance System) Controller based on ESP32-S3 and ESP-IDF.
 
@@ -7,10 +7,10 @@ Automotive ADAS (Advanced Driver Assistance System) Controller based on ESP32-S3
 - **Status:** Active development on the compact v2 hardware/control branch.
 - **Description:** ESP32-S3 based vehicle safety controller for radar, HMI, black-box logging, and isolated I/O control.
 
-## 🎯 Projenin Amacı
+##  Projenin Amacı
 Bu proje; ağır vasıtalar, iş makineleri ve lüks karavanlar için tasarlanmış bir ADAS beynidir. Kör noktalardaki engelleri tespit eder, sürücüyü uyarır ve olayları SD karta loglar.
 
-## 🛠️ Teknik Özellikler
+##  Teknik Özellikler
 - **MCU:** ESP32-S3 DevKitC-1 (Dual Core, 240MHz)
 - **Framework:** ESP-IDF (Strict C, FreeRTOS)
 - **CAN Bus:** SN65HVD230 (Brigade Radar & UDS Sensör Desteği)
@@ -18,7 +18,7 @@ Bu proje; ağır vasıtalar, iş makineleri ve lüks karavanlar için tasarlanm�
 - **Kara Kutu:** MicroSD Kart + DS1307 RTC (SPI2/I2C0)
 - **I/O:** 3x Opto-İzole Giriş, 3x High-Side MOSFET (+12V), 3x Sinyal Rölesi
 
-## 📂 Dosya Yapısı
+##  Dosya Yapısı
 - `src/main.c`: Sistem giriş noktası ve görev başlatıcı.
 - `src/hal.c`: Donanım Soyutlama Katmanı (GPIO, CAN, UART, I2C, SPI).
 - `src/logic.c`: Radar algoritmaları ve FreeRTOS görevleri.
@@ -37,16 +37,16 @@ Bu proje; ağır vasıtalar, iş makineleri ve lüks karavanlar için tasarlanm�
 - GPIO20-22 güç-kesilme, donanımsal output-arm ve pencere-watchdog güvenliğine ayrılmıştır; Core için I/O expander gerekmez.
 - ADS1115/RTC DNP seçenekleridir. LIN/K-Line, güvenlik pinlerini kaldırmadan ancak ayrı varyant veya expansion ile eklenebilir.
 
-## 🌐 Web Arayüzü
+##  Web Arayüzü
 - **SSID:** `RADAR_SISTEM_PRO`
 - **Şifre:** `12345678`
 - **IP:** `192.168.4.1`
 
-## 🚀 Kurulum (PlatformIO)
+##  Kurulum (PlatformIO)
 1. PlatformIO Core yüklü olduğundan emin olun.
 2. Proje dizininde terminali açın.
 3. Derleme için: `pio run`
 4. Yükleme için: `pio run --target upload`
 
-## ⚖️ Lisans
+##  Lisans
 Bu proje Göktuğ için özel olarak geliştirilmiştir.

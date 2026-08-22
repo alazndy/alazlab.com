@@ -2,7 +2,7 @@
 
 GT-Launcher is built with a **"Secure by Design"** philosophy: zero data collection, no cloud sync, no account. Everything it knows about your device stays on your device.
 
-## 🔐 Required Permissions
+##  Required Permissions
 
 | Permission | Why do we need it? |
 | --- | --- |
@@ -20,7 +20,7 @@ Every permission's live grant status is visible in **Engineering → ABOUT**, an
 
 ![Permissions catalog — tap any row to jump to its system settings screen](assets/permissions/runtime-grant-flow.gif)
 
-## 🛡️ Privacy FAQ
+##  Privacy FAQ
 
 ### Does the launcher track my location?
 No. Location is processed locally for your current speed/street name — it's never uploaded anywhere.

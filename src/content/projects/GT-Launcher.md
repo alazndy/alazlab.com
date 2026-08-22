@@ -57,7 +57,7 @@ summary: "Star Trek esintili bir estetikte, tamamen modüler kart sistemine sahi
 techStack: ["Kotlin", "Jetpack Compose", "Room", "OBD-II BLE", "ML Kit OCR", "Gson", "Material3"]
 ---
 
-## 🚀 Sistem Özeti
+##  Sistem Özeti
 
 Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next Generation" estetiğine sadık, "Secure by Design" felsefesiyle geliştirilmiş, tamamen modüler bir ana ekran deneyimi.
 
@@ -89,11 +89,11 @@ Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next
 
 ---
 
-## 🧩 1. UCCS — Unified Card Capability Mimarisi
+##  1. UCCS — Unified Card Capability Mimarisi
 
 GT-Launcher'da kartlar sabit birer şablon değildir. **Unified Card Capability System (UCCS)** sayesinde her kart bir veya daha fazla yeteneği barındıran akıllı birer yüzeydir.
 
-### 🛠️ 5 Sekmeli Taktiksel Card Builder
+###  5 Sekmeli Taktiksel Card Builder
 Yeni bir kart oluştururken 5 adımlı sihirbaz kullanılır:
 - **`FUNCTION`:** 9 hazır şablon, 19 modül kataloğundan yetenek seçimi ve bildirim puls rengi.
 - **`BEHAVIOR`:** Tek/çift dokunma ve 4 yönlü kaydırma (`Swipe`) jest eşlemeleri, kamera modu, albüm seçimi.
@@ -111,7 +111,7 @@ Yeni bir kart oluştururken 5 adımlı sihirbaz kullanılır:
   </figcaption>
 </figure>
 
-### 📦 19 Modüllük Zengin Yetenek Havuzu
+###  19 Modüllük Zengin Yetenek Havuzu
 - **Primary:** `APP_LAUNCH` (Uygulama Başlatıcı), `WIDGET` (Android Yerel Widget Host), `GALLERY` (Fotoğraf Karuseli & Ön Plan), `MEDIA_CONTROL` (MediaSession Kontrolü), `APP_DRAWER` (Slide List Çekmece), `CLOCK` (Dijital Saat & Stardate), `WEATHER` (Atmosfer Telemetrisi), `FINANCE` (Canlı Kripto/Hisse & PnL).
 - **Communication:** `NOTIFICATIONS` (Bildirim Yansıtıcı & Rozet), `COMMS` (Haberleşme Hub'ı).
 - **Action:** `CAMERA` (8 Hızlı Çekim Modu), `FLASHLIGHT` (Taktiksel Fener).
@@ -141,7 +141,7 @@ Yeni bir kart oluştururken 5 adımlı sihirbaz kullanılır:
 
 ---
 
-## 🎨 2. 6 Görsel Stil & LCARS Tema Motoru
+##  2. 6 Görsel Stil & LCARS Tema Motoru
 
 GT-Launcher, her biri bağımsız Compose render sözleşmesine sahip 6 görsel stil sunar:
 
@@ -183,7 +183,7 @@ GT-Launcher, her biri bağımsız Compose render sözleşmesine sahip 6 görsel 
 
 ---
 
-## 🖼️ 3. Dinamik Izgara, Duvar Kağıdı ve Header
+##  3. Dinamik Izgara, Duvar Kağıdı ve Header
 
 - **Akıllı Izgara Motoru (`GridEngine`):** Kart taşınırken komşu hücreleri skorlar; çakışan kartları animasyonla aşağı kaydırır (**cascade push**) ve snap noktasına kilitler.
 - **Pinch-to-Crop Duvar Kağıdı:** Fotoğraf galerisinden seçilen görseli canlı kırpma ile ızgara arkasına sabitleme.
@@ -214,7 +214,7 @@ GT-Launcher, her biri bağımsız Compose render sözleşmesine sahip 6 görsel 
 
 ---
 
-## ⚡ 4. Komuta Güvertesi: OmniSearch & Slide List
+##  4. Komuta Güvertesi: OmniSearch & Slide List
 
 - **Omni-Terminal Hibrit Arama:** Web araması (Google, Maps, Play Store), kurulu uygulamalar, rehber kişileri ve sistem ayarları tek komuta arama alanından filtrelenir.
 - **Slide List Çekmece:** Niagara tarzı akıcı alfabetik liste ile klasik LCARS departman filtrelemesini (`COMMAND`, `ENGINEERING`, `SCIENCE`, `OPERATIONS`) birleştirir.
@@ -244,7 +244,7 @@ GT-Launcher, her biri bağımsız Compose render sözleşmesine sahip 6 görsel 
 
 ---
 
-## 🏎️ 5. Drive Mode "Interceptor" & Telemetri
+##  5. Drive Mode "Interceptor" & Telemetri
 
 Yalnızca yatay çalışan ve sürüş güvenliği için optimize edilen kokpit HUD'ı:
 - **OBD-II BLE Entegrasyonu:** vLinker iCar Pro ve ELM327 BLE adaptörleriyle anlık RPM, GPS hızı, soğutma sıvısı sıcaklığı, turbo boost ve motor yükü telemetrisi.
@@ -275,7 +275,7 @@ Yalnızca yatay çalışan ve sürüş güvenliği için optimize edilen kokpit 
 
 ---
 
-## 🛠️ 6. Engineering Panel & Güvenlik Mimarisi
+##  6. Engineering Panel & Güvenlik Mimarisi
 
 Tüm launcher ayarlarını tek çatı altında toplayan 9 güverte:
 - **Güverteler:** `APPEARANCE`, `HOME`, `SIDEBAR`, `APPS`, `VEHICLE`, `SYSTEM`, `ABOUT`, `ADAPTIVE`, `PREMIUM`.
@@ -306,7 +306,7 @@ Tüm launcher ayarlarını tek çatı altında toplayan 9 güverte:
 
 ---
 
-## 📥 Kurulum ve İlk Ayar Rehberi
+##  Kurulum ve İlk Ayar Rehberi
 
 > [!TIP]
 > En iyi deneyim için Android 10+ bir cihaz önerilir. Drive Mode için vLinker iCar Pro (veya uyumlu bir ELM327 BLE adaptörü) tavsiye edilir.
@@ -316,7 +316,7 @@ Tüm launcher ayarlarını tek çatı altında toplayan 9 güverte:
 3. **İlk Kurulum:** Bridge Configuration akışında izinleri tanımlayın; hazır bir preset seçin ya da Guided Setup ile ilk kartınızı oluşturun.
 4. **Ana Ekran Uygulaması Yap:** Android'in "Varsayılan uygulamalar → Ana Ekran" ayarından GT-Launcher'ı seçin.
 5. **Kişiselleştir:** Engineering Panel → Görünüm'den görsel stilinizi ve renginizi belirleyin; Sistem → Yedekleme'den profilinizi güvene alın.
-6. **Başla:** "Space, the final frontier..." 🖖
+6. **Başla:** "Space, the final frontier..."
 
 ---
 

@@ -86,10 +86,10 @@ Android ve iOS hedefleri için proje kendi platform toolchain’leriyle derlenir
 
 ```text
 lib/
-├── api/api_service.dart          # ESP32 HTTP haberleşmesi
-├── screens/                      # bağlantı, ayar, OTA ve log ekranları
-├── theme/app_theme.dart          # koyu otomotiv arayüzü
-└── main.dart                     # router ve Provider kurulumu
+ api/api_service.dart          # ESP32 HTTP haberleşmesi
+ screens/                      # bağlantı, ayar, OTA ve log ekranları
+ theme/app_theme.dart          # koyu otomotiv arayüzü
+ main.dart                     # router ve Provider kurulumu
 ```
 
 Durum yönetimi `provider`, sayfa yönlendirmesi `go_router`, firmware dosyası seçimi `file_picker` ile yürütülür.

@@ -12,17 +12,17 @@ export async function generateStaticParams() {
 export default async function UniControlPage() {
   const project = getProjectBySlug('UniControl');
   const contentHtml = await marked.parse(project?.content || '');
-  
+
   return (
     <div className="min-h-screen pb-24 animate-in fade-in duration-1000 bg-[#020202]">
-      
-      {/* ── HERO ── */}
+
+      {/*  HERO  */}
       <div className="relative pt-20 pb-16 px-6 overflow-hidden">
         {/* Hardware/Grid background effect */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20" />
-        
+
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lcars-gold/10 blur-[150px] rounded-full pointer-events-none" />
-        
+
         <div className="max-w-5xl mx-auto relative z-10 space-y-8 text-center flex flex-col items-center">
           <Link href="/#projects" className="inline-flex items-center gap-2 text-foreground/50 hover:text-lcars-gold transition-colors font-mono tracking-widest uppercase text-xs">
             <ArrowLeft className="w-4 h-4" />
@@ -34,12 +34,12 @@ export default async function UniControlPage() {
               <Microchip className="w-4 h-4" />
               Embedded Hardware
             </div>
-            
+
           {/* Project Cover Image */}
           {project?.metadata?.image && (
             <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
-              <img 
-                src={project.metadata.image} 
+              <img
+                src={project.metadata.image}
                 alt={project.metadata.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -56,8 +56,8 @@ export default async function UniControlPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 space-y-16 relative z-10">
-        
-        {/* ── SCHEMATIC VIEW ── */}
+
+        {/*  SCHEMATIC VIEW  */}
         <div className="glass p-2 border-border rounded-[32px] overflow-hidden">
           <div className="bg-[#050505] rounded-[24px] p-8 md:p-12 relative overflow-hidden border border-border">
             {/* PCB Traces Decorative */}
@@ -100,7 +100,7 @@ export default async function UniControlPage() {
           </div>
         </div>
 
-        {/* ── BOM & ENGINEERING ── */}
+        {/*  BOM & ENGINEERING  */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-6">
             <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
@@ -136,8 +136,8 @@ export default async function UniControlPage() {
           </div>
         </div>
 
-      
-        {/* ── DYNAMIC PROJECT DETAILS ── */}
+
+        {/*  DYNAMIC PROJECT DETAILS  */}
         <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16 max-w-5xl mx-auto px-6 relative z-10 mb-16">
           <div
             className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red"

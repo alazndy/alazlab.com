@@ -3,8 +3,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { 
-  Cpu, Shield, Zap, Globe, Database, Activity, 
+import {
+  Cpu, Shield, Zap, Globe, Database, Activity,
   Layers, Radio, Share2
 } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export function SystemTower() {
   const [isBuildingHovered, setIsBuildingHovered] = useState(false);
 
   return (
-    <div 
+    <div
       className="relative w-full h-[1000px] flex items-center justify-center select-none"
       onMouseEnter={() => setIsBuildingHovered(true)}
       onMouseLeave={() => {
@@ -31,10 +31,10 @@ export function SystemTower() {
       }}
       style={{ perspective: '2500px' }}
     >
-      {/* ── CENTRAL TOWER STRUCTURE (FRONT-FACING 3D) ── */}
-      <motion.div 
+      {/*  CENTRAL TOWER STRUCTURE (FRONT-FACING 3D)  */}
+      <motion.div
         className="relative w-96 h-[600px] flex flex-col-reverse items-center justify-center gap-1"
-        style={{ 
+        style={{
           transformStyle: 'preserve-3d',
           transform: 'rotateY(-20deg) rotateX(10deg)', // Hafif bir açıyla tam karşıdan bakış
         }}
@@ -43,15 +43,15 @@ export function SystemTower() {
       >
         {towerLevels.map((floor, index) => {
           const isFloorHovered = hoveredFloor === floor.id;
-          
+
           const floorHeight = 80; // Dikey yükseklik
           const depth = 60; // Ekranın içine doğru derinlik
           const explodedGap = 20; // Katlar arası boşluk
-          
+
           return (
             <motion.div
               key={floor.id}
-              animate={{ 
+              animate={{
                 y: isBuildingHovered ? -(floor.id * 30) : 0, // Yukarı doğru açılma
                 z: isFloorHovered ? 100 : 0, // Üzerine gelince sana doğru fırlama
                 scale: isFloorHovered ? 1.05 : 1,
@@ -62,7 +62,7 @@ export function SystemTower() {
               style={{ transformStyle: 'preserve-3d' }}
             >
               {/* FRONT FACE (Senin gördüğün ana yüzey) */}
-              <div 
+              <div
                 className={cn(
                   "absolute inset-0 border-2 transition-all duration-500 flex items-center justify-between px-8 overflow-hidden z-20",
                   isFloorHovered ? "bg-black/90 border-white shadow-[0_0_50px_rgba(255,255,255,0.2)]" : "bg-zinc-900/60 border-white/10"
@@ -77,20 +77,20 @@ export function SystemTower() {
                     </div>
                  </div>
                  {isFloorHovered && (
-                   <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    className="w-2 h-2 rounded-full bg-lcars-green animate-pulse shadow-[0_0_10px_#22c55e]" 
+                   <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="w-2 h-2 rounded-full bg-lcars-green animate-pulse shadow-[0_0_10px_#22c55e]"
                    />
                  )}
               </div>
 
               {/* TOP FACE (Üst yüzey - Derinlik veren parça) */}
-              <div 
+              <div
                 className="absolute left-0 right-0 top-0 origin-top transition-all duration-500"
-                style={{ 
-                  height: `${depth}px`, 
-                  transform: 'rotateX(90deg)', 
+                style={{
+                  height: `${depth}px`,
+                  transform: 'rotateX(90deg)',
                   backgroundColor: isFloorHovered ? floor.color : 'rgba(255,255,255,0.05)',
                   opacity: isFloorHovered ? 0.4 : 0.1,
                   border: '1px solid rgba(255,255,255,0.1)'
@@ -98,11 +98,11 @@ export function SystemTower() {
               />
 
               {/* RIGHT FACE (Sağ yüzey - Derinlik veren parça) */}
-              <div 
+              <div
                 className="absolute top-0 bottom-0 right-0 origin-right transition-all duration-500"
-                style={{ 
-                  width: `${depth}px`, 
-                  transform: 'rotateY(90deg)', 
+                style={{
+                  width: `${depth}px`,
+                  transform: 'rotateY(90deg)',
                   backgroundColor: isFloorHovered ? floor.color : 'rgba(0,0,0,0.8)',
                   opacity: isFloorHovered ? 0.3 : 0.2,
                   border: '1px solid rgba(255,255,255,0.1)'
@@ -110,7 +110,7 @@ export function SystemTower() {
               />
 
               {/* BOTTOM FACE */}
-              <div 
+              <div
                 className="absolute left-0 right-0 bottom-0 h-[60px] origin-bottom bg-black/40"
                 style={{ transform: 'rotateX(-90deg)' }}
               />
@@ -119,7 +119,7 @@ export function SystemTower() {
         })}
       </motion.div>
 
-      {/* ── HUD INTERFACE (Screen-Space / Flat) ── */}
+      {/*  HUD INTERFACE (Screen-Space / Flat)  */}
       <AnimatePresence>
         {hoveredFloor !== null && (
           <motion.div
@@ -131,7 +131,7 @@ export function SystemTower() {
           >
             <div className="glass p-12 rounded-[64px] border-white/10 space-y-10 relative overflow-hidden shadow-[0_0_120px_rgba(0,0,0,1)]">
                <div className="absolute top-0 left-0 w-2 h-48 bg-lcars-cyan rounded-full translate-x-4 translate-y-12 shadow-[0_0_30px_#00ccff]" />
-               
+
                <div className="space-y-4">
                   <div className="flex items-center gap-6">
                      <div className="w-16 h-16 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center">
@@ -153,7 +153,7 @@ export function SystemTower() {
                   <p className="text-3xl leading-tight font-medium italic">
                      &quot;{towerLevels.find(f => f.id === hoveredFloor)?.details}&quot;
                   </p>
-                  
+
                   <div className="pt-10 border-t border-white/5 grid grid-cols-1 gap-8">
                      <div className="space-y-3">
                         <div className="text-[11px] font-mono text-white/20 uppercase tracking-[0.4em] font-black">Architecture_Stack</div>
@@ -161,7 +161,7 @@ export function SystemTower() {
                            {towerLevels.find(f => f.id === hoveredFloor)?.tech}
                         </div>
                      </div>
-                     
+
                      <div className="grid grid-cols-2 gap-6">
                         <div className="p-6 bg-white/5 rounded-3xl border border-white/5">
                            <div className="text-[10px] font-mono text-white/20 uppercase font-black mb-1">Stability_Index</div>

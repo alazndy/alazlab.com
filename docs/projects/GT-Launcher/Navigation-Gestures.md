@@ -2,7 +2,7 @@
 
 Mastering the GT interface is mostly muscle memory. This guide covers every interaction layer, from the home grid to the sidebar rail.
 
-## 📱 Core Navigation
+##  Core Navigation
 
 ### The Home Grid
 - **Single Tap** on a card: its primary action (launch app, toggle state, etc.).
@@ -14,7 +14,7 @@ Drag toward the sidebar's edge from anywhere on screen to reveal it temporarily;
 
 ---
 
-## 📐 Card-Specific Gestures
+##  Card-Specific Gestures
 
 Most cards are interactive: **Swipe Up / Down / Left / Right** are each independently configurable per card.
 - *Example:* Swipe Up on an App Launch card → opens Spotify. Swipe Down → YouTube Music.
@@ -24,7 +24,7 @@ Configure these in **Card Settings → BEHAVIOR**, or during creation in the bui
 
 ---
 
-## 🛠️ The Sidebar Utility Rail
+##  The Sidebar Utility Rail
 
 The sidebar is a fully configurable button rail — every button is a `SidebarItem` with its own tap and swipe bindings.
 
@@ -48,7 +48,7 @@ Go to **Engineering → SIDEBAR**, tap any item to open the **Sidebar Item Edito
 
 ---
 
-## 🎛️ Edit Mode Controls
+##  Edit Mode Controls
 
 Triple-tap an empty grid area to enter Edit Mode.
 
@@ -61,13 +61,13 @@ Triple-tap an empty grid area to enter Edit Mode.
 | Drag card | Move to a new grid position |
 | Resize handle (bottom-right) | Drag to resize span |
 | Gear icon on card | Open Card Settings |
-| `✏ HEADER` button | Open Header Widget Editor directly |
+| ` HEADER` button | Open Header Widget Editor directly |
 | `ADD` button | Open the Card Builder to add a new card |
 | Triple-tap empty space | Enter/exit Edit Mode |
 
 ---
 
-## 🚨 System States
+##  System States
 
 GT-Launcher has three separate visual-alert mechanisms — worth knowing apart, since they look similar but mean different things:
 
@@ -78,7 +78,7 @@ GT-Launcher has three separate visual-alert mechanisms — worth knowing apart, 
 
 ---
 
-## ♿ Accessibility & System Back
+##  Accessibility & System Back
 
 The **GT-Launcher Accessibility Service** must be enabled for:
 - Sidebar **Back** button (system back gesture).

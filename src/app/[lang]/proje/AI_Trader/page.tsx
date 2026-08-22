@@ -12,15 +12,15 @@ export async function generateStaticParams() {
 export default async function AITraderPage() {
   const project = getProjectBySlug('AI_Trader');
   const contentHtml = await marked.parse(project?.content || '');
-  
+
   return (
     <div className="min-h-screen pb-24 animate-in fade-in duration-1000 bg-black">
-      
-      {/* ── HERO ── */}
+
+      {/*  HERO  */}
       <div className="relative pt-20 pb-16 px-6 overflow-hidden">
         {/* Abstract Grid & Trading Lines */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
-        
+
         <svg className="absolute bottom-0 left-0 w-full h-[60%] opacity-20 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 1000 300">
           <path d="M0 300 L100 250 L200 280 L300 150 L400 180 L500 50 L600 120 L700 80 L800 160 L900 40 L1000 100 L1000 300 Z" fill="url(#gradient-chart)" />
           <path d="M0 300 L100 250 L200 280 L300 150 L400 180 L500 50 L600 120 L700 80 L800 160 L900 40 L1000 100" fill="none" stroke="#00ccff" strokeWidth="2" />
@@ -33,7 +33,7 @@ export default async function AITraderPage() {
         </svg>
 
         <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-lcars-cyan/10 blur-[120px] rounded-full pointer-events-none" />
-        
+
         <div className="max-w-5xl mx-auto relative z-10 space-y-8">
           <Link href="/#projects" className="inline-flex items-center gap-2 text-foreground/50 hover:text-lcars-cyan transition-colors font-mono tracking-widest uppercase text-xs">
             <ArrowLeft className="w-4 h-4" />
@@ -45,12 +45,12 @@ export default async function AITraderPage() {
               <BrainCircuit className="w-4 h-4" />
               Algorithmic Finance
             </div>
-            
+
           {/* Project Cover Image */}
           {project?.metadata?.image && (
             <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
-              <img 
-                src={project.metadata.image} 
+              <img
+                src={project.metadata.image}
                 alt={project.metadata.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -67,8 +67,8 @@ export default async function AITraderPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 space-y-16 relative z-10">
-        
-        {/* ── CORE ENGINE ── */}
+
+        {/*  CORE ENGINE  */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-6">
             <div className="flex items-center justify-between">
@@ -97,7 +97,7 @@ export default async function AITraderPage() {
           </div>
         </div>
 
-        {/* ── EXECUTION & TECH STACK ── */}
+        {/*  EXECUTION & TECH STACK  */}
         <div className="glass rounded-[32px] border-border p-8 md:p-12 space-y-8 bg-foreground/5">
           <div className="flex flex-col md:flex-row gap-8 items-center justify-between border-b border-border pb-8">
             <div className="space-y-4 max-w-lg">
@@ -133,8 +133,8 @@ export default async function AITraderPage() {
           </div>
         </div>
 
-      
-        {/* ── DYNAMIC PROJECT DETAILS ── */}
+
+        {/*  DYNAMIC PROJECT DETAILS  */}
         <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16 max-w-5xl mx-auto px-6 relative z-10 mb-16">
           <div
             className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red"

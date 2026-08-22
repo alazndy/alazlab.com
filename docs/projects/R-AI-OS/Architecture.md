@@ -1,52 +1,52 @@
 # R-AI-OS Kernel
 
 <p align="center">
-  <img src="vscode-extension/icon.png" width="180" alt="R-AI-OS Logo"/>
+ <img src="vscode-extension/icon.png" width="180" alt="R-AI-OS Logo"/>
 </p>
 
 <p align="center">
 <pre>
-  ╔═╗ ══════════════════════════════════════════ ╔═╗
-  ║ ╚╗                                          ╔╝ ║
-  ╚═╗║         ▄█████████████▄                  ║╔═╝
-    ║║      ▄█▀  ┌─────────┐  ▀█▄               ║║
-    ║║   ▄█▀  ───│   · │ · │───  ▀█▄            ║║
-    ║║   █ ─────│   │ R │  │ ───── █           ║║
-    ║║   ▀█▄  ───│   · │ · │───  ▄█▀            ║║
-    ║║      ▀█▄  └─────────┘  ▄█▀               ║║
-  ╔═╝║         ▀█████████████▀                  ║╚═╗
-  ║ ╔╝   · · ·   R - A I - O S   KERNEL  v3.8   ╚╗ ║
-  ╚═╝ ══════════════════════════════════════════ ╚═╝
+
+
+
+
+ · ·
+ R
+ · ·
+
+
+ · · · R - A I - O S KERNEL v3.8
+
 </pre>
 </p>
 
 <p align="center">
-  <strong>A Hardened, LLM-Native OS Kernel for Autonomous Agent Swarms</strong>
+ <strong>A Hardened, LLM-Native OS Kernel for Autonomous Agent Swarms</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/alazndy/r-ai-os/releases"><img src="https://img.shields.io/badge/version-v3.9.0-blue?style=for-the-badge" alt="Version"></a>
-  <a href="https://rust-lang.org"><img src="https://img.shields.io/badge/Built%20with-Rust-orange?style=for-the-badge&logo=rust" alt="Rust"></a>
-  <a href="https://github.com/alazndy/r-ai-os/blob/master/LICENSE"><img src="https://img.shields.io/github/license/alazndy/r-ai-os?style=for-the-badge" alt="License"></a>
-  <a href="#-security-kernel"><img src="https://img.shields.io/badge/Security-Hardened-green?style=for-the-badge" alt="Security"></a>
-  <a href="#-vs-code-extension"><img src="https://img.shields.io/badge/VS%20Code-v0.9.0-blueviolet?style=for-the-badge&logo=visualstudiocode" alt="VS Code"></a>
+ <a href="https://github.com/alazndy/r-ai-os/releases"><img src="https://img.shields.io/badge/version-v3.9.0-blue?style=for-the-badge" alt="Version"></a>
+ <a href="https://rust-lang.org"><img src="https://img.shields.io/badge/Built%20with-Rust-orange?style=for-the-badge&logo=rust" alt="Rust"></a>
+ <a href="https://github.com/alazndy/r-ai-os/blob/master/LICENSE"><img src="https://img.shields.io/github/license/alazndy/r-ai-os?style=for-the-badge" alt="License"></a>
+ <a href="#-security-kernel"><img src="https://img.shields.io/badge/Security-Hardened-green?style=for-the-badge" alt="Security"></a>
+ <a href="#-vs-code-extension"><img src="https://img.shields.io/badge/VS%20Code-v0.9.0-blueviolet?style=for-the-badge&logo=visualstudiocode" alt="VS Code"></a>
 </p>
 
 <p align="center">
-  <a href="#-the-vision">Vision</a> •
-  <a href="#-security-kernel">Security</a> •
-  <a href="#-tri-protocol-interface">Protocols</a> •
-  <a href="#-core-modules">Modules</a> •
-  <a href="#-vs-code-extension">VS Code</a> •
-  <a href="#%EF%B8%8F-system-tray-raios-tray">System Tray</a> •
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-cli-reference">CLI</a> •
-  <a href="#-roadmap">Roadmap</a>
+ <a href="#-the-vision">Vision</a> •
+ <a href="#-security-kernel">Security</a> •
+ <a href="#-tri-protocol-interface">Protocols</a> •
+ <a href="#-core-modules">Modules</a> •
+ <a href="#-vs-code-extension">VS Code</a> •
+ <a href="#%EF%B8%8F-system-tray-raios-tray">System Tray</a> •
+ <a href="#-quick-start">Quick Start</a> •
+ <a href="#-cli-reference">CLI</a> •
+ <a href="#-roadmap">Roadmap</a>
 </p>
 
 ---
 
-## 🔭 The Vision
+## The Vision
 
 R-AI-OS is not a CLI tool — it is a **Kernel**. While traditional operating systems manage hardware, R-AI-OS manages the **AI layer**: a decentralized swarm of autonomous specialists running across Claude Code, Codex CLI, OpenCode, Antigravity (`agy`), and any MCP-compatible agent. `raios new` scaffolds a project; `raios bootstrap` provisions whatever global tools, Claude Code marketplaces/plugins, and rule-sync repos you've explicitly listed under `[bootstrap]` in `config.toml` — see [CLI Reference](#-cli-reference) for what's actually installed on your machine.
 
@@ -54,18 +54,18 @@ It solves the fundamental problem of **unsupervised agent execution**: agents th
 
 ```
 Human → [ R-AI-OS Kernel ] → Agent Swarm (Claude / Codex / OpenCode / AGY / MCP)
-              ↓
-    ┌──────────────────────────────────────────────┐
-    │  Security Kernel  │  Cortex  │  Swarm Mesh  │
-    │  Policy Gate      │  BM25+V  │  Lock Mgr    │
-    │  Audit Ledger     │  Sigmap  │  Factory Mode│
-    └──────────────────────────────────────────────┘
-         ↓ TCP :42069   ↓ MCP :42070   ↓ HTTP :42071
+ ↓
+
+ Security Kernel Cortex Swarm Mesh
+ Policy Gate BM25+V Lock Mgr
+ Audit Ledger Sigmap Factory Mode
+
+ ↓ TCP :42069 ↓ MCP :42070 ↓ HTTP :42071
 ```
 
 ---
 
-## 🛡️ Security Kernel
+## Security Kernel
 
 The Security Kernel is the core of R-AI-OS. It enforces a **zero-trust model** for all agent tool calls: every action is policy-gated, logged, and auditable. All 4 phases are implemented and tested.
 
@@ -73,10 +73,10 @@ The Security Kernel is the core of R-AI-OS. It enforces a **zero-trust model** f
 
 ```
 crates/raios-core/src/security/
-├── sandbox.rs       # Phase 1 — Filesystem Jail (canonicalize + boundary)
-├── policy.rs        # Phase 2 — Policy Manager (TOML allow/deny/confirm)
-├── verify_chain.rs  # Phase 3 — Audit Chain (SHA-256 hash-chained SQLite)
-└── egress.rs        # Phase 4 — Egress Filter (domain allowlist, fail-closed)
+ sandbox.rs # Phase 1 — Filesystem Jail (canonicalize + boundary)
+ policy.rs # Phase 2 — Policy Manager (TOML allow/deny/confirm)
+ verify_chain.rs # Phase 3 — Audit Chain (SHA-256 hash-chained SQLite)
+ egress.rs # Phase 4 — Egress Filter (domain allowlist, fail-closed)
 ```
 
 ### Phase 1 — Filesystem Jail
@@ -116,8 +116,8 @@ Every allow/deny decision is written to a tamper-evident, SHA-256 hash-chained S
 Concurrent writers are serialized at the predecessor-read boundary: standalone appends acquire an immediate SQLite write transaction before reading the current tail, while audit rows participating in a larger domain transaction remain atomic with that transaction. Two connections therefore cannot legitimately create separate children of the same predecessor.
 
 ```bash
-raios verify-chain          # verify full chain integrity
-raios verify-chain -n 50    # show last 50 entries then verify
+raios verify-chain # verify full chain integrity
+raios verify-chain -n 50 # show last 50 entries then verify
 ```
 
 ### Phase 4 — Egress Filter
@@ -140,7 +140,7 @@ All HTTP API calls require a Bearer token stored in the OS config directory unde
 
 ---
 
-## 🔌 Tri-Protocol Interface
+## Tri-Protocol Interface
 
 All three protocols share one event bus and one security kernel:
 
@@ -170,9 +170,9 @@ Notification client IDs must be 1–128 ASCII characters from `A-Z`, `a-z`, `0-9
 
 ---
 
-## 🧠 Core Modules
+## Core Modules
 
-### 📉 Cortex — Token Budgeter & Context Manager
+### Cortex — Token Budgeter & Context Manager
 
 - **Sigmap:** Up to 97% token reduction via high-density signature mapping (`SIGMAP.md`)
 - **BM25 persistence:** Index survives restarts via mtime-based invalidation
@@ -180,11 +180,11 @@ Notification client IDs must be 1–128 ASCII characters from `A-Z`, `a-z`, `0-9
 - **Vector store:** Binary SQLite BLOBs — transaction-safe, no JSON drift
 - **Session memory:** Per-agent `memory.md` auto-append
 
-### 🎯 Unified Agent Router
+### Unified Agent Router
 
 Maps natural-language task descriptions to the right specialist using local BM25 + vector hybrid indexing — entirely local, no external routing dependency. `[bootstrap]` config can optionally point at external rule-sync repos (e.g. community skill/rule packs) to seed a workspace, but that's an opt-in setup step, not something the router itself bridges or depends on.
 
-### 🔄 Agent Swarm Mesh
+### Agent Swarm Mesh
 
 Parallel worktree-based agent execution with coordination primitives:
 
@@ -193,14 +193,14 @@ Parallel worktree-based agent execution with coordination primitives:
 - **Radar Whispers:** Real-time context hints pushed to all connected agents
 - **Factory Mode:** Submit heavy jobs async; completion fires broadcast + optional webhook
 
-### 📊 Portfolio Intelligence
+### Portfolio Intelligence
 
 - **Neural Search:** Semantic search across 140+ projects with BM25 + embeddings
 - **Health Scanner:** Background scan for `memory.md` compliance, security leaks, git drift
 - **GitHub Sync:** Live star counts and last-commit timestamps
 - **Auto-Discovery:** Detects new workspace directories and updates `entities.json`
 
-### 📨 Agent Handoff — Atomic, Control-Plane-Backed
+### Agent Handoff — Atomic, Control-Plane-Backed
 
 Agents hand work to each other through the same control plane that already tracks tasks, runs, artifacts, and approvals — not a side-channel state file:
 
@@ -222,15 +222,15 @@ The report carries `findings`, `evidence`, `edge_cases_considered`, `open_questi
 - Delivery is real, not an unread env var: the next `raios run`/`raios task` for that agent injects the `[HANDOVER CONTEXT]` via the CLI's own prompt flag — `claude --append-system-prompt`, `codex <prompt>`, `opencode --prompt`, `agy --prompt-interactive` — and marks it consumed only once the process actually starts.
 - Visible at the terminal via the **Inbox** TUI panel (pending approvals, active runs, blocked tasks) or programmatically via the `get_inbox` MCP tool.
 
-### 🧠 Trace Memory — Local Fix Recall
+### Trace Memory — Local Fix Recall
 
 R-AI-OS can now store compact tool/session traces locally and recall them before repeating the same failure:
 
 ```bash
 raios trace record --project R-AI-OS --command "cargo test -p raios-runtime" \
-  --error "trace recall missed partial phrase" \
-  --fix "fall back to significant query tokens before project fallback" \
-  --tag trace --success
+ --error "trace recall missed partial phrase" \
+ --fix "fall back to significant query tokens before project fallback" \
+ --tag trace --success
 raios trace search "partial phrase" --project R-AI-OS --success-only
 raios evolve from-traces --project R-AI-OS
 raios trace kg-export "partial phrase" --project R-AI-OS
@@ -243,7 +243,7 @@ raios trace kg-export "partial phrase" --project R-AI-OS
 - `raios evolve from-traces` converts useful trace fixes into pending instinct candidates; promotion remains a human-controlled step.
 - `raios trace kg-export` emits MemPalace-compatible KG triple JSON for MCP ingestion without silently writing to an external semantic store.
 
-### 🪶 ANKA — Historical Transcript Recall
+### ANKA — Historical Transcript Recall
 
 ANKA (*Agent Narrative Knowledge Archive*) searches local coding-agent history
 through a separate, rebuildable cache; it never writes raw transcripts into
@@ -264,7 +264,7 @@ raios anka forget <record-id>
 
 See [`docs/ANKA.md`](docs/ANKA.md) for cache and authority boundaries.
 
-### ⏳ Lifecycle Worker
+### Lifecycle Worker
 
 Background daemon task (`crates/raios-runtime/src/daemon/lifecycle.rs`) that keeps project status honest without manual upkeep. Every `lifecycle_interval_secs`, it checks each tracked project's last commit time and transitions status automatically:
 
@@ -285,24 +285,24 @@ lifecycle_interval_secs = 3600
 
 ---
 
-## 🖥️ VS Code Extension (v0.9.0)
+## VS Code Extension (v0.9.0)
 
 R-AI-OS ships a native VS Code extension that turns the IDE into a **Hybrid UI** — the control panel for your agent swarm directly in your sidebar.
 
 ```
 vscode-extension/
-├── src/
-│   ├── extension.ts              # Activation + provider wiring
-│   ├── ipc/
-│   │   ├── DaemonClient.ts       # TCP :42069 connection
-│   │   ├── TokenBridge.ts        # Session token proxy (XSS-safe)
-│   │   └── DaemonManager.ts      # Systemd-first startup, authenticated readiness
-│   └── providers/
-│       ├── SidebarProvider.ts    # Main WebviewView control panel
-│       ├── StatusBarProvider.ts  # Live daemon indicator
-│       ├── DiagnosticProvider.ts # File-save security scan
-│       ├── RefactorProvider.ts   # Refactor surface analysis
-│       └── DiffInboxProvider.ts  # Pending diff approvals
+ src/
+ extension.ts # Activation + provider wiring
+ ipc/
+ DaemonClient.ts # TCP :42069 connection
+ TokenBridge.ts # Session token proxy (XSS-safe)
+ DaemonManager.ts # Systemd-first startup, authenticated readiness
+ providers/
+ SidebarProvider.ts # Main WebviewView control panel
+ StatusBarProvider.ts # Live daemon indicator
+ DiagnosticProvider.ts # File-save security scan
+ RefactorProvider.ts # Refactor surface analysis
+ DiffInboxProvider.ts # Pending diff approvals
 ```
 
 ### Control Panel Cards
@@ -339,10 +339,10 @@ Manual equivalent, if you need the individual steps:
 
 ```bash
 cd vscode-extension
- pnpm install        # pulls in typescript + @vscode/vsce devDependencies
+ pnpm install # pulls in typescript + @vscode/vsce devDependencies
  pnpm run compile
  pnpm run package
-code --uninstall-extension alazndy.raios   # drop the old version first
+code --uninstall-extension alazndy.raios # drop the old version first
 code --install-extension raios-*.vsix
 ```
 
@@ -356,16 +356,16 @@ code --install-extension raios-*.vsix
 
 ---
 
-## 🖥️ System Tray (`raios-tray`)
+## System Tray (`raios-tray`)
 
 R-AI-OS provides a desktop system tray application built with PySide6 (`tools/raios-tray/raios-tray.py`) for persistent status monitoring and quick agent orchestration. See [tools/raios-tray/README.md](tools/raios-tray/README.md) for setup and configuration details.
 
 ```
 tools/raios-tray/
-├── raios-tray.py           # PySide6 system tray application
-├── raios-tray.service      # User systemd service template
-├── requirements.txt        # Runtime dependencies
-└── requirements.lock.txt   # Pinned dependency lockfile
+ raios-tray.py # PySide6 system tray application
+ raios-tray.service # User systemd service template
+ requirements.txt # Runtime dependencies
+ requirements.lock.txt # Pinned dependency lockfile
 ```
 
 ### Features
@@ -379,23 +379,23 @@ tools/raios-tray/
 
 ---
 
-## 🏭 Product Factory Visual Control Studio (`raios-factory-ui`)
+## Product Factory Visual Control Studio (`raios-factory-ui`)
 
 R-AI-OS provides a modern, interactive React web application (`tools/raios-factory-ui/`) for visualizing, auditing, and orchestrating the Product Factory across all 10 lifecycle phases (Phases 0–9). See [tools/raios-factory-ui/README.md](tools/raios-factory-ui/README.md) for detailed setup and usage instructions.
 
 ```
 tools/raios-factory-ui/
-├── src/
-│   ├── components/
-│   │   ├── PipelineFlow.jsx          # 10-Phase Pipeline flowchart & inspector
-│   │   ├── IntakeCharterStudio.jsx   # Product intake & Markdown Charter editor
-│   │   ├── ChangeControlGraph.jsx    # CR & AI Impact Assessment network graph
-│   │   ├── CycleExecutionMatrix.jsx  # Stage task graph DAG & SHA-256 evidence
-│   │   ├── QualityReleaseGate.jsx    # Closed-testing quality checklist & signoff
-│   │   ├── SupportTriageDesk.jsx     # Support ticket triage & CR linking
-│   │   └── CommandTerminal.jsx       # Interactive IPC terminal & command log
-│   ├── App.jsx                       # Main workspace switcher & state engine
-│   └── mockData.js                   # Product Factory domain projection data
+ src/
+ components/
+ PipelineFlow.jsx # 10-Phase Pipeline flowchart & inspector
+ IntakeCharterStudio.jsx # Product intake & Markdown Charter editor
+ ChangeControlGraph.jsx # CR & AI Impact Assessment network graph
+ CycleExecutionMatrix.jsx # Stage task graph DAG & SHA-256 evidence
+ QualityReleaseGate.jsx # Closed-testing quality checklist & signoff
+ SupportTriageDesk.jsx # Support ticket triage & CR linking
+ CommandTerminal.jsx # Interactive IPC terminal & command log
+ App.jsx # Main workspace switcher & state engine
+ mockData.js # Product Factory domain projection data
 ```
 
 ### Features
@@ -409,7 +409,7 @@ tools/raios-factory-ui/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Fastest: install a release binary (Linux/macOS, x86_64)
 
@@ -591,9 +591,9 @@ command in the palette. It never submits a Factory command automatically.
 Provision a machine from your own `[bootstrap]` config: `raios bootstrap` prints a plan of whatever global npm tools, Claude Code marketplaces/plugins, rule-sync repos, and plugin-enables you've listed under `[bootstrap]` in `~/.config/raios/config.toml`, then asks for confirmation before running anything. With no `[bootstrap]` section configured it prints an empty plan and exits — a safe no-op, not an automatic sync of any external agent ecosystem. Re-running against an already-provisioned machine is idempotent: steps that are already done (marketplace already added, plugin already installed/enabled) are reported and skipped rather than treated as failures.
 
 ```bash
-raios bootstrap             # prints the plan, asks for confirmation, then executes it
-raios bootstrap --dry-run   # prints the plan only, never prompts or executes
-raios bootstrap --yes       # skips the confirmation prompt (also: -y)
+raios bootstrap # prints the plan, asks for confirmation, then executes it
+raios bootstrap --dry-run # prints the plan only, never prompts or executes
+raios bootstrap --yes # skips the confirmation prompt (also: -y)
 ```
 
 See [`[bootstrap]` Configuration](#bootstrap-configuration) below for the full config schema.
@@ -625,7 +625,7 @@ targets = ["~/.claude/rules", "~/.antigravity/rules"]
 
 ---
 
-## 💻 CLI Reference
+## CLI Reference
 
 ### Core Operations
 
@@ -694,35 +694,35 @@ documented in [`docs/DATABASE_RECOVERY.md`](docs/DATABASE_RECOVERY.md).
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 R-AI-OS is a Cargo workspace of 6 crates — there is no monolithic `src/` at the repo root:
 
 ```
 crates/
-├── raios-contracts/      # Shared types/DTOs used across every other crate
-├── raios-core/           # Config, DB layer, Security Kernel (sandbox, policy, chain, egress)
-├── raios-runtime/        # Daemon, intelligence/routing, cortex (BM25+vector), swarm, server (Axum),
-│                         # sentinel (redaction), session_memory, bootstrap, agent_runner
-├── raios-surface-cli/    # `raios` CLI — one module per subcommand (cli/*.rs)
-├── raios-surface-mcp/    # MCP server — policy-gated tool call handler
-└── raios-surface-tui/    # TUI — panels (dashboard, security, inbox, etc.) + setup wizard
+ raios-contracts/ # Shared types/DTOs used across every other crate
+ raios-core/ # Config, DB layer, Security Kernel (sandbox, policy, chain, egress)
+ raios-runtime/ # Daemon, intelligence/routing, cortex (BM25+vector), swarm, server (Axum),
+ # sentinel (redaction), session_memory, bootstrap, agent_runner
+ raios-surface-cli/ # `raios` CLI — one module per subcommand (cli/*.rs)
+ raios-surface-mcp/ # MCP server — policy-gated tool call handler
+ raios-surface-tui/ # TUI — panels (dashboard, security, inbox, etc.) + setup wizard
 
 vscode-extension/
-├── src/
-│   ├── extension.ts      # Extension activation
-│   ├── ipc/              # DaemonClient, TokenBridge, DaemonManager
-│   ├── providers/        # Sidebar, StatusBar, Diagnostics, Refactor, Diffs
-│   ├── commands/         # CommandBridge
-│   └── bridge/           # JumpToCode
-├── icon.svg              # Master logo (512×512, source of truth)
-├── icon.png              # Extension marketplace icon (512×512)
-└── icon128.png           # Extension sidebar icon (128×128)
+ src/
+ extension.ts # Extension activation
+ ipc/ # DaemonClient, TokenBridge, DaemonManager
+ providers/ # Sidebar, StatusBar, Diagnostics, Refactor, Diffs
+ commands/ # CommandBridge
+ bridge/ # JumpToCode
+ icon.svg # Master logo (512×512, source of truth)
+ icon.png # Extension marketplace icon (512×512)
+ icon128.png # Extension sidebar icon (128×128)
 ```
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [x] **Phase 1–7:** Core TUI, workspace mapping, health dashboard, BM25 search
 - [x] **Phase 8:** Universal Kernel — Tri-protocol, Lock Manager, Radar Whispers, Factory Mode

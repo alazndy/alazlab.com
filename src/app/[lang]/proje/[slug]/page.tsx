@@ -114,7 +114,7 @@ export default async function ProjectPage({ params }: Props) {
       {/* Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
-        {/* ── MAIN CONTENT (TABS: Overview, Wiki Reader, Media, Resources) ── */}
+        {/*  MAIN CONTENT (TABS: Overview, Wiki Reader, Media, Resources)  */}
         <div className="lg:col-span-8 order-2 lg:order-1">
           <ProjectViewTabs
             metadata={metadata}
@@ -125,7 +125,7 @@ export default async function ProjectPage({ params }: Props) {
           />
         </div>
 
-        {/* ── SIDEBAR ── */}
+        {/*  SIDEBAR  */}
         <ProjectSidebar
           metadata={metadata}
           catAccent={cat.accent}

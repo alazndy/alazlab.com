@@ -9,7 +9,7 @@ import { categoryConfig, defaultConfig, statusConfig, statusDot } from '@/lib/pr
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
 
-// ── SCORE ─────────────────────────────────────────────────────────────────────
+//  SCORE
 const S: Record<string, number> = { Live: 10, Active: 8, Stable: 6, Early: 4, Pending: 2, Legacy: 0 };
 const score = (p: ProjectMetadata) => (S[p.status] ?? 2) + Math.min(p.techStack?.length ?? 0, 10) * 0.8;
 
@@ -34,7 +34,7 @@ const ROW: Record<Size, string> = {
   xs:     'row-span-2',
 };
 
-// ── CARD ──────────────────────────────────────────────────────────────────────
+//  CARD
 const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath }: {
   project: ProjectMetadata; size: Size; idx: number; localizePath: (path: string) => string;
 }) {
@@ -158,7 +158,7 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
   );
 });
 
-// ── MAIN ──────────────────────────────────────────────────────────────────────
+//  MAIN
 export function ProjectGrid({ projects }: { projects: ProjectMetadata[] }) {
   const { t, lang, localizePath } = useI18n();
   const isEn = lang === 'en';

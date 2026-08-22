@@ -20,7 +20,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
   return (
     <aside className="lg:col-span-4 order-1 lg:order-2 space-y-5 lg:sticky lg:top-10">
 
-      {/* ── SYSTEM TELEMETRY & SPEC CARD ── */}
+      {/*  SYSTEM TELEMETRY & SPEC CARD  */}
       <div className="rounded-3xl border border-white/10 bg-card p-6 space-y-4 shadow-lg">
         <div className="flex items-center justify-between border-b border-white/8 pb-3">
           <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-lcars-cyan uppercase tracking-widest">
@@ -73,7 +73,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
         </dl>
       </div>
 
-      {/* ── TECH STACK MATRIX ── */}
+      {/*  TECH STACK MATRIX  */}
       {metadata.techStack && metadata.techStack.length > 0 && (
         <div className="rounded-3xl border border-white/10 bg-card p-6 space-y-4 shadow-lg">
           <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-lcars-orange uppercase tracking-widest">
@@ -93,7 +93,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
         </div>
       )}
 
-      {/* ── RELATED PROJECTS WITH IMAGE PREVIEWS ── */}
+      {/*  RELATED PROJECTS WITH IMAGE PREVIEWS  */}
       {related.length > 0 && (
         <div className="rounded-3xl border border-white/10 bg-card p-6 space-y-4 shadow-lg">
           <div className="flex items-center gap-2 text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest">

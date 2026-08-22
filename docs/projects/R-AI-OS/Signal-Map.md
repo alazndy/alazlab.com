@@ -32,442 +32,442 @@ vscode-extension/src/ipc/DaemonManager.ts ← utils/raiosBinary
 
 ## todos
 ```
-.claude/worktrees/bootstrap-safety-plan/docs/superpowers/plans/2026-07-21-product-readiness-coverage-release.md:102  # TODO: fix");
-crates/raios-surface-tui/src/setup_wizard/templates.rs:107  # TODO: implement later`. Always full, compilable context.
+.claude/worktrees/bootstrap-safety-plan/docs/superpowers/plans/2026-07-21-product-readiness-coverage-release.md:102 # TODO: fix");
+crates/raios-surface-tui/src/setup_wizard/templates.rs:107 # TODO: implement later`. Always full, compilable context.
 ```
 
 ## changes (last 10 commits — 75 minutes ago)
 ```
-tools/raios-tray/desktop_runtime.py           +DesktopKind  +DesktopSession  +detect_desktop_session  +tray_host_guidance
-tools/raios-tray/raios-tray.py                +valid_notification_client_id  +fallback_notification_client_id  +notification_client_id  +_menu_action
-tools/raios-tray/test_service.py              +TrayServiceLifecycleTests  +test_service_is_owned_by_the_graphical_session_target
-crates/raios-runtime/src/search/indexer.rs    +Component
+tools/raios-tray/desktop_runtime.py +DesktopKind +DesktopSession +detect_desktop_session +tray_host_guidance
+tools/raios-tray/raios-tray.py +valid_notification_client_id +fallback_notification_client_id +notification_client_id +_menu_action
+tools/raios-tray/test_service.py +TrayServiceLifecycleTests +test_service_is_owned_by_the_graphical_session_target
+crates/raios-runtime/src/search/indexer.rs +Component
 ```
 
 ## .claude
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-core/src/config.rs
 ```
-pub struct DaemonConfig  :7-26
-pub struct Config  :62-90
-pub struct FactoryConfig  :98-103
-pub struct FactoryStorageConfig  :108-115
-pub struct BootstrapConfig  :122-131
-pub struct ClaudeMarketplace  :134-138
-pub struct RuleSyncRepo  :141-145
-pub struct DetectResult  :242-247
-impl DaemonConfig  :28-57
-impl Config  :147-162
-impl Config  :164-240
-  pub fn config_file() → PathBuf  :170-170
-  pub fn load() → Option<Self>  :179-179
-  pub fn save(&self) → Result<()>  :186-186
-  pub fn auto_detect() → DetectResult  :198-198
-  pub fn from_detect_result(detected: DetectResult) → Self  :222-222
+pub struct DaemonConfig :7-26
+pub struct Config :62-90
+pub struct FactoryConfig :98-103
+pub struct FactoryStorageConfig :108-115
+pub struct BootstrapConfig :122-131
+pub struct ClaudeMarketplace :134-138
+pub struct RuleSyncRepo :141-145
+pub struct DetectResult :242-247
+impl DaemonConfig :28-57
+impl Config :147-162
+impl Config :164-240
+ pub fn config_file() → PathBuf :170-170
+ pub fn load() → Option<Self> :179-179
+ pub fn save(&self) → Result<()> :186-186
+ pub fn auto_detect() → DetectResult :198-198
+ pub fn from_detect_result(detected: DetectResult) → Self :222-222
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/bootstrap.rs
 ```
-pub enum BootstrapAction  :6-21
-pub enum ActionOutcome  :146-150
-impl BootstrapAction  :23-48
-  pub fn describe(&self) → String  :24-24
-pub fn build_plan(cfg: &BootstrapConfig) → Vec<BootstrapAction>  :110-143
-pub fn execute(actions: &[BootstrapAction]) → Vec<(String, ActionOutcome)>  :155-160
+pub enum BootstrapAction :6-21
+pub enum ActionOutcome :146-150
+impl BootstrapAction :23-48
+ pub fn describe(&self) → String :24-24
+pub fn build_plan(cfg: &BootstrapConfig) → Vec<BootstrapAction> :110-143
+pub fn execute(actions: &[BootstrapAction]) → Vec<(String, ActionOutcome)> :155-160
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/cortex/mod.rs
 ```
-pub struct Cortex  :45-48
-impl Cortex  :50-224
-  pub fn init() → Result<Self>  :52-52
-  pub fn index_workspace(&mut self, root: &Path) → Result<usize>  :61-61
-  pub fn index_project(&mut self, project_path: &Path) → Result<usize>  :111-111
-  pub fn rebuild_index(&mut self)  :142-142
-  pub fn index_file(&mut self, path: &Path) → Result<bool>  :148-148
-  pub fn search(&self, query: &str, top_k: usize) → Result<Vec<VectorResult>>  :188-188
-  pub fn search_scoped(&self, query: &str, top_k: usize, scope_dir: &Path,) → Result<Vec<VectorResult>>  :198-203
-  pub fn index_memory_files(&mut self, root: &Path) → Result<usize>  :221-221
+pub struct Cortex :45-48
+impl Cortex :50-224
+ pub fn init() → Result<Self> :52-52
+ pub fn index_workspace(&mut self, root: &Path) → Result<usize> :61-61
+ pub fn index_project(&mut self, project_path: &Path) → Result<usize> :111-111
+ pub fn rebuild_index(&mut self) :142-142
+ pub fn index_file(&mut self, path: &Path) → Result<bool> :148-148
+ pub fn search(&self, query: &str, top_k: usize) → Result<Vec<VectorResult>> :188-188
+ pub fn search_scoped(&self, query: &str, top_k: usize, scope_dir: &Path,) → Result<Vec<VectorResult>> :198-203
+ pub fn index_memory_files(&mut self, root: &Path) → Result<usize> :221-221
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/intelligence/evolution.rs
 ```
-pub struct CandidateStore  :16-18
-impl CandidateStore  :20-151
-pub fn new  :21-21
-pub fn default_path  :28-28
-pub fn insert  :58-58
-pub fn list_pending  :84-84
-pub fn promote  :122-122
-pub fn sweep_expired  :138-138
-pub fn process_job_event  :161-184
-pub fn suggest_from_trace  :186-210
-pub fn import_trace_candidates  :212-242
-pub fn record_approval_decision  :262-287
-pub async fn start_evolution_worker  :293-327
+pub struct CandidateStore :16-18
+impl CandidateStore :20-151
+pub fn new :21-21
+pub fn default_path :28-28
+pub fn insert :58-58
+pub fn list_pending :84-84
+pub fn promote :122-122
+pub fn sweep_expired :138-138
+pub fn process_job_event :161-184
+pub fn suggest_from_trace :186-210
+pub fn import_trace_candidates :212-242
+pub fn record_approval_decision :262-287
+pub async fn start_evolution_worker :293-327
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/intelligence/instinct.rs
 ```
-pub struct InstinctData  :6-10
-pub struct InstinctEngine  :12-15
-impl InstinctEngine  :17-58
-  pub fn init() → Self  :18-18
-  pub fn add_rule(&mut self, rule: String)  :32-32
-  pub fn save(&self) → anyhow::Result<()>  :38-38
-  pub fn get_instinct_prompt(&self) → String  :48-48
-pub fn suggest_from_health(health: &crate::health::ProjectHealth) → Vec<String>  :60-91
-pub fn suggest_from_outcome(description: &str, command: &str, result: &str) → Vec<String>  :95-135
-pub fn suggest_from_failure(description: &str, _command: &str, error: &str) → Vec<String>  :138-177
-pub fn append_to_memory_md(project_path: &std::path::Path, rule: &str) → anyhow::Result<()>  :187-222
-pub fn load_project_rules(project_path: &std::path::Path) → Vec<String>  :224-248
+pub struct InstinctData :6-10
+pub struct InstinctEngine :12-15
+impl InstinctEngine :17-58
+ pub fn init() → Self :18-18
+ pub fn add_rule(&mut self, rule: String) :32-32
+ pub fn save(&self) → anyhow::Result<()> :38-38
+ pub fn get_instinct_prompt(&self) → String :48-48
+pub fn suggest_from_health(health: &crate::health::ProjectHealth) → Vec<String> :60-91
+pub fn suggest_from_outcome(description: &str, command: &str, result: &str) → Vec<String> :95-135
+pub fn suggest_from_failure(description: &str, _command: &str, error: &str) → Vec<String> :138-177
+pub fn append_to_memory_md(project_path: &std::path::Path, rule: &str) → anyhow::Result<()> :187-222
+pub fn load_project_rules(project_path: &std::path::Path) → Vec<String> :224-248
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/intelligence/router.rs
 ```
-pub struct AgentRouter  :99-99
-impl AgentRouter  :101-105
-impl AgentRouter  :107-119
-  pub fn new() → Self  :108-108
-  pub fn init() → anyhow::Result<Self>  :112-112
-  pub fn route(&self, task: &str) → anyhow::Result<Option<String>>  :116-116
-pub fn route_capability(query: &str) → Option<String>  :81-96
+pub struct AgentRouter :99-99
+impl AgentRouter :101-105
+impl AgentRouter :107-119
+ pub fn new() → Self :108-108
+ pub fn init() → anyhow::Result<Self> :112-112
+ pub fn route(&self, task: &str) → anyhow::Result<Option<String>> :116-116
+pub fn route_capability(query: &str) → Option<String> :81-96
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/kernel.rs
 ```
-pub struct Kernel  :26-28
-impl Kernel  :30-77
-  pub fn new(state: Arc<RwLock<DaemonState>>) → Self  :31-31
-  pub async fn run(&self) → Result<()>  :37-37
-impl McpTcpSession  :155-244
+pub struct Kernel :26-28
+impl Kernel :30-77
+ pub fn new(state: Arc<RwLock<DaemonState>>) → Self :31-31
+ pub async fn run(&self) → Result<()> :37-37
+impl McpTcpSession :155-244
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/new_project.rs
 ```
-pub struct NewProjectConfig  :5-12
-pub struct NewProjectResult  :14-18
-pub fn create(cfg: &NewProjectConfig) → NewProjectResult  :20-208
+pub struct NewProjectConfig :5-12
+pub struct NewProjectResult :14-18
+pub fn create(cfg: &NewProjectConfig) → NewProjectResult :20-208
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/obsidian.rs
 ```
-pub struct ObsidianSyncReport  :133-137
-pub fn default_vault_path() → PathBuf  :139-143
-pub fn sync_vault_projects(vault: &Path, projects: &[EntityProject], dry_run: bool,) → ObsidianSyncReport  :145-227
-pub fn sync_vault(dev_ops: &Path, vault: &Path, dry_run: bool) → ObsidianSyncReport  :235-238
+pub struct ObsidianSyncReport :133-137
+pub fn default_vault_path() → PathBuf :139-143
+pub fn sync_vault_projects(vault: &Path, projects: &[EntityProject], dry_run: bool,) → ObsidianSyncReport :145-227
+pub fn sync_vault(dev_ops: &Path, vault: &Path, dry_run: bool) → ObsidianSyncReport :235-238
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/artifact_store.rs
 ```
-pub struct StoredFactoryArtifact  :16-22
-pub struct FactoryArtifactStore  :25-27
-impl FactoryArtifactStore  :29-104
-  pub fn new(root: impl Into<PathBuf>) → Self  :30-30
-  pub fn default_root() → PathBuf  :34-34
-  pub fn root(&self) → &Path  :41-41
-  pub fn store_bytes(&self, bytes: &[u8], media_type: &str,) → Result<StoredFactoryArtifac...  :45-49
-impl FactoryArtifactStore  :106-110
+pub struct StoredFactoryArtifact :16-22
+pub struct FactoryArtifactStore :25-27
+impl FactoryArtifactStore :29-104
+ pub fn new(root: impl Into<PathBuf>) → Self :30-30
+ pub fn default_root() → PathBuf :34-34
+ pub fn root(&self) → &Path :41-41
+ pub fn store_bytes(&self, bytes: &[u8], media_type: &str,) → Result<StoredFactoryArtifac... :45-49
+impl FactoryArtifactStore :106-110
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/gates.rs
 ```
-pub trait FactoryGateService  :4-9
+pub trait FactoryGateService :4-9
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/ingest.rs
 ```
-pub trait FactoryIngestService  :5-11
+pub trait FactoryIngestService :5-11
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/maintenance.rs
 ```
-pub trait FactoryMaintenanceService  :4-10
+pub trait FactoryMaintenanceService :4-10
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/orchestrator.rs
 ```
-pub trait FactoryOrchestrator  :4-10
+pub trait FactoryOrchestrator :4-10
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/planner.rs
 ```
-pub trait FactoryPlanner  :5-7
+pub trait FactoryPlanner :5-7
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/product_factory/service.rs
 ```
-pub trait ProductFactoryService  :14-24
-pub fn dispatch_factory_command(conn: &mut Connection, actor: &ControlActor, factory_enabled: bool, command: &FactoryCommand,) → Result<serde_json::Value, P...  :32-39
-pub fn dispatch_factory_command_with_config(conn: &mut Connection, actor: &ControlActor, factory_enabled: bool, command: &FactoryCommand, override_config: Option<&raios_core::config::Config>,) → Result<serde_json::Value, P...  :41-160
+pub trait ProductFactoryService :14-24
+pub fn dispatch_factory_command(conn: &mut Connection, actor: &ControlActor, factory_enabled: bool, command: &FactoryCommand,) → Result<serde_json::Value, P... :32-39
+pub fn dispatch_factory_command_with_config(conn: &mut Connection, actor: &ControlActor, factory_enabled: bool, command: &FactoryCommand, override_config: Option<&raios_core::config::Config>,) → Result<serde_json::Value, P... :41-160
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/proxy_store.rs
 ```
-pub struct Capability  :34-41
-pub struct CapabilityStore  :46-48
-pub struct CapabilityProxy  :132-137
-pub enum Backend  :22-31
-impl CapabilityStore  :50-127
-  pub fn new() → Self  :51-51
-  pub fn register(&mut self, cap: Capability)  :57-57
-  pub fn get(&self, name: &str) → Option<&Capability>  :61-61
-  pub fn list(&self) → Vec<&Capability>  :65-65
-impl CapabilityProxy  :139-277
-  pub fn new(store: CapabilityStore) → Self  :140-140
-  pub fn execute(&self, capability: &str, input: &str) → Result<String>  :195-195
-  pub fn route(&self, query: &str, input: &str) → Result<String>  :269-269
-  pub fn store(&self) → &CapabilityStore  :274-274
+pub struct Capability :34-41
+pub struct CapabilityStore :46-48
+pub struct CapabilityProxy :132-137
+pub enum Backend :22-31
+impl CapabilityStore :50-127
+ pub fn new() → Self :51-51
+ pub fn register(&mut self, cap: Capability) :57-57
+ pub fn get(&self, name: &str) → Option<&Capability> :61-61
+ pub fn list(&self) → Vec<&Capability> :65-65
+impl CapabilityProxy :139-277
+ pub fn new(store: CapabilityStore) → Self :140-140
+ pub fn execute(&self, capability: &str, input: &str) → Result<String> :195-195
+ pub fn route(&self, query: &str, input: &str) → Result<String> :269-269
+ pub fn store(&self) → &CapabilityStore :274-274
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/radar.rs
 ```
-pub struct Whisper  :52-65
-pub struct RadarChannel  :139-141
-pub enum WhisperKind  :14-22
-pub enum Severity  :42-47
-impl WhisperKind  :24-36
-  pub fn label(&self) → &'static str  :25-25
-impl Whisper  :67-132
-  pub fn compile_error(project: &str, file: PathBuf, line: u32, message: &str) → Self  :68-68
-  pub fn security_vuln(project: &str, file: Option<PathBuf>, message: &str, cve: Option<&str>,) → Self  :80-85
-  pub fn arch_violation(project: &str, file: PathBuf, message: &str, hint: Option<&str>) → Self  :97-97
-  pub fn lock_conflict(project: &str, resource: &str, owner: &str) → Self  :109-109
-  pub fn codebase_rule(project: &str, rule: &str, detail: &str) → Self  :121-121
-impl RadarChannel  :143-169
-  pub fn new(tx: broadcast::Sender<String>) → Self  :144-144
-  pub fn emit(&self, whisper: Whisper)  :149-149
-  pub fn emit_many(&self, whispers: impl IntoIterator<Item = Whisper>)  :164-164
+pub struct Whisper :52-65
+pub struct RadarChannel :139-141
+pub enum WhisperKind :14-22
+pub enum Severity :42-47
+impl WhisperKind :24-36
+ pub fn label(&self) → &'static str :25-25
+impl Whisper :67-132
+ pub fn compile_error(project: &str, file: PathBuf, line: u32, message: &str) → Self :68-68
+ pub fn security_vuln(project: &str, file: Option<PathBuf>, message: &str, cve: Option<&str>,) → Self :80-85
+ pub fn arch_violation(project: &str, file: PathBuf, message: &str, hint: Option<&str>) → Self :97-97
+ pub fn lock_conflict(project: &str, resource: &str, owner: &str) → Self :109-109
+ pub fn codebase_rule(project: &str, rule: &str, detail: &str) → Self :121-121
+impl RadarChannel :143-169
+ pub fn new(tx: broadcast::Sender<String>) → Self :144-144
+ pub fn emit(&self, whisper: Whisper) :149-149
+ pub fn emit_many(&self, whispers: impl IntoIterator<Item = Whisper>) :164-164
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/refactor_scan.rs
 ```
-pub struct RefactorIssue  :25-30
-pub struct RefactorReport  :33-39
-pub struct RefactorThresholds  :56-65
-pub struct PartialThresholds  :82-89
-pub struct RefactorConfig  :92-96
-pub enum RefactorSeverity  :8-12
-impl RefactorSeverity  :14-22
-  pub fn label(&self) → &'static str  :15-15
-impl RefactorReport  :41-51
-  pub fn empty() → Self  :42-42
-impl RefactorThresholds  :67-78
-impl RefactorConfig  :98-122
-  pub fn for_ext(&self, ext: &str) → RefactorThresholds  :99-99
-pub fn scan_project(root: &Path) → RefactorReport  :142-144
-pub fn scan_project_with(root: &Path, config: &RefactorConfig) → RefactorReport  :146-183
+pub struct RefactorIssue :25-30
+pub struct RefactorReport :33-39
+pub struct RefactorThresholds :56-65
+pub struct PartialThresholds :82-89
+pub struct RefactorConfig :92-96
+pub enum RefactorSeverity :8-12
+impl RefactorSeverity :14-22
+ pub fn label(&self) → &'static str :15-15
+impl RefactorReport :41-51
+ pub fn empty() → Self :42-42
+impl RefactorThresholds :67-78
+impl RefactorConfig :98-122
+ pub fn for_ext(&self, ext: &str) → RefactorThresholds :99-99
+pub fn scan_project(root: &Path) → RefactorReport :142-144
+pub fn scan_project_with(root: &Path, config: &RefactorConfig) → RefactorReport :146-183
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/search/hybrid.rs
 ```
-pub struct HybridResult  :19-32
-pub enum ResultSource  :35-39
-impl ResultSource  :41-49
-  pub fn label(&self) → &'static str  :42-42
-pub fn fuse(bm25_results: Vec<BM25Result>, vector_results: Vec<VectorResult>, top_n: usize,) → Vec<HybridResult>  :59-148
+pub struct HybridResult :19-32
+pub enum ResultSource :35-39
+impl ResultSource :41-49
+ pub fn label(&self) → &'static str :42-42
+pub fn fuse(bm25_results: Vec<BM25Result>, vector_results: Vec<VectorResult>, top_n: usize,) → Vec<HybridResult> :59-148
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/search/indexer.rs
 ```
-pub struct SearchResult  :62-68
-pub struct ProjectIndex  :74-81
-impl ProjectIndex  :83-231
-  pub fn build(root: &Path) → Result<Self>  :84-84
-  pub fn search(&self, query: &str) → Vec<SearchResult>  :150-150
-  pub fn load_or_build(root: &Path, db_path: &Path, force: bool) → Result<Self>  :210-210
+pub struct SearchResult :62-68
+pub struct ProjectIndex :74-81
+impl ProjectIndex :83-231
+ pub fn build(root: &Path) → Result<Self> :84-84
+ pub fn search(&self, query: &str) → Vec<SearchResult> :150-150
+ pub fn load_or_build(root: &Path, db_path: &Path, force: bool) → Result<Self> :210-210
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/search/trigram.rs
 ```
-pub struct LocateMatch  :10-14
-pub fn locate(root: &Path, db_path: &Path, pattern: &str, case_insensitive: bool, force: bool,) → Result<Vec<LocateMatch>>  :142-187
+pub struct LocateMatch :10-14
+pub fn locate(root: &Path, db_path: &Path, pattern: &str, case_insensitive: bool, force: bool,) → Result<Vec<LocateMatch>> :142-187
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/sentinel/compiler.rs
 ```
-pub fn run_cargo_check(project_path: &Path) → Result<Vec<ValidationError>>  :7-45
+pub fn run_cargo_check(project_path: &Path) → Result<Vec<ValidationError>> :7-45
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/sentinel/mod.rs
 ```
-pub enum SentinelState  :8-22
+pub enum SentinelState :8-22
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/sentinel/monitor.rs
 ```
-pub struct FileMonitor  :6-8
-impl FileMonitor  :10-33
-  pub fn new(path: impl AsRef<Path>) → Self  :11-11
-  pub fn watch(&self) → Result<Receiver<Result<Even...  :19-19
+pub struct FileMonitor :6-8
+impl FileMonitor :10-33
+ pub fn new(path: impl AsRef<Path>) → Self :11-11
+ pub fn watch(&self) → Result<Receiver<Result<Even... :19-19
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/sentinel/tester.rs
 ```
-pub fn run_cargo_test(project_path: &Path) → Result<Vec<ValidationError>>  :6-35
-pub fn has_tests(project_path: &Path) → bool  :37-51
+pub fn run_cargo_test(project_path: &Path) → Result<Vec<ValidationError>> :6-35
+pub fn has_tests(project_path: &Path) → bool :37-51
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session_canvas.rs
 ```
-pub struct CanvasNode  :9-14
-pub fn fold_events(events: &[SessionEvent]) → Vec<CanvasNode>  :19-50
-pub fn to_mermaid(session_id: &str, nodes: &[CanvasNode]) → String  :53-77
+pub struct CanvasNode :9-14
+pub fn fold_events(events: &[SessionEvent]) → Vec<CanvasNode> :19-50
+pub fn to_mermaid(session_id: &str, nodes: &[CanvasNode]) → String :53-77
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session_memory/distillation.rs
 ```
-pub fn rebuild_persona(conn: &rusqlite::Connection, project_key: &str) → Option<()>  :65-132
+pub fn rebuild_persona(conn: &rusqlite::Connection, project_key: &str) → Option<()> :65-132
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session_memory/heuristics.rs
 ```
-pub fn decision_lines_from_transcript(transcript: &str) → Vec<String>  :146-152
+pub fn decision_lines_from_transcript(transcript: &str) → Vec<String> :146-152
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session_memory/mod.rs
 ```
-pub fn generate_memory_entry(transcript: &str) → Option<String>  :17-50
-pub fn append_to_memory_md(project_path: &str, entry: &str) → std::io::Result<()>  :54-67
-pub fn post_session_memory_prompt(project_path: &str, session_started: SystemTime)  :71-120
-pub fn cmd_memory_gen(project: Option<&str>, json: bool)  :123-181
-pub fn auto_sync_agent_memory(agent: &str, project_path: &str, session_started: SystemTime, verbose: bool,)  :188-209
-pub fn sync_wrapper_launch_input(agent: &str, project_path: &str, wrapper_run_id: &str, input: &str, verbose: bool,)  :215-239
-pub fn sync_wrapper_session_note(agent: &str, project_path: &str, wrapper_run_id: &str, note: &str,)  :244-261
-pub fn auto_sync_claude_memory(project_path: &str, session_started: SystemTime)  :356-358
+pub fn generate_memory_entry(transcript: &str) → Option<String> :17-50
+pub fn append_to_memory_md(project_path: &str, entry: &str) → std::io::Result<()> :54-67
+pub fn post_session_memory_prompt(project_path: &str, session_started: SystemTime) :71-120
+pub fn cmd_memory_gen(project: Option<&str>, json: bool) :123-181
+pub fn auto_sync_agent_memory(agent: &str, project_path: &str, session_started: SystemTime, verbose: bool,) :188-209
+pub fn sync_wrapper_launch_input(agent: &str, project_path: &str, wrapper_run_id: &str, input: &str, verbose: bool,) :215-239
+pub fn sync_wrapper_session_note(agent: &str, project_path: &str, wrapper_run_id: &str, note: &str,) :244-261
+pub fn auto_sync_claude_memory(project_path: &str, session_started: SystemTime) :356-358
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session_memory/transcript_io.rs
 ```
-pub struct ScopedTranscript  :22-25
-pub enum TranscriptScope  :7-11
-impl TranscriptScope  :13-17
-  pub fn permits_automatic_memory_import(self) → bool  :14-14
-pub fn find_latest_conversation(project_path: &str, min_mtime: Option<SystemTime>,) → Option<PathBuf>  :35-96
-pub fn extract_transcript(jsonl_path: &Path) → String  :100-130
-pub fn collect_scoped_transcript(agent: &str, project_path: &str, session_started: SystemTime,) → ScopedTranscript  :239-275
-pub fn collect_transcript(agent: &str, project_path: &str, session_started: SystemTime) → String  :280-287
+pub struct ScopedTranscript :22-25
+pub enum TranscriptScope :7-11
+impl TranscriptScope :13-17
+ pub fn permits_automatic_memory_import(self) → bool :14-14
+pub fn find_latest_conversation(project_path: &str, min_mtime: Option<SystemTime>,) → Option<PathBuf> :35-96
+pub fn extract_transcript(jsonl_path: &Path) → String :100-130
+pub fn collect_scoped_transcript(agent: &str, project_path: &str, session_started: SystemTime,) → ScopedTranscript :239-275
+pub fn collect_transcript(agent: &str, project_path: &str, session_started: SystemTime) → String :280-287
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session_review.rs
 ```
-pub struct PostRunReview  :7-12
-impl PostRunReview  :14-18
-  pub fn to_json(&self) → String  :15-15
-pub fn build_review(conn: &Connection, agent: &str, project_dir: &Path, session_started: SystemTime, session_start_utc: &str, session_end_utc: &str,) → PostRunReview  :20-70
+pub struct PostRunReview :7-12
+impl PostRunReview :14-18
+ pub fn to_json(&self) → String :15-15
+pub fn build_review(conn: &Connection, agent: &str, project_dir: &Path, session_started: SystemTime, session_start_utc: &str, session_end_utc: &str,) → PostRunReview :20-70
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/session.rs
 ```
-pub struct Session  :8-15
-pub struct SessionEvent  :18-24
-pub struct SessionStore  :26-28
-impl SessionStore  :30-172
-  pub fn new(db_path: impl Into<PathBuf>) → Self  :31-31
-  pub fn default_path() → PathBuf  :38-38
-  pub fn start(&self, agent: &str, project: Option<&str>) → String  :73-73
-  pub fn end(&self, id: &str, summary: Option<&str>)  :85-85
-  pub fn record_event(&self, session_id: &str, event_type: &str, data: &str)  :95-95
-  pub fn get(&self, id: &str) → Option<Session>  :105-105
-  pub fn events(&self, session_id: &str) → Vec<SessionEvent>  :124-124
-  pub fn current_open(&self) → Option<Session>  :152-152
+pub struct Session :8-15
+pub struct SessionEvent :18-24
+pub struct SessionStore :26-28
+impl SessionStore :30-172
+ pub fn new(db_path: impl Into<PathBuf>) → Self :31-31
+ pub fn default_path() → PathBuf :38-38
+ pub fn start(&self, agent: &str, project: Option<&str>) → String :73-73
+ pub fn end(&self, id: &str, summary: Option<&str>) :85-85
+ pub fn record_event(&self, session_id: &str, event_type: &str, data: &str) :95-95
+ pub fn get(&self, id: &str) → Option<Session> :105-105
+ pub fn events(&self, session_id: &str) → Vec<SessionEvent> :124-124
+ pub fn current_open(&self) → Option<Session> :152-152
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/swarm/merge.rs
 ```
-pub struct DiffSummary  :6-11
-pub fn diff_summary(project_path: &Path, branch: &str) → Result<DiffSummary>  :14-38
-pub fn merge_branch(project_path: &Path, branch: &str, message: &str) → Result<()>  :41-50
-pub fn delete_branch(project_path: &Path, branch: &str) → Result<()>  :53-60
+pub struct DiffSummary :6-11
+pub fn diff_summary(project_path: &Path, branch: &str) → Result<DiffSummary> :14-38
+pub fn merge_branch(project_path: &Path, branch: &str, message: &str) → Result<()> :41-50
+pub fn delete_branch(project_path: &Path, branch: &str) → Result<()> :53-60
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/swarm/mod.rs
 ```
-pub struct SwarmTask  :10-24
-pub enum SwarmStatus  :27-34
+pub struct SwarmTask :10-24
+pub enum SwarmStatus :27-34
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/swarm/store.rs
 ```
-pub struct SwarmStore  :8-10
-impl SwarmStore  :12-148
-  pub fn new(db_path: impl Into<PathBuf>) → Self  :13-13
-  pub fn default_path() → PathBuf  :24-24
-  pub fn create(&self, project_name: &str, project_path: &Path, description: &str, agent: &str,) → Result<SwarmTask>  :41-47
-  pub fn get(&self, id: &str) → Option<SwarmTask>  :100-100
-  pub fn list_active(&self) → Vec<SwarmTask>  :129-129
+pub struct SwarmStore :8-10
+impl SwarmStore :12-148
+ pub fn new(db_path: impl Into<PathBuf>) → Self :13-13
+ pub fn default_path() → PathBuf :24-24
+ pub fn create(&self, project_name: &str, project_path: &Path, description: &str, agent: &str,) → Result<SwarmTask> :41-47
+ pub fn get(&self, id: &str) → Option<SwarmTask> :100-100
+ pub fn list_active(&self) → Vec<SwarmTask> :129-129
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/swarm/worktree.rs
 ```
-pub fn create_worktree(project_path: &Path, task_id: Uuid, task_description: &str,) → Result<(PathBuf, String)>  :8-45
-pub fn remove_worktree(project_path: &Path, worktree_path: &Path) → Result<()>  :48-67
-pub fn list_worktrees(project_path: &Path) → Result<Vec<String>>  :70-85
+pub fn create_worktree(project_path: &Path, task_id: Uuid, task_description: &str,) → Result<(PathBuf, String)> :8-45
+pub fn remove_worktree(project_path: &Path, worktree_path: &Path) → Result<()> :48-67
+pub fn list_worktrees(project_path: &Path) → Result<Vec<String>> :70-85
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/sync.rs
 ```
-pub fn sync_universe(dev_ops: &Path, master: &Path) → Result<String>  :5-43
+pub fn sync_universe(dev_ops: &Path, master: &Path) → Result<String> :5-43
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/system_scan/db_budget.rs
 ```
-pub fn check() → DbBudgetReport  :37-42
+pub fn check() → DbBudgetReport :37-42
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/system_scan/doctor.rs
 ```
-pub struct DoctorResult  :36-41
-pub enum DoctorTier  :7-11
-impl DoctorTier  :13-21
-  pub fn as_str(&self) → &'static str  :14-14
-impl DoctorTier  :23-33
-pub fn save_doctor_result(conn: &Connection, res: &DoctorResult) → Result<()>  :43-56
-pub fn get_doctor_result(conn: &Connection, agent: &str) → Result<Option<DoctorResult>>  :58-76
-pub fn run_doctor_check(agent: &str, requested_tier: Option<DoctorTier>) → DoctorResult  :78-221
+pub struct DoctorResult :36-41
+pub enum DoctorTier :7-11
+impl DoctorTier :13-21
+ pub fn as_str(&self) → &'static str :14-14
+impl DoctorTier :23-33
+pub fn save_doctor_result(conn: &Connection, res: &DoctorResult) → Result<()> :43-56
+pub fn get_doctor_result(conn: &Connection, agent: &str) → Result<Option<DoctorResult>> :58-76
+pub fn run_doctor_check(agent: &str, requested_tier: Option<DoctorTier>) → DoctorResult :78-221
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/system_scan/mod.rs
 ```
-pub struct SystemAiTool  :14-19
-pub struct UsageSnapshot  :53-67
-pub struct TableRowCount  :91-94
-pub struct ProjectMemBudget  :99-104
-pub struct DbStorageConsumer  :109-112
-pub struct DbBudgetReport  :117-127
-pub struct AiAuditReport  :130-136
-pub enum ToolStatus  :22-32
-pub enum UsageConfidence  :36-40
-pub enum UsageSource  :44-50
-impl UsageSnapshot  :69-87
-pub fn scan_system() → AiAuditReport  :138-155
-pub fn db_budget_check() → DbBudgetReport  :163-165
+pub struct SystemAiTool :14-19
+pub struct UsageSnapshot :53-67
+pub struct TableRowCount :91-94
+pub struct ProjectMemBudget :99-104
+pub struct DbStorageConsumer :109-112
+pub struct DbBudgetReport :117-127
+pub struct AiAuditReport :130-136
+pub enum ToolStatus :22-32
+pub enum UsageConfidence :36-40
+pub enum UsageSource :44-50
+impl UsageSnapshot :69-87
+pub fn scan_system() → AiAuditReport :138-155
+pub fn db_budget_check() → DbBudgetReport :163-165
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/tasks.rs
 ```
-pub struct Task  :8-18
-impl Task  :20-52
-  pub fn display(&self) → &str  :22-22
-  pub fn is_persisted(&self) → bool  :27-27
-  pub fn from_personal_row(r: raios_core::db::PersonalTaskRow) → Self  :32-32
-  pub fn agent_label(&self) → Option<&str>  :43-43
-pub fn parse_task_line(line: &str) → Option<Task>  :57-59
-pub fn load_tasks(dev_ops: &Path) → Result<Vec<Task>>  :157-187
-pub fn save_tasks(dev_ops: &Path, tasks: &[Task]) → Result<()>  :189-211
-pub fn dispatch_to_agent(task: &Task, agent: &str, project_path: Option<&PathBuf>, sentinel_errors: Option<Vec<String>>,) → String  :218-255
+pub struct Task :8-18
+impl Task :20-52
+ pub fn display(&self) → &str :22-22
+ pub fn is_persisted(&self) → bool :27-27
+ pub fn from_personal_row(r: raios_core::db::PersonalTaskRow) → Self :32-32
+ pub fn agent_label(&self) → Option<&str> :43-43
+pub fn parse_task_line(line: &str) → Option<Task> :57-59
+pub fn load_tasks(dev_ops: &Path) → Result<Vec<Task>> :157-187
+pub fn save_tasks(dev_ops: &Path, tasks: &[Task]) → Result<()> :189-211
+pub fn dispatch_to_agent(task: &Task, agent: &str, project_path: Option<&PathBuf>, sentinel_errors: Option<Vec<String>>,) → String :218-255
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/trace_recall.rs
 ```
-pub fn record_post_run_review_trace(conn: &Connection, agent: &str, project_dir: &str, success: bool, review: &crate::session_review::PostRunReview, related_task_id: Option<&str>,) → rusqlite::Result<Option<Str...  :6-89
-pub fn relevant_trace_block(conn: &Connection, project_path: Option<&str>, query: &str, limit: usize,) → Option<String>  :91-159
+pub fn record_post_run_review_trace(conn: &Connection, agent: &str, project_dir: &str, success: bool, review: &crate::session_review::PostRunReview, related_task_id: Option<&str>,) → rusqlite::Result<Option<Str... :6-89
+pub fn relevant_trace_block(conn: &Connection, project_path: Option<&str>, query: &str, limit: usize,) → Option<String> :91-159
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-runtime/src/workers.rs
 ```
-pub enum RuntimeEvent  :11-20
-pub fn spawn_embedded_workers(tx: Sender<RuntimeEvent>, dev_ops: PathBuf)  :29-45
+pub enum RuntimeEvent :11-20
+pub fn spawn_embedded_workers(tx: Sender<RuntimeEvent>, dev_ops: PathBuf) :29-45
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/Cargo.toml
@@ -499,70 +499,70 @@ key tempfile
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/action_types.rs
 ```
-pub enum FactoryAction  :5-14
-pub enum HubAction  :17-41
-pub enum HubApiKeyAction  :44-57
-pub enum PolicyCmd  :60-93
-pub enum MemAction  :96-156
-pub enum TraceAction  :159-209
-pub enum AnkaAction  :212-239
-pub enum AgentWrapperCmd  :242-255
-pub enum CronAction  :258-282
-pub enum HandoffTarget  :285-290
-pub enum HandoffStatus  :304-308
-pub enum QuarantineAction  :344-355
-pub enum SecretAction  :358-375
-pub enum SwarmAction  :378-396
-pub enum EvolveAction  :399-419
-pub enum GitCommands  :422-460
-impl HandoffTarget  :292-301
-  pub fn as_str(&self) → &'static str  :293-293
-impl HandoffStatus  :310-318
-  pub fn as_str(&self) → &'static str  :311-311
+pub enum FactoryAction :5-14
+pub enum HubAction :17-41
+pub enum HubApiKeyAction :44-57
+pub enum PolicyCmd :60-93
+pub enum MemAction :96-156
+pub enum TraceAction :159-209
+pub enum AnkaAction :212-239
+pub enum AgentWrapperCmd :242-255
+pub enum CronAction :258-282
+pub enum HandoffTarget :285-290
+pub enum HandoffStatus :304-308
+pub enum QuarantineAction :344-355
+pub enum SecretAction :358-375
+pub enum SwarmAction :378-396
+pub enum EvolveAction :399-419
+pub enum GitCommands :422-460
+impl HandoffTarget :292-301
+ pub fn as_str(&self) → &'static str :293-293
+impl HandoffStatus :310-318
+ pub fn as_str(&self) → &'static str :311-311
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/agent_wrapper.rs
 ```
-pub enum AgentWrapperAction  :3-7
-pub fn cmd_agent_wrapper(action: AgentWrapperAction, json: bool)  :9-133
+pub enum AgentWrapperAction :3-7
+pub fn cmd_agent_wrapper(action: AgentWrapperAction, json: bool) :9-133
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/args.rs
 ```
-pub struct Cli  :13-24
-pub enum InstinctCmd  :27-41
-pub enum Commands  :44-319
+pub struct Cli :13-24
+pub enum InstinctCmd :27-41
+pub enum Commands :44-319
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/cron.rs
 ```
-pub fn cmd_cron(action: CronAction, json: bool)  :28-158
+pub fn cmd_cron(action: CronAction, json: bool) :28-158
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/hub.rs
 ```
-pub fn cmd_start(json: bool)  :80-156
-pub fn cmd_stop(json: bool)  :160-204
-pub fn cmd_status(json: bool)  :290-344
-pub fn cmd_install(enable: bool, json: bool)  :372-435
-pub fn cmd_logs(lines: usize)  :507-556
-pub fn cmd_api_key_show(reveal: bool)  :583-605
-pub fn cmd_api_key_generate(force: bool)  :607-687
+pub fn cmd_start(json: bool) :80-156
+pub fn cmd_stop(json: bool) :160-204
+pub fn cmd_status(json: bool) :290-344
+pub fn cmd_install(enable: bool, json: bool) :372-435
+pub fn cmd_logs(lines: usize) :507-556
+pub fn cmd_api_key_show(reveal: bool) :583-605
+pub fn cmd_api_key_generate(force: bool) :607-687
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/mod.rs
 ```
-pub fn run(cli: Cli)  :79-221
+pub fn run(cli: Cli) :79-221
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/reflect.rs
 ```
-pub fn cmd_reflect(dev_ops_path: &Path, json: bool)  :16-30
+pub fn cmd_reflect(dev_ops_path: &Path, json: bool) :16-30
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-cli/src/cli/task_update.rs
 ```
-pub fn run_refactor_flag(json: bool)  :54-68
+pub fn run_refactor_flag(json: bool) :54-68
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/Cargo.toml
@@ -582,44 +582,44 @@ key tempfile
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/mod.rs
 ```
-impl RpcResponse  :57-77
-impl McpServer  :97-205
-pub fn run_stdio() → Result<()>  :209-244
+impl RpcResponse :57-77
+impl McpServer :97-205
+pub fn run_stdio() → Result<()> :209-244
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/resources.rs
 ```
-impl McpServer  :5-93
+impl McpServer :5-93
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/tools_dev.rs
 ```
-impl McpServer  :5-120
+impl McpServer :5-120
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/tools_factory.rs
 ```
-impl McpServer  :12-50
+impl McpServer :12-50
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/tools_git.rs
 ```
-impl McpServer  :5-94
+impl McpServer :5-94
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/tools_swarm.rs
 ```
-impl McpServer  :5-129
+impl McpServer :5-129
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/tools_workspace.rs
 ```
-impl McpServer  :84-191
+impl McpServer :84-191
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-mcp/src/mcp/tools.rs
 ```
-impl McpServer  :6-73
+impl McpServer :6-73
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/Cargo.toml
@@ -643,222 +643,222 @@ key tempfile
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/client.rs
 ```
-pub struct Client  :7-9
-impl Client  :11-55
-  pub fn new(tx_daemon: Option<Sender<String>>) → Self  :13-13
-  pub fn send_command(&self, cmd: Command) → Result<(), Problem>  :18-18
-  pub fn send_factory_command(&self, cmd: FactoryCommand) → Result<(), Problem>  :25-25
-  pub fn send_query(&self, query: Query) → Result<(), Problem>  :43-43
+pub struct Client :7-9
+impl Client :11-55
+ pub fn new(tx_daemon: Option<Sender<String>>) → Self :13-13
+ pub fn send_command(&self, cmd: Command) → Result<(), Problem> :18-18
+ pub fn send_factory_command(&self, cmd: FactoryCommand) → Result<(), Problem> :25-25
+ pub fn send_query(&self, query: Query) → Result<(), Problem> :43-43
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/control_navigation.rs
 ```
-impl App  :14-96
+impl App :14-96
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/editor.rs
 ```
-pub struct Editor  :38-44
-impl Editor  :46-161
-  pub fn from_content(content: &str, view_height: usize) → Self  :47-47
-  pub fn content(&self) → String  :63-63
-  pub fn handle_key(&mut self, key: KeyEvent)  :67-67
-pub fn simple_diff(old: &str, new: &str) → Vec<String>  :4-33
-pub fn char_to_byte(s: &str, char_pos: usize) → usize  :163-168
+pub struct Editor :38-44
+impl Editor :46-161
+ pub fn from_content(content: &str, view_height: usize) → Self :47-47
+ pub fn content(&self) → String :63-63
+ pub fn handle_key(&mut self, key: KeyEvent) :67-67
+pub fn simple_diff(old: &str, new: &str) → Vec<String> :4-33
+pub fn char_to_byte(s: &str, char_pos: usize) → usize :163-168
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/intent.rs
 ```
-pub enum Intent  :8-43
+pub enum Intent :8-43
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/ipc.rs
 ```
-pub fn connect_daemon(tx: Sender<BgMsg>) → Option<Sender<String>>  :8-10
-pub fn connect_daemon_addr(tx: Sender<BgMsg>, remote_host: Option<String>,) → Option<Sender<String>>  :14-109
+pub fn connect_daemon(tx: Sender<BgMsg>) → Option<Sender<String>> :8-10
+pub fn connect_daemon_addr(tx: Sender<BgMsg>, remote_host: Option<String>,) → Option<Sender<String>> :14-109
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/mod.rs
 ```
-pub struct PaletteItem  :43-48
-pub struct App  :194-271
-impl App  :273-277
-impl App  :279-424
-  pub fn new() → Self  :281-281
-  pub fn new_remote(host: String) → Self  :373-373
-pub fn filtered_palette(query: &str) → Vec<&'static PaletteItem>  :163-171
+pub struct PaletteItem :43-48
+pub struct App :194-271
+impl App :273-277
+impl App :279-424
+ pub fn new() → Self :281-281
+ pub fn new_remote(host: String) → Self :373-373
+pub fn filtered_palette(query: &str) → Vec<&'static PaletteItem> :163-171
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/reducer.rs
 ```
-pub fn reduce_intent(store: &mut Store, intent: Intent)  :9-63
-pub fn reduce_event(store: &mut Store, event: Event)  :66-101
+pub fn reduce_intent(store: &mut Store, intent: Intent) :9-63
+pub fn reduce_event(store: &mut Store, event: Event) :66-101
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/route.rs
 ```
-pub enum Route  :7-17
-impl Route  :37-119
-  pub fn all() → &'static [Route]  :39-39
-  pub fn title(&self) → &'static str  :44-44
-  pub fn tab_label(&self) → &'static str  :54-54
-  pub fn tab_at_column(column: u16) → Option<Self>  :64-64
-  pub fn next(&self) → Self  :80-80
-  pub fn prev(&self) → Self  :90-90
-  pub fn from_index(idx: usize) → Self  :100-100
-  pub fn to_index(&self) → usize  :111-111
-pub fn dashboard_header_height(screen_height: u16) → u16  :29-35
+pub enum Route :7-17
+impl Route :37-119
+ pub fn all() → &'static [Route] :39-39
+ pub fn title(&self) → &'static str :44-44
+ pub fn tab_label(&self) → &'static str :54-54
+ pub fn tab_at_column(column: u16) → Option<Self> :64-64
+ pub fn next(&self) → Self :80-80
+ pub fn prev(&self) → Self :90-90
+ pub fn from_index(idx: usize) → Self :100-100
+ pub fn to_index(&self) → usize :111-111
+pub fn dashboard_header_height(screen_height: u16) → u16 :29-35
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/services.rs
 ```
-pub struct InboxPanelData  :16-20
-pub struct SchedulerPanelData  :23-25
-pub struct PoliciesPanelData  :28-31
-pub struct ProjectListItem  :34-42
-pub struct ProjectsPanelData  :45-49
-pub struct ProjectDetailData  :52-55
-pub fn load_inbox_panel_data() → Result<InboxPanelData, String>  :67-70
-pub fn load_scheduler_panel_data() → Result<SchedulerPanelData, ...  :82-87
-pub fn load_policies_panel_data() → PoliciesPanelData  :89-99
-pub fn sort_project_indices(projects: &[EntityProject], health: &[ProjectHealth], sort: &SortMode,) → Vec<usize>  :101-140
-pub fn build_projects_panel_data(app: &App) → ProjectsPanelData  :142-167
-pub fn load_project_detail_data(project_path: &Path) → ProjectDetailData  :169-176
-pub fn load_graph_report_lines(project_path: &Path) → Result<Vec<String>, String>  :245-254
-pub fn load_git_diff_lines(project_path: &Path) → Vec<String>  :256-273
-pub fn daemon_search_command(query: &str) → String  :275-280
-pub fn daemon_get_logs_command(limit: u64) → String  :282-284
-pub fn daemon_submit_raios_command(args: &str) → String  :286-293
-pub fn create_vault_note(vault_projects_path: &Path, project: &EntityProject,) → std::io::Result<bool>  :295-315
-pub fn probe_service_active(service: &str) → bool  :317-323
-pub fn scan_extensions(dev_ops_path: &Path) → Vec<ExtensionInfo>  :325-425
-pub fn run_extension_command_bg(tx: &std::sync::mpsc::Sender<BgMsg>, ext_path: &Path, toml_path: &Path, ext_name: &str, cmd_name: &str,)  :427-582
-pub fn read_env_key(env_path: &Path, key: &str) → Option<String>  :607-620
-pub fn write_env_key(env_path: &Path, key: &str, value: &str) → std::io::Result<()>  :622-643
+pub struct InboxPanelData :16-20
+pub struct SchedulerPanelData :23-25
+pub struct PoliciesPanelData :28-31
+pub struct ProjectListItem :34-42
+pub struct ProjectsPanelData :45-49
+pub struct ProjectDetailData :52-55
+pub fn load_inbox_panel_data() → Result<InboxPanelData, String> :67-70
+pub fn load_scheduler_panel_data() → Result<SchedulerPanelData, ... :82-87
+pub fn load_policies_panel_data() → PoliciesPanelData :89-99
+pub fn sort_project_indices(projects: &[EntityProject], health: &[ProjectHealth], sort: &SortMode,) → Vec<usize> :101-140
+pub fn build_projects_panel_data(app: &App) → ProjectsPanelData :142-167
+pub fn load_project_detail_data(project_path: &Path) → ProjectDetailData :169-176
+pub fn load_graph_report_lines(project_path: &Path) → Result<Vec<String>, String> :245-254
+pub fn load_git_diff_lines(project_path: &Path) → Vec<String> :256-273
+pub fn daemon_search_command(query: &str) → String :275-280
+pub fn daemon_get_logs_command(limit: u64) → String :282-284
+pub fn daemon_submit_raios_command(args: &str) → String :286-293
+pub fn create_vault_note(vault_projects_path: &Path, project: &EntityProject,) → std::io::Result<bool> :295-315
+pub fn probe_service_active(service: &str) → bool :317-323
+pub fn scan_extensions(dev_ops_path: &Path) → Vec<ExtensionInfo> :325-425
+pub fn run_extension_command_bg(tx: &std::sync::mpsc::Sender<BgMsg>, ext_path: &Path, toml_path: &Path, ext_name: &str, cmd_name: &str,) :427-582
+pub fn read_env_key(env_path: &Path, key: &str) → Option<String> :607-620
+pub fn write_env_key(env_path: &Path, key: &str, value: &str) → std::io::Result<()> :622-643
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/state.rs
 ```
-pub struct ExtCmdInfo  :11-14
-pub struct ExtConfigField  :17-24
-pub struct ExtServiceStatus  :27-30
-pub struct ExtensionInfo  :33-42
-pub struct ExtState  :52-62
-pub struct Activity  :184-189
-pub struct LogEntry  :192-196
-pub struct SetupField  :201-206
-pub struct PortfolioStats  :266-279
-pub struct CreatorState  :365-370
-pub struct PendingConstitutionSave  :373-379
-pub struct ConstitutionState  :382-392
-pub struct SearchState  :397-404
-pub struct MempalaceState  :409-417
-pub struct HealthState  :422-429
-pub struct TaskState  :434-437
-pub struct SystemState  :442-463
-pub struct WizardState  :468-485
-pub struct SetupState  :488-495
-pub struct InventoryState  :498-506
-pub struct UIState  :509-520
-pub struct TimelineState  :523-526
-pub struct ProjectState  :531-545
-pub struct EditorState  :550-558
-pub enum ExtFocus  :45-49
+pub struct ExtCmdInfo :11-14
+pub struct ExtConfigField :17-24
+pub struct ExtServiceStatus :27-30
+pub struct ExtensionInfo :33-42
+pub struct ExtState :52-62
+pub struct Activity :184-189
+pub struct LogEntry :192-196
+pub struct SetupField :201-206
+pub struct PortfolioStats :266-279
+pub struct CreatorState :365-370
+pub struct PendingConstitutionSave :373-379
+pub struct ConstitutionState :382-392
+pub struct SearchState :397-404
+pub struct MempalaceState :409-417
+pub struct HealthState :422-429
+pub struct TaskState :434-437
+pub struct SystemState :442-463
+pub struct WizardState :468-485
+pub struct SetupState :488-495
+pub struct InventoryState :498-506
+pub struct UIState :509-520
+pub struct TimelineState :523-526
+pub struct ProjectState :531-545
+pub struct EditorState :550-558
+pub enum ExtFocus :45-49
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/app/store.rs
 ```
-pub struct Store  :11-40
-impl Store  :42-68
-impl Store  :70-88
-  pub fn new() → Self  :72-72
-  pub fn set_snapshot(&mut self, env: SnapshotEnvelope)  :77-77
-  pub fn add_log(&mut self, log: impl Into<String>)  :82-82
+pub struct Store :11-40
+impl Store :42-68
+impl Store :70-88
+ pub fn new() → Self :72-72
+ pub fn set_snapshot(&mut self, env: SnapshotEnvelope) :77-77
+ pub fn add_log(&mut self, log: impl Into<String>) :82-82
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/setup_wizard/exec.rs
 ```
-pub fn exec_workspace(dev_ops: &Path, github_user: &str) → Vec<WizardAction>  :10-91
-pub fn exec_master(master_path: &Path, github_user: &str) → Vec<WizardAction>  :94-146
-pub fn exec_claude(dev_ops: &Path, master_path: &Path) → Vec<WizardAction>  :149-184
-pub fn exec_codex(master_path: &Path) → Vec<WizardAction>  :187-207
-pub fn exec_opencode() → Vec<WizardAction>  :210-248
-pub fn exec_skills(dev_ops: &Path) → Vec<WizardAction>  :251-297
-pub fn exec_agent_wrapper(choice: usize) → Vec<WizardAction>  :300-312
-pub fn exec_initialize(dev_ops: &Path, master_path: &Path, skills_path: &Path, vault_path: Option<&Path>, agent_wrapper_enabled: bool,) → Vec<WizardAction>  :315-352
+pub fn exec_workspace(dev_ops: &Path, github_user: &str) → Vec<WizardAction> :10-91
+pub fn exec_master(master_path: &Path, github_user: &str) → Vec<WizardAction> :94-146
+pub fn exec_claude(dev_ops: &Path, master_path: &Path) → Vec<WizardAction> :149-184
+pub fn exec_codex(master_path: &Path) → Vec<WizardAction> :187-207
+pub fn exec_opencode() → Vec<WizardAction> :210-248
+pub fn exec_skills(dev_ops: &Path) → Vec<WizardAction> :251-297
+pub fn exec_agent_wrapper(choice: usize) → Vec<WizardAction> :300-312
+pub fn exec_initialize(dev_ops: &Path, master_path: &Path, skills_path: &Path, vault_path: Option<&Path>, agent_wrapper_enabled: bool,) → Vec<WizardAction> :315-352
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/setup_wizard/types.rs
 ```
-pub struct AgentStatus  :88-113
-pub struct WizardAction  :162-169
-pub enum WizardStep  :7-29
-impl WizardStep  :31-84
-  pub fn next(&self) → Self  :33-33
-  pub fn index(&self) → usize  :49-49
-  pub fn total() → usize  :65-65
-  pub fn title(&self) → &'static str  :70-70
-impl WizardAction  :171-193
-pub fn detect_agents() → AgentStatus  :116-144
+pub struct AgentStatus :88-113
+pub struct WizardAction :162-169
+pub enum WizardStep :7-29
+impl WizardStep :31-84
+ pub fn next(&self) → Self :33-33
+ pub fn index(&self) → usize :49-49
+ pub fn total() → usize :65-65
+ pub fn title(&self) → &'static str :70-70
+impl WizardAction :171-193
+pub fn detect_agents() → AgentStatus :116-144
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/components.rs
 ```
-pub fn render_boot(frame: &mut Frame, app: &App)  :16-70
-pub fn render_bouncing_alert(frame: &mut Frame, app: &App)  :73-109
-pub fn render_launcher(frame: &mut Frame, area: Rect, app: &App)  :112-181
-pub fn render_command_palette(frame: &mut Frame, app: &App)  :184-246
-pub fn render_file_changed_badge(frame: &mut Frame, _app: &App)  :249-265
-pub fn render_launcher_modal(frame: &mut Frame, app: &App)  :268-319
-pub fn center_rect(width: u16, height: u16, parent: Rect) → Rect  :322-331
-pub fn render_handover_modal(frame: &mut Frame, app: &App)  :334-401
-pub fn render_constitution_save_modal(frame: &mut Frame, app: &App)  :404-452
+pub fn render_boot(frame: &mut Frame, app: &App) :16-70
+pub fn render_bouncing_alert(frame: &mut Frame, app: &App) :73-109
+pub fn render_launcher(frame: &mut Frame, area: Rect, app: &App) :112-181
+pub fn render_command_palette(frame: &mut Frame, app: &App) :184-246
+pub fn render_file_changed_badge(frame: &mut Frame, _app: &App) :249-265
+pub fn render_launcher_modal(frame: &mut Frame, app: &App) :268-319
+pub fn center_rect(width: u16, height: u16, parent: Rect) → Rect :322-331
+pub fn render_handover_modal(frame: &mut Frame, app: &App) :334-401
+pub fn render_constitution_save_modal(frame: &mut Frame, app: &App) :404-452
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/filebrowser.rs
 ```
-pub fn render_file_panel(frame: &mut Frame, area: Rect, app: &App, files: &[FileEntry])  :15-69
-pub fn render_file_view(frame: &mut Frame, app: &App)  :72-195
-pub fn render_file_edit(frame: &mut Frame, app: &App)  :198-323
+pub fn render_file_panel(frame: &mut Frame, area: Rect, app: &App, files: &[FileEntry]) :15-69
+pub fn render_file_view(frame: &mut Frame, app: &App) :72-195
+pub fn render_file_edit(frame: &mut Frame, app: &App) :198-323
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/health.rs
 ```
-pub fn render_diagnostics(frame: &mut Frame, area: Rect, app: &App)  :14-62
-pub fn render_health_view(frame: &mut Frame, app: &App)  :65-197
-pub fn render_system_audit(frame: &mut Frame, area: Rect, app: &App)  :311-402
+pub fn render_diagnostics(frame: &mut Frame, area: Rect, app: &App) :14-62
+pub fn render_health_view(frame: &mut Frame, app: &App) :65-197
+pub fn render_system_audit(frame: &mut Frame, area: Rect, app: &App) :311-402
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/mempalace.rs
 ```
-pub fn render_mempalace_info(frame: &mut Frame, area: Rect, app: &App)  :14-36
-pub fn render_mempalace_view(frame: &mut Frame, app: &App)  :39-193
+pub fn render_mempalace_info(frame: &mut Frame, area: Rect, app: &App) :14-36
+pub fn render_mempalace_view(frame: &mut Frame, app: &App) :39-193
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/mod.rs
 ```
-pub fn spinner_char(tick: u64) → char  :50-52
-pub fn render(frame: &mut Frame, app: &App)  :67-101
-pub fn update_code_block_state(line: &str, ext: &str, in_block: &mut bool)  :130-137
-pub fn highlight_line(line: &'a str, in_block: &mut bool, ext: &str) → Vec<Span<'a>>  :140-160
+pub fn spinner_char(tick: u64) → char :50-52
+pub fn render(frame: &mut Frame, app: &App) :67-101
+pub fn update_code_block_state(line: &str, ext: &str, in_block: &mut bool) :130-137
+pub fn highlight_line(line: &'a str, in_block: &mut bool, ext: &str) → Vec<Span<'a>> :140-160
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/projects.rs
 ```
-pub fn render_projects(frame: &mut Frame, area: Rect, app: &App)  :14-129
-pub fn render_project_detail(frame: &mut Frame, app: &App)  :132-284
-pub fn render_graph_report(frame: &mut Frame, app: &App)  :427-467
+pub fn render_projects(frame: &mut Frame, area: Rect, app: &App) :14-129
+pub fn render_project_detail(frame: &mut Frame, app: &App) :132-284
+pub fn render_graph_report(frame: &mut Frame, app: &App) :427-467
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/search.rs
 ```
-pub fn render_search(frame: &mut Frame, app: &App)  :14-96
-pub fn render_search_panel(frame: &mut Frame, area: Rect, app: &App)  :99-193
+pub fn render_search(frame: &mut Frame, app: &App) :14-96
+pub fn render_search_panel(frame: &mut Frame, area: Rect, app: &App) :99-193
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/crates/raios-surface-tui/src/ui/sentinel.rs
 ```
-pub fn render_sentinel_hub(frame: &mut Frame, area: Rect, app: &App)  :14-75
+pub fn render_sentinel_hub(frame: &mut Frame, area: Rect, app: &App) :14-75
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/docker-compose.yml
@@ -916,9 +916,9 @@ h2 PR review checklist
 ### .claude/worktrees/bootstrap-safety-plan/docs/RBJ_REPORTS/2026-05-17_Initial_Audit.md
 ```
 h1 R-AI-OS Stratejik Analiz Raporu (RBJ-001)
-h2 🛑 1. RED TEAM RAPORU (Acımasız Eleştiri)
-h2 🛡️ 2. BLUE TEAM RAPORU (Mimari Savunma)
-h2 ⚖️ 3. YARGIÇ KARARI (Stratejik Yön)
+h2 1. RED TEAM RAPORU (Acımasız Eleştiri)
+h2 2. BLUE TEAM RAPORU (Mimari Savunma)
+h2 3. YARGIÇ KARARI (Stratejik Yön)
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/docs/RBJ_REPORTS/2026-06-10_Findings_Report.md
@@ -1085,8 +1085,8 @@ h2 Task 5: Diff Inbox Overlay (VS Code)
 h2 Task 6: Jump to Code Bridge (TUI → IDE)
 h2 Task 7: Package & Yayın
 h2 Özet
-h3 Phase 9A (Daemon değişikliği yok) ✅
-h3 Phase 9B (Daemon extension gerekli) ✅
+h3 Phase 9A (Daemon değişikliği yok)
+h3 Phase 9B (Daemon extension gerekli)
 h3 IPC Protokol Özeti
 code-fence plain
 code-fence ---
@@ -2517,10 +2517,10 @@ code-fence ---
 
 ### .claude/worktrees/bootstrap-safety-plan/docs/WIKI/07-Contributing.md
 ```
-h1 🤝 Contributing to R-AI-OS
-h2 📜 The Anayasa (MASTER.md)
-h2 🤖 Agent Compliance
-h2 🧠 Memory Format
+h1 Contributing to R-AI-OS
+h2 The Anayasa (MASTER.md)
+h2 Agent Compliance
+h2 Memory Format
 h1 [Project Name] Memory
 h2 Current Status
 h2 [Agent Name]
@@ -2531,24 +2531,24 @@ h3 In Progress
 h3 Next Steps
 h2 Decision Log
 h2 Instincts
-h2 🛠️ Pull Request Rules
+h2 Pull Request Rules
 code-fence markdown
 code-fence plain
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/docs/WIKI/Home.md
 ```
-h1 📖 R-AI-OS Official Wiki
-h3 🏛️ [01. Architecture Deep Dive](01-Architecture-Deep-Dive.md)
-h3 🛡️ [02. Security Model](02-Security-Model.md)
-h3 🧠 [03. Hybrid Memory & Context](03-Hybrid-Memory-and-Context.md)
-h3 📥 [04. Async Workflow & Inbox](04-Async-Workflow-and-Inbox.md)
-h3 ⚙️ [05. Installation and Setup](05-Installation-and-Setup.md)
-h3 ⌨️ [06. CLI Commands Reference](06-CLI-Commands-Reference.md)
-h3 🤝 [07. Contributing](07-Contributing.md)
-h3 🧭 [Control Plane Blueprint](../superpowers/specs/2026-06-10-control-plane-blueprint.md)
-h3 🗺️ [Control Plane Remaining Work Plan](../superpowers/specs/2026-06-10-control-plane-remaining-work-plan.md)
-h3 🚀 Getting Started
+h1 R-AI-OS Official Wiki
+h3 [01. Architecture Deep Dive](01-Architecture-Deep-Dive.md)
+h3 [02. Security Model](02-Security-Model.md)
+h3 [03. Hybrid Memory & Context](03-Hybrid-Memory-and-Context.md)
+h3 [04. Async Workflow & Inbox](04-Async-Workflow-and-Inbox.md)
+h3 [05. Installation and Setup](05-Installation-and-Setup.md)
+h3 [06. CLI Commands Reference](06-CLI-Commands-Reference.md)
+h3 [07. Contributing](07-Contributing.md)
+h3 [Control Plane Blueprint](../superpowers/specs/2026-06-10-control-plane-blueprint.md)
+h3 [Control Plane Remaining Work Plan](../superpowers/specs/2026-06-10-control-plane-remaining-work-plan.md)
+h3 Getting Started
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/gitrepo.md
@@ -2595,8 +2595,8 @@ key deny_all
 ### .claude/worktrees/bootstrap-safety-plan/README.md
 ```
 h1 R-AI-OS Kernel
-h2 🔭 The Vision
-h2 🛡️ Security Kernel
+h2 The Vision
+h2 Security Kernel
 h3 Architecture
 h3 Phase 1 — Filesystem Jail
 h1 raios-policy.toml
@@ -2605,18 +2605,18 @@ h3 Phase 3 — Audit Chain
 h3 Phase 4 — Egress Filter
 h3 Redaction Engine
 h3 Session Token Auth
-h2 🔌 Tri-Protocol Interface
+h2 Tri-Protocol Interface
 h3 HTTP API Endpoints
-h2 🧠 Core Modules
-h3 📉 Cortex — Token Budgeter & Context Manager
-h3 🎯 Unified Agent Router
-h3 🔄 Agent Swarm Mesh
-h3 📊 Portfolio Intelligence
-h3 📨 Agent Handoff — Atomic, Control-Plane-Backed
-h3 🧠 Trace Memory — Local Fix Recall
-h3 🪶 ANKA — Historical Transcript Recall
-h3 ⏳ Lifecycle Worker
-h2 🖥️ VS Code Extension (v0.8.1)
+h2 Core Modules
+h3 Cortex — Token Budgeter & Context Manager
+h3 Unified Agent Router
+h3 Agent Swarm Mesh
+h3 Portfolio Intelligence
+h3 Agent Handoff — Atomic, Control-Plane-Backed
+h3 Trace Memory — Local Fix Recall
+h3 ANKA — Historical Transcript Recall
+h3 Lifecycle Worker
+h2 VS Code Extension (v0.8.1)
 h3 Control Panel Cards
 h3 Security Properties
 ```
@@ -2659,14 +2659,14 @@ h3 crates/raios-runtime/src/factory.rs
 
 ### .claude/worktrees/bootstrap-safety-plan/status_report_v080.md
 ```
-h1 R-AI-OS v0.8.0 Durum Raporu (Aura Hardened Edition) 🦾🛡️
-h2 🛡️ 1. Hardened IPC Security (Day 1 Security)
-h2 📥 2. Diff Inbox Pattern (Non-Blocking Workflow)
-h2 🏗️ 3. Mimari Altyapı (Daemon-Centric)
-h2 🔍 4. Akıllı Arama & Keşif
-h2 📊 5. Gerçek Zamanlı İzleme
+h1 R-AI-OS v0.8.0 Durum Raporu (Aura Hardened Edition)
+h2 1. Hardened IPC Security (Day 1 Security)
+h2 2. Diff Inbox Pattern (Non-Blocking Workflow)
+h2 3. Mimari Altyapı (Daemon-Centric)
+h2 4. Akıllı Arama & Keşif
+h2 5. Gerçek Zamanlı İzleme
 h3 🟢 Mevcut Durum: **OPERASYONEL & HARDENED**
-h3 🔗 Sıradaki Hedefler
+h3 Sıradaki Hedefler
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/tools/raios-tray/handoff.md
@@ -2701,31 +2701,31 @@ h2 Change Log & Agent Trail
 
 ### .claude/worktrees/bootstrap-safety-plan/tools/raios-tray/raios-tray.py
 ```
-@dataclass Agent(name, commands)  :156-158
-@dataclass TrayState(online, health?, projects?, projects_from_cache, usage?, aiosd_cpu, aiosd_ram_mb, error, dirty_projects, mem_items, tasks)  :162-173
-class PathInput(QWidget)  :799-834
-  def __init__(initial_value: str, mode: str, parent: QWidget | None)
-  def value() → str
-  def pick_path() → None
-class SettingsDialog(QDialog)  :837-996
-  def __init__(parent: QWidget | None)
-  def build_config() → dict
-  def validate_config(config: dict) → str | None
-  def persist() → bool
-  def save_only() → None
-  def save_and_restart() → None
-  def open_config_dir() → None
-class MemoryBrowserDialog(QDialog)  :999-1142
-  def __init__(items: list[dict], parent: QWidget | None)
-class QuickAddTaskDialog(QDialog)  :1145-1198
-  def __init__(projects: list[dict], parent: QWidget | None)
-class TaskListDialog(QDialog)  :1201-1321
-  def __init__(tasks: list[dict], projects: list[dict], parent: QWidget | None)
-class ProjectEditDialog(QDialog)  :1324-1346
-  def __init__(parent: QWidget | None, name: str, path: str)
-  def result() → tuple[str, str]
-class ProjectManagerDialog(QDialog)  :1349-1608
-  def filter_rows(text: str) → None
+@dataclass Agent(name, commands) :156-158
+@dataclass TrayState(online, health?, projects?, projects_from_cache, usage?, aiosd_cpu, aiosd_ram_mb, error, dirty_projects, mem_items, tasks) :162-173
+class PathInput(QWidget) :799-834
+ def __init__(initial_value: str, mode: str, parent: QWidget | None)
+ def value() → str
+ def pick_path() → None
+class SettingsDialog(QDialog) :837-996
+ def __init__(parent: QWidget | None)
+ def build_config() → dict
+ def validate_config(config: dict) → str | None
+ def persist() → bool
+ def save_only() → None
+ def save_and_restart() → None
+ def open_config_dir() → None
+class MemoryBrowserDialog(QDialog) :999-1142
+ def __init__(items: list[dict], parent: QWidget | None)
+class QuickAddTaskDialog(QDialog) :1145-1198
+ def __init__(projects: list[dict], parent: QWidget | None)
+class TaskListDialog(QDialog) :1201-1321
+ def __init__(tasks: list[dict], projects: list[dict], parent: QWidget | None)
+class ProjectEditDialog(QDialog) :1324-1346
+ def __init__(parent: QWidget | None, name: str, path: str)
+ def result() → tuple[str, str]
+class ProjectManagerDialog(QDialog) :1349-1608
+ def filter_rows(text: str) → None
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/tools/raios-tray/README.md
@@ -2788,71 +2788,71 @@ code-fence plain
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/bridge/JumpToCode.ts
 ```
-export class JumpToCode  :4-29
-  constructor(private readonly client)  :5-5
-  activate() → void  :7-28
+export class JumpToCode :4-29
+ constructor(private readonly client) :5-5
+ activate() → void :7-28
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/commands/CommandBridge.ts
 ```
-export class CommandBridge  :8-107
-  constructor(private readonly client, private readonly outputChannel, private readonly diagnosticProvider)  :9-13
-  register(context) → void  :15-63
+export class CommandBridge :8-107
+ constructor(private readonly client, private readonly outputChannel, private readonly diagnosticProvider) :9-13
+ register(context) → void :15-63
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/extension.ts
 ```
-export function activate(context) → void  :21-95
-export function deactivate() → void  :97-100
+export function activate(context) → void :21-95
+export function deactivate() → void :97-100
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/ipc/DaemonClient.ts
 ```
-export class DaemonClient  :8-128
-  constructor(private readonly port, private readonly host)  :16-19
-  onMessage(handler) → void  :25-27
-  connect() → void  :29-81
-  send(method, params, unknown> = {}) → void  :83-87
-  sendRaw(payload, unknown>) → void  :89-92
-  disconnect() → void  :94-99
+export class DaemonClient :8-128
+ constructor(private readonly port, private readonly host) :16-19
+ onMessage(handler) → void :25-27
+ connect() → void :29-81
+ send(method, params, unknown> = {}) → void :83-87
+ sendRaw(payload, unknown>) → void :89-92
+ disconnect() → void :94-99
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/ipc/DaemonManager.ts
 ```
-export class DaemonManager  :10-91
-  isTokenFresh() → boolean  :19-27
-  async ensureRunning() → Promise<boolean>  :33-38
-  async spawn() → Promise<boolean>  :41-64
-  dispose() → void  :87-90
+export class DaemonManager :10-91
+ isTokenFresh() → boolean :19-27
+ async ensureRunning() → Promise<boolean> :33-38
+ async spawn() → Promise<boolean> :41-64
+ dispose() → void :87-90
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/ipc/TokenBridge.ts
 ```
-export class TokenBridge  :7-157
-  constructor(private readonly context)  :10-10
-  readToken() → string | null  :16-41
-  async getToken() → Promise<string | nul  :46-64
-  async request(endpoint, method, body?) → Promise<any>  :69-138
-  async handleMessage(message, webview) → Promise<void>  :143-157
+export class TokenBridge :7-157
+ constructor(private readonly context) :10-10
+ readToken() → string | null :16-41
+ async getToken() → Promise<string | nul :46-64
+ async request(endpoint, method, body?) → Promise<any> :69-138
+ async handleMessage(message, webview) → Promise<void> :143-157
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/providers/RefactorTreeProvider.ts
 ```
-export interface RefactorFileData  :4-9
-  file: string  :5-5
-  severity: "HIGH" | "MEDIUM"  :6-6
-  lines: number  :7-7
-  reasons: string[]  :8-8
-class RefactorNode  :13-22
-  constructor(public readonly kind, label, collapsible, public readonly fileData?)  :14-21
+export interface RefactorFileData :4-9
+ file: string :5-5
+ severity: "HIGH" | "MEDIUM" :6-6
+ lines: number :7-7
+ reasons: string[] :8-8
+class RefactorNode :13-22
+ constructor(public readonly kind, label, collapsible, public readonly fileData?) :14-21
 ```
 
 ### .claude/worktrees/bootstrap-safety-plan/vscode-extension/src/utils/raiosBinary.ts
 ```
-export function resolveRaiosBinary() → string  :11-51
-export function resolveAiosdBinary() → string | null  :57-88
-export function raiosConfigDir() → string  :94-100
-export function tokenFilePath() → string  :105-107
+export function resolveRaiosBinary() → string :11-51
+export function resolveAiosdBinary() → string | null :57-88
+export function raiosConfigDir() → string :94-100
+export function tokenFilePath() → string :105-107
 ```
 
 ## .github
@@ -2921,84 +2921,84 @@ key tempfile
 
 ### crates/raios-core/src/config.rs
 ```
-pub struct DaemonConfig  :7-28
-pub struct Config  :65-93
-pub struct FactoryConfig  :101-106
-pub struct FactoryStorageConfig  :111-118
-pub struct BootstrapConfig  :125-134
-pub struct ClaudeMarketplace  :137-141
-pub struct RuleSyncRepo  :144-148
-pub struct DetectResult  :245-250
-impl DaemonConfig  :30-60
-impl Config  :150-165
-impl Config  :167-243
-  pub fn config_file() → PathBuf  :173-173
-  pub fn load() → Option<Self>  :182-182
-  pub fn save(&self) → Result<()>  :189-189
-  pub fn auto_detect() → DetectResult  :201-201
-  pub fn from_detect_result(detected: DetectResult) → Self  :225-225
+pub struct DaemonConfig :7-28
+pub struct Config :65-93
+pub struct FactoryConfig :101-106
+pub struct FactoryStorageConfig :111-118
+pub struct BootstrapConfig :125-134
+pub struct ClaudeMarketplace :137-141
+pub struct RuleSyncRepo :144-148
+pub struct DetectResult :245-250
+impl DaemonConfig :30-60
+impl Config :150-165
+impl Config :167-243
+ pub fn config_file() → PathBuf :173-173
+ pub fn load() → Option<Self> :182-182
+ pub fn save(&self) → Result<()> :189-189
+ pub fn auto_detect() → DetectResult :201-201
+ pub fn from_detect_result(detected: DetectResult) → Self :225-225
 ```
 
 ### crates/raios-core/src/db/activity_events.rs
 ```
-pub struct ActivityEvent  :40-45
-pub struct ImportantEvents  :50-53
-pub struct DigestWindow  :57-61
-pub fn log_activity_event(conn: &Connection, source: &str, project: Option<&str>, tier: &str, summary: &str, detail_json: Option<&str>,) → rusqlite::Result<()>  :21-36
-pub fn poll_important_events(conn: &Connection, client_id: &str,) → rusqlite::Result<ImportantE...  :111-151
-pub fn poll_digest_window(conn: &Connection, client_id: &str, digest_interval_secs: i64,) → rusqlite::Result<Option<Dig...  :157-210
-pub fn sync_security_activity_findings(conn: &mut Connection, project: &str, findings: &[(String, String) → rusqlite::Result<usize>  :216-266
-pub fn prune_activity_events_older_than(conn: &Connection, days: i64) → rusqlite::Result<usize>  :270-275
+pub struct ActivityEvent :40-45
+pub struct ImportantEvents :50-53
+pub struct DigestWindow :57-61
+pub fn log_activity_event(conn: &Connection, source: &str, project: Option<&str>, tier: &str, summary: &str, detail_json: Option<&str>,) → rusqlite::Result<()> :21-36
+pub fn poll_important_events(conn: &Connection, client_id: &str,) → rusqlite::Result<ImportantE... :111-151
+pub fn poll_digest_window(conn: &Connection, client_id: &str, digest_interval_secs: i64,) → rusqlite::Result<Option<Dig... :157-210
+pub fn sync_security_activity_findings(conn: &mut Connection, project: &str, findings: &[(String, String) → rusqlite::Result<usize> :216-266
+pub fn prune_activity_events_older_than(conn: &Connection, days: i64) → rusqlite::Result<usize> :270-275
 ```
 
 ### crates/raios-core/src/db/maintenance.rs
 ```
-pub struct DbMaintenanceCheck  :17-30
-pub struct DbSnapshotReport  :33-42
-pub struct DbCheckpointReport  :45-52
-pub fn check_workspace_database(full: bool) → Result<DbMaintenanceCheck>  :54-57
-pub fn backup_workspace_database(retain: usize) → Result<DbSnapshotReport>  :59-66
-pub fn checkpoint_workspace_database(truncate: bool) → Result<DbCheckpointReport>  :68-70
-pub fn check_database(database_path: &Path, snapshot_dir: &Path, full: bool,) → Result<DbMaintenanceCheck>  :72-100
-pub fn backup_database(database_path: &Path, snapshot_dir: &Path, retain: usize,) → Result<DbSnapshotReport>  :102-187
-pub fn checkpoint_database(database_path: &Path, truncate: bool) → Result<DbCheckpointReport>  :189-219
+pub struct DbMaintenanceCheck :17-30
+pub struct DbSnapshotReport :33-42
+pub struct DbCheckpointReport :45-52
+pub fn check_workspace_database(full: bool) → Result<DbMaintenanceCheck> :54-57
+pub fn backup_workspace_database(retain: usize) → Result<DbSnapshotReport> :59-66
+pub fn checkpoint_workspace_database(truncate: bool) → Result<DbCheckpointReport> :68-70
+pub fn check_database(database_path: &Path, snapshot_dir: &Path, full: bool,) → Result<DbMaintenanceCheck> :72-100
+pub fn backup_database(database_path: &Path, snapshot_dir: &Path, retain: usize,) → Result<DbSnapshotReport> :102-187
+pub fn checkpoint_database(database_path: &Path, truncate: bool) → Result<DbCheckpointReport> :189-219
 ```
 
 ### crates/raios-core/src/db/mod.rs
 ```
-pub fn open_db() → Result<Connection>  :66-75
-pub fn cp_log_append(conn: &Connection, sender: &str, content: &str) → Result<()>  :92-105
-pub fn cp_logs_replay(conn: &Connection, limit: usize) → Result<Vec<(String, String,...  :108-121
-pub fn migrate_existing(conn: &Connection) → Result<()>  :123-125
-pub fn import_from_json(dev_ops: &Path, conn: &Connection) → usize  :130-193
+pub fn open_db() → Result<Connection> :66-75
+pub fn cp_log_append(conn: &Connection, sender: &str, content: &str) → Result<()> :92-105
+pub fn cp_logs_replay(conn: &Connection, limit: usize) → Result<Vec<(String, String,... :108-121
+pub fn migrate_existing(conn: &Connection) → Result<()> :123-125
+pub fn import_from_json(dev_ops: &Path, conn: &Connection) → usize :130-193
 ```
 
 ### crates/raios-core/src/db/wf_sessions.rs
 ```
-pub struct SessionRow  :105-113
-pub struct WrapperMemoryNote  :121-125
-pub fn cp_session_start(conn: &Connection, agent_identity: &str, project_id: Option<i64>,) → Result<(String, String)>  :3-50
-pub fn cp_session_end(conn: &Connection, task_id: &str, run_id: &str, success: bool) → Result<()>  :53-55
-pub fn cp_session_end_with_summary(conn: &Connection, task_id: &str, run_id: &str, success: bool, summary: Option<&str>,) → Result<()>  :57-102
-pub fn cp_record_wrapper_memory_note(conn: &Connection, run_id: &str, project_path: &str, note: &str,) → Result<WrapperMemoryNote>  :133-179
-pub fn cp_sessions_list(conn: &Connection, limit: usize) → Result<Vec<SessionRow>>  :181-201
+pub struct SessionRow :105-113
+pub struct WrapperMemoryNote :121-125
+pub fn cp_session_start(conn: &Connection, agent_identity: &str, project_id: Option<i64>,) → Result<(String, String)> :3-50
+pub fn cp_session_end(conn: &Connection, task_id: &str, run_id: &str, success: bool) → Result<()> :53-55
+pub fn cp_session_end_with_summary(conn: &Connection, task_id: &str, run_id: &str, success: bool, summary: Option<&str>,) → Result<()> :57-102
+pub fn cp_record_wrapper_memory_note(conn: &Connection, run_id: &str, project_path: &str, note: &str,) → Result<WrapperMemoryNote> :133-179
+pub fn cp_sessions_list(conn: &Connection, limit: usize) → Result<Vec<SessionRow>> :181-201
 ```
 
 ### crates/raios-core/src/entities.rs
 ```
-pub struct EntityProject  :7-17
-pub fn load_entities(dev_ops: &Path) → Vec<EntityProject>  :21-41
-pub fn save_entities(_dev_ops: &Path, projects: Vec<EntityProject>) → std::io::Result<()>  :45-65
-pub fn discover_entities(dev_ops: &Path) → Vec<EntityProject>  :69-123
-pub fn discover_all_entities(dev_ops: &Path) → Vec<EntityProject>  :129-153
-pub fn has_sigmap_context(path: &Path) → bool  :215-217
+pub struct EntityProject :7-17
+pub fn load_entities(dev_ops: &Path) → Vec<EntityProject> :21-41
+pub fn save_entities(_dev_ops: &Path, projects: Vec<EntityProject>) → std::io::Result<()> :45-65
+pub fn discover_entities(dev_ops: &Path) → Vec<EntityProject> :69-123
+pub fn discover_all_entities(dev_ops: &Path) → Vec<EntityProject> :129-153
+pub fn has_sigmap_context(path: &Path) → bool :215-217
 ```
 
 ### crates/raios-core/src/security/verify_chain.rs
 ```
-pub fn record_audit_event(conn: &Connection, event_type: &str, actor: &str, data: &str,) → Result<()>  :14-37
-pub fn record_tool_decision(conn: &Connection, tool: &str, args_hash: &str, matched_rule: &str, event_type: &str, actor: &str,) → Result<()>  :70-85
-pub fn verify_chain(conn: &Connection) → Result<usize>  :91-153
+pub fn record_audit_event(conn: &Connection, event_type: &str, actor: &str, data: &str,) → Result<()> :14-37
+pub fn record_tool_decision(conn: &Connection, tool: &str, args_hash: &str, matched_rule: &str, event_type: &str, actor: &str,) → Result<()> :70-85
+pub fn verify_chain(conn: &Connection) → Result<usize> :91-153
 ```
 
 ### crates/raios-runtime/Cargo.toml
@@ -3030,86 +3030,86 @@ key tempfile
 
 ### crates/raios-runtime/src/agent_runner.rs
 ```
-pub fn run_agent(agent: &str, project_dir: Option<String>, timeout_secs: Option<u64>, extra_args: Vec<String>,) → Result<(), String>  :259-398
-pub fn spawn_agent_detached(agent: &str, task_prompt: &str, project_dir: Option<&str>,) → Result<u32, String>  :731-797
-pub fn ext_command_from_task_description(task_description: &str) → Option<(&str, &str)>  :860-867
-pub fn spawn_ext_command_detached(ext_name: &str, command: &str) → Result<u32, String>  :875-885
+pub fn run_agent(agent: &str, project_dir: Option<String>, timeout_secs: Option<u64>, extra_args: Vec<String>,) → Result<(), String> :259-398
+pub fn spawn_agent_detached(agent: &str, task_prompt: &str, project_dir: Option<&str>,) → Result<u32, String> :731-797
+pub fn ext_command_from_task_description(task_description: &str) → Option<(&str, &str)> :860-867
+pub fn spawn_ext_command_detached(ext_name: &str, command: &str) → Result<u32, String> :875-885
 ```
 
 ### crates/raios-runtime/src/cli/preflight.rs
 ```
-pub enum PreflightMode  :5-8
-pub fn cmd_preflight(project: Option<String>, dev_ops_path: &Path) → bool  :30-95
+pub enum PreflightMode :5-8
+pub fn cmd_preflight(project: Option<String>, dev_ops_path: &Path) → bool :30-95
 ```
 
 ### crates/raios-runtime/src/daemon/git.rs
 ```
-pub async fn start_git_worker(state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, interval: Duration,)  :8-130
+pub async fn start_git_worker(state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, interval: Duration,) :8-130
 ```
 
 ### crates/raios-runtime/src/daemon/health.rs
 ```
-pub async fn start_health_worker(state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, interval: Duration,)  :82-198
+pub async fn start_health_worker(state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, interval: Duration,) :82-198
 ```
 
 ### crates/raios-runtime/src/daemon/lifecycle.rs
 ```
-pub async fn start_lifecycle_worker(state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, interval: Duration, standby_days: u64, archive_days: u64,)  :18-127
+pub async fn start_lifecycle_worker(state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, interval: Duration, standby_days: u64, archive_days: u64,) :18-127
 ```
 
 ### crates/raios-runtime/src/daemon/scheduler.rs
 ```
-pub async fn start_scheduler_worker(_state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, check_interval: Duration,)  :44-153
+pub async fn start_scheduler_worker(_state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>, check_interval: Duration,) :44-153
 ```
 
 ### crates/raios-runtime/src/health.rs
 ```
-pub struct ProjectHealth  :6-38
-pub fn check_project_fast(proj: &EntityProject) → ProjectHealth  :51-120
-pub fn check_project(proj: &EntityProject) → ProjectHealth  :122-205
-pub fn check_build_test_deps(h: &mut ProjectHealth)  :208-219
-pub fn check_project_with_security(proj: &EntityProject) → ProjectHealth  :222-230
-pub fn check_graphify(path: &Path) → (bool, Option<PathBuf>)  :233-247
-pub fn find_graphify_script(dev_ops: &Path) → Option<PathBuf>  :250-261
-pub fn validate_file(path: &Path, proj: &EntityProject) → Vec<ValidationError>  :266-292
+pub struct ProjectHealth :6-38
+pub fn check_project_fast(proj: &EntityProject) → ProjectHealth :51-120
+pub fn check_project(proj: &EntityProject) → ProjectHealth :122-205
+pub fn check_build_test_deps(h: &mut ProjectHealth) :208-219
+pub fn check_project_with_security(proj: &EntityProject) → ProjectHealth :222-230
+pub fn check_graphify(path: &Path) → (bool, Option<PathBuf>) :233-247
+pub fn find_graphify_script(dev_ops: &Path) → Option<PathBuf> :250-261
+pub fn validate_file(path: &Path, proj: &EntityProject) → Vec<ValidationError> :266-292
 ```
 
 ### crates/raios-runtime/src/kernel.rs
 ```
-pub struct Kernel  :26-28
-impl Kernel  :46-96
-  pub fn new(state: Arc<RwLock<DaemonState>>) → Self  :47-47
-  pub async fn run(&self) → Result<()>  :53-53
-impl McpTcpSession  :174-263
+pub struct Kernel :26-28
+impl Kernel :46-96
+ pub fn new(state: Arc<RwLock<DaemonState>>) → Self :47-47
+ pub async fn run(&self) → Result<()> :53-53
+impl McpTcpSession :174-263
 ```
 
 ### crates/raios-runtime/src/reflect_scoring.rs
 ```
-pub struct ProjectSnapshot  :6-14
-pub fn snapshot(p: &EntityProject) → ProjectSnapshot  :16-37
-pub fn build_recommendations(snaps: &[ProjectSnapshot]) → Vec<String>  :73-117
+pub struct ProjectSnapshot :6-14
+pub fn snapshot(p: &EntityProject) → ProjectSnapshot :16-37
+pub fn build_recommendations(snaps: &[ProjectSnapshot]) → Vec<String> :73-117
 ```
 
 ### crates/raios-runtime/src/search/indexer.rs
 ```
-pub struct SearchResult  :77-83
-pub struct ProjectIndex  :89-96
-impl ProjectIndex  :98-246
-  pub fn build(root: &Path) → Result<Self>  :99-99
-  pub fn search(&self, query: &str) → Vec<SearchResult>  :165-165
-  pub fn load_or_build(root: &Path, db_path: &Path, force: bool) → Result<Self>  :225-225
+pub struct SearchResult :77-83
+pub struct ProjectIndex :89-96
+impl ProjectIndex :98-246
+ pub fn build(root: &Path) → Result<Self> :99-99
+ pub fn search(&self, query: &str) → Vec<SearchResult> :165-165
+ pub fn load_or_build(root: &Path, db_path: &Path, force: bool) → Result<Self> :225-225
 ```
 
 ### crates/raios-runtime/src/server/http/mod.rs
 ```
-pub fn resolve_bind_addr(port: u16) → SocketAddr  :34-54
-pub fn detect_tailscale_ip() → Option<std::net::IpAddr>  :57-63
-pub async fn start_http_server(port: u16, daemon_state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>,) → anyhow::Result<()>  :66-114
+pub fn resolve_bind_addr(port: u16) → SocketAddr :34-54
+pub fn detect_tailscale_ip() → Option<std::net::IpAddr> :57-63
+pub async fn start_http_server(port: u16, daemon_state: Arc<RwLock<DaemonState>>, tx: broadcast::Sender<String>,) → anyhow::Result<()> :66-114
 ```
 
 ### crates/raios-runtime/src/system_scan/db_budget.rs
 ```
-pub fn check() → DbBudgetReport  :49-54
+pub fn check() → DbBudgetReport :49-54
 ```
 
 ### crates/raios-surface-cli/Cargo.toml
@@ -3141,36 +3141,36 @@ key tempfile
 
 ### crates/raios-surface-cli/src/cli/args.rs
 ```
-pub struct Cli  :13-24
-pub enum InstinctCmd  :27-41
-pub enum DbCmd  :44-63
-pub enum Commands  :66-342
+pub struct Cli :13-24
+pub enum InstinctCmd :27-41
+pub enum DbCmd :44-63
+pub enum Commands :66-342
 ```
 
 ### crates/raios-surface-cli/src/cli/db.rs
 ```
-pub fn cmd_db(command: DbCmd, json: bool)  :3-21
+pub fn cmd_db(command: DbCmd, json: bool) :3-21
 ```
 
 ### crates/raios-surface-cli/src/cli/hub.rs
 ```
-pub fn cmd_start(json: bool)  :80-156
-pub fn cmd_stop(json: bool)  :160-204
-pub fn cmd_status(json: bool)  :290-351
-pub fn cmd_install(enable: bool, json: bool)  :379-442
-pub fn cmd_logs(lines: usize)  :514-563
-pub fn cmd_api_key_show(reveal: bool)  :613-635
-pub fn cmd_api_key_generate(force: bool)  :637-704
+pub fn cmd_start(json: bool) :80-156
+pub fn cmd_stop(json: bool) :160-204
+pub fn cmd_status(json: bool) :290-351
+pub fn cmd_install(enable: bool, json: bool) :379-442
+pub fn cmd_logs(lines: usize) :514-563
+pub fn cmd_api_key_show(reveal: bool) :613-635
+pub fn cmd_api_key_generate(force: bool) :637-704
 ```
 
 ### crates/raios-surface-cli/src/cli/mod.rs
 ```
-pub fn run(cli: Cli)  :82-220
+pub fn run(cli: Cli) :82-220
 ```
 
 ### crates/raios-surface-cli/src/cli/reflect.rs
 ```
-pub fn cmd_reflect(dev_ops_path: &Path, json: bool)  :5-19
+pub fn cmd_reflect(dev_ops_path: &Path, json: bool) :5-19
 ```
 
 ### crates/raios-surface-mcp/Cargo.toml
@@ -3190,7 +3190,7 @@ key tempfile
 
 ### crates/raios-surface-mcp/src/mcp/tools_workspace.rs
 ```
-impl McpServer  :84-191
+impl McpServer :84-191
 ```
 
 ### crates/raios-surface-tui/Cargo.toml
@@ -3214,627 +3214,627 @@ key tempfile
 
 ### crates/raios-surface-tui/src/app/events/bg_messages.rs
 ```
-impl App  :18-139
-  pub fn handle_bg_msg(&mut self, msg: BgMsg)  :20-20
+impl App :18-139
+ pub fn handle_bg_msg(&mut self, msg: BgMsg) :20-20
 ```
 
 ### crates/raios-surface-tui/src/app/reducer.rs
 ```
-pub fn reduce_intent(store: &mut Store, intent: Intent)  :10-73
-pub fn reduce_event(store: &mut Store, event: Event)  :76-111
+pub fn reduce_intent(store: &mut Store, intent: Intent) :10-73
+pub fn reduce_event(store: &mut Store, event: Event) :76-111
 ```
 
 ### crates/raios-contracts/src/command.rs
 ```
-pub enum Command  :11-117
-impl Command  :119-161
-  pub fn idempotency_key(&self) → &str  :121-121
+pub enum Command :11-117
+impl Command :119-161
+ pub fn idempotency_key(&self) → &str :121-121
 ```
 
 ### crates/raios-core/src/core/process/command.rs
 ```
-pub fn command_exists(command: &str) → bool  :4-6
-pub fn resolve_command_path(command: &str) → Option<PathBuf>  :8-34
-pub fn python_command() → (String, Vec<String>)  :36-52
-pub fn shell_command(command: &str) → (String, Vec<String>)  :54-70
-pub fn open_in_system_editor(path: &Path) → std::io::Result<()>  :72-92
-pub fn copy_to_clipboard(text: &str) → bool  :94-138
-pub fn launch_in_terminal(command: &str, work_dir: &Path) → bool  :140-224
-pub fn launch_in_terminal_argv(program: &str, args: &[String], work_dir: &Path) → bool  :229-290
+pub fn command_exists(command: &str) → bool :4-6
+pub fn resolve_command_path(command: &str) → Option<PathBuf> :8-34
+pub fn python_command() → (String, Vec<String>) :36-52
+pub fn shell_command(command: &str) → (String, Vec<String>) :54-70
+pub fn open_in_system_editor(path: &Path) → std::io::Result<()> :72-92
+pub fn copy_to_clipboard(text: &str) → bool :94-138
+pub fn launch_in_terminal(command: &str, work_dir: &Path) → bool :140-224
+pub fn launch_in_terminal_argv(program: &str, args: &[String], work_dir: &Path) → bool :229-290
 ```
 
 ### crates/raios-core/src/core/process/mod.rs
 ```
-pub struct PortEntry  :9-15
-pub struct ProcessEntry  :18-23
-pub struct KillResult  :26-29
+pub struct PortEntry :9-15
+pub struct ProcessEntry :18-23
+pub struct KillResult :26-29
 ```
 
 ### crates/raios-core/src/db/control_plane.rs
 ```
-pub struct SchedulerTask  :3-12
-pub struct UnifiedTaskRow  :107-118
-pub struct ApprovalInboxRow  :121-129
-pub struct RunOverviewRow  :132-140
-pub struct DaemonSnapshot  :267-278
-pub struct DriftReport  :314-319
-pub fn cp_scheduler_list_ready(conn: &Connection) → Result<Vec<SchedulerTask>>  :18-79
-pub fn cp_task_graph_node_ids(conn: &Connection, task_id: &str,) → Result<Option<(String, Stri...  :82-92
-pub fn cp_task_graph_shell_cmd(conn: &Connection, task_id: &str) → Result<Option<String>>  :95-102
-pub fn cp_query_active_tasks(conn: &Connection) → Result<Vec<UnifiedTaskRow>>  :161-186
-pub fn cp_query_blocked_tasks(conn: &Connection) → Result<Vec<UnifiedTaskRow>>  :189-214
-pub fn cp_query_pending_approvals(conn: &Connection) → Result<Vec<ApprovalInboxRow>>  :217-238
-pub fn cp_query_active_runs(conn: &Connection) → Result<Vec<RunOverviewRow>>  :241-261
-pub fn cp_daemon_snapshot(conn: &Connection) → Result<DaemonSnapshot>  :280-308
-pub fn cp_detect_graph_cache_drift(conn: &Connection, graph_id: &str) → Result<DriftReport>  :322-347
-pub fn cp_rebuild_task_graph_cache(conn: &Connection) → Result<usize>  :351-398
+pub struct SchedulerTask :3-12
+pub struct UnifiedTaskRow :107-118
+pub struct ApprovalInboxRow :121-129
+pub struct RunOverviewRow :132-140
+pub struct DaemonSnapshot :267-278
+pub struct DriftReport :314-319
+pub fn cp_scheduler_list_ready(conn: &Connection) → Result<Vec<SchedulerTask>> :18-79
+pub fn cp_task_graph_node_ids(conn: &Connection, task_id: &str,) → Result<Option<(String, Stri... :82-92
+pub fn cp_task_graph_shell_cmd(conn: &Connection, task_id: &str) → Result<Option<String>> :95-102
+pub fn cp_query_active_tasks(conn: &Connection) → Result<Vec<UnifiedTaskRow>> :161-186
+pub fn cp_query_blocked_tasks(conn: &Connection) → Result<Vec<UnifiedTaskRow>> :189-214
+pub fn cp_query_pending_approvals(conn: &Connection) → Result<Vec<ApprovalInboxRow>> :217-238
+pub fn cp_query_active_runs(conn: &Connection) → Result<Vec<RunOverviewRow>> :241-261
+pub fn cp_daemon_snapshot(conn: &Connection) → Result<DaemonSnapshot> :280-308
+pub fn cp_detect_graph_cache_drift(conn: &Connection, graph_id: &str) → Result<DriftReport> :322-347
+pub fn cp_rebuild_task_graph_cache(conn: &Connection) → Result<usize> :351-398
 ```
 
 ### crates/raios-core/src/db/mem.rs
 ```
-pub struct MemItemRow  :71-86
-pub struct MemUpsert  :141-153
-pub struct MemNodeRow  :486-494
-pub enum Provenance  :33-38
-impl Provenance  :40-49
-  pub fn as_str(&self) → &'static str  :41-41
-impl Provenance  :51-55
-impl Provenance  :57-68
-impl MemItemRow  :88-139
-  pub fn effective_confidence_at(&self, at: chrono::DateTime<chrono::Local>) → f64  :96-96
-  pub fn effective_confidence(&self) → f64  :136-136
-pub fn mem_upsert(conn: &Connection, item: MemUpsert) → Result<()>  :166-170
-pub fn mem_list(conn: &Connection, project_key: &str) → Result<Vec<MemItemRow>>  :253-281
-pub fn mem_get(conn: &Connection, project_key: &str, slug: &str) → Result<Option<MemItemRow>>  :283-310
-pub fn mem_on_used(conn: &Connection, project_key: &str, slug: &str) → Result<bool>  :313-323
-pub fn mem_list_all(conn: &Connection) → Result<Vec<MemItemRow>>  :325-353
-pub fn mem_delete(conn: &Connection, project_key: &str, slug: &str) → Result<bool>  :355-361
-pub fn mem_export(conn: &Connection, project_key: &str, memory_dir: &std::path::Path,) → Result<usize>  :366-423
-pub fn mem_export_portable(conn: &Connection, dst: &std::path::Path) → Result<usize>  :426-436
-pub fn mem_import_portable(conn: &Connection, src: &std::path::Path) → Result<usize>  :440-481
-pub fn mem_node_add(conn: &Connection, project_key: &str, kind: &str, source: &str, content: &str, session_id: Option<&str>,) → Result<String>  :511-540
-pub fn mem_node_get(conn: &Connection, id: &str) → Result<Option<MemNodeRow>>  :542-560
-pub fn mem_lineage_add(conn: &Connection, child_kind: &str, child_id: &str, parent_kind: &str, parent_id: &str, relation: &str,) → Result<()>  :563-577
-pub fn mem_lineage_parents(conn: &Connection, child_kind: &str, child_id: &str,) → Result<Vec<(String, String,...  :580-596
-pub fn mem_history(conn: &Connection, project_key: &str, slug: &str) → Result<Vec<MemNodeRow>>  :599-625
+pub struct MemItemRow :71-86
+pub struct MemUpsert :141-153
+pub struct MemNodeRow :486-494
+pub enum Provenance :33-38
+impl Provenance :40-49
+ pub fn as_str(&self) → &'static str :41-41
+impl Provenance :51-55
+impl Provenance :57-68
+impl MemItemRow :88-139
+ pub fn effective_confidence_at(&self, at: chrono::DateTime<chrono::Local>) → f64 :96-96
+ pub fn effective_confidence(&self) → f64 :136-136
+pub fn mem_upsert(conn: &Connection, item: MemUpsert) → Result<()> :166-170
+pub fn mem_list(conn: &Connection, project_key: &str) → Result<Vec<MemItemRow>> :253-281
+pub fn mem_get(conn: &Connection, project_key: &str, slug: &str) → Result<Option<MemItemRow>> :283-310
+pub fn mem_on_used(conn: &Connection, project_key: &str, slug: &str) → Result<bool> :313-323
+pub fn mem_list_all(conn: &Connection) → Result<Vec<MemItemRow>> :325-353
+pub fn mem_delete(conn: &Connection, project_key: &str, slug: &str) → Result<bool> :355-361
+pub fn mem_export(conn: &Connection, project_key: &str, memory_dir: &std::path::Path,) → Result<usize> :366-423
+pub fn mem_export_portable(conn: &Connection, dst: &std::path::Path) → Result<usize> :426-436
+pub fn mem_import_portable(conn: &Connection, src: &std::path::Path) → Result<usize> :440-481
+pub fn mem_node_add(conn: &Connection, project_key: &str, kind: &str, source: &str, content: &str, session_id: Option<&str>,) → Result<String> :511-540
+pub fn mem_node_get(conn: &Connection, id: &str) → Result<Option<MemNodeRow>> :542-560
+pub fn mem_lineage_add(conn: &Connection, child_kind: &str, child_id: &str, parent_kind: &str, parent_id: &str, relation: &str,) → Result<()> :563-577
+pub fn mem_lineage_parents(conn: &Connection, child_kind: &str, child_id: &str,) → Result<Vec<(String, String,... :580-596
+pub fn mem_history(conn: &Connection, project_key: &str, slug: &str) → Result<Vec<MemNodeRow>> :599-625
 ```
 
 ### crates/raios-core/src/security/policy.rs
 ```
-pub struct PolicyConfig  :11-26
-pub struct HooksPolicy  :29-34
-pub struct ServerPolicy  :37-41
-pub struct HubPolicy  :45-67
-pub struct EgressPolicy  :97-102
-pub struct FilesystemPolicy  :105-109
-pub struct ToolsPolicy  :130-137
-pub struct PreflightPolicy  :140-142
-pub struct ToolRule  :145-153
-pub struct ToolCapabilities  :163-180
-pub enum PolicyAction  :113-117
-impl HubPolicy  :69-82
-impl HubPolicy  :84-94
-impl PolicyAction  :119-127
-  pub fn as_str(&self) → &'static str  :120-120
-impl PolicyConfig  :184-283
-  pub fn load_from_file(path: &Path) → Result<Self>  :185-185
-  pub fn tool_action(&self, tool_name: &str) → &PolicyAction  :194-194
-  pub fn validate_tool_call(&self, tool_name: &str) → Result<()>  :205-205
-  pub fn validate_tool_call_with_hook(&self, tool_name: &str, payload: Option<super::hooks::HookPayload>,) → Result<()>  :220-224
-  pub fn needs_confirmation(&self, tool_name: &str) → bool  :250-250
-  pub fn try_load_default() → Option<Self>  :255-255
-  pub fn default_path() → Option<std::path::PathBuf>  :271-271
+pub struct PolicyConfig :11-26
+pub struct HooksPolicy :29-34
+pub struct ServerPolicy :37-41
+pub struct HubPolicy :45-67
+pub struct EgressPolicy :97-102
+pub struct FilesystemPolicy :105-109
+pub struct ToolsPolicy :130-137
+pub struct PreflightPolicy :140-142
+pub struct ToolRule :145-153
+pub struct ToolCapabilities :163-180
+pub enum PolicyAction :113-117
+impl HubPolicy :69-82
+impl HubPolicy :84-94
+impl PolicyAction :119-127
+ pub fn as_str(&self) → &'static str :120-120
+impl PolicyConfig :184-283
+ pub fn load_from_file(path: &Path) → Result<Self> :185-185
+ pub fn tool_action(&self, tool_name: &str) → &PolicyAction :194-194
+ pub fn validate_tool_call(&self, tool_name: &str) → Result<()> :205-205
+ pub fn validate_tool_call_with_hook(&self, tool_name: &str, payload: Option<super::hooks::HookPayload>,) → Result<()> :220-224
+ pub fn needs_confirmation(&self, tool_name: &str) → bool :250-250
+ pub fn try_load_default() → Option<Self> :255-255
+ pub fn default_path() → Option<std::path::PathBuf> :271-271
 ```
 
 ### crates/raios-runtime/src/bootstrap.rs
 ```
-pub enum BootstrapAction  :6-21
-pub enum ActionOutcome  :146-150
-impl BootstrapAction  :23-48
-  pub fn describe(&self) → String  :24-24
-pub fn build_plan(cfg: &BootstrapConfig) → Vec<BootstrapAction>  :110-143
-pub fn execute(actions: &[BootstrapAction]) → Vec<(String, ActionOutcome)>  :155-160
+pub enum BootstrapAction :6-21
+pub enum ActionOutcome :146-150
+impl BootstrapAction :23-48
+ pub fn describe(&self) → String :24-24
+pub fn build_plan(cfg: &BootstrapConfig) → Vec<BootstrapAction> :110-143
+pub fn execute(actions: &[BootstrapAction]) → Vec<(String, ActionOutcome)> :155-160
 ```
 
 ### crates/raios-runtime/src/control_plane/service.rs
 ```
-pub struct ControlActor  :24-27
-impl ControlActor  :29-56
-  pub fn local_session() → Self  :30-30
-  pub fn remote_session(subject: impl Into<String>) → Self  :37-37
-pub fn init_idempotency_table(conn: &Connection) → Result<(), String>  :59-80
-pub fn clean_expired_idempotency(conn: &Connection, max_age_hours: u32) → Result<usize, String>  :82-88
-pub fn load_now_snapshot(conn: &Connection) → Result<NowSnapshot, String>  :90-144
-pub fn load_work_snapshot(conn: &Connection) → Result<WorkSnapshot, String>  :146-229
-pub fn load_explore_snapshot(conn: &Connection, search_query: Option<&str>,) → Result<ExploreSnapshot, Str...  :254-304
-pub fn load_govern_snapshot(conn: &Connection) → Result<GovernSnapshot, String>  :306-389
-pub fn load_system_snapshot(conn: &Connection) → Result<SnapshotEnvelope, St...  :391-408
-pub fn dispatch_control_command(conn: &mut Connection, actor: &ControlActor, cmd: &Command,) → Result<Option<serde_json::V...  :528-653
+pub struct ControlActor :24-27
+impl ControlActor :29-56
+ pub fn local_session() → Self :30-30
+ pub fn remote_session(subject: impl Into<String>) → Self :37-37
+pub fn init_idempotency_table(conn: &Connection) → Result<(), String> :59-80
+pub fn clean_expired_idempotency(conn: &Connection, max_age_hours: u32) → Result<usize, String> :82-88
+pub fn load_now_snapshot(conn: &Connection) → Result<NowSnapshot, String> :90-144
+pub fn load_work_snapshot(conn: &Connection) → Result<WorkSnapshot, String> :146-229
+pub fn load_explore_snapshot(conn: &Connection, search_query: Option<&str>,) → Result<ExploreSnapshot, Str... :254-304
+pub fn load_govern_snapshot(conn: &Connection) → Result<GovernSnapshot, String> :306-389
+pub fn load_system_snapshot(conn: &Connection) → Result<SnapshotEnvelope, St... :391-408
+pub fn dispatch_control_command(conn: &mut Connection, actor: &ControlActor, cmd: &Command,) → Result<Option<serde_json::V... :528-653
 ```
 
 ### crates/raios-runtime/src/cortex/mod.rs
 ```
-pub struct Cortex  :45-48
-impl Cortex  :50-224
-  pub fn init() → Result<Self>  :52-52
-  pub fn index_workspace(&mut self, root: &Path) → Result<usize>  :61-61
-  pub fn index_project(&mut self, project_path: &Path) → Result<usize>  :111-111
-  pub fn rebuild_index(&mut self)  :142-142
-  pub fn index_file(&mut self, path: &Path) → Result<bool>  :148-148
-  pub fn search(&self, query: &str, top_k: usize) → Result<Vec<VectorResult>>  :188-188
-  pub fn search_scoped(&self, query: &str, top_k: usize, scope_dir: &Path,) → Result<Vec<VectorResult>>  :198-203
-  pub fn index_memory_files(&mut self, root: &Path) → Result<usize>  :221-221
+pub struct Cortex :45-48
+impl Cortex :50-224
+ pub fn init() → Result<Self> :52-52
+ pub fn index_workspace(&mut self, root: &Path) → Result<usize> :61-61
+ pub fn index_project(&mut self, project_path: &Path) → Result<usize> :111-111
+ pub fn rebuild_index(&mut self) :142-142
+ pub fn index_file(&mut self, path: &Path) → Result<bool> :148-148
+ pub fn search(&self, query: &str, top_k: usize) → Result<Vec<VectorResult>> :188-188
+ pub fn search_scoped(&self, query: &str, top_k: usize, scope_dir: &Path,) → Result<Vec<VectorResult>> :198-203
+ pub fn index_memory_files(&mut self, root: &Path) → Result<usize> :221-221
 ```
 
 ### crates/raios-runtime/src/cortex/store.rs
 ```
-pub struct ChunkMeta  :42-46
-pub struct VectorResult  :49-55
-pub struct VectorEngine  :71-78
-impl EmbPoint  :62-67
-impl VectorEngine  :80-253
-  pub fn load() → Self  :82-82
-  pub fn load_from(db_path: &Path) → Self  :87-87
-  pub fn save(&mut self)  :160-160
-  pub fn is_indexed(&self, file_path: &str, mtime_secs: u64) → bool  :165-165
-  pub fn upsert_file(&mut self, file_path: &str, mtime_secs: u64, pairs: Vec<(Embedding, ChunkMeta)  :170-175
-pub fn default_db_path() → PathBuf  :9-17
+pub struct ChunkMeta :42-46
+pub struct VectorResult :49-55
+pub struct VectorEngine :71-78
+impl EmbPoint :62-67
+impl VectorEngine :80-253
+ pub fn load() → Self :82-82
+ pub fn load_from(db_path: &Path) → Self :87-87
+ pub fn save(&mut self) :160-160
+ pub fn is_indexed(&self, file_path: &str, mtime_secs: u64) → bool :165-165
+ pub fn upsert_file(&mut self, file_path: &str, mtime_secs: u64, pairs: Vec<(Embedding, ChunkMeta) :170-175
+pub fn default_db_path() → PathBuf :9-17
 ```
 
 ### crates/raios-runtime/src/daemon/handlers.rs
 ```
-pub struct ClientHandle  :71-87
-pub async fn handle_client_connection(h: ClientHandle)  :105-220
+pub struct ClientHandle :71-87
+pub async fn handle_client_connection(h: ClientHandle) :105-220
 ```
 
 ### crates/raios-runtime/src/daemon/proxy.rs
 ```
-pub struct AgentProcess  :98-104
-pub struct ExecutionProxy  :107-110
-impl ExecutionProxy  :112-325
-  pub fn new(state: Arc<RwLock<DaemonState>>) → Self  :113-113
-  pub fn with_event_tx(mut self, tx: tokio::sync::broadcast::Sender<String>) → Self  :120-120
-  pub async fn spawn_agent(&self, agent_name: &str, project_path: &str, timeout_secs: u64,) → Result<String>  :137-142
+pub struct AgentProcess :98-104
+pub struct ExecutionProxy :107-110
+impl ExecutionProxy :112-325
+ pub fn new(state: Arc<RwLock<DaemonState>>) → Self :113-113
+ pub fn with_event_tx(mut self, tx: tokio::sync::broadcast::Sender<String>) → Self :120-120
+ pub async fn spawn_agent(&self, agent_name: &str, project_path: &str, timeout_secs: u64,) → Result<String> :137-142
 ```
 
 ### crates/raios-runtime/src/daemon_client.rs
 ```
-pub fn steer_agent_via_http(agent_id: &str, message: &str, sender: &str) → Result<()>  :42-45
-pub fn steer_agent_at(base_url: &str, token: &str, agent_id: &str, message: &str, sender: &str,) → Result<()>  :54-87
+pub fn steer_agent_via_http(agent_id: &str, message: &str, sender: &str) → Result<()> :42-45
+pub fn steer_agent_at(base_url: &str, token: &str, agent_id: &str, message: &str, sender: &str,) → Result<()> :54-87
 ```
 
 ### crates/raios-runtime/src/discovery.rs
 ```
-pub struct AgentInfo  :4-8
-pub struct SkillInfo  :22-31
-impl AgentInfo  :10-14
-  pub fn exists(&self) → bool  :11-11
-pub fn discover_agents() → Vec<AgentInfo>  :33-59
-pub fn discover_skills(skills_path: &Path) → Vec<SkillInfo>  :62-70
-pub fn open_in_editor(path: &Path) → anyhow::Result<()>  :103-106
+pub struct AgentInfo :4-8
+pub struct SkillInfo :22-31
+impl AgentInfo :10-14
+ pub fn exists(&self) → bool :11-11
+pub fn discover_agents() → Vec<AgentInfo> :33-59
+pub fn discover_skills(skills_path: &Path) → Vec<SkillInfo> :62-70
+pub fn open_in_editor(path: &Path) → anyhow::Result<()> :103-106
 ```
 
 ### crates/raios-runtime/src/system_scan/doctor.rs
 ```
-pub struct DoctorResult  :36-41
-pub enum DoctorTier  :7-11
-impl DoctorTier  :13-21
-  pub fn as_str(&self) → &'static str  :14-14
-impl DoctorTier  :23-33
-pub fn save_doctor_result(conn: &Connection, res: &DoctorResult) → Result<()>  :43-56
-pub fn get_doctor_result(conn: &Connection, agent: &str) → Result<Option<DoctorResult>>  :58-76
-pub fn run_doctor_check(agent: &str, requested_tier: Option<DoctorTier>) → DoctorResult  :91-236
+pub struct DoctorResult :36-41
+pub enum DoctorTier :7-11
+impl DoctorTier :13-21
+ pub fn as_str(&self) → &'static str :14-14
+impl DoctorTier :23-33
+pub fn save_doctor_result(conn: &Connection, res: &DoctorResult) → Result<()> :43-56
+pub fn get_doctor_result(conn: &Connection, agent: &str) → Result<Option<DoctorResult>> :58-76
+pub fn run_doctor_check(agent: &str, requested_tier: Option<DoctorTier>) → DoctorResult :91-236
 ```
 
 ### crates/raios-runtime/src/tasks.rs
 ```
-pub struct Task  :8-18
-impl Task  :20-52
-  pub fn display(&self) → &str  :22-22
-  pub fn is_persisted(&self) → bool  :27-27
-  pub fn from_personal_row(r: raios_core::db::PersonalTaskRow) → Self  :32-32
-  pub fn agent_label(&self) → Option<&str>  :43-43
-pub fn parse_task_line(line: &str) → Option<Task>  :57-59
-pub fn load_tasks(dev_ops: &Path) → Result<Vec<Task>>  :157-187
-pub fn save_tasks(dev_ops: &Path, tasks: &[Task]) → Result<()>  :189-211
-pub fn dispatch_to_agent(task: &Task, agent: &str, project_path: Option<&PathBuf>, sentinel_errors: Option<Vec<String>>,) → String  :218-255
+pub struct Task :8-18
+impl Task :20-52
+ pub fn display(&self) → &str :22-22
+ pub fn is_persisted(&self) → bool :27-27
+ pub fn from_personal_row(r: raios_core::db::PersonalTaskRow) → Self :32-32
+ pub fn agent_label(&self) → Option<&str> :43-43
+pub fn parse_task_line(line: &str) → Option<Task> :57-59
+pub fn load_tasks(dev_ops: &Path) → Result<Vec<Task>> :157-187
+pub fn save_tasks(dev_ops: &Path, tasks: &[Task]) → Result<()> :189-211
+pub fn dispatch_to_agent(task: &Task, agent: &str, project_path: Option<&PathBuf>, sentinel_errors: Option<Vec<String>>,) → String :218-255
 ```
 
 ### crates/raios-surface-cli/src/cli/action_types.rs
 ```
-pub enum FactoryAction  :5-14
-pub enum HubAction  :17-41
-pub enum HubApiKeyAction  :44-57
-pub enum PolicyCmd  :60-93
-pub enum MemAction  :96-170
-pub enum TraceAction  :173-223
-pub enum AnkaAction  :226-253
-pub enum AgentWrapperCmd  :256-269
-pub enum CronAction  :272-296
-pub enum HandoffTarget  :299-304
-pub enum HandoffStatus  :318-322
-pub enum QuarantineAction  :358-369
-pub enum SecretAction  :372-389
-pub enum SwarmAction  :392-410
-pub enum EvolveAction  :413-433
-pub enum GitCommands  :436-474
-impl HandoffTarget  :306-315
-  pub fn as_str(&self) → &'static str  :307-307
-impl HandoffStatus  :324-332
-  pub fn as_str(&self) → &'static str  :325-325
+pub enum FactoryAction :5-14
+pub enum HubAction :17-41
+pub enum HubApiKeyAction :44-57
+pub enum PolicyCmd :60-93
+pub enum MemAction :96-170
+pub enum TraceAction :173-223
+pub enum AnkaAction :226-253
+pub enum AgentWrapperCmd :256-269
+pub enum CronAction :272-296
+pub enum HandoffTarget :299-304
+pub enum HandoffStatus :318-322
+pub enum QuarantineAction :358-369
+pub enum SecretAction :372-389
+pub enum SwarmAction :392-410
+pub enum EvolveAction :413-433
+pub enum GitCommands :436-474
+impl HandoffTarget :306-315
+ pub fn as_str(&self) → &'static str :307-307
+impl HandoffStatus :324-332
+ pub fn as_str(&self) → &'static str :325-325
 ```
 
 ### crates/raios-surface-cli/src/cli/cron.rs
 ```
-pub fn cmd_cron(action: CronAction, json: bool)  :28-158
+pub fn cmd_cron(action: CronAction, json: bool) :28-158
 ```
 
 ### crates/raios-surface-cli/src/cli/update_check.rs
 ```
-pub fn maybe_notify_update()  :45-67
+pub fn maybe_notify_update() :45-67
 ```
 
 ### crates/raios-surface-mcp/src/mcp/mod.rs
 ```
-impl RpcResponse  :57-77
-impl McpServer  :97-218
-pub fn run_stdio() → Result<()>  :222-257
+impl RpcResponse :57-77
+impl McpServer :97-218
+pub fn run_stdio() → Result<()> :222-257
 ```
 
 ### crates/raios-surface-mcp/src/mcp/resources.rs
 ```
-impl McpServer  :5-93
+impl McpServer :5-93
 ```
 
 ### crates/raios-surface-mcp/src/mcp/tools_git.rs
 ```
-impl McpServer  :23-112
+impl McpServer :23-112
 ```
 
 ### crates/raios-surface-mcp/src/mcp/tools_swarm.rs
 ```
-impl McpServer  :5-129
+impl McpServer :5-129
 ```
 
 ### crates/raios-surface-mcp/src/mcp/tools.rs
 ```
-impl McpServer  :6-74
+impl McpServer :6-74
 ```
 
 ### crates/raios-surface-tui/src/app/control_navigation.rs
 ```
-impl App  :41-167
+impl App :41-167
 ```
 
 ### crates/raios-surface-tui/src/app/editor.rs
 ```
-pub struct Editor  :39-50
-impl Editor  :52-170
-  pub fn from_content(content: &str, view_height: usize) → Self  :54-54
-  pub fn content(&self) → String  :71-71
-  pub fn handle_key(&mut self, key: KeyEvent)  :76-76
-pub fn simple_diff(old: &str, new: &str) → Vec<String>  :4-33
-pub fn char_to_byte(s: &str, char_pos: usize) → usize  :173-178
+pub struct Editor :39-50
+impl Editor :52-170
+ pub fn from_content(content: &str, view_height: usize) → Self :54-54
+ pub fn content(&self) → String :71-71
+ pub fn handle_key(&mut self, key: KeyEvent) :76-76
+pub fn simple_diff(old: &str, new: &str) → Vec<String> :4-33
+pub fn char_to_byte(s: &str, char_pos: usize) → usize :173-178
 ```
 
 ### crates/raios-surface-tui/src/app/events/actions.rs
 ```
-impl App  :9-135
+impl App :9-135
 ```
 
 ### crates/raios-surface-tui/src/app/events/commands.rs
 ```
-impl App  :13-120
+impl App :13-120
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/active_agents_view.rs
 ```
-impl App  :5-20
+impl App :5-20
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/constitution_view.rs
 ```
-impl App  :5-117
+impl App :5-117
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/dashboard.rs
 ```
-impl App  :6-126
+impl App :6-126
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/extensions_view.rs
 ```
-impl App  :5-80
+impl App :5-80
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/mod.rs
 ```
-impl App  :31-168
-  pub fn handle_key(&mut self, key: KeyEvent) → Result<()>  :33-33
+impl App :31-168
+ pub fn handle_key(&mut self, key: KeyEvent) → Result<()> :33-33
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/search_view.rs
 ```
-impl App  :6-32
+impl App :6-32
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/setup.rs
 ```
-impl App  :8-125
+impl App :8-125
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/tasks_view.rs
 ```
-impl App  :5-27
+impl App :5-27
 ```
 
 ### crates/raios-surface-tui/src/app/events/keyboard/timeline_view.rs
 ```
-impl App  :5-11
+impl App :5-11
 ```
 
 ### crates/raios-surface-tui/src/app/events/mouse.rs
 ```
-impl App  :20-141
-  pub fn handle_mouse(&mut self, mouse: MouseEvent) → Result<()>  :22-22
+impl App :20-141
+ pub fn handle_mouse(&mut self, mouse: MouseEvent) → Result<()> :22-22
 ```
 
 ### crates/raios-surface-tui/src/app/mod.rs
 ```
-pub struct PaletteItem  :44-49
-pub struct App  :199-276
-impl App  :278-282
-impl App  :284-430
-  pub fn new() → Self  :286-286
-  pub fn new_remote(host: String) → Self  :417-417
-pub fn filtered_palette(query: &str) → Vec<&'static PaletteItem>  :168-176
+pub struct PaletteItem :44-49
+pub struct App :199-276
+impl App :278-282
+impl App :284-430
+ pub fn new() → Self :286-286
+ pub fn new_remote(host: String) → Self :417-417
+pub fn filtered_palette(query: &str) → Vec<&'static PaletteItem> :168-176
 ```
 
 ### crates/raios-surface-tui/src/app/operations.rs
 ```
-pub struct OperationAction  :47-56
-pub struct OperationsConsole  :60-67
-pub struct TaskComposer  :71-78
-pub enum OperationPanel  :9-17
-pub enum OperationActionKind  :32-43
-impl OperationPanel  :19-28
-  pub fn next(self) → Self  :21-21
-impl TaskComposer  :80-94
-  pub fn begin(&mut self)  :82-82
-  pub fn cancel(&mut self)  :89-89
-impl OperationsConsole  :96-146
-  pub fn rebuild(&mut self, has_approval: bool, has_blocker: bool, has_project: bool)  :98-98
-  pub fn selected_action(&self) → Option<&OperationAction>  :143-143
+pub struct OperationAction :47-56
+pub struct OperationsConsole :60-67
+pub struct TaskComposer :71-78
+pub enum OperationPanel :9-17
+pub enum OperationActionKind :32-43
+impl OperationPanel :19-28
+ pub fn next(self) → Self :21-21
+impl TaskComposer :80-94
+ pub fn begin(&mut self) :82-82
+ pub fn cancel(&mut self) :89-89
+impl OperationsConsole :96-146
+ pub fn rebuild(&mut self, has_approval: bool, has_blocker: bool, has_project: bool) :98-98
+ pub fn selected_action(&self) → Option<&OperationAction> :143-143
 ```
 
 ### crates/raios-surface-tui/src/app/route.rs
 ```
-pub enum Route  :7-17
-impl Route  :40-122
-  pub fn all() → &'static [Route]  :42-42
-  pub fn title(&self) → &'static str  :47-47
-  pub fn tab_label(&self) → &'static str  :57-57
-  pub fn tab_at_column(column: u16) → Option<Self>  :67-67
-  pub fn next(&self) → Self  :83-83
-  pub fn prev(&self) → Self  :93-93
-  pub fn from_index(idx: usize) → Self  :103-103
-  pub fn to_index(&self) → usize  :114-114
-pub fn dashboard_header_height(screen_height: u16) → u16  :32-38
+pub enum Route :7-17
+impl Route :40-122
+ pub fn all() → &'static [Route] :42-42
+ pub fn title(&self) → &'static str :47-47
+ pub fn tab_label(&self) → &'static str :57-57
+ pub fn tab_at_column(column: u16) → Option<Self> :67-67
+ pub fn next(&self) → Self :83-83
+ pub fn prev(&self) → Self :93-93
+ pub fn from_index(idx: usize) → Self :103-103
+ pub fn to_index(&self) → usize :114-114
+pub fn dashboard_header_height(screen_height: u16) → u16 :32-38
 ```
 
 ### crates/raios-surface-tui/src/app/services.rs
 ```
-pub struct InboxPanelData  :17-24
-pub struct SchedulerPanelData  :28-31
-pub struct PoliciesPanelData  :35-40
-pub struct ProjectListItem  :44-59
-pub struct ProjectsPanelData  :63-70
-pub struct ProjectDetailData  :74-79
-pub fn load_inbox_panel_data() → Result<InboxPanelData, String>  :92-95
-pub fn load_scheduler_panel_data() → Result<SchedulerPanelData, ...  :108-113
-pub fn load_policies_panel_data() → PoliciesPanelData  :116-126
-pub fn sort_project_indices(projects: &[EntityProject], health: &[ProjectHealth], sort: &SortMode,) → Vec<usize>  :129-168
-pub fn build_projects_panel_data(app: &App) → ProjectsPanelData  :171-196
-pub fn load_project_detail_data(project_path: &Path) → ProjectDetailData  :199-206
-pub fn load_graph_report_lines(project_path: &Path) → Result<Vec<String>, String>  :276-285
-pub fn load_git_diff_lines(project_path: &Path) → Vec<String>  :288-305
-pub fn daemon_search_command(query: &str) → String  :308-313
-pub fn daemon_get_logs_command(limit: u64) → String  :316-318
-pub fn daemon_submit_raios_command(args: &str) → String  :321-328
-pub fn create_vault_note(vault_projects_path: &Path, project: &EntityProject,) → std::io::Result<bool>  :331-351
-pub fn probe_service_active(service: &str) → bool  :354-360
-pub fn scan_extensions(dev_ops_path: &Path) → Vec<ExtensionInfo>  :363-463
-pub fn run_extension_command_bg(tx: &std::sync::mpsc::Sender<BgMsg>, ext_path: &Path, toml_path: &Path, ext_name: &str, cmd_name: &str,)  :466-621
-pub fn read_env_key(env_path: &Path, key: &str) → Option<String>  :647-660
-pub fn write_env_key(env_path: &Path, key: &str, value: &str) → std::io::Result<()>  :663-684
+pub struct InboxPanelData :17-24
+pub struct SchedulerPanelData :28-31
+pub struct PoliciesPanelData :35-40
+pub struct ProjectListItem :44-59
+pub struct ProjectsPanelData :63-70
+pub struct ProjectDetailData :74-79
+pub fn load_inbox_panel_data() → Result<InboxPanelData, String> :92-95
+pub fn load_scheduler_panel_data() → Result<SchedulerPanelData, ... :108-113
+pub fn load_policies_panel_data() → PoliciesPanelData :116-126
+pub fn sort_project_indices(projects: &[EntityProject], health: &[ProjectHealth], sort: &SortMode,) → Vec<usize> :129-168
+pub fn build_projects_panel_data(app: &App) → ProjectsPanelData :171-196
+pub fn load_project_detail_data(project_path: &Path) → ProjectDetailData :199-206
+pub fn load_graph_report_lines(project_path: &Path) → Result<Vec<String>, String> :276-285
+pub fn load_git_diff_lines(project_path: &Path) → Vec<String> :288-305
+pub fn daemon_search_command(query: &str) → String :308-313
+pub fn daemon_get_logs_command(limit: u64) → String :316-318
+pub fn daemon_submit_raios_command(args: &str) → String :321-328
+pub fn create_vault_note(vault_projects_path: &Path, project: &EntityProject,) → std::io::Result<bool> :331-351
+pub fn probe_service_active(service: &str) → bool :354-360
+pub fn scan_extensions(dev_ops_path: &Path) → Vec<ExtensionInfo> :363-463
+pub fn run_extension_command_bg(tx: &std::sync::mpsc::Sender<BgMsg>, ext_path: &Path, toml_path: &Path, ext_name: &str, cmd_name: &str,) :466-621
+pub fn read_env_key(env_path: &Path, key: &str) → Option<String> :647-660
+pub fn write_env_key(env_path: &Path, key: &str, value: &str) → std::io::Result<()> :663-684
 ```
 
 ### crates/raios-surface-tui/src/app/state.rs
 ```
-pub struct ExtCmdInfo  :14-19
-pub struct ExtConfigField  :23-36
-pub struct ExtServiceStatus  :40-45
-pub struct ExtensionInfo  :49-66
-pub struct ExtState  :80-99
-pub struct Activity  :331-340
-pub struct LogEntry  :344-351
-pub struct SetupField  :357-366
-pub struct PortfolioStats  :437-462
-pub struct CreatorState  :571-580
-pub struct PendingConstitutionSave  :584-595
-pub struct ConstitutionState  :599-618
-pub struct SearchState  :622-635
-pub struct MempalaceState  :639-654
-pub struct HealthState  :658-671
-pub struct TaskState  :675-680
-pub struct SystemState  :684-725
-pub struct WizardState  :729-772
-pub struct SetupState  :821-834
-pub struct InventoryState  :838-853
-pub struct UIState  :857-870
-pub struct TimelineState  :874-879
-pub struct ProjectState  :885-912
-pub struct EditorState  :918-933
-pub enum ExtFocus  :70-76
+pub struct ExtCmdInfo :14-19
+pub struct ExtConfigField :23-36
+pub struct ExtServiceStatus :40-45
+pub struct ExtensionInfo :49-66
+pub struct ExtState :80-99
+pub struct Activity :331-340
+pub struct LogEntry :344-351
+pub struct SetupField :357-366
+pub struct PortfolioStats :437-462
+pub struct CreatorState :571-580
+pub struct PendingConstitutionSave :584-595
+pub struct ConstitutionState :599-618
+pub struct SearchState :622-635
+pub struct MempalaceState :639-654
+pub struct HealthState :658-671
+pub struct TaskState :675-680
+pub struct SystemState :684-725
+pub struct WizardState :729-772
+pub struct SetupState :821-834
+pub struct InventoryState :838-853
+pub struct UIState :857-870
+pub struct TimelineState :874-879
+pub struct ProjectState :885-912
+pub struct EditorState :918-933
+pub enum ExtFocus :70-76
 ```
 
 ### crates/raios-surface-tui/src/app/store.rs
 ```
-pub struct Store  :26-63
-pub struct ExploreSearch  :193-202
-pub enum WorkFocus  :14-22
-impl Store  :65-95
-impl Store  :97-189
-  pub fn new() → Self  :99-99
-  pub fn set_snapshot(&mut self, env: SnapshotEnvelope)  :104-104
-  pub fn selected_project(&self) → Option<&ProjectDto>  :111-111
-  pub fn rebuild_operations(&mut self)  :122-122
-  pub fn add_log(&mut self, log: impl Into<String>)  :149-149
-  pub fn work_project_indices(&self) → Vec<usize>  :157-157
-  pub fn explore_results(&self) → &[SearchResultDto]  :182-182
-impl ExploreSearch  :204-221
-  pub fn begin(&mut self)  :206-206
-  pub fn cancel(&mut self)  :212-212
-  pub fn set_results(&mut self, results: Vec<SearchResultDto>)  :217-217
+pub struct Store :26-63
+pub struct ExploreSearch :193-202
+pub enum WorkFocus :14-22
+impl Store :65-95
+impl Store :97-189
+ pub fn new() → Self :99-99
+ pub fn set_snapshot(&mut self, env: SnapshotEnvelope) :104-104
+ pub fn selected_project(&self) → Option<&ProjectDto> :111-111
+ pub fn rebuild_operations(&mut self) :122-122
+ pub fn add_log(&mut self, log: impl Into<String>) :149-149
+ pub fn work_project_indices(&self) → Vec<usize> :157-157
+ pub fn explore_results(&self) → &[SearchResultDto] :182-182
+impl ExploreSearch :204-221
+ pub fn begin(&mut self) :206-206
+ pub fn cancel(&mut self) :212-212
+ pub fn set_results(&mut self, results: Vec<SearchResultDto>) :217-217
 ```
 
 ### crates/raios-surface-tui/src/setup_wizard/exec.rs
 ```
-pub fn exec_workspace(dev_ops: &Path, github_user: &str) → Vec<WizardAction>  :10-91
-pub fn exec_master(master_path: &Path, params: &super::types::ConstitutionParams,) → Vec<WizardAction>  :94-149
-pub fn exec_claude(dev_ops: &Path, master_path: &Path) → Vec<WizardAction>  :152-187
-pub fn exec_codex(master_path: &Path) → Vec<WizardAction>  :190-210
-pub fn exec_opencode() → Vec<WizardAction>  :213-251
-pub fn exec_skills(dev_ops: &Path) → Vec<WizardAction>  :254-300
-pub fn exec_agent_wrapper(choice: usize) → Vec<WizardAction>  :303-315
-pub fn exec_initialize(dev_ops: &Path, master_path: &Path, skills_path: &Path, vault_path: Option<&Path>, agent_wrapper_enabled: bool,) → Vec<WizardAction>  :318-355
+pub fn exec_workspace(dev_ops: &Path, github_user: &str) → Vec<WizardAction> :10-91
+pub fn exec_master(master_path: &Path, params: &super::types::ConstitutionParams,) → Vec<WizardAction> :94-149
+pub fn exec_claude(dev_ops: &Path, master_path: &Path) → Vec<WizardAction> :152-187
+pub fn exec_codex(master_path: &Path) → Vec<WizardAction> :190-210
+pub fn exec_opencode() → Vec<WizardAction> :213-251
+pub fn exec_skills(dev_ops: &Path) → Vec<WizardAction> :254-300
+pub fn exec_agent_wrapper(choice: usize) → Vec<WizardAction> :303-315
+pub fn exec_initialize(dev_ops: &Path, master_path: &Path, skills_path: &Path, vault_path: Option<&Path>, agent_wrapper_enabled: bool,) → Vec<WizardAction> :318-355
 ```
 
 ### crates/raios-surface-tui/src/setup_wizard/templates.rs
 ```
-pub fn master_template(params: &ConstitutionParams) → String  :4-134
+pub fn master_template(params: &ConstitutionParams) → String :4-134
 ```
 
 ### crates/raios-surface-tui/src/setup_wizard/types.rs
 ```
-pub struct ConstitutionParams  :7-24
-pub struct AgentStatus  :128-153
-pub struct WizardAction  :202-209
-pub enum WizardStep  :47-69
-impl ConstitutionParams  :30-43
-impl WizardStep  :71-124
-  pub fn next(&self) → Self  :73-73
-  pub fn index(&self) → usize  :89-89
-  pub fn total() → usize  :105-105
-  pub fn title(&self) → &'static str  :110-110
-impl WizardAction  :211-233
-pub fn detect_agents() → AgentStatus  :156-184
+pub struct ConstitutionParams :7-24
+pub struct AgentStatus :128-153
+pub struct WizardAction :202-209
+pub enum WizardStep :47-69
+impl ConstitutionParams :30-43
+impl WizardStep :71-124
+ pub fn next(&self) → Self :73-73
+ pub fn index(&self) → usize :89-89
+ pub fn total() → usize :105-105
+ pub fn title(&self) → &'static str :110-110
+impl WizardAction :211-233
+pub fn detect_agents() → AgentStatus :156-184
 ```
 
 ### crates/raios-surface-tui/src/ui/components.rs
 ```
-pub fn render_boot(frame: &mut Frame, app: &App)  :16-70
-pub fn render_bouncing_alert(frame: &mut Frame, app: &App)  :73-109
-pub fn render_launcher(frame: &mut Frame, area: Rect, app: &App)  :112-160
-pub fn render_command_palette(frame: &mut Frame, app: &App)  :163-225
-pub fn render_file_changed_badge(frame: &mut Frame, _app: &App)  :228-244
-pub fn render_launcher_modal(frame: &mut Frame, app: &App)  :247-298
-pub fn center_rect(width: u16, height: u16, parent: Rect) → Rect  :301-310
-pub fn render_handover_modal(frame: &mut Frame, app: &App)  :313-380
-pub fn render_constitution_save_modal(frame: &mut Frame, app: &App)  :383-431
+pub fn render_boot(frame: &mut Frame, app: &App) :16-70
+pub fn render_bouncing_alert(frame: &mut Frame, app: &App) :73-109
+pub fn render_launcher(frame: &mut Frame, area: Rect, app: &App) :112-160
+pub fn render_command_palette(frame: &mut Frame, app: &App) :163-225
+pub fn render_file_changed_badge(frame: &mut Frame, _app: &App) :228-244
+pub fn render_launcher_modal(frame: &mut Frame, app: &App) :247-298
+pub fn center_rect(width: u16, height: u16, parent: Rect) → Rect :301-310
+pub fn render_handover_modal(frame: &mut Frame, app: &App) :313-380
+pub fn render_constitution_save_modal(frame: &mut Frame, app: &App) :383-431
 ```
 
 ### crates/raios-surface-tui/src/ui/filebrowser.rs
 ```
-pub fn render_file_view(frame: &mut Frame, app: &App)  :14-137
-pub fn render_file_edit(frame: &mut Frame, app: &App)  :140-265
+pub fn render_file_view(frame: &mut Frame, app: &App) :14-137
+pub fn render_file_edit(frame: &mut Frame, app: &App) :140-265
 ```
 
 ### crates/raios-surface-tui/src/ui/mod.rs
 ```
-pub fn spinner_char(tick: u64) → char  :53-55
-pub fn render(frame: &mut Frame, app: &App)  :60-100
-pub fn update_code_block_state(line: &str, ext: &str, in_block: &mut bool)  :129-136
-pub fn highlight_line(line: &'a str, in_block: &mut bool, ext: &str) → Vec<Span<'a>>  :139-159
+pub fn spinner_char(tick: u64) → char :53-55
+pub fn render(frame: &mut Frame, app: &App) :60-100
+pub fn update_code_block_state(line: &str, ext: &str, in_block: &mut bool) :129-136
+pub fn highlight_line(line: &'a str, in_block: &mut bool, ext: &str) → Vec<Span<'a>> :139-159
 ```
 
 ### crates/raios-surface-tui/src/ui/panels/header.rs
 ```
-pub fn render_header(frame: &mut Frame, area: Rect, app: &App)  :14-114
+pub fn render_header(frame: &mut Frame, area: Rect, app: &App) :14-114
 ```
 
 ### crates/raios-surface-tui/src/ui/panels/recent.rs
 ```
-pub fn render_recent(frame: &mut Frame, area: Rect, app: &App)  :14-62
+pub fn render_recent(frame: &mut Frame, area: Rect, app: &App) :14-62
 ```
 
 ### crates/raios-surface-tui/src/ui/panels/tasks.rs
 ```
-pub fn render_tasks_panel(frame: &mut Frame, area: Rect, app: &App)  :14-121
-pub fn render_tasks_view(frame: &mut Frame, app: &App)  :124-126
+pub fn render_tasks_panel(frame: &mut Frame, area: Rect, app: &App) :14-121
+pub fn render_tasks_view(frame: &mut Frame, app: &App) :124-126
 ```
 
 ### crates/raios-surface-tui/src/ui/projects.rs
 ```
-pub fn render_project_detail(frame: &mut Frame, app: &App)  :14-166
-pub fn render_graph_report(frame: &mut Frame, app: &App)  :309-349
+pub fn render_project_detail(frame: &mut Frame, app: &App) :14-166
+pub fn render_graph_report(frame: &mut Frame, app: &App) :309-349
 ```
 
 ### crates/raios-surface-tui/src/ui/routes/explore.rs
 ```
-pub fn render_explore_route(f: &mut Frame, area: Rect, store: &Store)  :46-197
+pub fn render_explore_route(f: &mut Frame, area: Rect, store: &Store) :46-197
 ```
 
 ### crates/raios-surface-tui/src/ui/routes/govern.rs
 ```
-pub fn render_govern_route(f: &mut Frame, area: Rect, store: &Store)  :79-228
+pub fn render_govern_route(f: &mut Frame, area: Rect, store: &Store) :79-228
 ```
 
 ### crates/raios-surface-tui/src/ui/routes/now.rs
 ```
-pub fn render_now_route(f: &mut Frame, area: Rect, store: &Store)  :20-147
+pub fn render_now_route(f: &mut Frame, area: Rect, store: &Store) :20-147
 ```
 
 ### crates/raios-surface-tui/src/ui/routes/work.rs
 ```
-pub fn render_work_route(f: &mut Frame, area: Rect, store: &Store)  :159-292
+pub fn render_work_route(f: &mut Frame, area: Rect, store: &Store) :159-292
 ```
 
 ### crates/raios-surface-tui/src/ui/search.rs
 ```
-pub fn render_search(frame: &mut Frame, app: &App)  :14-96
-pub fn render_search_panel(frame: &mut Frame, area: Rect, app: &App)  :99-193
+pub fn render_search(frame: &mut Frame, app: &App) :14-96
+pub fn render_search_panel(frame: &mut Frame, area: Rect, app: &App) :99-193
 ```
 
 ### crates/raios-surface-tui/src/ui/setup/mod.rs
 ```
-pub fn render_setup(frame: &mut Frame, app: &App)  :21-35
+pub fn render_setup(frame: &mut Frame, app: &App) :21-35
 ```
 
 ### crates/raios-surface-tui/src/ui/setup/steps/action.rs
 ```
-pub fn render_agent(frame: &mut Frame, area: Rect, app: &App, name: &str, skipped: bool, installed: bool, version: &str, url: &str, will_create: &[&str],)  :15-79
-pub fn render_skills(frame: &mut Frame, area: Rect, app: &App)  :82-117
-pub fn render_agent_wrapper(frame: &mut Frame, area: Rect, app: &App)  :120-218
-pub fn render_initialize(frame: &mut Frame, area: Rect, app: &App)  :221-286
-pub fn render_done(frame: &mut Frame, area: Rect, app: &App)  :289-353
+pub fn render_agent(frame: &mut Frame, area: Rect, app: &App, name: &str, skipped: bool, installed: bool, version: &str, url: &str, will_create: &[&str],) :15-79
+pub fn render_skills(frame: &mut Frame, area: Rect, app: &App) :82-117
+pub fn render_agent_wrapper(frame: &mut Frame, area: Rect, app: &App) :120-218
+pub fn render_initialize(frame: &mut Frame, area: Rect, app: &App) :221-286
+pub fn render_done(frame: &mut Frame, area: Rect, app: &App) :289-353
 ```
 
 ### crates/raios-surface-tui/src/ui/setup/steps/info.rs
 ```
-pub fn render_welcome(frame: &mut Frame, area: Rect, app: &App)  :13-115
-pub fn render_workspace(frame: &mut Frame, area: Rect, app: &App)  :118-269
-pub fn render_master(frame: &mut Frame, area: Rect, app: &App)  :272-390
+pub fn render_welcome(frame: &mut Frame, area: Rect, app: &App) :13-115
+pub fn render_workspace(frame: &mut Frame, area: Rect, app: &App) :118-269
+pub fn render_master(frame: &mut Frame, area: Rect, app: &App) :272-390
 ```
 
 ## tools
 
 ### tools/raios-tray/desktop_runtime.py
 ```
-class DesktopKind(str, Enum)  :11-15
-@dataclass DesktopSession(kind, name, is_wayland)  :19-22
-def detect_desktop_session(environ: Mapping[str, str] | None) → DesktopSession  :25-39
-def tray_host_guidance(session: DesktopSession) → str  :42-49
+class DesktopKind(str, Enum) :11-15
+@dataclass DesktopSession(kind, name, is_wayland) :19-22
+def detect_desktop_session(environ: Mapping[str, str] | None) → DesktopSession :25-39
+def tray_host_guidance(session: DesktopSession) → str :42-49
 ```
 
 ### tools/raios-tray/memory.md
@@ -3850,31 +3850,31 @@ h2 Change Log & Agent Trail
 
 ### tools/raios-tray/raios-tray.py
 ```
-@dataclass Agent(name, commands)  :132-134
-@dataclass TrayState(online, health?, projects?, projects_from_cache, usage?, aiosd_cpu, aiosd_ram_mb, error, dirty_projects, mem_items, tasks)  :138-149
-class PathInput(QWidget)  :800-835
-  def __init__(initial_value: str, mode: str, parent: QWidget | None)
-  def value() → str
-  def pick_path() → None
-class SettingsDialog(QDialog)  :838-997
-  def __init__(parent: QWidget | None)
-  def build_config() → dict
-  def validate_config(config: dict) → str | None
-  def persist() → bool
-  def save_only() → None
-  def save_and_restart() → None
-  def open_config_dir() → None
-class MemoryBrowserDialog(QDialog)  :1000-1143
-  def __init__(items: list[dict], parent: QWidget | None)
-class QuickAddTaskDialog(QDialog)  :1146-1199
-  def __init__(projects: list[dict], parent: QWidget | None)
-class TaskListDialog(QDialog)  :1202-1322
-  def __init__(tasks: list[dict], projects: list[dict], parent: QWidget | None)
-class ProjectEditDialog(QDialog)  :1325-1347
-  def __init__(parent: QWidget | None, name: str, path: str)
-  def result() → tuple[str, str]
-class ProjectManagerDialog(QDialog)  :1350-1609
-  def filter_rows(text: str) → None
+@dataclass Agent(name, commands) :132-134
+@dataclass TrayState(online, health?, projects?, projects_from_cache, usage?, aiosd_cpu, aiosd_ram_mb, error, dirty_projects, mem_items, tasks) :138-149
+class PathInput(QWidget) :800-835
+ def __init__(initial_value: str, mode: str, parent: QWidget | None)
+ def value() → str
+ def pick_path() → None
+class SettingsDialog(QDialog) :838-997
+ def __init__(parent: QWidget | None)
+ def build_config() → dict
+ def validate_config(config: dict) → str | None
+ def persist() → bool
+ def save_only() → None
+ def save_and_restart() → None
+ def open_config_dir() → None
+class MemoryBrowserDialog(QDialog) :1000-1143
+ def __init__(items: list[dict], parent: QWidget | None)
+class QuickAddTaskDialog(QDialog) :1146-1199
+ def __init__(projects: list[dict], parent: QWidget | None)
+class TaskListDialog(QDialog) :1202-1322
+ def __init__(tasks: list[dict], projects: list[dict], parent: QWidget | None)
+class ProjectEditDialog(QDialog) :1325-1347
+ def __init__(parent: QWidget | None, name: str, path: str)
+ def result() → tuple[str, str]
+class ProjectManagerDialog(QDialog) :1350-1609
+ def filter_rows(text: str) → None
 ```
 
 ### tools/raios-tray/README.md
@@ -3895,8 +3895,8 @@ code-fence plain
 
 ### tools/raios-tray/test_service.py
 ```
-class TrayServiceLifecycleTests(unittest.TestCase)  :8-16
-  def test_service_is_owned_by_the_graphical_session_target() → None
+class TrayServiceLifecycleTests(unittest.TestCase) :8-16
+ def test_service_is_owned_by_the_graphical_session_target() → None
 ```
 
 ### tools/raios-factory-ui/index.html
@@ -3913,11 +3913,11 @@ keys: [lockfileVersion, settings, importers, packages, snapshots]
 ### tools/raios-factory-ui/README.md
 ```
 h1 R-AI-OS Product Factory — Visual Control Studio
-h2 🚀 Overview
-h2 ⚡ Quick Start
+h2 Overview
+h2 Quick Start
 h3 1. Development Mode
 h3 2. Production Build
-h2 ✨ Features & Architecture
+h2 Features & Architecture
 code-fence plain
 code-fence ---
 code-fence bash
@@ -3964,8 +3964,8 @@ keys: [overrides, allowBuilds, ignoredBuiltDependencies]
 
 ### vscode-extension/src/ipc/DaemonManager.ts
 ```
-export class DaemonManager  :14-146
-  isTokenFresh() → boolean  :23-25
-  async ensureRunning() → Promise<boolean>  :95-108
-  async spawn() → Promise<boolean>  :111-138
+export class DaemonManager :14-146
+ isTokenFresh() → boolean :23-25
+ async ensureRunning() → Promise<boolean> :95-108
+ async spawn() → Promise<boolean> :111-138
 ```

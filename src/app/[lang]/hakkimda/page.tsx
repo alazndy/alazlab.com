@@ -30,7 +30,7 @@ export default function HakkimdaPage() {
   return (
     <div className="max-w-[1600px] mx-auto space-y-32 pb-32 animate-in fade-in duration-1000">
 
-      {/* ── HERO: dual identity ── */}
+      {/*  HERO: dual identity  */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden glass rounded-[64px] border-border">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[#030305]/40 z-10" />
@@ -93,7 +93,7 @@ export default function HakkimdaPage() {
         </div>
       </section>
 
-      {/* ── DUAL IDENTITY NARRATIVE ── */}
+      {/*  DUAL IDENTITY NARRATIVE  */}
       <section className="relative overflow-hidden px-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="p-10 glass rounded-[32px] border-border space-y-6">
@@ -118,7 +118,7 @@ export default function HakkimdaPage() {
 
         <div className="max-w-3xl mx-auto mt-16 text-center">
           <p className="text-2xl text-foreground/80 font-medium italic">
-            &quot;{lang === 'en' 
+            &quot;{lang === 'en'
               ? 'The common denominator connecting both: never giving up until the problem is truly solved — whether it is a CAN-bus radar system or a security core of an AI agent.'
               : 'İkisini bağlayan ortak payda: sorunu gerçekten çözene kadar uğraşmak — ister bir CAN-bus radar sistemi olsun, ister bir AI agent\'ın güvenlik çekirdeği.'}&quot;
           </p>
@@ -139,7 +139,7 @@ export default function HakkimdaPage() {
         </div>
       </section>
 
-      {/* ── SYSTEM TOWER ── */}
+      {/*  SYSTEM TOWER  */}
       <section className="space-y-16 px-4">
         <SystemTower />
       </section>

@@ -18,7 +18,7 @@ export default async function RAIOSPage() {
     <div className="pb-24">
       <RaiosClient techStack={techStack} />
 
-      {/* ── DYNAMIC PROJECT DETAILS ── */}
+      {/*  DYNAMIC PROJECT DETAILS  */}
       <div className="max-w-5xl mx-auto px-6 relative z-10">
         <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16">
           <div

@@ -1,4 +1,4 @@
-# 🛡️ UniControl Pro v5.1.0 - Automotive Radar & I/O Controller
+#  UniControl Pro v5.1.0 - Automotive Radar & I/O Controller
 **Kapsamlı Sistem Mimarisi ve Mühendislik Başvuru Dokümanı**
 
 ![Platform](https://img.shields.io/badge/Platform-ESP32--S3-blue?style=for-the-badge) ![Framework](https://img.shields.io/badge/Framework-ESP--IDF-green?style=for-the-badge) ![OS](https://img.shields.io/badge/OS-FreeRTOS-orange?style=for-the-badge) ![Architecture](https://img.shields.io/badge/Architecture-Modular_C-red?style=for-the-badge) ![Standard](https://img.shields.io/badge/Standard-Automotive_Grade-yellow?style=for-the-badge)
@@ -7,7 +7,7 @@ Bu doküman, ağır vasıtalar ve iş makineleri için geliştirilen **UniContro
 
 ---
 
-## 📑 İÇİNDEKİLER
+##  İÇİNDEKİLER
 1.[Sistem Mimarisi ve Dosya Hiyerarşisi](#1-sistem-mimarisi-ve-dosya-hiyerarşisi)
 2. [Detaylı Malzeme Listesi (BOM) ve Komponent Analizi](#2-detaylı-malzeme-listesi-bom-ve-komponent-analizi)
 3.[Pinout ve Donanımsal Devre Tasarım Mantığı](#3-pinout-ve-donanımsal-devre-tasarım-mantığı)
@@ -21,7 +21,7 @@ Bu doküman, ağır vasıtalar ve iş makineleri için geliştirilen **UniContro
 
 ---
 
-## 📂 1. SİSTEM MİMARİSİ VE DOSYA HİYERARŞİSİ
+##  1. SİSTEM MİMARİSİ VE DOSYA HİYERARŞİSİ
 
 Proje "Spaghetti Code" yapısını engellemek için Modüler C (Modular C) mimarisinde tasarlanmıştır. Proje klasörü altındaki `src` dizini aşağıdaki gibi olmalıdır:
 
@@ -34,7 +34,7 @@ Proje "Spaghetti Code" yapısını engellemek için Modüler C (Modular C) mimar
 
 ---
 
-## ⚙️ 2. DETAYLI MALZEME LİSTESİ (BOM) VE KOMPONENT ANALİZİ
+##  2. DETAYLI MALZEME LİSTESİ (BOM) VE KOMPONENT ANALİZİ
 
 | Referans | Kategori | Tam Parça Kodu | Teknik Özellik / Limitler | Açıklama |
 | :--- | :--- | :--- | :--- | :--- |
@@ -49,7 +49,7 @@ Proje "Spaghetti Code" yapısını engellemek için Modüler C (Modular C) mimar
 
 ---
 
-## 🔌 3. [[UniControl GPIO]] VE DONANIMSAL DEVRE TASARIM MANTIĞI
+##  3. [[UniControl GPIO]] VE DONANIMSAL DEVRE TASARIM MANTIĞI
 
 ESP32-S3'ün boot/strapping pin çakışmalarını önleyen kesinleşmiş pin haritası:
 
@@ -78,7 +78,7 @@ Otomotiv standardı gereği yükün şasesi sabittir, +12V anahtarlanır.
 
 ---
 
-## 🧠 4. [[Unicontrol Code]] YAPISI VE IPC İLETİŞİMİ
+##  4. [[Unicontrol Code]] YAPISI VE IPC İLETİŞİMİ
 
 Projede `vTaskStartScheduler()` altında koşacak 5 ana görev vardır. İletişim **Thread-Safe** olmalı ve Queue (Kuyruk) veya Mutex kullanılmalıdır.
 
@@ -92,7 +92,7 @@ Projede `vTaskStartScheduler()` altında koşacak 5 ana görev vardır. İletiş
 
 ---
 
-## 📡 5. SENSÖR HABERLEŞMESİ VE SENSOR FUSION (CAN BUS)
+##  5. SENSÖR HABERLEŞMESİ VE SENSOR FUSION (CAN BUS)
 
 **ESP-IDF TWAI (Two-Wire Automotive Interface) Konfigürasyonu:**
 *   Sistem aynı hatta hem standart hem extended paketleri dinlemek zorundadır. Bu yüzden `twai_filter_config_t` maskesi tüm ID'leri geçirecek şekilde (Accept All) ayarlanır.
@@ -101,7 +101,7 @@ Projede `vTaskStartScheduler()` altında koşacak 5 ana görev vardır. İletiş
 *   **Format:** 11-Bit Standard ID.
 *   **Baud Rate:** 250 kbps veya 500 kbps (NVS'ten seçilebilir).
 *   **Veri:** Uzun menzil (0-60m). Objelerin radyal mesafesi (Radius) ve açısı (Angle) gelir.
-*   **Matematiksel Dönüşüm (FPU ile):** 
+*   **Matematiksel Dönüşüm (FPU ile):**
     ```c
     float x_coord = radius * cos(angle * M_PI / 180.0);
     float y_coord = radius * sin(angle * M_PI / 180.0);
@@ -117,7 +117,7 @@ Eğer `task_radar` hem UDS'den (tamponda cisim var) hem de Radardan (3 metre ile
 
 ---
 
-## 💾 6. HAFIZA YÖNETİMİ VE NVS STRUCT YAPISI
+##  6. HAFIZA YÖNETİMİ VE NVS STRUCT YAPISI
 
 Cihazın konfigürasyonu, her açılışta okunmak üzere ESP32 NVS (Non-Volatile Storage) partition'ına bir **Blob (Binary Large Object)** olarak yazılır. Bu yöntem, her değişkeni tek tek kaydetmekten çok daha hızlı ve güvenlidir.
 
@@ -138,72 +138,72 @@ extern sys_settings_t current_settings;
 
 ---
 
-## 🌐 7. WEB SUNUCUSU (SoftAP), OTA VE LIVE DEBUG
+##  7. WEB SUNUCUSU (SoftAP), OTA VE LIVE DEBUG
 
 Cihaz sahada kurulduğunda bilgisayar bağlanmasına gerek kalmaz.
 
 - **SoftAP:** SSID UniControl_Pro, Şifre: NVS'te tutulur (Default: 12345678), Gateway: 192.168.4.1
-    
+
 - **Web Sunucusu Çökme Koruması:** esp_http_server kütüphanesi kullanılır. HTML dosyası büyük olduğunda belleği (Heap) tüketmemek için, HTML stringi parçalara bölünerek gönderilir:
-    
+
     codeC
-    
+
     ```
     httpd_resp_send_chunk(req, html_part1, HTTPD_RESP_USE_STRLEN);
     httpd_resp_send_chunk(req, html_part2, HTTPD_RESP_USE_STRLEN);
     httpd_resp_send_chunk(req, NULL, 0); // İletimi bitir
     ```
-    
+
 - **OTA (Over-The-Air) Update:** Web arayüzünde /update POST endpoint'i bulunur. Yüklenen firmware.bin dosyası stream halinde (parça parça) okunarak esp_ota_write fonksiyonu ile bir sonraki partition'a (App1) yazılır. Başarılı olursa esp_ota_set_boot_partition çağrılıp cihaz yeniden başlatılır.
-    
+
 - **Live Debug:** /debug sayfası üzerinden WebSocket bağlantısı açılarak, CAN Bus hattından gelen ham hex verileri, RAM durumu ve loglar anlık olarak telefon ekranında akıtılabilir.
-    
+
 
 ---
 
-## 🗄️ 8. KARA KUTU (DATA LOGGER) SİSTEMİ
+##  8. KARA KUTU (DATA LOGGER) SİSTEMİ
 
 Olayların hukuki analizi için log tutulur. SD Kart yazma işlemleri asenkron olmalı, task_radar'ı bloklamamalıdır.
 
 - **Donanım Protokolü:** Wemos Shield ESP32'nin SPI hattına bağlıdır (VSPI veya HSPI). DS1307 RTC, I2C hattına bağlıdır.
-    
+
 - **Log Tetikleme Koşulu (Event-Driven):** Her okumayı kaydetmek SD kartı kısa sürede bozar. Log sadece aşağıdaki durumlarda atılır:
-    
+
     1. Hedef danger_distance_m eşiğinin altına girdiğinde (Tehlike başladı).
-        
+
     2. Hedef danger_distance_m sınırından çıktığında (Tehlike bitti).
-        
+
     3. OUT1, OUT2 çıkışları aktif olduğunda veya IN pinlerinden araç sinyalleri/geri vites okunduğunda.
-        
+
 - **Rate Limiting (Cooldown):** Sisteme "Aynı saniye içinde maksimum 1 log atılabilir" kuralı eklenmiştir (Yazılımsal timer ile).
-    
+
 - **Örnek SD Kart log.txt Formatı:**
-    
+
     codeText[2026-03-18 14:05:12] [EVENT] TEHLIKE_BASLADI: 1.45m (X:0.5, Y:1.3)
-    
+
     ```
     [2026-03-18 14:05:13][IO_TRG] OUT2_AKTIF: Sol Uyari Verildi.[2026-03-18 14:05:22] [EVENT] TEHLIKE_BITTI: 4.20m
     ```
-    
+
 
 ---
 
-## ⚡ 9. PCB ÇİZİM KURALLARI VE OTOMOTİV KORUMALARI
+##  9. PCB ÇİZİM KURALLARI VE OTOMOTİV KORUMALARI
 
 Bir araca takılacak devrenin "Automotive Grade" olması için PCB (Printed Circuit Board) tasarımında uyulması zorunlu kurallar:
 
 1. **Güç Girişi Koruması:** Aküden gelen ana +12V hattına; **3A Bıçak Sigorta**, ardından ters akım/ters bağlantı koruması için **1N5408 Güç Diyodu** (veya P-Channel Reverse Polarity devresi) ve yüksek voltaj sıçramaları (Load Dump) için **TVS Diyot (Örn: SMCJ24A)** eklenmelidir.
-    
+
 2. **Flyback Koruması:** OUT1, OUT2, OUT3 çıkışları eğer araç üzerinde bobinli bir yük (Röle, Mekanik Korna vb.) sürecekse, dışarıdan bağlanan yükün uçlarına ters **1N4007 Flyback Diyotu** konulmalıdır. Cihaz içindeki MOSFET'in (IRF9540) Drain'den GND'ye TVS konulması da şiddetle önerilir.
-    
+
 3. **İzolasyon Bariyeri:** PC817 Optocoupler'ların PCB yerleşiminde, 12V tarafındaki pinler ile 3.3V (ESP32) tarafındaki pinler arasında en az **2mm clearance (boşluk)** bırakılmalı, gerekirse PCB üzerine isolation slot (yarık) açılmalıdır.
-    
+
 4. **Toprak Hattı (Ground Plane):** Tüm GND bağlantıları kalın bir Polygon Pour ile birleştirilmeli, CAN Bus modülünün GND'si ile ESP32 GND'si aynı şasede yıldız noktası (Star Ground) mantığı ile birleşmelidir.
-    
+
 
 ---
 
-## 🛠️ 10. DERLEME, PLATFORMIO VE PARTITION AYARLARI
+##  10. DERLEME, PLATFORMIO VE PARTITION AYARLARI
 
 Proje Arduino IDE ile değil, profesyonel **VS Code + PlatformIO (ESP-IDF Framework)** ortamında derlenmelidir.
 
@@ -218,7 +218,7 @@ board = esp32-s3-devkitc-1
 framework = espidf
 monitor_speed = 115200
 board_build.partitions = partitions_singleapp_large.csv
-build_flags = 
+build_flags =
     -D CORE_DEBUG_LEVEL=3
     -D CONFIG_FREERTOS_HZ=1000
 ```
@@ -242,11 +242,11 @@ spiffs,   data, spiffs,  0x620000,0x1D0000,   # Log ve Web dosyaları (opsiyonel
 **Derleme Komutları:**
 
 - Projeyi temizle: pio run -t clean
-    
+
 - Derle ve Yükle: pio run -t upload
-    
+
 - Seri Portu İzle: pio device monitor
-    
+
 
 ---
 

@@ -91,12 +91,12 @@ Frontend varsayılan olarak `http://localhost:5173`, backend ise `http://localho
 
 ```
 AI 360 VCT/
-├── src/              # React frontend kaynak dosyaları
-│   ├── components/   # UI ve 3D bileşenler
-│   └── ...
-├── server.js         # Express API sunucusu
-├── database.db       # SQLite veri tabanı (otomatik oluşturulur)
-└── vite.config.js
+ src/              # React frontend kaynak dosyaları
+    components/   # UI ve 3D bileşenler
+    ...
+ server.js         # Express API sunucusu
+ database.db       # SQLite veri tabanı (otomatik oluşturulur)
+ vite.config.js
 ```
 
 

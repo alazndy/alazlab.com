@@ -87,7 +87,7 @@ export function ProjectViewTabs({
   return (
     <div className="space-y-8">
 
-      {/* ── INTERACTIVE TAB SELECTOR ── */}
+      {/*  INTERACTIVE TAB SELECTOR  */}
       {tabs.length > 1 && (
         <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/8 custom-scrollbar">
           {tabs.map((tab) => {
@@ -120,7 +120,7 @@ export function ProjectViewTabs({
         </div>
       )}
 
-      {/* ── TAB 1: OVERVIEW ── */}
+      {/*  TAB 1: OVERVIEW  */}
       {activeTab === 'overview' && (
         <div className="space-y-12 animate-in fade-in duration-300">
           <div
@@ -167,10 +167,10 @@ export function ProjectViewTabs({
         </div>
       )}
 
-      {/* ── TAB 2: WIKI & DOCUMENTATION READER ── */}
+      {/*  TAB 2: WIKI & DOCUMENTATION READER  */}
       {activeTab === 'wiki' && hasWiki && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-in fade-in duration-300">
-          
+
           {/* Wiki Table of Contents Sidebar */}
           <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-16">
             <div className="relative">
@@ -251,14 +251,14 @@ export function ProjectViewTabs({
         </div>
       )}
 
-      {/* ── TAB 3: MEDIA & GALLERY ── */}
+      {/*  TAB 3: MEDIA & GALLERY  */}
       {activeTab === 'gallery' && hasGallery && (
         <div className="space-y-8 animate-in fade-in duration-300">
           <ProjectResourceSections project={metadata} />
         </div>
       )}
 
-      {/* ── TAB 4: RESOURCES & DOWNLOADS ── */}
+      {/*  TAB 4: RESOURCES & DOWNLOADS  */}
       {activeTab === 'resources' && hasResources && (
         <div className="space-y-8 animate-in fade-in duration-300">
           <ProjectResourceSections project={metadata} />

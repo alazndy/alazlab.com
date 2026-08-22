@@ -97,7 +97,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
-        {/* ── LEFT COLUMN: MAIN ARCHITECT PROFILE ── */}
+        {/*  LEFT COLUMN: MAIN ARCHITECT PROFILE  */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -201,7 +201,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
           </div>
         </motion.div>
 
-        {/* ── RIGHT COLUMN: ACTIVE TELEMETRY & SYSTEM RADAR ── */}
+        {/*  RIGHT COLUMN: ACTIVE TELEMETRY & SYSTEM RADAR  */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}

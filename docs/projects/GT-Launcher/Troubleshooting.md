@@ -1,6 +1,6 @@
 # Troubleshooting & FAQ
 
-## 🆘 Common Issues
+##  Common Issues
 
 ### 1. Back and Recents buttons don't work!
 **Solution:** enable the **GT-Launcher Accessibility Service**.
@@ -36,7 +36,7 @@
 - If the release keystore changes, update the property before generating release artifacts.
 - Debug builds skip this check entirely — this only affects release builds.
 
-## ❓ Frequently Asked Questions
+##  Frequently Asked Questions
 
 **Q: Can I use my own icon packs?**
 A: Yes — go to **Engineering → APPEARANCE → ICON PACK** and pick any pack installed from the Play Store.

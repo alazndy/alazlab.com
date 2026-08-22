@@ -149,7 +149,7 @@ export function ProjectHero({
           </div>
         )}
 
-        {/* ── CONTENT ── */}
+        {/*  CONTENT  */}
         <div className={cn(
           "relative z-10 grid gap-6 p-5 sm:p-8 md:p-12",
           (variant === 'browser' || variant === 'mobile') && hasImage
@@ -202,7 +202,7 @@ export function ProjectHero({
                   >
                     {/* Glossy overlay effect */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent opacity-0 group-hover/dl:opacity-100 transition-opacity" />
-                    
+
                     <Smartphone className="w-6 h-6 animate-pulse" />
                     <span>{t('project.downloadApk')} {version || ''}</span>
                   </a>

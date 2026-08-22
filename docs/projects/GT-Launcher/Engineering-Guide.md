@@ -2,7 +2,7 @@
 
 The **Engineering Panel** is GT-Launcher's settings hub. Open it via the gear icon on the home screen, or from the sidebar's configured shortcut.
 
-## 🗂️ Navigation
+##  Navigation
 
 The panel opens to a reorderable master deck of section tiles. Default sections, in order:
 
@@ -49,7 +49,7 @@ Each widget: size (XS–XL), visibility toggle, drag to reorder.
 
 ![Configuring header widgets in Engineering Home](assets/customization/header-widget-editor.gif)
 
-*Shortcut:* while in edit mode, tap **✏ HEADER** to jump here directly.
+*Shortcut:* while in edit mode, tap ** HEADER** to jump here directly.
 
 #### GRID ENGINE
 - **Columns:** 2 to 12, default **6**.
@@ -156,7 +156,7 @@ Manage your subscription or lifetime unlock, or restore a previous purchase.
 
 ---
 
-## 📐 Grid Property Reference
+##  Grid Property Reference
 
 | Property | Description |
 |---|---|

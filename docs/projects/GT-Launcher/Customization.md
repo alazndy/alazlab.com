@@ -1,6 +1,6 @@
 # Customization: Deep Dive into the Grid Engine & Card Builder
 
-## 📐 How the Grid Works
+##  How the Grid Works
 
 The launcher divides your screen into a matrix.
 - **Columns (X):** Configurable from 2 to 12 — default **6** (**Engineering → HOME → GRID ENGINE**).
@@ -14,7 +14,7 @@ Each card's minimum size is enforced per capability (e.g. a Gallery card can't s
 
 ---
 
-## 🧩 Capability-Based Card Builder (v4.7+)
+##  Capability-Based Card Builder (v4.7+)
 
 GT-Launcher uses a **Unified Card Capability System (UCCS)**. Cards are not a fixed type — they're a surface that can host one or more capabilities simultaneously.
 
@@ -67,7 +67,7 @@ Track stock, crypto, and FX holdings on a single card with live quotes and runni
 
 ---
 
-## 🎨 Visual Styles System
+##  Visual Styles System
 
 Apply a global card rendering style from **Engineering → APPEARANCE → CARD STYLE**. Each style has its own set of adjustable parameters, and every card can override the global style individually.
 
@@ -91,7 +91,7 @@ Per-card style override is available in **Card Settings → VISUAL**.
 
 ---
 
-## 🎨 Theme Engine & Color System
+##  Theme Engine & Color System
 
 ### Theme Hierarchy
 1. **Global Preset:** 12 named color palettes — `ORANGE` (Classic TNG Style) · `BLUE` (Calm & Professional) · `GREEN` (Fresh & Natural) · `PURPLE` (Mysterious & Royal) · `RED` (Bold & Alert) · `TEAL` (Calm & Scientific) · `NAVY` (Deep & Elegant) · `MAGENTA` (High-Tech & Bold) · `ROSE` (Warm & Elegant, TOS Pink) · `CYAN` (Sharp & Electric, Borg/Tactical) · `YELLOW` (Bright & Optimistic) · `AMBER` (Warm & Timeless, TOS Gold). The parenthetical is flavor-text shown right under each preset's name in the picker, not a separate name.
@@ -127,7 +127,7 @@ Non-default Visual Styles inside the Theme Creator are a Premium feature.
 Every card can carry its own independent accent color.
 - Open **Card Settings → CARD COLOR**.
 - Enter a `#RRGGBB` hex or pick from the 9 quick-chips.
-- Tap `✕` to revert to the global theme rotation.
+- Tap `` to revert to the global theme rotation.
 - `null` = theme-following (default).
 
 ![Overriding individual card color with HSV wheel & harmonies](assets/customization/card-color-override.gif)
@@ -136,9 +136,9 @@ Custom accents automatically pick black or white text for contrast, the same cla
 
 ---
 
-## 🖥️ Header Widget System (v4.4+)
+##  Header Widget System (v4.4+)
 
-Configure the top header area in **Engineering → HOME → HEADER WIDGETS** (or tap **✏ HEADER** while in edit mode on the home screen).
+Configure the top header area in **Engineering → HOME → HEADER WIDGETS** (or tap ** HEADER** while in edit mode on the home screen).
 
 ![Configuring header widgets, sizing and visibility](assets/customization/header-widget-editor.gif)
 
@@ -157,7 +157,7 @@ The header height auto-adjusts to widget content — there's no fixed height.
 
 ---
 
-## 💾 Layout Profiles (Presets)
+##  Layout Profiles (Presets)
 
 Save the whole card arrangement as a named "Station" in **Engineering → SYSTEM → LAYOUT PRESETS**, and switch between them any time — one tap loads a completely different card set, colors, and positions. Useful for keeping, say, a dense daily-driver layout and a stripped-down minimal one side by side.
 
@@ -165,7 +165,7 @@ Save the whole card arrangement as a named "Station" in **Engineering → SYSTEM
 
 ---
 
-## 🖼️ Wallpaper & Background Images
+##  Wallpaper & Background Images
 
 Set a full launcher wallpaper or custom background overlay behind your card grid:
 - Navigate to **Engineering → HOME → BACKGROUND**.
@@ -177,6 +177,6 @@ Set a full launcher wallpaper or custom background overlay behind your card grid
 
 ---
 
-## 💡 Performance Tip
+##  Performance Tip
 
 On older devices, a larger cell size or fewer columns means fewer Compose nodes on screen and smoother animations — try dropping to 4-5 columns or bumping the cell size before reaching for a lower-end theme. GT-Launcher also auto-requests the device's highest supported refresh rate (90/120/144 Hz) via `preferredDisplayModeId`.

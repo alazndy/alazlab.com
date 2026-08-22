@@ -41,21 +41,21 @@ document does not reassign any P4 GPIO.
 
 ```text
 J_PWR.1  VBAT_RAW (9-32 V)
-   │
+
   F1  Harness fuse near source + carrier secondary fuse
-   │
+
   Q1  Reverse-polarity ideal-diode MOSFET stage
-   │──── D1 TVS ──── GND at power entry
-   │
+    D1 TVS  GND at power entry
+
 VBAT_PROT
-   ├── U1 automotive buck ── BUCK_5V ── U_VSYS reverse-blocking switch ── P4_5V ── J_P4.VSYS
-   ├── BUCK_5V ── U2 sequenced 5 V load switch/filter ── CAN_5V
-   └── F2..F7 individual output fuses ─ relay contacts / PWM load positives
+    U1 automotive buck  BUCK_5V  U_VSYS reverse-blocking switch  P4_5V  J_P4.VSYS
+    BUCK_5V  U2 sequenced 5 V load switch/filter  CAN_5V
+    F2..F7 individual output fuses  relay contacts / PWM load positives
 
-VBAT_PROT ── U_SUP supervisor/comparator ── PWR_FAIL_N ── P4 GPIO20
-P4_5V ── C_HOLDUP (sized by measurement) ── GND
+VBAT_PROT  U_SUP supervisor/comparator  PWR_FAIL_N  P4 GPIO20
+P4_5V  C_HOLDUP (sized by measurement)  GND
 
-J_PWR.2  GND ───────────────────────────────────────── continuous ground plane
+J_PWR.2  GND  continuous ground plane
 ```
 
 Rules:
@@ -107,21 +107,21 @@ Rules:
 ### CAN-1 and CAN-2 (identical circuits)
 
 ```text
-3V3 ── 10k ──┬─────── U_CAN1.TXD
-              └─────── P4 GPIO2
-P4 GPIO3 ◄──────────── U_CAN1.RXD
-P4 GPIO33 ──────────── U_CAN1.STB       # CAN-2 uses GPIO4/5/52
-                          │
+3V3  10k  U_CAN1.TXD
+               P4 GPIO2
+P4 GPIO3  U_CAN1.RXD
+P4 GPIO33  U_CAN1.STB       # CAN-2 uses GPIO4/5/52
+
                          10k
-                          │
+
                          3V3       # boot default = standby/passive
 
-CAN_5V ─────────────── U_CAN1.VCC     3V3 ── U_CAN1.VIO
+CAN_5V  U_CAN1.VCC     3V3  U_CAN1.VIO
            100nF to GND at pin 3         100nF to GND at pin 5
-GND ────────────────── U_CAN1.GND
-U_CAN1.CANH/CANL ── L_CAN1/DNP bypass ──┬── J_CAN1.1/.2
-                                        ├── D_CAN1 dual-line CAN TVS to GND
-                                        └── JP_TERM + selectable 120R/split termination
+GND  U_CAN1.GND
+U_CAN1.CANH/CANL  L_CAN1/DNP bypass  J_CAN1.1/.2
+                                         D_CAN1 dual-line CAN TVS to GND
+                                         JP_TERM + selectable 120R/split termination
 ```
 
 `U_CAN1` and `U_CAN2` are TCAN1042HGV-Q1. `JP_CANx_TERM` is open by default;
@@ -138,23 +138,23 @@ only the option validated for the harness. The common-mode choke also needs a
 ### CAN FD
 
 ```text
-P4 GPIO28 ─ 22R ─── U_CANFD.nCS        U_CANFD.VDD ── 3V3
-P4 GPIO29 ─ 22R ─── U_CANFD.SDI        U_CANFD.VSS ── GND
-P4 GPIO30 ─ 22R ─── U_CANFD.SCK        VDD bypass: 100nF + 1uF local
-P4 GPIO31 ◄─ 22R ── U_CANFD.SDO        # place SDO resistor at U_CANFD
-P4 GPIO32 ◄──────── U_CANFD.INT        (active-low interrupt)
+P4 GPIO28  22R  U_CANFD.nCS        U_CANFD.VDD  3V3
+P4 GPIO29  22R  U_CANFD.SDI        U_CANFD.VSS  GND
+P4 GPIO30  22R  U_CANFD.SCK        VDD bypass: 100nF + 1uF local
+P4 GPIO31  22R  U_CANFD.SDO        # place SDO resistor at U_CANFD
+P4 GPIO32  U_CANFD.INT        (active-low interrupt)
 
-3V3 ── 10k ── U_CANFD.nCS             # deselected during reset
-Y_CANFD 40MHz ── U_CANFD.OSC1/OSC2     # AEC-Q200 crystal, calculated Cload
+3V3  10k  U_CANFD.nCS             # deselected during reset
+Y_CANFD 40MHz  U_CANFD.OSC1/OSC2     # AEC-Q200 crystal, calculated Cload
 
-U_CANFD.TXCAN ─── U_PHYFD.TXD          U_PHYFD.VDD ── CAN_5V
-U_CANFD.RXCAN ◄── U_PHYFD.RXD          U_PHYFD.VIO ── 3V3
-U_CANFD.INT0/XSTBY ── U_PHYFD.STBY     U_PHYFD.GND ── GND
-                └──── 10k ── 3V3       # standby until controller owns the pin
+U_CANFD.TXCAN  U_PHYFD.TXD          U_PHYFD.VDD  CAN_5V
+U_CANFD.RXCAN  U_PHYFD.RXD          U_PHYFD.VIO  3V3
+U_CANFD.INT0/XSTBY  U_PHYFD.STBY     U_PHYFD.GND  GND
+                 10k  3V3       # standby until controller owns the pin
 
-U_PHYFD.CANH/CANL ─ L_CANFD/DNP bypass ─┬─ J_CANFD.1/.2
-                                        ├─ D_CANFD CAN-FD-rated TVS at connector
-                                        └─ JP_CANFD_TERM + 120R/split termination
+U_PHYFD.CANH/CANL  L_CANFD/DNP bypass  J_CANFD.1/.2
+                                         D_CANFD CAN-FD-rated TVS at connector
+                                         JP_CANFD_TERM + 120R/split termination
 ```
 
 `U_CANFD` is MCP2518FD and `U_PHYFD` is MCP2562FD. Fit the oscillator/crystal
@@ -185,15 +185,15 @@ Connector recommendation for each CAN port:
 ## Sheet D — Isolated Trigger Inputs
 
 ```text
-J_TRIG1.1 ─ PTC1 ─ BR1 bridge input ─ R_IN1A ─┬─ U_OPTO1.A
-                                               └─ R_IN1B (parallel sharing)
-J_TRIG1.2 ──────── BR1 bridge return ─────────── U_OPTO1.K
-       └── D_TRIG1 bidirectional TVS is across the two input wires, not GND
+J_TRIG1.1  PTC1  BR1 bridge input  R_IN1A  U_OPTO1.A
+                                                R_IN1B (parallel sharing)
+J_TRIG1.2  BR1 bridge return  U_OPTO1.K
+        D_TRIG1 bidirectional TVS is across the two input wires, not GND
 
-3V3 ── 10k ─────────┬── 100R ── P4 GPIO26 (ISO_TRIG1)
-                   └── U_OPTO1.C
-GND ─────────────────── U_OPTO1.E
-GPIO26 ── C_FILTER1 (DNP/10nF start value) ── GND
+3V3  10k  100R  P4 GPIO26 (ISO_TRIG1)
+                    U_OPTO1.C
+GND  U_OPTO1.E
+GPIO26  C_FILTER1 (DNP/10nF start value)  GND
 ```
 
 Repeat for `ISO_TRIG2` on GPIO27. The input-side negative must not be joined to
@@ -213,18 +213,18 @@ temperature range. Preserve the isolation barrier in PCB copper and creepage.
 ### Hardware safety gate and watchdog
 
 ```text
-P4 GPIO22 (SAFETY_HB) ── U_WDOG.WDI
-U_WDOG.WDO_N ───────────┬── P4 header EN      # timed low pulse = P4 reset
-                        └── WDOG_OK ── 10k ── 3V3
+P4 GPIO22 (SAFETY_HB)  U_WDOG.WDI
+U_WDOG.WDO_N  P4 header EN      # timed low pulse = P4 reset
+                         WDOG_OK  10k  3V3
 
-PWR_FAIL_N ─┐
-             AND (U_SAFE1A) ── POWER_WDOG_OK ─┐
-WDOG_OK ────┘                                 AND (U_SAFE1B) ── SAFE_OK
-P4 GPIO21 (OUTPUT_ARM) ───────────────────────┘
+PWR_FAIL_N
+             AND (U_SAFE1A)  POWER_WDOG_OK
+WDOG_OK                                  AND (U_SAFE1B)  SAFE_OK
+P4 GPIO21 (OUTPUT_ARM)
 
-P4 RELAY1_EN ─┐
-               AND (U_SAFE1C) ── RELAY1_SAFE ── final driver
-SAFE_OK ──────┘
+P4 RELAY1_EN
+               AND (U_SAFE1C)  RELAY1_SAFE  final driver
+SAFE_OK
 
 Repeat the safety gate for RELAY2..4 and PWM_OUT1..2.
 ```
@@ -248,17 +248,17 @@ deadlock.
 ### Relay coil drivers (four identical channels)
 
 ```text
-P4 GPIO48 ─ safety gate ─ R_GATE1 ─ Q_RELAY1.G
-                                  │
+P4 GPIO48  safety gate  R_GATE1  Q_RELAY1.G
+
                                 R_PD1
-                                  │
+
                                  GND
 
-RELAY_COIL_1+ (fused VBAT_PROT) ─ K1 coil ─ Q_RELAY1.D
-GND ─────────────────────────────────────── Q_RELAY1.S
+RELAY_COIL_1+ (fused VBAT_PROT)  K1 coil  Q_RELAY1.D
+GND  Q_RELAY1.S
 D_FLY1 is across the coil: cathode at RELAY_COIL_1+, anode at Q_RELAY1.D
 
-K1 contacts ── J_RELAY_OUT: COM / NO / NC
+K1 contacts  J_RELAY_OUT: COM / NO / NC
 ```
 
 GPIO48, GPIO49, GPIO50, and GPIO51 drive K1 through K4 respectively. Relay
@@ -275,14 +275,14 @@ when fast relay release is required and verify the resulting MOSFET voltage.
 ### PWM low-side outputs (two identical channels)
 
 ```text
-P4 GPIO46 ─ safety gate ─ R_GATE_PWM1 ─ Q_PWM1.G
-                                      │
+P4 GPIO46  safety gate  R_GATE_PWM1  Q_PWM1.G
+
                                     R_PD_PWM1
-                                      │
+
                                      GND
 
-J_LOAD1.1  F_LOAD1 ─ VBAT_PROT ─ vehicle load ─ J_LOAD1.2 / Q_PWM1.D
-GND ────────────────────────────────────────────────────────── Q_PWM1.S
+J_LOAD1.1  F_LOAD1  VBAT_PROT  vehicle load  J_LOAD1.2 / Q_PWM1.D
+GND  Q_PWM1.S
 ```
 
 GPIO46 drives PWM-1 and GPIO47 drives PWM-2. `Q_PWMx` must have an Rds(on)

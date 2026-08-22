@@ -52,6 +52,7 @@
   - **Wiki & Dokümantasyon (Wiki Reader):** GT-Launcher (9 kılavuz), UniControl (CAN/protokol raporları) ve R-AI-OS (güvenlik/mimari) için in-page arama özellikli interaktif dokümantasyon okuyucusu.
   - **Medya & Vitrin (Media & Gallery):** Tüm canlı GIF demoları, video ve şemalar.
   - **Kaynaklar (Downloads & Resources):** APK sürümleri, kaynak kod ve resmi dokümanlar.
+- **Sıfır Emoji & Dinamik Mühendislik Standardı (2026-08-23):** Tüm siteden (kod tabanı, markdown'lar, dokümantasyonlar, menüler ve başlıklar) istisnasız tüm emojiler temizlendi. Yerine endüstriyel LCARS HUD aksanları, Lucide SVG vektör ikonları ve mikro telemetri göstergeleri entegre edildi.
 - **İçerik Entegrasyonu**: DevOps klasöründeki README ve memory.md dosyaları taranarak markdown içerikleri zenginleştirildi.
 - **Sistem Temizliği**: Crucix ve AG-Manager projeleri tüm metadata ve kod tabanından temizlendi.
   - `src/content/projects/AG-Manager.md` silindi.

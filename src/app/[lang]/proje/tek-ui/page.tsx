@@ -12,11 +12,11 @@ export async function generateStaticParams() {
 export default async function TekUIPage() {
   const project = getProjectBySlug('tek-ui');
   const contentHtml = await marked.parse(project?.content || '');
-  
+
   return (
     <div className="min-h-screen pb-24 animate-in fade-in duration-1000 bg-foreground/5">
-      
-      {/* ── HERO ── */}
+
+      {/*  HERO  */}
       <div className="relative pt-20 pb-16 px-6">
         <div className="max-w-5xl mx-auto space-y-8">
           <Link href="/#projects" className="inline-flex items-center gap-2 text-foreground/50 hover:text-foreground transition-colors font-mono tracking-widest uppercase text-xs">
@@ -30,12 +30,12 @@ export default async function TekUIPage() {
                 <Palette className="w-4 h-4" />
                 UI Infrastructure
               </div>
-              
+
           {/* Project Cover Image */}
           {project?.metadata?.image && (
             <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
-              <img 
-                src={project.metadata.image} 
+              <img
+                src={project.metadata.image}
                 alt={project.metadata.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -48,7 +48,7 @@ export default async function TekUIPage() {
                 T-Ecosystem&apos;in kurumsal tasarım sistemi ve component kütüphanesi. Radix UI primitives ve Tailwind CSS v4 mimarisi.
               </p>
             </div>
-            
+
             {/* Visualizer Block */}
             <div className="w-full md:w-72 aspect-square glass rounded-3xl border-border p-6 flex flex-col justify-between shadow-2xl bg-black/40">
                <div className="flex gap-2">
@@ -70,8 +70,8 @@ export default async function TekUIPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 space-y-12 relative z-10 mt-12">
-        
-        {/* ── CORE PILLARS ── */}
+
+        {/*  CORE PILLARS  */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="glass p-8 rounded-[24px] border-border space-y-4">
             <Layers className="w-8 h-8 text-foreground" />
@@ -96,7 +96,7 @@ export default async function TekUIPage() {
           </div>
         </div>
 
-        {/* ── TOKENS ── */}
+        {/*  TOKENS  */}
         <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-8">
           <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
             <Box className="w-6 h-6" />
@@ -122,8 +122,8 @@ export default async function TekUIPage() {
           </div>
         </div>
 
-      
-        {/* ── DYNAMIC PROJECT DETAILS ── */}
+
+        {/*  DYNAMIC PROJECT DETAILS  */}
         <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16 max-w-5xl mx-auto px-6 relative z-10 mb-16">
           <div
             className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red"

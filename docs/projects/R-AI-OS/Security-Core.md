@@ -13,8 +13,8 @@ at this stage of the project.
 
 | Version | Supported |
 |---------|-----------|
-| Latest tagged release | ✅ |
-| Older releases | ❌ |
+| Latest tagged release |  |
+| Older releases |  |
 
 ## Reporting a Vulnerability
 

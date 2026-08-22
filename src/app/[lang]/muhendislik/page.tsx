@@ -14,8 +14,8 @@ export default async function MuhendislikPage({ params }: { params: Promise<{ la
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 pb-24 px-2 sm:px-4">
-      
-      {/* ── HEADER & TELEMETRY HUD ── */}
+
+      {/*  HEADER & TELEMETRY HUD  */}
       <div className="relative p-8 sm:p-12 rounded-3xl border border-lcars-orange/30 bg-card overflow-hidden shadow-2xl">
         <div
           aria-hidden
@@ -64,7 +64,7 @@ export default async function MuhendislikPage({ params }: { params: Promise<{ la
         </div>
       </div>
 
-      {/* ── BENTO PROJECT MATRIX ── */}
+      {/*  BENTO PROJECT MATRIX  */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((p) => (
           <Link

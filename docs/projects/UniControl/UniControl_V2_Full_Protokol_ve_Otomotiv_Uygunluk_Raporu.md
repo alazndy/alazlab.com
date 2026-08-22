@@ -103,23 +103,23 @@ Bu rapordaki hiçbir sistem seviyesi alan **Sertifikalı** değildir.
 ## Kritik mimari akış
 
 ```text
-                         ┌──────────────────────────┐
-Vehicle 9–32 V ────────► │ Protected power + PWR_FAIL│
-                         └────────────┬─────────────┘
-                                      │
-                              ┌───────▼────────┐
-                              │ ESP32-P4-WIFI6 │
-                              └───┬────┬────┬──┘
-                                  │    │    │
-          TWAI 1/2 ──────────────┘    │    └── SPI2 ─ MCP2518FD ─ MCP2562FD ─ CAN FD
-          │                            │
-     2 × TCAN1042HGV-Q1 ─ 2 × CAN      ├── UARTx ─ LIN transceiver ─ LIN
-                                       ├── UARTy ─ L9637-class PHY ─ K-Line
-                                       ├── I2C0 ─ ADS1115-Q1 ─ protected AN1..AN4
-                                       └── I2C0 ─ TCA9539-Q1 ─ SAFE_OK gates ─ 4 relay drivers
+
+Vehicle 9–32 V   Protected power + PWR_FAIL
+
+
+
+                               ESP32-P4-WIFI6
+
+
+          TWAI 1/2          SPI2  MCP2518FD  MCP2562FD  CAN FD
+
+     2 × TCAN1042HGV-Q1  2 × CAN       UARTx  LIN transceiver  LIN
+                                        UARTy  L9637-class PHY  K-Line
+                                        I2C0  ADS1115-Q1  protected AN1..AN4
+                                        I2C0  TCA9539-Q1  SAFE_OK gates  4 relay drivers
 
 GPIO21 OUTPUT_ARM + GPIO22 SAFETY_HB + PWR_FAIL_N
-                   └──────────► watchdog / SAFE_OK ─► tüm röle ve PWM sürücüleri OFF
+                    watchdog / SAFE_OK  tüm röle ve PWM sürücüleri OFF
 ```
 
 LIN/K-Line ve ADC için açılan fonksiyonlar, CAN FD SPI veya güvenlik zincirinin

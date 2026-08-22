@@ -12,15 +12,15 @@ export async function generateStaticParams() {
 export default async function ENVIPage() {
   const project = getProjectBySlug('ENV-I');
   const contentHtml = await marked.parse(project?.content || '');
-  
+
   return (
     <div className="min-h-screen pb-24 animate-in fade-in duration-1000">
-      
-      {/* ── HERO ── */}
+
+      {/*  HERO  */}
       <div className="relative pt-20 pb-16 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay" />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-lcars-cyan/10 blur-[150px] rounded-full pointer-events-none" />
-        
+
         <div className="max-w-5xl mx-auto relative z-10 space-y-8">
           <Link href="/#projects" className="inline-flex items-center gap-2 text-foreground/50 hover:text-lcars-cyan transition-colors font-mono tracking-widest uppercase text-xs">
             <ArrowLeft className="w-4 h-4" />
@@ -32,12 +32,12 @@ export default async function ENVIPage() {
               <Database className="w-4 h-4" />
               Monitoring / Platform
             </div>
-            
+
           {/* Project Cover Image */}
           {project?.metadata?.image && (
             <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
-              <img 
-                src={project.metadata.image} 
+              <img
+                src={project.metadata.image}
                 alt={project.metadata.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -54,8 +54,8 @@ export default async function ENVIPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 space-y-16 relative z-10">
-        
-        {/* ── METRICS DASHBOARD ── */}
+
+        {/*  METRICS DASHBOARD  */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { label: 'Stack', val: 'Next.js + Firebase', icon: Shield, color: 'text-lcars-green' },
@@ -73,7 +73,7 @@ export default async function ENVIPage() {
           ))}
         </div>
 
-        {/* ── CORE ARCHITECTURE ── */}
+        {/*  CORE ARCHITECTURE  */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-8">
             <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
@@ -120,7 +120,7 @@ export default async function ENVIPage() {
           </div>
         </div>
 
-        {/* ── FEATURES ── */}
+        {/*  FEATURES  */}
         <div className="space-y-8">
           <h2 className="text-3xl font-black text-foreground uppercase tracking-tight text-center">Genişletilmiş Özellikler</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -148,8 +148,8 @@ export default async function ENVIPage() {
           </div>
         </div>
 
-      
-        {/* ── DYNAMIC PROJECT DETAILS ── */}
+
+        {/*  DYNAMIC PROJECT DETAILS  */}
         <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16 max-w-5xl mx-auto px-6 relative z-10 mb-16">
           <div
             className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red"

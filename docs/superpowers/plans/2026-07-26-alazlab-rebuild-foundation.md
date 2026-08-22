@@ -236,7 +236,7 @@ export default function HakkimdaPage() {
   return (
     <div className="max-w-[1600px] mx-auto space-y-32 pb-32 animate-in fade-in duration-1000">
 
-      {/* ── HERO: dual identity ── */}
+      {/*  HERO: dual identity  */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden glass rounded-[64px] border-border">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[#030305]/40 z-10" />
@@ -298,7 +298,7 @@ export default function HakkimdaPage() {
         </div>
       </section>
 
-      {/* ── DUAL IDENTITY NARRATIVE ── */}
+      {/*  DUAL IDENTITY NARRATIVE  */}
       <section className="relative overflow-hidden px-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="p-10 glass rounded-[32px] border-border space-y-6">
@@ -352,7 +352,7 @@ export default function HakkimdaPage() {
         </div>
       </section>
 
-      {/* ── SYSTEM TOWER (kept — visual language, not roleplay copy) ── */}
+      {/*  SYSTEM TOWER (kept — visual language, not roleplay copy)  */}
       <section className="space-y-16 px-4">
         <div className="flex flex-col md:flex-row items-end justify-between gap-8 px-12">
           <div className="space-y-4">

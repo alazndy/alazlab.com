@@ -1,4 +1,4 @@
-# 💻 UniControl Pro v5.1.0 - Yazılım Mimarisi ve RTOS Task Listesi
+#  UniControl Pro v5.1.0 - Yazılım Mimarisi ve RTOS Task Listesi
 **ESP-IDF & FreeRTOS Kapsamlı Mühendislik Dokümanı**
 
 ![ESP-IDF](https://img.shields.io/badge/Framework-ESP--IDF_v5.x-green?style=for-the-badge)
@@ -11,7 +11,7 @@ Bu doküman, UniControl Pro cihazının iç yazılım (Firmware) mimarisini, bel
 
 ---
 
-## 📑 İÇİNDEKİLER
+##  İÇİNDEKİLER
 1.[Çift Çekirdek (Dual-Core) Dağılım Stratejisi](#1-çift-çekirdek-dual-core-dağılım-stratejisi)
 2.[Modüler Dosya Hiyerarşisi](#2-modüler-dosya-hiyerarşisi)
 3.[Kritik Veri Yapıları (Structs)](#3-kritik-veri-yapıları-structs)
@@ -21,7 +21,7 @@ Bu doküman, UniControl Pro cihazının iç yazılım (Firmware) mimarisini, bel
 
 ---
 
-## 🧠 1. ÇİFT ÇEKİRDEK (DUAL-CORE) DAĞILIM STRATEJİSİ
+##  1. ÇİFT ÇEKİRDEK (DUAL-CORE) DAĞILIM STRATEJİSİ
 
 ESP32-S3'ün iki çekirdeği (Core 0 - PRO_CPU ve Core 1 - APP_CPU), donanımsal kesmelerin (Interrupt) ve Wi-Fi yükünün sistemin gerçek zamanlı hesaplamalarını (Radar Math) geciktirmemesi için kesin sınırlarla ayrılmıştır.
 
@@ -30,30 +30,30 @@ ESP32-S3'ün iki çekirdeği (Core 0 - PRO_CPU ve Core 1 - APP_CPU), donanımsal
 
 ---
 
-## 📂 2. MODÜLER DOSYA HİYERARŞİSİ
+##  2. MODÜLER DOSYA HİYERARŞİSİ
 
 Kodun yönetilebilirliğini artırmak için iş mantığı (Logic) ile donanım katmanı (HAL) birbirinden ayrılmıştır.
 
 ```text
 src/
-├── main.c           # Uygulama giriş noktası, Init() çağrıları ve Task oluşturulması
-├── hal_twai.c       # CAN Bus (SN65HVD230) konfigürasyonu, filtreleme ve okuma/yazma
-├── hal_io.c         # Optocoupler girişleri (Debounce) ve MOSFET çıkışları
-├── hal_sd_rtc.c     # I2C DS1307 RTC okuma ve SPI SD Kart FAT32 mount işlemleri
-├── logic_fusion.c   # Radar + UDS koordinat birleştirme ve tehlike alanı algoritması
-├── logic_hmi.c      # Nextion ekran UART haberleşmesi ve Smart Sanitizer parser'ı
-├── web_server.c     # SoftAP HTTP Web Sunucusu (Chunked Response), WebSocket, OTA
-├── settings_nvs.c   # NVS Blob (Struct) okuma, doğrulama ve kaydetme
-└── utils.c          # CRC hesaplamaları, String işlemleri, Log formatlama
+ main.c           # Uygulama giriş noktası, Init() çağrıları ve Task oluşturulması
+ hal_twai.c       # CAN Bus (SN65HVD230) konfigürasyonu, filtreleme ve okuma/yazma
+ hal_io.c         # Optocoupler girişleri (Debounce) ve MOSFET çıkışları
+ hal_sd_rtc.c     # I2C DS1307 RTC okuma ve SPI SD Kart FAT32 mount işlemleri
+ logic_fusion.c   # Radar + UDS koordinat birleştirme ve tehlike alanı algoritması
+ logic_hmi.c      # Nextion ekran UART haberleşmesi ve Smart Sanitizer parser'ı
+ web_server.c     # SoftAP HTTP Web Sunucusu (Chunked Response), WebSocket, OTA
+ settings_nvs.c   # NVS Blob (Struct) okuma, doğrulama ve kaydetme
+ utils.c          # CRC hesaplamaları, String işlemleri, Log formatlama
 include/
-├── defs.h           # Global Pin tanımları (Macro) ve Enum listeleri
-├── structs.h        # Tüm C Struct yapılarının (NVS, Objeler, Queue) tutulduğu dosya
-└── ipc_keys.h       # Mutex, Semaphore ve Queue Handle tanımları
+ defs.h           # Global Pin tanımları (Macro) ve Enum listeleri
+ structs.h        # Tüm C Struct yapılarının (NVS, Objeler, Queue) tutulduğu dosya
+ ipc_keys.h       # Mutex, Semaphore ve Queue Handle tanımları
 ````
 
 ---
 
-## 🧬 3. KRİTİK VERİ YAPILARI (STRUCTS)
+##  3. KRİTİK VERİ YAPILARI (STRUCTS)
 
 Sistemdeki veriler global değişkenler yerine düzenli struct yapıları içinde tutulur.
 
@@ -99,7 +99,7 @@ tracked_obj_t global_obj_list[12];
 
 ---
 
-## 🔄 4. FREERTOS TASK LİSTESİ VE YAŞAM DÖNGÜLERİ
+##  4. FREERTOS TASK LİSTESİ VE YAŞAM DÖNGÜLERİ
 
 Sistemin kalbi olan görevlerin öncelik (Priority) ve ayrılan bellek (Stack) haritası.
 
@@ -119,75 +119,75 @@ Sistemin kalbi olan görevlerin öncelik (Priority) ve ayrılan bellek (Stack) h
 **1. task_can_parser Algoritması:**
 
 - twai_receive(..., portMAX_DELAY) ile bloklanıp bekler. CPU tüketmez.
-    
+
 - Mesaj geldiğinde, ID kontrolü yapar. (11-bit ise Radar, 29-bit ise UDS).
-    
+
 - Hex byte'larını kaydırarak (Bitwise Shift) mesafe ve açıyı çıkartır.
-    
+
 - xMutexTake(xObjListMutex, portMAX_DELAY) ile Obje dizisini kilitler.
-    
+
 - Matematiksel dönüşümü (FPU) yapar, diziyi günceller.
-    
+
 - xMutexGive(xObjListMutex) ile kilidi bırakır.
-    
+
 
 **2. task_io_logic Algoritması:**
 
 - Girişlerde Bounce (ark) olmaması için yazılımsal Debounce filtresi uygular.
-    
+
 - Örnek Senaryo: Eğer (IN1_SAG_SINYAL == 1) VE (Sağ tarafta danger_zone_m içinde obje var ise) -> OUT2_SAG_UYARI = 1 yap.
-    
+
 - Eğer bir OUT pini tetiklendiyse, xQueueSend(xLogQueue, ...) ile Logger taskına bir event fırlatır.
-    
+
 
 **3. task_sd_logger Algoritması (Asenkron Loglama):**
 
 - Eğer Log atma işlemi task_io veya task_can içinde yapılsaydı, SD Kartın 50ms süren yazma gecikmesi radarı dondururdu (Priority Inversion).
-    
+
 - Bunun yerine bu task xQueueReceive(xLogQueue, &logData, portMAX_DELAY) ile sonsuz uykudadır.
-    
+
 - Kuyruğa "Kör Nokta Uyarısı Verildi" olayı düşer düşmez uyanır, RTC'den saati okur, dosyayı açar, yazar (Append) ve kapatıp tekrar uyur.
-    
+
 
 ---
 
-## 🚥 5. IPC (GÖREVLER ARASI İLETİŞİM) SENKRONİZASYONU
+##  5. IPC (GÖREVLER ARASI İLETİŞİM) SENKRONİZASYONU
 
 ESP32'de aynı değişkene iki task aynı anda yazmaya kalkarsa (Race Condition) veya biri yazarken diğeri okursa sistem çöker (Core Panic - LoadStoreError). Bunu önleyen kilit mekanizmaları main.c içinde ilk başta oluşturulur:
 
 1. **xObjListMutex (Mutex):**
-    
+
     - global_obj_list dizisine erişimi yönetir.
-        
+
     - Kullananlar: task_can_parser (Yazar), task_hmi_render (Okur), task_buzzer_pwm (Okur).
-        
+
 2. **xLogQueue (Kuyruk / Queue):**
-    
+
     - Tipi: QueueHandle_t. Uzunluk: 10 eleman. Boyut: sizeof(log_event_t).
-        
+
     - Olayları sıraya dizer. SD kart yazma hızı yetişemese bile veri kaybolmaz, RAM'deki kuyrukta bekler.
-        
+
 3. **xSystemEventGroup (Event Group):**
-    
+
     - Sistemin durumlarını bayraklar (Flags) halinde tutar.
-        
+
     - BIT0: Wi-Fi Hazır.
-        
+
     - BIT1: CAN Bus Başarılı.
-        
+
     - BIT2: SD Kart Okundu.
-        
+
     - Kullanım: HMI taskı ekrana "Sistem Hazır" yazmak için bu 3 bitin de "1" olmasını bekler (xEventGroupWaitBits).
-        
+
 
 ---
 
-## 🛡️ 6. HATA YÖNETİMİ VE WATCHDOG (WDT)
+##  6. HATA YÖNETİMİ VE WATCHDOG (WDT)
 
 Otomotiv elektroniğinde sistemin kitlenmesi (Freeze) kabul edilemez.
 
 - **TWAI Bus-Off Kurtarması:** Eğer CAN hattında kısa devre olursa, ESP32 TWAI birimi "Bus-Off" durumuna geçer ve iletişimi keser. task_sys_monitor bu durumu tespit edip, twai_initiate_recovery() çağırarak kendini otomatik resetlemeden donanımı kurtarır.
-    
+
 - **Task Watchdog Timer (TWDT):** Kritik tasklar (Örn: task_can_parser) başlatılırken esp_task_wdt_add() ile Watchdog'a eklenir. Eğer task bir Sonsuz Döngüye (While(1)) girer ve vTaskDelay çağırmazsa, donanım WDT'si devreye girip 3 saniye içinde ESP32'yi güvenli bir şekilde yeniden başlatır (Hard Reset).
-    
+
 - **Timeout Temizliği:** Sensör koparsa, ekranda eski objeler hayalet (Ghost Object) olarak kalmamalıdır. task_can_parser diziyi tarar; last_seen süresi 200ms'yi geçmiş nesneleri listeden temizler (Sıfırlar).
