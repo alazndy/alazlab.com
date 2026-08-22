@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 
 const PROJECTS_PATH = path.join(process.cwd(), 'src', 'content', 'projects');
+const DOCS_PROJECTS_PATH = path.join(process.cwd(), 'docs', 'projects');
 
 export interface ProjectDownload {
   title: string;
@@ -30,6 +31,14 @@ export interface ProjectVideo {
   src: string;
   description?: string;
   thumbnail?: string;
+}
+
+export interface ProjectWikiDoc {
+  slug: string;
+  filename: string;
+  title: string;
+  summary?: string;
+  content: string;
 }
 
 export interface ProjectMetadata {
@@ -185,6 +194,37 @@ export function getProjectBySlug(slug: string) {
     metadata: normalizeMetadata(data, slug),
     content,
   };
+}
+
+export function getProjectWikiDocs(slug: string): ProjectWikiDoc[] {
+  const projectDocsDir = path.join(DOCS_PROJECTS_PATH, slug);
+  if (!fs.existsSync(projectDocsDir)) return [];
+
+  const files = fs.readdirSync(projectDocsDir).filter(f => f.endsWith('.md') && !f.startsWith('.'));
+
+  return files.map(file => {
+    const filePath = path.join(projectDocsDir, file);
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const { content } = matter(raw);
+    const docSlug = file.replace(/\.md$/, '').toLowerCase();
+
+    // Extract first # heading as title, fallback to file name
+    const headingMatch = content.match(/^#\s+([^\n\r]+)/m);
+    let title = headingMatch ? headingMatch[1].trim() : file.replace(/\.md$/, '').replace(/[-_]/g, ' ');
+    title = title.replace(/^#+\s*/, '').replace(/\[.*?\]/g, '').trim();
+
+    // Extract first paragraph as summary
+    const paraMatch = content.replace(/^#\s+[^\n\r]+/m, '').trim().match(/^([^#\n\r`][^\n\r]+)/m);
+    const summary = paraMatch ? paraMatch[1].slice(0, 140) + '...' : undefined;
+
+    return {
+      slug: docSlug,
+      filename: file,
+      title,
+      summary,
+      content,
+    };
+  });
 }
 
 export function getProjectsByCategory() {

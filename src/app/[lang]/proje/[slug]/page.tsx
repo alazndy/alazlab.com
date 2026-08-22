@@ -1,14 +1,13 @@
-import { getProjectBySlug, getAllProjects } from '@/lib/markdown';
+import { getProjectBySlug, getAllProjects, getProjectWikiDocs } from '@/lib/markdown';
 import { categoryConfig, defaultConfig, statusConfig } from '@/lib/project-config';
 import { notFound } from 'next/navigation';
 import { marked } from 'marked';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { ProjectHero } from '@/components/projects/ProjectHero';
 import { ProjectSidebar } from '@/components/projects/ProjectSidebar';
-import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
+import { ProjectViewTabs } from '@/components/projects/ProjectViewTabs';
 
 interface Props { params: Promise<{ lang: string; slug: string }> }
 
@@ -64,6 +63,15 @@ export default async function ProjectPage({ params }: Props) {
   const cat = categoryConfig[metadata.category] ?? defaultConfig;
   const sc = statusConfig[metadata.status] ?? statusConfig['Early'];
 
+  // Load project wiki docs if available
+  const rawWikiDocs = getProjectWikiDocs(slug);
+  const parsedWikiDocs = await Promise.all(
+    rawWikiDocs.map(async (doc) => ({
+      ...doc,
+      html: await marked.parse(doc.content),
+    }))
+  );
+
   // Related projects (same category, different slug)
   const allProjects = getAllProjects();
   const related = allProjects
@@ -106,31 +114,15 @@ export default async function ProjectPage({ params }: Props) {
       {/* Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
-        {/* ── MAIN CONTENT ── */}
+        {/* ── MAIN CONTENT (TABS: Overview, Wiki Reader, Media, Resources) ── */}
         <div className="lg:col-span-8 order-2 lg:order-1">
-          {content.trim() ? (
-            <div
-              className={cn(
-                "prose prose-invert max-w-none",
-                "prose-headings:font-black prose-headings:tracking-tight prose-headings:text-white",
-                "prose-h2:text-lg prose-h2:uppercase prose-h2:mt-10 prose-h2:mb-3",
-                "prose-h2:flex prose-h2:items-center prose-h2:gap-2",
-                `prose-h2:before:content-[''] prose-h2:before:block prose-h2:before:w-1 prose-h2:before:h-4 prose-h2:before:rounded-full prose-h2:before:${cat.accentBg}`,
-                "prose-h3:text-base prose-h3:text-white/65 prose-h3:mt-6 prose-h3:mb-2",
-                "prose-p:text-white/50 prose-p:leading-relaxed prose-p:mb-4 prose-p:text-sm",
-                "prose-li:text-white/45 prose-li:text-sm",
-                `prose-li:marker:${cat.accent}`,
-                "prose-strong:text-white/75 prose-strong:font-semibold",
-                "prose-code:text-amber-400 prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-code:text-xs",
-                "prose-blockquote:border-l-2 prose-blockquote:border-white/20 prose-blockquote:text-white/40 prose-blockquote:not-italic prose-blockquote:pl-4 prose-blockquote:my-6"
-              )}
-              dangerouslySetInnerHTML={{ __html: contentHtml }}
-            />
-          ) : (
-            <div className="py-12 text-center text-white/20 text-sm font-mono">
-              {isEn ? 'More details coming soon.' : 'Detaylar yakında eklenecek.'}
-            </div>
-          )}
+          <ProjectViewTabs
+            metadata={metadata}
+            overviewHtml={contentHtml}
+            wikiDocs={parsedWikiDocs}
+            accentColor={cat.accent}
+            accentBg={cat.accentBg}
+          />
         </div>
 
         {/* ── SIDEBAR ── */}
@@ -142,7 +134,6 @@ export default async function ProjectPage({ params }: Props) {
         />
       </div>
 
-      <ProjectResourceSections project={metadata} />
     </article>
   );
 }
