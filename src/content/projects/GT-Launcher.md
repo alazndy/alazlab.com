@@ -82,28 +82,36 @@ Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next
 
 GT-Launcher'ın kalbi: kartlar artık tek bir sabit "tip" yerine, birbiriyle birleştirilebilir bağımsız yeteneklerden (**capability**) inşa edilir.
 
-### 🛠️ 5 Sekmeli Card Builder Mimarisi (Kart Ekleme Akışı)
+### 🛠️ 5 Sekmeli Card Builder Mimarisi
 Yeni bir kart oluştururken ya da var olan bir kartı düzenlerken 5 aşamalı taktiksel sihirbaz kullanılır:
+- **`FUNCTION` (İşlev):** 9 başlangıç şablonu (`LAUNCHER`, `WIDGET`, `GALLERY`, `CAMERA`, `MEDIA`, `APP_DRAWER`, `NOTIFICATION`, `FINANCE`, `SYSTEM_STATS`), modül ekleme/sıralama ve bildirim puls rengi.
+- **`BEHAVIOR` (Davranış):** 6 yönlü jest eşleme (`Tap`, `Double Tap`, `Swipe Up/Down/Left/Right`), kamera çekim modu ve albüm seçimi.
+- **`APPEARANCE` (Görünüm):** Kart başlığı, alt başlık, LCARS durum kodu, renk vurgusu ve neon iç parlama (`Inner Glow`).
+- **`LAYOUT` (Boyut & Izgara):** Sütun genişliği ($W$), satır yüksekliği ($H$) ve span hücre değerleri.
+- **`VISUAL` (Görsel Katman):** Özel arka plan/ön plan fotoğrafı ve bağımsız kart görsel stili (`Flat`, `Glass`, `Neon` vb.).
 
-1. **`FUNCTION` (İşlev & Modüller):**
-   - **Başlangıç Şablonları (Presets):** Kartı hızlıca tohumlamak için 9 hazır şablon (`LAUNCHER`, `SYSTEM_STATS`, `WIDGET`, `COMMS`, `GALLERY`, `CAMERA`, `MEDIA`, `APP_DRAWER`, `NOTIFICATION`, `FINANCE`).
-   - **Modül Ekleme & Kaldırma:** Karta dilediğiniz yetenekleri ekleme, sırasını değiştirme ve silme.
-   - **Aktif Renk & Bildirim Tetikleyicisi:** Karta bildirim veya uyarı düştüğünde rengin dinamik olarak değişmesi (`activeColorHex`) ve neon puls animasyonu.
-2. **`BEHAVIOR` (Davranış & Jestler):**
-   - **6 Yönlü Jest Eşleme:** Tek dokunma (`Tap`), Çift dokunma (`Double Tap`), Yukarı (`Swipe Up`), Aşağı (`Swipe Down`), Sola (`Swipe Left`) ve Sağa (`Swipe Right`) eylemleri.
-   - **Kamera Başlatma Modları:** Fotoğraf, Video, Selfie, Portre, Panorama veya Gece modlarını doğrudan karta bağlama.
-3. **`APPEARANCE` (Görünüm & Kimlik):**
-   - **Kimlik:** Özel kart başlığı, alt başlık ve LCARS durum metni.
-   - **Görsel Özelleştirme:** Kart vurgu rengi, arka plan dolgu opaklığı ve iç neon parlama (`Inner Glow`) yoğunluğu.
-4. **`LAYOUT` (Boyut & Izgara):**
-   - **Izgara Konumlandırma:** Sütun genişliği ($W$), satır yüksekliği ($H$), serbest modda piksel ofsetleri ($X, Y$) ve hücre span değerleri.
-5. **`VISUAL` (Görsel Katman):**
-   - **Özel Arka Plan / Ön Plan Görseli:** Kart içine cihaz galerisinden kırpılmış bağımsız fotoğraf yerleştirme.
-   - **Stil Geçersiz Kılma:** Genel temadan bağımsız olarak sadece o karta özel görsel stil (`Flat`, `Glass`, `Neon` vb.) atama.
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/card-builder-5-tabs.gif" alt="5 Sekmeli Card Builder Walkthrough" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">5 Sekmeli Card Builder</span>
+      <h4 class="text-sm font-bold text-white mb-1">Taktiksel Kart Oluşturma Sihirbazı</h4>
+      <p class="text-xs text-white/50 leading-relaxed">FUNCTION, BEHAVIOR, APPEARANCE, LAYOUT ve VISUAL sekmeleriyle kart işlevlerini, jestlerini ve boyutunu anlık önizlemeyle tasarlama akışı.</p>
+    </div>
+  </div>
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/card-builder-5-tabs.gif" alt="5 Sekmeli Card Builder sihirbazı walkthrough" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/capability-stacking.gif" alt="Birden fazla yeteneği tek karta stackleme" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/capability-stacking.gif" alt="Modül Yığınlama ve Hibrit Yetenekler" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Modül Stackleme</span>
+      <h4 class="text-sm font-bold text-white mb-1">Çoklu Yetenek Birleştirme</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Saat, canlı bildirim rozeti ve fener gibi birden fazla yeteneğin tek bir kart yüzeyinde çakışma korumasıyla (conflictsWith) birleştirilmesi.</p>
+    </div>
+  </div>
 </div>
 
 ---
@@ -132,24 +140,60 @@ Yeni bir kart oluştururken ya da var olan bir kartı düzenlerken 5 aşamalı t
 | **UTILITY** | **Taktiksel Boşluk** | `SPACER` | Grid üzerinde estetik ve hizalama amaçlı boşluk bırakan yer tutucu modül. |
 | **UTILITY** | **3D DECK Rotator** | `DECK` | Kartı çok yüzeyli bir yığına dönüştürür; diğer modüller arasında 3D çevirme jesti sağlar. |
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/widget-capability-picker.gif" alt="Android platform widget seçici akışı" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/camera-mode-picker.gif" alt="Kamera başlatma modu seçimi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/widget-capability-picker.gif" alt="Android Platform Widget Seçici" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Platform Widget</span>
+      <h4 class="text-sm font-bold text-white mb-1">Android Sistem Widget Seçicisi</h4>
+      <p class="text-xs text-white/50 leading-relaxed">SELECT WIDGET butonuyla Android'in yerel widget diyaloğunu açıp herhangi bir 3. parti widget'ı kart içine entegre etme süreci.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/camera-mode-picker.gif" alt="Kamera Çekim Modu Seçimi" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Kamera Modları</span>
+      <h4 class="text-sm font-bold text-white mb-1">Doğrudan Çekim Modu Atama</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Kamera kartına Photo, Video, Selfie, Portre, Panorama, Slo-Mo, Gece veya Pro modunu bağlayarak tek dokunuşta başlatma.</p>
+    </div>
+  </div>
 </div>
 
 ---
 
 ## 🖼️ Fotoğraf ve Duvar Kağıdı Entegrasyonu
 
-GT-Launcher hem ana ekran seviyesinde tam ekran duvar kağıdı yönetimini hem de kart seviyesinde özel fotoğraf yükleme desteğini bünyesinde barındırır:
+GT-Launcher hem ana ekran seviyesinde tam ekran duvar kağıdı yönetimini hem de kart seviyesinde bağımsız fotoğraf sergilemeyi destekler:
+- **Kalıcı Depolama Güvencesi:** Seçilen tüm görseller uygulamanın korumalı sandbox alanına kopyalanır; Android sağlayıcı izinleri değişse dahi fotoğraflarınız silinmez.
+- **GPU UV Kırpması:** Tek bir yüksek çözünürlüklü görsel Canvas seviyesinde işlenerek 60/120 FPS akıcılıkta kalır.
 
-- **Ana Ekran Duvar Kağıdı (`Engineering → HOME → BACKGROUND`):** Sistem dosya seçicisinden istenen fotoğrafı seçme, dokunmatik pinch-to-crop ve serbest konumlandırma ile ızgara arkasına sabitleme.
-- **Kart Foreground / Galeri Fotoğrafı:** Card Builder veya Card Settings üzerinden cihaza ait fotoğrafları doğrudan kart yüzeyinde sergileme.
-- **Kalıcı Depolama Güvencesi:** Seçilen görseller uygulamanın özel sandbox depolama alanına kopyalanır; Android sağlayıcı URI izinleri kapansa dahi fotoğraflar hiçbir zaman kaybolmaz.
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/wallpaper-background-photo.gif" alt="Duvar Kağıdı Seçimi ve Kırpma" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Ana Ekran Duvar Kağıdı</span>
+      <h4 class="text-sm font-bold text-white mb-1">Mühendislik Arka Plan Kırpıcısı</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Engineering → HOME → BACKGROUND üzerinden galeri fotoğrafı seçimi, canlı pinch-to-crop kırpma ve ızgara arkasına sabitleme.</p>
+    </div>
+  </div>
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/wallpaper-background-photo.gif" alt="Ana ekran arka plan duvar kağıdı seçimi ve kaydetme" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/card-background-photo.gif" alt="Kart içine galeri fotoğrafı ekleme akışı" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/card-background-photo.gif" alt="Kart Foreground Fotoğraf Seçimi" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Kart Fotoğrafı & Galeri</span>
+      <h4 class="text-sm font-bold text-white mb-1">Kart Yüzeyine Fotoğraf Ekleme</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Card Builder → BEHAVIOR sekmesinde cihaz hafızasından fotoğraf seçip kart foreground yüzeyinde canlı albüm kartı oluşturma.</p>
+    </div>
+  </div>
 </div>
 
 ---
@@ -167,9 +211,28 @@ Her görsel stil kendi bağımsız render sözleşmesini takip eder:
 | **Minimal** | Düşük vurgulu, metin odaklı yüzey | Kenarlık kalınlığı |
 | **Neon** | Ayarlanabilir parlaklıkta dış/iç ışıklandırma | Köşe yuvarlama, Glow yarıçapı, Glow rengi |
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/visual-style-switch.gif" alt="Görsel stiller arasında canlı geçiş" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/theme-creator-presets.gif" alt="12 LCARS renk paleti seçimi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/visual-style-switch.gif" alt="Görsel Stiller Arasında Canlı Geçiş" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Görsel Stiller</span>
+      <h4 class="text-sm font-bold text-white mb-1">6 Stil Arasında Anında Geçiş</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Flat, Glass, Neobrutalism, Claymorphism, Minimal ve Neon sözleşmeleri arasında tek dokunuşla canlı stil değişimi.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/theme-creator-presets.gif" alt="12 LCARS Renk Paleti" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Tema Çarkı & Paletler</span>
+      <h4 class="text-sm font-bold text-white mb-1">12 Starfleet Renk Paleti</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Classic Orange, TOS Gold, Medical Blue, Tactical Red ve Borg Cyan gibi kanonik Starfleet renkleri ve akıllı önayarlar.</p>
+    </div>
+  </div>
 </div>
 
 ### Dinamik & Adaptif Tema Otomasyonu
@@ -178,9 +241,28 @@ Her görsel stil kendi bağımsız render sözleşmesini takip eder:
 - **Pil Seviyesi Teması:** %80 üzeri yeşil, azaldıkça sarı ve turuncuya, %15 altında kırmızıya kayar.
 - **Hava Durumu Teması:** Yağmurda mavi, güneşte altın, bulutta çelik grisine uyarlanır.
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/dynamic-theme-toggle.gif" alt="Saatlik ve pil bazlı dinamik tema geçişi" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/card-color-override.gif" alt="Kart bazlı bağımsız renk ve armoni tekeri" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/dynamic-theme-toggle.gif" alt="Dinamik Tema Otomasyonu" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-green-500/10 text-green-400 border border-green-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Dinamik Temalar</span>
+      <h4 class="text-sm font-bold text-white mb-1">Saatlik & Pil Bazlı Otomasyon</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Manuel seçim gerektirmeden günün saatine, şarj yüzdesine veya hava şartlarına göre otomatik palet adaptasyonu.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/card-color-override.gif" alt="Kart Başına Renk Değişimi" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Özel Kart Rengi</span>
+      <h4 class="text-sm font-bold text-white mb-1">Kart Bazında Bağımsız Renk Atama</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Genel temayı bozmadan tek bir karta HSV çarkı ve renk armoni motoru (Triadic, Complementary) ile bağımsız ton tanımlama.</p>
+    </div>
+  </div>
 </div>
 
 ---
@@ -188,70 +270,183 @@ Her görsel stil kendi bağımsız render sözleşmesini takip eder:
 ## 🎛️ Izgara Motoru & Başlık (Header Widgets)
 
 - **Akıllı Izgara Yerleşimi (`GridEngine`):** Kart sürüklenirken en yakın hücreleri skorlayan ve çakışan kartları animasyonla aşağı kaydıran (**cascade push**) akıllı önizleme.
-- **Header Widget Sistemi:** Saat (XS-XL), Tarih, Hava Durumu, Pil ve Stardate widget'ları sol/sağ sütun bazında bağımsız ölçeklenir ve sıralanır.
-- **İstasyon Şablonları (Layout Presets):** Tüm kart yerleşimlerini isim vererek kaydetme ve tek dokunuşla farklı konfigürasyonlara geçiş yapma.
+- **Üçlü Dokunuşla Düzenleme:** Boş bir hücreye üç kez tıklayarak düzenleme moduna girme ve kart boyutlarını altın kollarla ayarlama.
+- **Header Widget Sistemi:** Saat (XS-XL), Tarih, Hava Durumu, Pil ve Stardate widget'ları sol/sağ sütun bazında bağımsız ölçeklenir.
+- **İstasyon Şablonları (Layout Presets):** Farklı kart dizilimlerini isim vererek kaydetme ve JSON yedeği olarak dışa aktarma.
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/grid-drag-resize.gif" alt="Izgara üzerinde serbest kart taşıma ve cascade itme" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/header-widget-editor.gif" alt="Header widget yönetimi ve boyutlandırma" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/enter-edit-mode.gif" alt="Üçlü Dokunuşla Düzenleme Modu" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Düzenleme Modu</span>
+      <h4 class="text-sm font-bold text-white mb-1">Üçlü Dokunuş Tetikleyicisi</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Ana ekrandaki boş bir hücreye 3 kez dokunarak taktiksel düzenleme moduna girme ve altın tutamaçları aktifleştirme.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/grid-drag-resize.gif" alt="Izgara Sürükleme ve Cascade İtme" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Izgara Snap & Cascade</span>
+      <h4 class="text-sm font-bold text-white mb-1">Akıllı Kart Sürükleme ve İtme</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Kart taşınırken çakışan öğeleri otomatik aşağı kaydıran (cascade) ve snap noktasına kilitlenen akıllı ızgara motoru.</p>
+    </div>
+  </div>
 </div>
 
-<div class="my-10 flex justify-center">
-  <img src="/projects/GT-Launcher/layout-presets.gif" alt="Düzen şablonlarını kaydetme ve profil yedekleme" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/header-widget-editor.gif" alt="Header Widget Editörü" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Header Widget Sistemi</span>
+      <h4 class="text-sm font-bold text-white mb-1">Başlık Widget Yönetimi & Boyutlandırma</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Saat, tarih, hava durumu ve stardate widget'larını XS–XL boyutlarında ölçekleyip sol ve sağ sütunlara dizme.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/layout-presets.gif" alt="İstasyon Düzen Şablonları" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Düzen Şablonları</span>
+      <h4 class="text-sm font-bold text-white mb-1">İstasyon Profilleri & Yedekleme</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Farklı kullanım senaryoları için (günlük, sürüş, minimal) kart yerleşimlerini kaydedip tek dokunuşla geri yükleme.</p>
+    </div>
+  </div>
 </div>
 
 ---
 
 ## 🛠️ Yan Menü (Sidebar Rail) ve Gezinme
 
-Ana ekranın sol veya sağ kenarında konumlanan taktiksel kısayol rayı:
-- **Üçlü Eylem Yapısı:** Her buton için Dokunma (`Tap`), Yukarı Kaydırma (`Swipe Up`) ve Aşağı Kaydırma (`Swipe Down`) bağımsız işlevlere bağlanabilir.
-- **Erişilebilirlik Servisi:** Yan menü üzerinden donanımsal sistem Geri (`Back`) ve Son Uygulamalar (`Recents`) eylemlerini tetikleme.
-- **Özelleştirilebilir Görünüm:** Buton genişlikleri, köşe ovallikleri ve LCARS ikon kütüphanesi.
+Ana ekranın kenarında konumlanan taktiksel hızlı erişim çubuğu:
+- **3 Bağımsız Jest:** Her buton için Dokunma (`Tap`), Yukarı Kaydırma (`Swipe Up`) ve Aşağı Kaydırma (`Swipe Down`) farklı uygulamalara atanabilir.
+- **Erişilebilirlik Servisi:** Yan menü üzerinden donanımsal sistem Geri (`Back`) ve Son Uygulamalar (`Recents`) tetiklenebilir.
 
 <div class="my-10 flex justify-center">
-  <img src="/projects/GT-Launcher/sidebar-interaction.gif" alt="Yan menü rayı, buton ayarları ve mühendislik paneli" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center text-center max-w-md w-full group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/sidebar-interaction.gif" alt="Yan Menü Rayı ve Jestler" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Yan Menü Rayı</span>
+      <h4 class="text-sm font-bold text-white mb-1">Çoklu Jestli Hızlı Erişim Çubuğu</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Ana ekran, ayarlar, çekmece ve sistem fonksiyonlarına sağa/sola kaydırma ile anında erişim sağlayan LCARS kontrol rayı.</p>
+    </div>
+  </div>
 </div>
 
 ---
 
 ## 📱 Slide List Çekmece & 🔎 OmniSearch
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/browse-departments.gif" alt="Slide List uygulama çekmecesi departman sınıflandırması" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/search-mixed-results.gif" alt="Omni-Terminal karma arama ve sonuç kartları" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-</div>
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/browse-departments.gif" alt="Slide List Departman Filtreleri" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Slide List Çekmece</span>
+      <h4 class="text-sm font-bold text-white mb-1">Departman Bazlı Uygulama Filtreleme</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Uygulamaları COMMAND, ENGINEERING, SCIENCE gibi Starfleet departmanlarına sınıflandıran akıcı Niagara tarzı liste.</p>
+    </div>
+  </div>
 
-- **Departman Yönetimi:** Uygulamaları Starfleet departmanlarına (`COMMAND`, `ENGINEERING`, `SCIENCE`, `OPERATIONS` vb.) otomatik sınıflandırma.
-- **Omni-Terminal Hibrit Arama:** Tek giriş alanından kurulu uygulamalar, rehber kişileri, sistem ayarları ve web aramalarına tek dokunuşta erişim.
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/search-mixed-results.gif" alt="Omni-Terminal Karma Arama" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Omni-Terminal</span>
+      <h4 class="text-sm font-bold text-white mb-1">Hibrit Komuta Arama Motoru</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Tek arama kutusundan web sorguları, cihazdaki uygulamalar, kişiler ve sistem ayarlarını canlı kartlar olarak sunar.</p>
+    </div>
+  </div>
+</div>
 
 ---
 
 ## 🏎️ Drive Mode "Interceptor" & Telemetri
 
 Yalnızca yatay çalışan ve sürüş güvenliği için optimize edilen kokpit HUD'ı:
-- **OBD-II BLE Bağlantısı:** vLinker iCar Pro ve ELM327 BLE adaptörleriyle anlık RPM, GPS hızı, soğutma sıvısı sıcaklığı, turbo boost ve yakıt tüketimi takibi.
-- **DTC Arıza Kodu Okuyucu:** Check Engine arıza kodlarını doğrudan ekranda listeleme.
+- **OBD-II BLE Bağlantısı:** vLinker ve ELM327 BLE adaptörleriyle anlık RPM, GPS hızı, soğutma sıvısı sıcaklığı, turbo boost ve yakıt tüketimi takibi.
 - **Kırmızı Alarm & Anomali Uyarısı:** Hararet 110°C'yi geçtiğinde veya arıza kodu algılandığında tam ekran kırmızı puls uyarısı.
-- **Trafik & Radar İkazı:** Bağlı navigasyon bildirimlerinden kaza veya radar uyarılarını HUD üstüne yansıtma.
 - **Yakıt Fişi OCR:** Kamera ile yakıt fişini tarayarak litre maliyetini otomatik hesaplama.
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/drive-mode-hud.gif" alt="Drive Mode Interceptor telemetri HUD" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/vehicle-obd-settings.gif" alt="Araç OBD ve sürüş tetikleyici ayarları" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/drive-mode-hud.gif" alt="Drive Mode HUD Kokpiti" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-red-500/10 text-red-400 border border-red-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Drive Mode Kokpit</span>
+      <h4 class="text-sm font-bold text-white mb-1">Interceptor Telemetri HUD</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Yatay modda çalışan taktiksel GPS hız göstergesi, ses spektrumu görselleştirici ve harita navigasyon paneli.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/vehicle-obd-settings.gif" alt="Araç OBD ve Sürüş Ayarları" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Araç & OBD Ayarları</span>
+      <h4 class="text-sm font-bold text-white mb-1">BLE Adaptör Eşleme & Tetikleyiciler</h4>
+      <p class="text-xs text-white/50 leading-relaxed">OBD-II cihaz seçimi, telefon yatay tutulduğunda otomatik Drive Mode'a geçiş ve hararet eşiği konfigürasyonu.</p>
+    </div>
+  </div>
 </div>
 
 ---
 
-## 🛠️ Engineering Panel & İzin Kataloğu
+## 🛠️ Engineering Panel & Güvenlik Merkezi
 
-Tüm launcher ayarlarını tek çatı altında toplayan reorderable 9 güverte:
+Tüm launcher ayarlarını tek çatı altında toplayan 9 güverte:
 - **Güverteler:** `APPEARANCE`, `HOME`, `SIDEBAR`, `APPS`, `VEHICLE`, `SYSTEM`, `ABOUT`, `ADAPTIVE`, `PREMIUM`.
-- **Canlı İzin Kataloğu (ABOUT):** Tüm Android izinlerinin anlık durumunu, neden istendiğini gösteren ve tek tıkla sistem ayarlarına yönlendiren şeffaf güvenlik merkezi.
+- **Canlı İzin Kataloğu (ABOUT):** Tüm Android izinlerinin anlık durumunu ve kullanım amacını gösteren şeffaf güvenlik merkezi.
 
-<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
-  <img src="/projects/GT-Launcher/engineering-sections-deep-dive.gif" alt="Engineering alt güverteleri (Apps, About, Adaptive)" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
-  <img src="/projects/GT-Launcher/runtime-grant-flow.gif" alt="Çalışma zamanı izin kataloğu ve yetkilendirme akışı" class="rounded-[2rem] border border-white/10 shadow-2xl shadow-black/50 max-w-[280px] w-full" />
+<div class="my-10 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/panel-navigation.gif" alt="Engineering Panel Ana Güverte Gezinmesi" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Mühendislik Paneli</span>
+      <h4 class="text-sm font-bold text-white mb-1">Ana Güverte Gezinmesi</h4>
+      <p class="text-xs text-white/50 leading-relaxed">9 ana güverte arasında akıcı kaydırma ve panel sırasını sürükleyerek yeniden düzenleme olanağı.</p>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center justify-between text-center group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/engineering-sections-deep-dive.gif" alt="Mühendislik Alt Güverteleri" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">Alt Güverteler</span>
+      <h4 class="text-sm font-bold text-white mb-1">Uygulama, Adaptif ve Sistem Detayları</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Apps (çekmece ayarları), Adaptive (zaman bazlı kart profilleri) ve System (RAM/depolama telemetrisi) derinlemesine kontrolleri.</p>
+    </div>
+  </div>
+</div>
+
+<div class="my-10 flex justify-center">
+  <div class="rounded-2xl bg-white/[0.02] border border-white/8 p-4 sm:p-5 flex flex-col items-center text-center max-w-md w-full group hover:bg-white/[0.04] transition-all">
+    <div class="w-full flex justify-center mb-4">
+      <img src="/projects/GT-Launcher/runtime-grant-flow.gif" alt="Çalışma Zamanı İzin Kataloğu" class="rounded-xl border border-white/10 shadow-2xl max-w-[240px] w-full" />
+    </div>
+    <div>
+      <span class="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-mono uppercase tracking-wider mb-2">İzin Kataloğu</span>
+      <h4 class="text-sm font-bold text-white mb-1">Şeffaf İzin Yetkilendirme Akışı</h4>
+      <p class="text-xs text-white/50 leading-relaxed">Bildirim, konum, depolama ve Bluetooth izinlerinin durumunu listeleyen ve doğrudan sistem ayarlarına yönlendiren güvenlik merkezi.</p>
+    </div>
+  </div>
 </div>
 
 ---
