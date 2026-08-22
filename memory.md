@@ -45,6 +45,7 @@
   - `runner.js` ve `deep_hunt.js` araçları geliştirildi.
   - Çalışan projelerden (`Oyuntd`, `cisemogrencitakip`, `t-Market`, `localhostmonitor`) canlı ekran görüntüleri alındı.
   - Firmware (`Radar`, `Arduino`, `UCPS`) ve legacy (`TrAIder`, `AI Trader`, `Pro-Gect`, `Tekel`) projeler için yapay zeka ile 4K kalitesinde premium "Hero" görseller üretildi.
+- **GT-Launcher Vitrin & Dokümantasyon Senkronu (2026-08-22):** 22 yüksek çözünürlüklü canlı GIF ve eksiksiz wiki dokümantasyonu portfolyoya entegre edildi (`public/projects/GT-Launcher/`, `docs/projects/GT-Launcher/`). `src/content/projects/GT-Launcher.md` Card Builder (5 tab), modül stackleme, fotoğraf/duvar kağıdı, 6 görsel stil, LCARS tema motoru, grid cascade, sidebar, OmniSearch ve Drive Mode interaktif demolarıyla güncellendi.
 - **İçerik Entegrasyonu**: DevOps klasöründeki README ve memory.md dosyaları taranarak markdown içerikleri zenginleştirildi.
 - **Sistem Temizliği**: Crucix ve AG-Manager projeleri tüm metadata ve kod tabanından temizlendi.
   - `src/content/projects/AG-Manager.md` silindi.
@@ -102,5 +103,6 @@
 | 2026-08-19 | Codex Kaira | AI Trader, tek-ui ve R-AI-OS sayfaları güncel repository durumuna çekildi | AI Trader canlı işlem iddiası kaldırıldı; GT-UI paket adı ve R-AI-OS v3.9.0/kılavuzları eklendi |
 | 2026-08-19 | Codex Kaira | ADC Web Sitesi aktif adc-web-sitesi- repository’sine göre düzeltildi | Eski Express/SQLite tanımı yerine Next.js 16, Firebase, SSR/SSG katalog ve SEO/AI crawler altyapısı işlendi |
 | 2026-08-20 | Codex Kaira | GT-Launcher proje sayfasına gerçek etkileşim demoları ve radial menü galerisi eklendi | Sidebar, OmniSearch ve Theme Creator GIF’leri ile radial-menu.jpg mevcut proje içeriğine bağlandı; content lint ve canlı route doğrulandı |
+| 2026-08-22 | Antigravity | GT-Launcher 22 canlı GIF ve eksiksiz yetenek mimarisi vitrine işlendi | Card Builder, Stacking, Photo/Wallpaper, 6 Style, Theme Creator, Grid cascade, Sidebar, OmniSearch ve Drive Mode canlı demoları bağlandı |
 ## Instincts
 - Before a signed commit, verify that a local GPG secret key exists for the configured author email; if absent, preserve staged changes and request key setup instead of creating an unsigned commit.
