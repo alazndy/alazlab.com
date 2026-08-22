@@ -14,7 +14,7 @@ export default async function LocalizedHome() {
   const categoryCount = new Set(projects.map(p => p.category)).size;
 
   return (
-    <div className="max-w-5xl mx-auto pb-20 space-y-12">
+    <div className="max-w-7xl mx-auto pb-20 space-y-16 px-2 sm:px-4">
       <HomeHero
         projectCount={projects.length}
         liveCount={liveCount}

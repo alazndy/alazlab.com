@@ -79,7 +79,7 @@ export default async function ProjectPage({ params }: Props) {
     .slice(0, 3);
 
   return (
-    <article className="max-w-5xl mx-auto pb-24">
+    <article className="max-w-7xl mx-auto pb-24 px-2 sm:px-4 space-y-4">
 
       {/* Back */}
       <div className="py-4">
