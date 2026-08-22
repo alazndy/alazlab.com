@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { ArrowRight, MapPin } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
 
 interface HomeHeroProps {
   projectCount: number;
@@ -10,14 +10,16 @@ interface HomeHeroProps {
   categoryCount: number;
 }
 
-const stats = (p: number, l: number, c: number) => [
-  { value: p,       suffix: '',  label: 'Proje'     },
-  { value: l,       suffix: '',  label: 'Aktif'     },
-  { value: c,       suffix: '',  label: 'Alan'      },
-  { value: 5,       suffix: '+', label: 'Yıl'       },
-];
-
 export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroProps) {
+  const { t } = useI18n();
+
+  const stats = [
+    { value: projectCount,  suffix: '',  label: t('stats.projects') },
+    { value: liveCount,     suffix: '',  label: t('stats.active')   },
+    { value: categoryCount, suffix: '',  label: t('stats.areas')    },
+    { value: 5,             suffix: '+', label: t('stats.years')    },
+  ];
+
   return (
     <section className="relative pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden">
 
@@ -44,7 +46,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border text-[11px] font-mono text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] animate-pulse" />
-            Available · Istanbul, TR
+            {t('header.available')}
             <MapPin className="w-3 h-3 opacity-50" />
           </span>
         </motion.div>
@@ -81,7 +83,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
           transition={{ delay: 0.35 }}
           className="text-sm font-mono text-muted-foreground tracking-[0.15em] uppercase max-w-sm"
         >
-          System Architect · Full-Stack · Embedded
+          {t('hero.role')}
         </motion.p>
 
         {/* Bio */}
@@ -91,8 +93,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
           transition={{ delay: 0.42 }}
           className="text-base text-foreground/60 leading-relaxed max-w-md"
         >
-          Building infrastructure across disciplines — AI trading engines,
-          automotive ECU systems, web platforms, and hardware from scratch.
+          {t('hero.bio')}
         </motion.p>
 
         {/* Stats */}
@@ -102,7 +103,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
           transition={{ delay: 0.5 }}
           className="flex items-end gap-8 sm:gap-12 pt-2"
         >
-          {stats(projectCount, liveCount, categoryCount).map(({ value, suffix, label }, i) => (
+          {stats.map(({ value, suffix, label }, i) => (
             <motion.div
               key={label}
               initial={{ opacity: 0, y: 8 }}
@@ -131,7 +132,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
             className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all"
             style={{ background: 'var(--accent-primary)', color: '#fff' }}
           >
-            Çalışmaları Gör
+            {t('hero.explore')}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>
           <a
@@ -141,17 +142,7 @@ export function HomeHero({ projectCount, liveCount, categoryCount }: HomeHeroPro
             İletişim
           </a>
         </motion.div>
-
       </motion.div>
-
-      {/* Decorative line */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 0.9, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-        className="absolute bottom-0 left-0 right-0 h-px origin-left"
-        style={{ background: 'linear-gradient(to right, var(--accent-primary), transparent)' }}
-      />
     </section>
   );
 }

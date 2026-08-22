@@ -67,9 +67,9 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
   return (
     <section className="space-y-4">
       <div className="flex items-center gap-4">
-        <h2 className="text-sm font-black tracking-widest uppercase text-foreground/40 font-mono">Tüm Projeler</h2>
+        <h2 className="text-sm font-black tracking-widest uppercase text-foreground/40 font-mono">{t('nav.allProjects')}</h2>
         <div className="flex-1 h-px bg-foreground/5" />
-        <span className="text-[10px] font-mono text-foreground/30">{allProjects.length} toplam</span>
+        <span className="text-[10px] font-mono text-foreground/30">{allProjects.length} {t('cat.total')}</span>
       </div>
 
       <div className="space-y-1">

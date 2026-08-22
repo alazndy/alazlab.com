@@ -46,6 +46,7 @@
   - Çalışan projelerden (`Oyuntd`, `cisemogrencitakip`, `t-Market`, `localhostmonitor`) canlı ekran görüntüleri alındı.
   - Firmware (`Radar`, `Arduino`, `UCPS`) ve legacy (`TrAIder`, `AI Trader`, `Pro-Gect`, `Tekel`) projeler için yapay zeka ile 4K kalitesinde premium "Hero" görseller üretildi.
 - **GT-Launcher Vitrin & Dokümantasyon Senkronu (2026-08-22):** 22 yüksek çözünürlüklü canlı GIF ve eksiksiz wiki dokümantasyonu portfolyoya entegre edildi (`public/projects/GT-Launcher/`, `docs/projects/GT-Launcher/`). `src/content/projects/GT-Launcher.md` Card Builder (5 tab), modül stackleme, fotoğraf/duvar kağıdı, 6 görsel stil, LCARS tema motoru, grid cascade, sidebar, OmniSearch ve Drive Mode interaktif demolarıyla güncellendi.
+- **Kapsamlı i18n (TR/EN) Desteği (2026-08-22):** Header'a canlı dil anahtarı (`LanguageToggle` TR/EN) eklendi; `i18n.tsx` sözlükleri tamamlandı. Navigasyon, Sidebar kategorileri, HomeHero (roller, biyografi, istatistikler), HomeWidgets, Proje detay sayfaları (`ProjectHero`, `ProjectSidebar`, `ProjectResourceSections`) ve CommandPalette tam çoklu dil desteğine kavuşturuldu.
 - **İçerik Entegrasyonu**: DevOps klasöründeki README ve memory.md dosyaları taranarak markdown içerikleri zenginleştirildi.
 - **Sistem Temizliği**: Crucix ve AG-Manager projeleri tüm metadata ve kod tabanından temizlendi.
   - `src/content/projects/AG-Manager.md` silindi.

@@ -38,8 +38,8 @@ const ProjectLink = memo(function ProjectLink({ project, url, isActive, color }:
   );
 });
 
-const CategorySection = memo(function CategorySection({ category, projects, isOpen, isActive, onToggle, pathname }: {
-  category: string; projects: ProjectMetadata[]; isOpen: boolean; isActive: boolean; onToggle: () => void; pathname: string;
+const CategorySection = memo(function CategorySection({ category, displayLabel, projects, isOpen, isActive, onToggle, pathname }: {
+  category: string; displayLabel: string; projects: ProjectMetadata[]; isOpen: boolean; isActive: boolean; onToggle: () => void; pathname: string;
 }) {
   const { icon: Icon, color } = getCat(category);
   return (
@@ -52,7 +52,7 @@ const CategorySection = memo(function CategorySection({ category, projects, isOp
       >
         <div className="flex items-center gap-3">
           <Icon className={cn("w-4 h-4", (isOpen || isActive) ? "" : "opacity-60")} />
-          <span className="text-xs font-bold truncate">{category}</span>
+          <span className="text-xs font-bold truncate">{displayLabel}</span>
         </div>
         {isOpen ? <ChevronDown className="w-3 h-3 opacity-50" /> : <ChevronRight className="w-3 h-3 opacity-50" />}
       </button>
@@ -84,6 +84,12 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
     return { grouped: g, sorted };
   }, [projects]);
 
+  const getCatLabel = useCallback((cat: string) => {
+    if (cat === 'Mühendislik') return t('cat.engineering');
+    if (cat === 'Lab') return t('cat.lab');
+    return t('cat.other');
+  }, [t]);
+
   const toggle = useCallback((cat: string) => setOpenCats(p => ({ ...p, [cat]: !p[cat] })), []);
 
   return (
@@ -94,7 +100,7 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
           <div className="w-2 h-7 bg-lcars-orange rounded-full" />
           <div>
             <div className="text-sm font-black text-foreground tracking-widest uppercase">Göktuğ</div>
-            <div className="text-[10px] font-mono text-foreground/30 uppercase tracking-wider">System Architect</div>
+            <div className="text-[10px] font-mono text-foreground/30 uppercase tracking-wider">{t('hero.role').split('·')[0].trim()}</div>
           </div>
         </div>
         {/* Close button — mobile only */}
@@ -129,7 +135,7 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
           <div className="px-3 mb-2 text-[10px] font-black text-foreground/20 uppercase tracking-widest">{t('nav.portfolio')}</div>
           <div className="space-y-0.5">
             {sorted.map(cat => (
-              <CategorySection key={cat} category={cat} projects={grouped[cat]}
+              <CategorySection key={cat} category={cat} displayLabel={getCatLabel(cat)} projects={grouped[cat]}
                 isOpen={!!openCats[cat]}
                 isActive={grouped[cat].some(p => pathname === (p.slug === 'GTab' ? '/gtab' : `/proje/${p.slug}`))}
                 onToggle={() => toggle(cat)} pathname={pathname}
@@ -143,7 +149,7 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
       <div className="px-5 py-3 border-t border-border shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-lcars-green animate-pulse" />
-          <span className="text-[10px] font-mono text-foreground/25 uppercase tracking-wider">{projects.length} sistem aktif</span>
+          <span className="text-[10px] font-mono text-foreground/25 uppercase tracking-wider">{projects.length} {t('nav.systemsActive')}</span>
         </div>
       </div>
     </>

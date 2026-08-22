@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Command, Terminal, FileText, Settings, X, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useI18n } from '@/lib/i18n';
 
 // We'll pass projects as props or fetch them
 interface CommandPaletteProps {
@@ -15,6 +16,7 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const router = useRouter();
+  const { t } = useI18n();
 
   const toggle = useCallback(() => setIsOpen((prev) => !isOpen), []);
 
@@ -64,8 +66,8 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
               <Terminal className="w-5 h-5 text-lcars-cyan animate-pulse" />
               <input
                 autoFocus
-                placeholder="EXECUTE COMMAND OR SEARCH SYSTEMS..."
-                className="flex-1 bg-transparent border-none outline-none text-sm font-mono tracking-widest text-white placeholder:text-white/20"
+                placeholder={t('cmd.placeholder')}
+                className="flex-1 bg-transparent border-none outline-none text-sm font-mono tracking-widest text-white placeholder:text-white/20 uppercase"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
@@ -78,7 +80,7 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
             <div className="max-h-[60vh] overflow-y-auto p-2 custom-scrollbar">
               {filteredProjects.length > 0 ? (
                 <div className="space-y-1">
-                  <div className="px-4 py-2 text-[10px] font-black font-mono text-white/20 uppercase tracking-[0.2em]">Available_Modules</div>
+                  <div className="px-4 py-2 text-[10px] font-black font-mono text-white/20 uppercase tracking-[0.2em]">{t('cmd.availableModules')}</div>
                   {filteredProjects.map((p) => (
                     <button
                       key={p.slug}

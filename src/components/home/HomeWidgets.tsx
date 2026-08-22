@@ -7,7 +7,19 @@ import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
 
 export const HomeWidgets = memo(function HomeWidgets() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+
+  const areas = lang === 'en' ? [
+    { label: 'Embedded Systems & ESP32 / CAN-Bus', color: 'text-lcars-orange' },
+    { label: 'Full-Stack Web & Next.js', color: 'text-lcars-cyan' },
+    { label: 'AI Agent Architectures & Rust', color: 'text-lcars-green' },
+    { label: 'Mobile & UI/UX Design Systems', color: 'text-lcars-purple' },
+  ] : [
+    { label: 'Gömülü Sistemler & ESP32 / CAN-Bus', color: 'text-lcars-orange' },
+    { label: 'Full-Stack Web & Next.js', color: 'text-lcars-cyan' },
+    { label: 'AI Agent Altyapıları & Rust', color: 'text-lcars-green' },
+    { label: 'Mobil & UI/UX Tasarım Sistemleri', color: 'text-lcars-purple' },
+  ];
   
   return (
     <aside className="xl:col-span-4 space-y-6 sticky top-10">
@@ -18,20 +30,22 @@ export const HomeWidgets = memo(function HomeWidgets() {
             <Lock className="w-5 h-5 text-lcars-orange" />
           </div>
           <div>
-            <div className="text-[10px] font-mono text-lcars-orange tracking-widest uppercase">Doğrulanmış</div>
+            <div className="text-[10px] font-mono text-lcars-orange tracking-widest uppercase">
+              {lang === 'en' ? 'VERIFIED' : 'DOĞRULANMIŞ'}
+            </div>
             <h3 className="text-base font-black text-foreground uppercase tracking-tight">Göktuğ Turhan</h3>
           </div>
         </div>
         <p className="text-xs text-foreground/60 leading-relaxed">
-          {t('home.subtitle')}
+          {t('hero.bio')}
         </p>
         <div className="grid grid-cols-2 gap-2 mt-4">
           <div className="p-2.5 bg-foreground/5 rounded-lg text-center">
-            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">Gündüz</div>
+            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">{t('about.dayTag')}</div>
             <div className="text-xs font-black text-lcars-orange">ADC Tasarım</div>
           </div>
           <div className="p-2.5 bg-foreground/5 rounded-lg text-center">
-            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">Gece</div>
+            <div className="text-[9px] font-mono text-foreground/40 uppercase mb-1">{lang === 'en' ? 'Night' : 'Gece'}</div>
             <div className="text-xs font-black text-lcars-cyan">Alaz Lab</div>
           </div>
         </div>
@@ -41,15 +55,12 @@ export const HomeWidgets = memo(function HomeWidgets() {
       <div className="glass rounded-2xl p-6 border-border">
         <div className="flex items-center gap-2 mb-5">
           <Activity className="w-4 h-4 text-lcars-cyan" />
-          <span className="text-xs font-black text-foreground/50 uppercase tracking-widest">Uzmanlık Alanları</span>
+          <span className="text-xs font-black text-foreground/50 uppercase tracking-widest">
+            {lang === 'en' ? 'SPECIALIZATION AREAS' : 'UZMANLIK ALANLARI'}
+          </span>
         </div>
         <div className="space-y-4">
-          {[
-            { label: 'Gömülü Sistemler & ESP32 / CAN-Bus', color: 'text-lcars-orange' },
-            { label: 'Full-Stack Web & Next.js', color: 'text-lcars-cyan' },
-            { label: 'AI Agent Altyapıları & Rust', color: 'text-lcars-green' },
-            { label: 'Mobil & UI/UX Tasarım Sistemleri', color: 'text-lcars-purple' },
-          ].map(m => (
+          {areas.map(m => (
             <div key={m.label} className="flex items-center gap-2 text-xs">
               <span className={cn("w-1.5 h-1.5 rounded-full bg-current", m.color)} />
               <span className="text-foreground/70 font-medium">{m.label}</span>
@@ -62,14 +73,16 @@ export const HomeWidgets = memo(function HomeWidgets() {
       <div className="glass rounded-2xl p-6 border-border">
         <div className="flex items-center gap-2 mb-4">
           <Globe className="w-4 h-4 text-lcars-gold" />
-          <span className="text-xs font-black text-foreground/50 uppercase tracking-widest">Öne Çıkanlar</span>
+          <span className="text-xs font-black text-foreground/50 uppercase tracking-widest">
+            {lang === 'en' ? 'FEATURED' : 'ÖNE ÇIKANLAR'}
+          </span>
         </div>
         <div className="space-y-2">
           {[
-            { name: 'GTab', cat: 'Verimlilik', href: '/gtab' },
-            { name: 'UniControl', cat: 'Mühendislik', href: '/proje/UniControl' },
+            { name: 'GTab', cat: lang === 'en' ? 'Productivity' : 'Verimlilik', href: '/gtab' },
+            { name: 'UniControl', cat: lang === 'en' ? 'Engineering' : 'Mühendislik', href: '/proje/UniControl' },
             { name: 'R-AI-OS', cat: 'Lab', href: '/proje/R-AI-OS' },
-            { name: 'GT-Launcher', cat: 'Mobil', href: '/proje/GT-Launcher' },
+            { name: 'GT-Launcher', cat: lang === 'en' ? 'Mobile' : 'Mobil', href: '/proje/GT-Launcher' },
           ].map((item) => (
             <Link
               key={item.name}

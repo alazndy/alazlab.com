@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import {
   BookOpen,
@@ -14,6 +16,7 @@ import type {
   ProjectMetadata,
   ProjectVideo,
 } from '@/lib/markdown';
+import { useI18n } from '@/lib/i18n';
 
 interface ProjectResourceSectionsProps {
   project: ProjectMetadata;
@@ -57,11 +60,12 @@ function ResourceCard({
 }
 
 function DownloadsSection({ downloads }: { downloads: ProjectDownload[] }) {
+  const { t } = useI18n();
   if (downloads.length === 0) return null;
 
   return (
     <section aria-labelledby="project-downloads" className="space-y-4">
-      <SectionHeading id="project-downloads" icon={Download} title="İndirmeler" />
+      <SectionHeading id="project-downloads" icon={Download} title={t('project.downloads')} />
       <div className="grid gap-3 md:grid-cols-2">
         {downloads.map((download) => (
           <ResourceCard
@@ -79,11 +83,12 @@ function DownloadsSection({ downloads }: { downloads: ProjectDownload[] }) {
 }
 
 function ManualsSection({ manuals }: { manuals: ProjectManual[] }) {
+  const { t } = useI18n();
   if (manuals.length === 0) return null;
 
   return (
     <section aria-labelledby="project-manuals" className="space-y-4">
-      <SectionHeading id="project-manuals" icon={BookOpen} title="Kılavuzlar ve dokümantasyon" />
+      <SectionHeading id="project-manuals" icon={BookOpen} title={t('project.manuals')} />
       <div className="grid gap-3 md:grid-cols-2">
         {manuals.map((manual) => (
           <ResourceCard
@@ -101,11 +106,12 @@ function ManualsSection({ manuals }: { manuals: ProjectManual[] }) {
 }
 
 function GallerySection({ gallery }: { gallery: ProjectGalleryItem[] }) {
+  const { t } = useI18n();
   if (gallery.length === 0) return null;
 
   return (
     <section aria-labelledby="project-gallery" className="space-y-4">
-      <SectionHeading id="project-gallery" icon={ImageIcon} title="Fotoğraflar ve ekran görüntüleri" />
+      <SectionHeading id="project-gallery" icon={ImageIcon} title={t('project.gallery')} />
       <div className="grid gap-4 sm:grid-cols-2">
         {gallery.map((item) => (
           <figure key={`${item.src}-${item.alt}`} className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025]">
@@ -156,6 +162,7 @@ function isDirectVideo(src: string): boolean {
 }
 
 function VideoCard({ video }: { video: ProjectVideo }) {
+  const { t } = useI18n();
   const embedUrl = getVideoEmbedUrl(video.src);
 
   return (
@@ -178,7 +185,7 @@ function VideoCard({ video }: { video: ProjectVideo }) {
         </video>
       ) : (
         <a href={video.src} target="_blank" rel="noreferrer" className="flex aspect-video items-center justify-center bg-black/30 text-white/30 transition-colors hover:text-lcars-cyan">
-          <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest"><Play className="h-4 w-4" /> Videoyu aç</span>
+          <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest"><Play className="h-4 w-4" /> {t('project.openVideo')}</span>
         </a>
       )}
       <div className="space-y-1 px-4 py-3">
@@ -190,11 +197,12 @@ function VideoCard({ video }: { video: ProjectVideo }) {
 }
 
 function VideosSection({ videos }: { videos: ProjectVideo[] }) {
+  const { t } = useI18n();
   if (videos.length === 0) return null;
 
   return (
     <section aria-labelledby="project-videos" className="space-y-4">
-      <SectionHeading id="project-videos" icon={Play} title="Videolar" />
+      <SectionHeading id="project-videos" icon={Play} title={t('project.videos')} />
       <div className="grid gap-4 lg:grid-cols-2">
         {videos.map((video) => <VideoCard key={`${video.title}-${video.src}`} video={video} />)}
       </div>

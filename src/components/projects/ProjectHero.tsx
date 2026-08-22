@@ -3,6 +3,7 @@
 import { ExternalLink, Code2, Calendar, Smartphone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { categoryConfig, defaultConfig, type HeroVariant } from '@/lib/project-config';
+import { useI18n } from '@/lib/i18n';
 
 interface ProjectHeroProps {
   title: string;
@@ -127,26 +128,20 @@ export function ProjectHero({
 }: ProjectHeroProps) {
   const cat = categoryConfig[category] ?? defaultConfig;
   const Icon = cat.icon;
+  const { t } = useI18n();
 
   const hasImage = !!image;
   const isLegacy = status === 'Legacy' || status === 'Pending';
 
   return (
-    <header className={cn("relative mb-10 rounded-3xl overflow-hidden", isLegacy ? "opacity-85" : "")}>
+    <header className="relative mb-12">
+      <div className="relative rounded-[2.5rem] border border-white/8 overflow-hidden bg-white/[0.02]">
 
-      {/* ── BACKGROUND ── */}
-      <div className="relative min-h-[280px] sm:min-h-[360px] md:min-h-[460px]">
+        {/* Ambient glow from category */}
+        <div className={cn("absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none opacity-20 blur-3xl", glow)} />
 
-        {/* Category-specific decorative background */}
-        {variant === 'data' && <DataGrid accentBg={accentBg} />}
-        {variant === 'hardware' && <HardwareGrid />}
-        {variant === 'design' && <DesignGrid accentBg={accentBg} />}
-
-        {/* Ambient glow */}
-        <div className={cn("absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full blur-[100px] opacity-20 pointer-events-none", glow)} />
-
-        {/* ── IMAGE (full-bleed or split) ── */}
-        {hasImage && (variant === 'default' || variant === 'data' || variant === 'hardware' || variant === 'design') && (
+        {/* Hero background image with gradient overlay */}
+        {hasImage && variant !== 'browser' && variant !== 'mobile' && (
           <div className="absolute inset-0">
             <img src={image} alt={title} className="w-full h-full object-cover opacity-30" loading="eager" />
             <div className={cn("absolute inset-0 bg-gradient-to-r", gradient)} />
@@ -209,7 +204,7 @@ export function ProjectHero({
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent opacity-0 group-hover/dl:opacity-100 transition-opacity" />
                     
                     <Smartphone className="w-6 h-6 animate-pulse" />
-                    <span>DOWNLOAD APK {version || ''}</span>
+                    <span>{t('project.downloadApk')} {version || ''}</span>
                   </a>
                 )}
                 <div className="flex items-center gap-3">
@@ -218,7 +213,7 @@ export function ProjectHero({
                       className={cn("flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all text-white border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10")}
                     >
                       <ExternalLink className="w-4 h-4" />
-                      Canlı Demo
+                      {t('project.liveDemo')}
                     </a>
                   )}
                   {github && (
@@ -226,7 +221,7 @@ export function ProjectHero({
                       className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white/40 hover:text-white/70 bg-white/5 hover:bg-white/8 border border-white/5 transition-all"
                     >
                       <Code2 className="w-4 h-4" />
-                      Kaynak Kod
+                      {t('project.sourceCode')}
                     </a>
                   )}
                 </div>
