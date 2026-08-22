@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Home, User, ChevronRight, ChevronDown, Folder,
-  Wrench, Terminal, X
+  Wrench, Terminal, X, Sparkles
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ProjectMetadata } from '@/lib/markdown';
@@ -14,12 +14,12 @@ import { useMobileNav } from './mobile-nav-context';
 import type { LucideIcon } from 'lucide-react';
 
 const categoryIcons: Record<string, { icon: LucideIcon; color: string }> = {
-  'Mühendislik':        { icon: Wrench,  color: 'bg-lcars-orange' },
-  'Lab':                { icon: Terminal, color: 'bg-lcars-cyan' },
-  'Diğer Çalışmalar':   { icon: Folder,  color: 'bg-white/50' },
+  'Mühendislik':        { icon: Wrench,  color: 'bg-apple-orange' },
+  'Lab':                { icon: Terminal, color: 'bg-apple-cyan' },
+  'Diğer Çalışmalar':   { icon: Folder,  color: 'bg-muted-foreground' },
 };
 
-const getCat = (cat: string) => categoryIcons[cat] ?? { icon: Folder, color: 'bg-white/50' };
+const getCat = (cat: string) => categoryIcons[cat] ?? { icon: Folder, color: 'bg-muted-foreground' };
 
 const ProjectLink = memo(function ProjectLink({ project, url, isActive, color }: {
   project: ProjectMetadata; url: string; isActive: boolean; color: string;
@@ -28,12 +28,14 @@ const ProjectLink = memo(function ProjectLink({ project, url, isActive, color }:
   return (
     <Link href={url} onClick={close}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 lg:py-1.5 rounded-md transition-all",
-        isActive ? "bg-foreground/10 text-foreground" : "text-foreground/40 hover:text-foreground/70 hover:bg-foreground/5"
+        "flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
+        isActive
+          ? "bg-foreground/10 text-foreground font-semibold shadow-2xs"
+          : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
       )}
     >
-      <div className={cn("w-1 h-3 rounded-full shrink-0 transition-opacity", color, isActive ? "opacity-100" : "opacity-0")} />
-      <span className="text-[11px] font-medium truncate">{project.title}</span>
+      <div className={cn("w-1.5 h-1.5 rounded-full shrink-0 transition-opacity", color, isActive ? "opacity-100" : "opacity-40")} />
+      <span className="truncate">{project.title}</span>
     </Link>
   );
 });
@@ -46,19 +48,24 @@ const CategorySection = memo(function CategorySection({ category, displayLabel, 
     <div>
       <button onClick={onToggle}
         className={cn(
-          "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors",
-          isOpen || isActive ? "text-foreground" : "text-foreground/50 hover:text-foreground hover:bg-foreground/5"
+          "w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors",
+          isOpen || isActive
+            ? "text-foreground bg-foreground/[0.03]"
+            : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
         )}
       >
-        <div className="flex items-center gap-3">
-          <Icon className={cn("w-4 h-4", (isOpen || isActive) ? "" : "opacity-60")} />
-          <span className="text-xs font-bold truncate">{displayLabel}</span>
+        <div className="flex items-center gap-2.5">
+          <Icon className={cn("w-4 h-4", (isOpen || isActive) ? "text-foreground" : "text-muted-foreground")} />
+          <span className="truncate">{displayLabel}</span>
         </div>
-        {isOpen ? <ChevronDown className="w-3 h-3 opacity-50" /> : <ChevronRight className="w-3 h-3 opacity-50" />}
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] font-mono text-muted-foreground/60">{projects.length}</span>
+          {isOpen ? <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />}
+        </div>
       </button>
 
       {(isOpen || isActive) && (
-        <div className="mt-1 mb-2 ml-4 border-l border-border pl-2 space-y-0.5">
+        <div className="mt-1 mb-2 ml-3 border-l border-border/80 pl-2 space-y-0.5">
           {projects.map(p => {
             const url = p.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${p.slug}`);
             return <ProjectLink key={p.slug} project={p} url={url} isActive={pathname === url} color={color} />;
@@ -72,7 +79,7 @@ const CategorySection = memo(function CategorySection({ category, displayLabel, 
 function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; pathname: string }) {
   const { t, localizePath } = useI18n();
   const { close } = useMobileNav();
-  const [openCats, setOpenCats] = useState<Record<string, boolean>>({});
+  const [openCats, setOpenCats] = useState<Record<string, boolean>>({ 'Mühendislik': true, 'Lab': true });
 
   const { grouped, sorted } = useMemo(() => {
     const g: Record<string, ProjectMetadata[]> = { 'Mühendislik': [], 'Lab': [], 'Diğer Çalışmalar': [] };
@@ -94,48 +101,51 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
 
   return (
     <>
-      {/* Logo */}
-      <div className="px-5 py-5 border-b border-border shrink-0 flex items-center justify-between">
+      {/* macOS Window Header Style Logo */}
+      <div className="px-5 py-4 border-b border-border/60 shrink-0 flex items-center justify-between">
         <Link href={localizePath('/')} onClick={close} className="flex items-center gap-3 group">
-          <div className="w-2 h-7 bg-lcars-orange rounded-full group-hover:scale-y-110 transition-transform" />
+          <div className="w-8 h-8 rounded-xl bg-foreground/5 border border-border flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
+            <span className="w-2.5 h-2.5 rounded-full bg-apple-orange" />
+          </div>
           <div>
-            <div className="text-sm font-black text-foreground tracking-widest uppercase">Göktuğ</div>
-            <div className="text-[10px] font-mono text-foreground/30 uppercase tracking-wider">{t('hero.role').split('·')[0].trim()}</div>
+            <div className="text-sm font-bold text-foreground tracking-tight">Göktuğ Turhan</div>
+            <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">{t('hero.role').split('·')[0].trim()}</div>
           </div>
         </Link>
-        {/* Close button — mobile only */}
+        {/* Mobile close */}
         <button onClick={close} className="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg hover:bg-foreground/8 transition-colors">
-          <X className="w-4 h-4 text-foreground/40" />
+          <X className="w-4 h-4 text-muted-foreground" />
         </button>
       </div>
 
-      {/* Nav */}
-      <div className="flex-1 overflow-y-auto py-4 flex flex-col custom-scrollbar">
-        <nav className="px-3 space-y-0.5 mb-5">
+      {/* Main Navigation */}
+      <div className="flex-1 overflow-y-auto py-3 px-3 flex flex-col custom-scrollbar space-y-4">
+        <nav className="space-y-0.5">
           {[
-            { href: localizePath('/'),            label: t('nav.home'),        accent: 'bg-lcars-orange', icon: Home },
-            { href: localizePath('/muhendislik'), label: t('nav.muhendislik'), accent: 'bg-lcars-orange', icon: Wrench },
-            { href: localizePath('/lab'),         label: t('nav.lab'),         accent: 'bg-lcars-cyan',   icon: Terminal },
-            { href: localizePath('/hakkimda'),    label: t('nav.about'),       accent: 'bg-lcars-gold',   icon: User },
-          ].map(({ href, label, accent, icon: Icon }) => {
+            { href: localizePath('/'),            label: t('nav.home'),        icon: Home },
+            { href: localizePath('/muhendislik'), label: t('nav.muhendislik'), icon: Wrench },
+            { href: localizePath('/lab'),         label: t('nav.lab'),         icon: Terminal },
+            { href: localizePath('/hakkimda'),    label: t('nav.about'),       icon: User },
+          ].map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href;
             return (
               <Link key={href} href={href} onClick={close}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all",
-                  isActive ? "bg-foreground/10 text-foreground" : "text-foreground/40 hover:text-foreground/70 hover:bg-foreground/5"
+                  "flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all",
+                  isActive
+                    ? "bg-foreground text-background shadow-xs font-bold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
                 )}
               >
-                <div className={cn("w-1 h-4 rounded-full shrink-0", accent, isActive ? "opacity-100" : "opacity-0")} />
                 <Icon className="w-4 h-4 shrink-0" />
-                <span className="text-xs font-semibold">{label}</span>
+                <span>{label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="px-3">
-          <div className="px-3 mb-2 text-[10px] font-black text-foreground/20 uppercase tracking-widest">{t('nav.portfolio')}</div>
+        <div>
+          <div className="px-3 mb-1.5 text-[10px] font-bold text-muted-foreground/70 uppercase tracking-widest">{t('nav.portfolio')}</div>
           <div className="space-y-0.5">
             {sorted.map(cat => (
               <CategorySection key={cat} category={cat} displayLabel={getCatLabel(cat)} projects={grouped[cat]}
@@ -148,12 +158,13 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="px-5 py-3 border-t border-border shrink-0">
+      {/* Footer Status */}
+      <div className="px-5 py-3 border-t border-border/60 shrink-0 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
         <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-lcars-green animate-pulse" />
-          <span className="text-[10px] font-mono text-foreground/25 uppercase tracking-wider">{projects.length} {t('nav.systemsActive')}</span>
+          <span className="w-2 h-2 rounded-full bg-apple-green animate-pulse" />
+          <span>{projects.length} {t('nav.systemsActive')}</span>
         </div>
+        <span className="text-[9px] uppercase tracking-wider text-muted-foreground/60">v5.2</span>
       </div>
     </>
   );
@@ -163,27 +174,24 @@ export const Sidebar = memo(function Sidebar({ projects = [] }: { projects?: Pro
   const pathname = usePathname();
   const { isOpen, close } = useMobileNav();
 
-  // Close on route change
   useEffect(() => { close(); }, [pathname, close]);
 
   return (
     <>
-      {/*  MOBILE OVERLAY  */}
+      {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-md transition-opacity"
           onClick={close}
           aria-hidden
         />
       )}
 
-      {/*  SIDEBAR PANEL  */}
+      {/* macOS Translucent Sidebar */}
       <aside className={cn(
-        "flex flex-col h-full bg-background border-r border-border z-50 select-none transition-transform duration-300 ease-in-out",
-        // Mobile: fixed drawer
+        "flex flex-col h-full bg-sidebar/95 backdrop-blur-2xl border-r border-border z-50 select-none transition-transform duration-300 ease-in-out",
         "fixed top-0 left-0 w-[80vw] max-w-72 lg:w-64",
         isOpen ? "translate-x-0" : "-translate-x-full",
-        // Desktop: static, always visible
         "lg:relative lg:translate-x-0 lg:shrink-0"
       )}>
         <SidebarContent projects={projects} pathname={pathname} />

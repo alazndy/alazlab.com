@@ -9,7 +9,7 @@ import { categoryConfig, defaultConfig, statusConfig, statusDot } from '@/lib/pr
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
 
-//  SCORE
+// SCORE
 const S: Record<string, number> = { Live: 10, Active: 8, Stable: 6, Early: 4, Pending: 2, Legacy: 0 };
 const score = (p: ProjectMetadata) => (S[p.status] ?? 2) + Math.min(p.techStack?.length ?? 0, 10) * 0.8;
 
@@ -34,7 +34,7 @@ const ROW: Record<Size, string> = {
   xs:     'row-span-2',
 };
 
-//  CARD
+// APPLE BENTO CARD
 const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath }: {
   project: ProjectMetadata; size: Size; idx: number; localizePath: (path: string) => string;
 }) {
@@ -53,26 +53,25 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
       >
         <Link href={href}
           className={cn(
-            "group h-full flex flex-col justify-between p-4 rounded-2xl border border-border bg-card",
-            "hover:border-foreground/20 hover:bg-foreground/[0.03] transition-all duration-200",
-            dim && "opacity-40 hover:opacity-70"
+            "apple-card h-full flex flex-col justify-between p-4",
+            dim && "opacity-40 hover:opacity-75"
           )}
         >
           <div className="flex items-center justify-between">
             {project.image ? (
-              <div className="w-8 h-8 rounded-lg overflow-hidden border border-border shrink-0">
+              <div className="w-8 h-8 rounded-xl overflow-hidden border border-border shrink-0">
                 <img src={project.image} alt="" className="w-full h-full object-cover" loading="lazy" />
               </div>
             ) : (
-              <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border border-border bg-foreground/5", cat.accent)}>
+              <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-border bg-muted", cat.accent)}>
                 <Icon className="w-4 h-4" />
               </div>
             )}
-            <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground/30 group-hover:text-foreground group-hover:translate-x-0.5 transition-all" />
+            <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 transition-all" />
           </div>
 
           <div className="flex-1 min-w-0 space-y-0.5 mt-2">
-            <p className="text-xs font-bold text-foreground/80 group-hover:text-foreground transition-colors truncate">{project.title}</p>
+            <p className="text-xs font-bold text-foreground group-hover:text-apple-blue transition-colors truncate">{project.title}</p>
             <p className="text-[10px] font-mono text-muted-foreground truncate">{project.category}</p>
           </div>
         </Link>
@@ -89,17 +88,15 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
     >
       <Link href={href} className="group block h-full">
         <article className={cn(
-          "relative h-full rounded-3xl border border-border bg-card overflow-hidden",
-          "hover:border-foreground/25 hover:shadow-2xl transition-all duration-300",
-          "flex flex-col justify-between p-5 sm:p-6",
+          "apple-card relative h-full overflow-hidden flex flex-col justify-between p-5 sm:p-6",
           dim && "opacity-50 hover:opacity-85"
         )}>
 
           {/* Background image & gradient overlay */}
           {project.image && (
             <div className="absolute inset-0 z-0">
-              <img src={project.image} alt="" className="w-full h-full object-cover opacity-25 group-hover:scale-105 transition-transform duration-700" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/30" />
+              <img src={project.image} alt="" className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-card via-card/90 to-transparent" />
             </div>
           )}
 
@@ -110,12 +107,12 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
                 <span className={cn("w-1.5 h-1.5 rounded-full", dot)} />
                 {project.status}
               </span>
-              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider bg-foreground/5 px-2 py-0.5 rounded-md border border-border/60">
+              <span className="apple-pill text-[10px] font-mono text-muted-foreground">
                 {project.category}
               </span>
             </div>
 
-            <div className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center text-foreground group-hover:bg-lcars-cyan group-hover:text-black transition-all">
+            <div className="w-8 h-8 rounded-full bg-foreground/5 group-hover:bg-foreground group-hover:text-background flex items-center justify-center text-foreground transition-all">
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </div>
@@ -123,14 +120,14 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
           {/* Bottom row: Title, summary, tech stack */}
           <div className="relative z-10 space-y-2 mt-auto pt-4">
             <h3 className={cn(
-              "font-black uppercase tracking-tight text-foreground group-hover:text-lcars-cyan transition-colors",
+              "font-extrabold tracking-tight text-foreground group-hover:text-apple-blue transition-colors",
               isBig ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"
             )}>
               {project.title}
             </h3>
 
             <p className={cn(
-              "text-foreground/60 leading-relaxed line-clamp-2",
+              "text-muted-foreground leading-relaxed line-clamp-2",
               isBig ? "text-sm sm:text-base max-w-xl" : "text-xs"
             )}>
               {project.summary}
@@ -139,7 +136,7 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
             {project.techStack && project.techStack.length > 0 && (
               <div className="flex flex-wrap gap-1.5 pt-2">
                 {project.techStack.slice(0, isBig ? 6 : 3).map((t) => (
-                  <span key={t} className="px-2 py-0.5 rounded text-[10px] font-mono border border-border/80 bg-background/60 text-foreground/60">
+                  <span key={t} className="apple-pill text-[10px] font-mono font-normal">
                     {t}
                   </span>
                 ))}
@@ -158,7 +155,7 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
   );
 });
 
-//  MAIN
+// MAIN
 export function ProjectGrid({ projects }: { projects: ProjectMetadata[] }) {
   const { t, lang, localizePath } = useI18n();
   const isEn = lang === 'en';
@@ -193,37 +190,37 @@ export function ProjectGrid({ projects }: { projects: ProjectMetadata[] }) {
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Sparkles className="w-4 h-4 text-lcars-orange" />
-            <h2 className="text-xs font-black font-mono uppercase tracking-[0.25em] text-foreground">
-              {isEn ? 'PROJECT ARCHIVE MATRIX' : 'PROJE ARŞİV MATRİSİ'}
+            <Sparkles className="w-4 h-4 text-apple-orange" />
+            <h2 className="text-xs font-bold font-mono uppercase tracking-widest text-foreground">
+              {isEn ? 'PROJECT ARCHIVE' : 'PROJE ARŞİVİ'}
             </h2>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border border-border bg-foreground/5 text-foreground/60">
+            <span className="apple-pill text-[10px] font-mono">
               {filtered.length} / {projects.length}
             </span>
           </div>
 
           {/* Quick Search */}
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/50" />
+            <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               placeholder={isEn ? 'Search stack or name...' : 'Teknoloji veya isim ara...'}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 bg-foreground/5 border border-border rounded-xl text-xs font-mono text-foreground placeholder:text-muted-foreground/40 outline-none focus:border-lcars-cyan transition-colors"
+              className="w-full pl-9 pr-3 py-2 bg-muted/80 border border-border rounded-full text-xs font-medium text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-apple-blue/30 transition-all"
             />
           </div>
         </div>
 
-        {/* Category Pills */}
+        {/* Category Pills (Apple Segmented Scroll) */}
         <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
           {categories.map(cat => (
             <button key={cat} onClick={() => setActive(cat)}
               className={cn(
-                "shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold uppercase tracking-wider transition-all whitespace-nowrap",
+                "shrink-0 px-4 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap",
                 active === cat
-                  ? "bg-foreground text-background shadow-md"
-                  : "text-muted-foreground hover:text-foreground hover:bg-foreground/5 border border-transparent hover:border-border"
+                  ? "bg-foreground text-background shadow-xs font-semibold"
+                  : "text-muted-foreground hover:text-foreground bg-muted/60 hover:bg-muted"
               )}
             >
               {cat === ALL ? ALL : cat.length > 24 ? cat.slice(0, 22) + '…' : cat}
@@ -234,7 +231,7 @@ export function ProjectGrid({ projects }: { projects: ProjectMetadata[] }) {
 
       {/* Bento grid: 6 columns (mobile) / 12 columns (desktop) */}
       <motion.div layout
-        className="grid grid-cols-6 lg:grid-cols-12 auto-rows-[80px] gap-3.5"
+        className="grid grid-cols-6 lg:grid-cols-12 auto-rows-[88px] gap-4"
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((p, i) => (
@@ -244,8 +241,8 @@ export function ProjectGrid({ projects }: { projects: ProjectMetadata[] }) {
       </motion.div>
 
       {filtered.length === 0 && (
-        <div className="p-12 text-center border border-border/60 rounded-3xl bg-card space-y-2">
-          <p className="text-sm font-mono text-muted-foreground">
+        <div className="p-12 text-center apple-card space-y-2">
+          <p className="text-sm font-medium text-muted-foreground">
             {isEn ? 'No projects match your filter query.' : 'Aramanıza uygun proje bulunamadı.'}
           </p>
         </div>

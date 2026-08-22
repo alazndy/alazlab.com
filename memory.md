@@ -52,6 +52,11 @@
   - **Wiki & Dokümantasyon (Wiki Reader):** GT-Launcher (9 kılavuz), UniControl (CAN/protokol raporları) ve R-AI-OS (güvenlik/mimari) için in-page arama özellikli interaktif dokümantasyon okuyucusu.
   - **Medya & Vitrin (Media & Gallery):** Tüm canlı GIF demoları, video ve şemalar.
   - **Kaynaklar (Downloads & Resources):** APK sürümleri, kaynak kod ve resmi dokümanlar.
+- **Apple Design & Liquid Glass Mimarisi (2026-08-23):** Site geneli `dickwu/apple-design-skill` prensiplerine (Apple Human Interface Guidelines, Liquid Glass 2025/2026, macOS Tahoe/Sequoia translucent sidebar, App Store Bento grid ve SF-style pill hiyerarşisi) uygun olarak baştan tasarlandı:
+  - **Liquid Glass Katmanı:** Yüzen üst çubuk (`apple-liquid-glass`, 28px blur), segmentli dil denetimi (`TR`/`EN`) ve macOS pencere başlıkları.
+  - **Apple Kart & Yüzey Sistemi:** `apple-card` geometrisi, continuous squircle kenarlıklar, yumuşak spring mikro etkileşimleri (`active:scale-95`).
+  - **Tipografi & Okunabilirlik:** Apple SF Pro / Geist tabanlı, yüksek kontrastlı hiyerarşik tipografi, net metin ölçekleri.
+  - **Tam Aydınlık & OLED Karanlık Mod:** Apple Açık Mod (`#f5f5f7` zemin ve beyaz yüzen kartlar) ve Apple Karanlık Mod (`#000000` OLED zemin ve derin cam kartlar) tam uyumlu.
 - **Sıfır Emoji & Dinamik Mühendislik Standardı (2026-08-23):** Tüm siteden (kod tabanı, markdown'lar, dokümantasyonlar, menüler ve başlıklar) istisnasız tüm emojiler temizlendi. Yerine endüstriyel LCARS HUD aksanları, Lucide SVG vektör ikonları ve mikro telemetri göstergeleri entegre edildi.
 - **İçerik Entegrasyonu**: DevOps klasöründeki README ve memory.md dosyaları taranarak markdown içerikleri zenginleştirildi.
 - **Sistem Temizliği**: Crucix ve AG-Manager projeleri tüm metadata ve kod tabanından temizlendi.
