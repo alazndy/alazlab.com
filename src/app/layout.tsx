@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const projects = getAllProjects();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`dark ${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
         <Providers>
           <MobileNavProvider>

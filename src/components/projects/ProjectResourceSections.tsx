@@ -41,20 +41,20 @@ function ResourceCard({
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="group flex items-start gap-4 rounded-2xl border border-white/8 bg-white/[0.025] p-4 transition-colors hover:border-lcars-cyan/30 hover:bg-white/[0.05]"
+      className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-lcars-cyan/40 hover:bg-foreground/[0.03]"
     >
-      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-lcars-cyan/20 bg-lcars-cyan/10 text-lcars-cyan">
+      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-lcars-cyan/30 bg-lcars-cyan/10 text-lcars-cyan">
         <Icon className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-2 text-sm font-semibold text-white/75 transition-colors group-hover:text-white">
+        <span className="flex items-center gap-2 text-sm font-bold text-foreground transition-colors group-hover:text-lcars-cyan">
           {title}
-          {external && <ExternalLink className="h-3.5 w-3.5 text-white/30" />}
+          {external && <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />}
         </span>
-        {description && <span className="mt-1 block text-xs leading-relaxed text-white/40">{description}</span>}
-        {meta && <span className="mt-2 block font-mono text-[10px] uppercase tracking-widest text-lcars-cyan/60">{meta}</span>}
+        {description && <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{description}</span>}
+        {meta && <span className="mt-2 block font-mono text-[10px] uppercase tracking-widest text-lcars-cyan">{meta}</span>}
       </span>
-      <Download className="mt-1 h-4 w-4 shrink-0 text-white/20 transition-colors group-hover:text-lcars-cyan" />
+      <Download className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-lcars-cyan" />
     </a>
   );
 }
@@ -114,7 +114,7 @@ function GallerySection({ gallery }: { gallery: ProjectGalleryItem[] }) {
       <SectionHeading id="project-gallery" icon={ImageIcon} title={t('project.gallery')} />
       <div className="grid gap-4 sm:grid-cols-2">
         {gallery.map((item) => (
-          <figure key={`${item.src}-${item.alt}`} className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025]">
+          <figure key={`${item.src}-${item.alt}`} className="overflow-hidden rounded-2xl border border-border bg-card">
             <Image
               src={item.src}
               alt={item.alt}
@@ -123,7 +123,7 @@ function GallerySection({ gallery }: { gallery: ProjectGalleryItem[] }) {
               unoptimized
               className="aspect-video w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
-            {item.caption && <figcaption className="px-4 py-3 text-xs leading-relaxed text-white/40">{item.caption}</figcaption>}
+            {item.caption && <figcaption className="px-4 py-3 text-xs leading-relaxed text-muted-foreground">{item.caption}</figcaption>}
           </figure>
         ))}
       </div>
@@ -166,7 +166,7 @@ function VideoCard({ video }: { video: ProjectVideo }) {
   const embedUrl = getVideoEmbedUrl(video.src);
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025]">
+    <article className="overflow-hidden rounded-2xl border border-border bg-card">
       {embedUrl ? (
         <div className="aspect-video bg-black">
           <iframe
@@ -184,13 +184,13 @@ function VideoCard({ video }: { video: ProjectVideo }) {
           Tarayıcınız video oynatmayı desteklemiyor.
         </video>
       ) : (
-        <a href={video.src} target="_blank" rel="noreferrer" className="flex aspect-video items-center justify-center bg-black/30 text-white/30 transition-colors hover:text-lcars-cyan">
+        <a href={video.src} target="_blank" rel="noreferrer" className="flex aspect-video items-center justify-center bg-foreground/5 text-muted-foreground transition-colors hover:text-lcars-cyan">
           <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest"><Play className="h-4 w-4" /> {t('project.openVideo')}</span>
         </a>
       )}
       <div className="space-y-1 px-4 py-3">
-        <h3 className="text-sm font-semibold text-white/75">{video.title}</h3>
-        {video.description && <p className="text-xs leading-relaxed text-white/40">{video.description}</p>}
+        <h3 className="text-sm font-semibold text-foreground">{video.title}</h3>
+        {video.description && <p className="text-xs leading-relaxed text-muted-foreground">{video.description}</p>}
       </div>
     </article>
   );
@@ -220,7 +220,7 @@ function SectionHeading({
   title: string;
 }) {
   return (
-    <h2 id={id} className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/75">
+    <h2 id={id} className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-foreground">
       <Icon className="h-4 w-4 text-lcars-cyan" />
       {title}
     </h2>
@@ -239,7 +239,7 @@ export function ProjectResourceSections({ project }: ProjectResourceSectionsProp
   if (downloads.length === 0 && manuals.length === 0 && gallery.length === 0 && videos.length === 0) return null;
 
   return (
-    <div className="mt-16 space-y-14 border-t border-white/8 pt-12">
+    <div className="mt-16 space-y-14 border-t border-border pt-12">
       <DownloadsSection downloads={downloads} />
       <ManualsSection manuals={manuals} />
       <GallerySection gallery={gallery} />
