@@ -57,7 +57,11 @@
   - **Apple Kart & Yüzey Sistemi:** `apple-card` geometrisi, continuous squircle kenarlıklar, yumuşak spring mikro etkileşimleri (`active:scale-95`).
   - **Tipografi & Okunabilirlik:** Apple SF Pro / Geist tabanlı, yüksek kontrastlı hiyerarşik tipografi, net metin ölçekleri.
   - **Tam Aydınlık & OLED Karanlık Mod:** Apple Açık Mod (`#f5f5f7` zemin ve beyaz yüzen kartlar) ve Apple Karanlık Mod (`#000000` OLED zemin ve derin cam kartlar) tam uyumlu.
-- **Sıfır Emoji & Dinamik Mühendislik Standardı (2026-08-23):** Tüm siteden (kod tabanı, markdown'lar, dokümantasyonlar, menüler ve başlıklar) istisnasız tüm emojiler temizlendi. Yerine endüstriyel LCARS HUD aksanları, Lucide SVG vektör ikonları ve mikro telemetri göstergeleri entegre edildi.
+- **Aydınlık & Karanlık Mod Tam Uyumluluk Revizyonu (2026-08-23):** Tüm sitedeki sabit karanlık sınıflar (`bg-black`, `bg-[#050505]`, `text-white`, `prose-invert`) temizlendi ve semantik CSS tokenlarına bağlandı.
+  - Açık Mod: Saf porselen zemin (`#fbfbfd`), net beyaz kartlar (`#ffffff`), keskin ve okunabilir grafit tipografi (`#111113` / `#55555c`) ile 7:1+ kontrast oranı sağlandı.
+  - Karanlık Mod: Derin OLED siyahı (`#050507`), cam kartlar (`#0e0e11`) ve net beyaz metinler (`#f5f5f7`) ile tam uyumlu hale getirildi.
+  - `SystemTower`, `RaiosClient`, `ENV-I`, `GTab`, `ProjectViewTabs` ve `.prose` blokları her iki temada da yüksek kontrast ve kusursuz okunabilirlikle çalışıyor.
+- **Sıfır Emoji & AI-Slop Temizliği (2026-08-23):** Yapay blur lekeleri, başlık üstü pill etiketleri, em-dash kalıpları ve abartılı buzzword'ler temizlendi; yerlerine doğrudan mühendislik gerçekleri yerleştirildi.
 - **İçerik Entegrasyonu**: DevOps klasöründeki README ve memory.md dosyaları taranarak markdown içerikleri zenginleştirildi.
 - **Sistem Temizliği**: Crucix ve AG-Manager projeleri tüm metadata ve kod tabanından temizlendi.
   - `src/content/projects/AG-Manager.md` silindi.
