@@ -1,89 +1,119 @@
+import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, LayoutDashboard, ShieldCheck, Globe, Code2 } from 'lucide-react';
-import { getProjectBySlug } from '@/lib/markdown';
-import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
+import { ChevronLeft } from 'lucide-react';
+import { getProjectBySlug, getAllProjects, getProjectWikiDocs } from '@/lib/markdown';
+import { categoryConfig, defaultConfig, statusConfig } from '@/lib/project-config';
+import { marked } from 'marked';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { GTabClient } from './GTabClient';
+import { ProjectSidebar } from '@/components/projects/ProjectSidebar';
+import { ProjectViewTabs } from '@/components/projects/ProjectViewTabs';
+
+interface Props {
+  params: Promise<{ lang: string }>;
+}
 
 export async function generateStaticParams() {
   return [{ lang: 'tr' }, { lang: 'en' }];
 }
 
-export default async function GTabPage({ params }: { params: Promise<{ lang: string }> }) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang } = await params;
+  const project = getProjectBySlug('GTab', lang);
+  if (!project) return {};
+
+  const { title, summary, category, techStack, image } = project.metadata;
+  const description = summary || `${title} — Privacy-first Chrome new tab workspace by Göktuğ Turhan.`;
+
+  return {
+    title: `${title} — Göktuğ Turhan`,
+    description,
+    keywords: [title, category, ...(techStack ?? []), 'Chrome Extension', 'Manifest V3', 'Google Tasks'].join(', '),
+    openGraph: {
+      title: `${title} — Göktuğ Turhan`,
+      description,
+      url: `https://alazlab.com/${lang}/gtab`,
+      siteName: 'alazlab.com',
+      type: 'article',
+      ...(image ? { images: [{ url: `https://alazlab.com${image}` }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} — Göktuğ Turhan`,
+      description,
+      ...(image ? { images: [`https://alazlab.com${image}`] } : {}),
+    },
+    alternates: { canonical: `https://alazlab.com/${lang}/gtab` },
+  };
+}
+
+export default async function GTabPage({ params }: Props) {
   const { lang } = await params;
   const isEn = lang === 'en';
-  const project = getProjectBySlug('GTab');
+  const project = getProjectBySlug('GTab', lang);
+  if (!project) notFound();
+
+  const { metadata, content } = project;
+  const contentHtml = await marked.parse(content);
+  const cat = categoryConfig[metadata.category] ?? defaultConfig;
+  const sc = statusConfig[metadata.status] ?? statusConfig['Active'];
+
+  // Load wiki docs
+  const rawWikiDocs = getProjectWikiDocs('GTab', lang);
+  const parsedWikiDocs = await Promise.all(
+    rawWikiDocs.map(async (doc) => ({
+      ...doc,
+      html: await marked.parse(doc.content),
+    }))
+  );
+
+  // Related projects
+  const allProjects = getAllProjects(lang);
+  const related = allProjects
+    .filter(p => p.slug !== 'GTab' && (p.category === metadata.category || p.area === 'lab'))
+    .slice(0, 3);
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 max-w-7xl mx-auto animate-in fade-in duration-700 space-y-16">
-      
-      <Link href={`/${lang}`} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/60 hover:bg-muted border border-border text-xs font-mono tracking-wider uppercase text-muted-foreground hover:text-foreground transition-all">
-        <ArrowLeft className="w-3.5 h-3.5" />
-        {isEn ? 'Back to Hub' : 'Ana Sayfaya Dön'}
-      </Link>
+    <article className="max-w-7xl mx-auto pb-24 px-2 sm:px-4 space-y-12 animate-in fade-in duration-500">
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div className="lg:col-span-7 space-y-8">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full font-mono text-xs uppercase tracking-widest text-apple-blue font-bold">
-              <LayoutDashboard className="w-4 h-4" />
-              Browser Extension
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold uppercase tracking-tight text-foreground">GTab</h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl font-normal">
-              {isEn 
-                ? 'A modular new tab workspace for Chrome. Integrates Google Tasks, Calendar, and local notes with offline-first persistence and zero third-party servers.'
-                : 'Chrome için modüler yeni sekme çalışma alanı. Google Görevler, Takvim ve yerel notları üçüncü taraf sunucu kullanmadan, yerel depolamayla birleştirir.'}
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <a 
-              href="https://chromewebstore.google.com/detail/gtab-ki%C5%9Fiselle%C5%9Ftirilebili/ablekgbicginadinndchdojklkojgbdb" 
-              target="_blank" 
-              rel="noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 bg-apple-blue text-white font-semibold text-xs uppercase tracking-wider rounded-xl hover:opacity-90 transition-all shadow-md"
-            >
-              <Globe className="w-4 h-4" />
-              {isEn ? 'Add to Chrome' : "Chrome'a Ekle"}
-            </a>
-            <a 
-              href="https://github.com/alazndy/GTab" 
-              target="_blank" 
-              rel="noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 bg-card text-foreground font-semibold text-xs uppercase tracking-wider rounded-xl hover:bg-muted border border-border transition-all"
-            >
-              <Code2 className="w-4 h-4" />
-              {isEn ? 'Source Code' : 'Kaynak Kod'}
-            </a>
-            <Link
-              href={`/${lang}/gtab/privacy-policy`}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground bg-card hover:bg-muted border border-border transition-all"
-            >
-              <ShieldCheck className="w-4 h-4 text-apple-green" />
-              {isEn ? 'Privacy Policy' : 'Gizlilik Politikası'}
-            </Link>
-          </div>
-        </div>
-
-        <div className="lg:col-span-5 relative">
-          <div className="apple-card overflow-hidden shadow-2xl">
-            <div className="aspect-[4/3] bg-muted/60 flex items-center justify-center p-8">
-              {/* Abstract Representation of GTab */}
-              <div className="w-full h-full grid grid-cols-3 grid-rows-3 gap-3">
-                <div className="col-span-2 row-span-2 bg-card rounded-xl border border-border shadow-xs" />
-                <div className="bg-orange-500/10 rounded-xl border border-orange-500/20" />
-                <div className="bg-blue-500/10 rounded-xl border border-blue-500/20" />
-                <div className="col-span-3 bg-card rounded-xl border border-border shadow-xs" />
-              </div>
-            </div>
-            <div className="p-5 bg-card border-t border-border flex items-center justify-between text-xs font-mono">
-              <span className="text-muted-foreground">Version 4.3.0 · Manifest V3</span>
-              <span className="text-apple-green font-bold">Chrome Web Store</span>
-            </div>
-          </div>
-        </div>
+      {/* Back Link */}
+      <div className="py-2">
+        <Link
+          href={`/${lang}`}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/60 hover:bg-muted border border-border text-xs font-medium text-muted-foreground hover:text-foreground transition-all group"
+        >
+          <ChevronLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+          {isEn ? 'Back to All Projects' : 'Tüm Projelere Dön'}
+        </Link>
       </div>
 
-      {project && <ProjectResourceSections project={project.metadata} />}
-    </div>
+      {/* Flagship Interactive New Tab Sandbox */}
+      <GTabClient />
+
+      {/* Architecture, Wiki Reader & System Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-border">
+
+        {/* Main Content Tabs (Overview, Wiki Docs, Gallery, Downloads) */}
+        <div className="lg:col-span-8 order-2 lg:order-1">
+          <ProjectViewTabs
+            metadata={metadata}
+            overviewHtml={contentHtml}
+            wikiDocs={parsedWikiDocs}
+            accentColor={cat.accent}
+            accentBg={cat.accentBg}
+          />
+        </div>
+
+        {/* Project Telemetry Sidebar */}
+        <ProjectSidebar
+          metadata={metadata}
+          catAccent={cat.accent}
+          statusClass={sc}
+          related={related}
+        />
+      </div>
+
+    </article>
   );
 }
