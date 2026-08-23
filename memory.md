@@ -73,11 +73,20 @@
   - `public/projects/AG-Manager.png` silindi.
   - `project_inventory.json`, `project_inventory_refined.json` ve `project_paths.json` dosyalarından kaldırıldı.
 - **Hata Giderme**: Windows dosya yolu (spaces/ampersand) ve port çakışmaları için `runner.js` optimize edildi.
+- **Amiral Gemisi İnteraktif Vitrinleri & Simülatörleri (2026-08-23):**
+  - **UniControl (`UniControlClient.tsx`):** Brigade BS-9000 radar tarayıcısı, engel mesafesi (0.5m-15m) ve açı kaydırıcısı, tehlike bölgesi sınıflandırması (Zone 1-4), 24V opto-izole I/O anahtarları ve canlı CAN 2.0B / FD veri akışı simülatörü entegre edildi.
+  - **R-AI-OS (`RaiosClient.tsx`):** Rust Tokio çekirdeği için canlı interaktif CLI terminal emülatörü (`raios reflect`, `raios locate`, `raios pre-flight`, `raios ocak overview`) ve alt sistem matrisi eklendi.
+  - **GTab (`GTabClient.tsx`):** Tarayıcı içi interaktif yeni sekme çalışma alanı simülatörü (Google Tasks ekleme/tamamlama, yerel IndexedDB not defteri, anlık saat, arama motoru ve tema değiştirici) ve doğrudan Chrome Web Store entegrasyonu tamamlandı.
+  - **GT-Launcher:** Waydroid üzerinden canlı Android konteynerinde yatay Drive Mode HUD kaydı alındı ve optimize 317KB GIF olarak yerleştirildi. Google Play Store bağlantısı aktif edildi.
+- **Spotlight Hızlı Komut Paleti (`Cmd+K` / `Ctrl+K`) (2026-08-23):** Sitedeki tüm 41 projeyi, sayfa hub'larını ve teknoloji etiketlerini Türkçe ve İngilizce anında listeleyen, klavye yön tuşlarıyla gezilebilen Apple Spotlight tarzı arama motoru (`SpotlightCommandPalette.tsx`) geliştirildi.
+- **Dinamik Sosyal Medya Önizlemesi & JSON-LD Yapılandırılmış Veri (2026-08-23):**
+  - `@vercel/og` tabanlı dinamik sosyal medya kart üreticisi (`src/app/opengraph-image.tsx`) eklendi.
+  - Google arama motoru zengin sonuçları için Schema.org `Person` ve `WebSite` JSON-LD yapılandırılmış verisi `src/app/layout.tsx`'e entegre edildi.
+- **Tam SSG Derleme & 99/99 Rota Doğrulaması:** 99 statik sayfanın tamamı 0 hata ile derlendi ve GitHub `main` dalına aktarıldı.
 ### Yapacakları
-- Final portfolyo UI cilalaması (polishing).
-- i18n (TR/EN) geçişlerinin son kontrolü.
+- —
 ### Notlar
-- Projelerin %80'inden fazlası artık "Visual Complete" durumunda.
+- Sitedeki tüm amiral gemisi sayfaları ve arama altyapısı eksiksiz canlıya hazır.
 
 ## Plan
 ### Tamamlananlar
@@ -87,10 +96,12 @@
 - [x] 41 projenin metadata ve içerik importu
 - [x] Görselleştirme Pipeline'ı (34+ Görsel eklendi)
 - [x] TR/EN dil desteği ve Dark Mod
-- [x] SEO (Sitemap, Robots, OG tags)
+- [x] SEO (Sitemap, Robots, OG tags, Schema JSON-LD)
 - [x] Crucix ve AG-Manager projelerinin temizlenmesi
-- [x] GT-Launcher v4.1.5 Release
-- [x] GT-Launcher v4.2.15 Release
+- [x] GT-Launcher v4.1.5 & v4.2.15 Release + Yatay Canlı Drive Mode GIF
+- [x] Amiral Gemisi İnteraktif Simülatörleri (UniControl, R-AI-OS, GTab, GT-Launcher)
+- [x] Spotlight Cmd+K Evrensel Arama Sistemi
+
 
 ### Devam Edenler
 - [ ] Dil desteği ince ayarları
