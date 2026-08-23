@@ -15,14 +15,14 @@ export default async function RAIOSPage() {
   const techStack = project?.metadata.techStack ?? DEFAULT_STACK;
 
   return (
-    <div className="pb-24">
+    <div className="pb-24 space-y-12">
       <RaiosClient techStack={techStack} />
 
-      {/*  DYNAMIC PROJECT DETAILS  */}
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16">
+      {/* DYNAMIC PROJECT DETAILS */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="apple-card p-6 sm:p-10">
           <div
-            className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red prose-code:text-lcars-orange [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:bg-black/40 [&_pre]:border [&_pre]:border-border [&_pre]:p-4"
+            className="prose max-w-none"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
