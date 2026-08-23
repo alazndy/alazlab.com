@@ -81,11 +81,14 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <article className="max-w-7xl mx-auto pb-24 px-2 sm:px-4 space-y-4">
 
-      {/* Back */}
-      <div className="py-4">
-        <Link href={`/${lang}`} className="inline-flex items-center gap-1.5 text-xs font-mono text-white/25 hover:text-white/60 transition-colors group">
+      {/* Back Button */}
+      <div className="py-3">
+        <Link
+          href={`/${lang}`}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/60 hover:bg-muted border border-border text-xs font-medium text-muted-foreground hover:text-foreground transition-all group"
+        >
           <ChevronLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-          {isEn ? 'All Projects' : 'Tüm Projeler'}
+          {isEn ? 'Back to All Projects' : 'Tüm Projelere Dön'}
         </Link>
       </div>
 
@@ -114,7 +117,7 @@ export default async function ProjectPage({ params }: Props) {
       {/* Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
-        {/*  MAIN CONTENT (TABS: Overview, Wiki Reader, Media, Resources)  */}
+        {/* MAIN CONTENT (TABS: Overview, Wiki Reader, Media, Resources) */}
         <div className="lg:col-span-8 order-2 lg:order-1">
           <ProjectViewTabs
             metadata={metadata}
@@ -125,7 +128,7 @@ export default async function ProjectPage({ params }: Props) {
           />
         </div>
 
-        {/*  SIDEBAR  */}
+        {/* SIDEBAR */}
         <ProjectSidebar
           metadata={metadata}
           catAccent={cat.accent}

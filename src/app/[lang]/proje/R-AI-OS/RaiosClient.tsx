@@ -68,7 +68,7 @@ function ProgressRing({ percent, size = 56 }: { percent: number; size?: number }
 
 export function RaiosClient({ techStack }: { techStack: string[] }) {
  return (
- <div className="min-h-screen bg-black">
+ <div className="min-h-screen bg-background text-foreground">
 
  {/* ── HERO ── */}
  <div className="relative pt-20 pb-16 px-6 overflow-hidden">

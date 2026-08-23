@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Terminal, Command, X, FileText, ChevronRight } from 'lucide-react';
+import { Search, Command, X, FileText, ChevronRight, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18n } from '@/lib/i18n';
 
-// We'll pass projects as props or fetch them
 interface CommandPaletteProps {
   projects: { title: string; slug: string; category: string }[];
 }
@@ -15,7 +14,8 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const router = useRouter();
-  const { t, localizePath } = useI18n();
+  const { t, localizePath, lang } = useI18n();
+  const isEn = lang === 'en';
 
   const toggle = useCallback(() => setIsOpen((prev) => !isOpen), []);
 
@@ -49,65 +49,83 @@ export function CommandPalette({ projects }: CommandPaletteProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-background/80 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-background/60 backdrop-blur-xl">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -20 }}
+            initial={{ opacity: 0, scale: 0.98, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            className="w-full max-w-2xl bg-card rounded-2xl border border-lcars-cyan/30 overflow-hidden shadow-2xl"
+            exit={{ opacity: 0, scale: 0.98, y: -10 }}
+            transition={{ duration: 0.2, ease: [0.25, 1, 0.5, 1] }}
+            className="w-full max-w-2xl bg-card rounded-3xl border border-border overflow-hidden shadow-2xl"
           >
-            <div className="p-6 border-b border-border flex items-center gap-4">
-              <Terminal className="w-5 h-5 text-lcars-cyan animate-pulse" />
+            {/* Spotlight Search Header */}
+            <div className="p-5 border-b border-border flex items-center gap-3.5 bg-muted/40">
+              <Search className="w-5 h-5 text-apple-blue shrink-0" />
               <input
                 autoFocus
                 placeholder={t('cmd.placeholder')}
-                className="flex-1 bg-transparent border-none outline-none text-sm font-mono tracking-widest text-foreground placeholder:text-muted-foreground/40 uppercase"
+                className="flex-1 bg-transparent border-none outline-none text-base font-medium text-foreground placeholder:text-muted-foreground"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <div className="flex items-center gap-2 px-2 py-1 bg-foreground/5 rounded text-[10px] font-mono text-muted-foreground border border-border">
-                <Command className="w-3 h-3" />
-                <span>K</span>
-              </div>
+              {query && (
+                <button
+                  onClick={() => setQuery('')}
+                  className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+              <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-1 bg-card rounded-lg text-xs font-mono text-muted-foreground border border-border shadow-2xs">
+                ESC
+              </kbd>
             </div>
 
-            <div className="max-h-[60vh] overflow-y-auto p-2 custom-scrollbar">
+            {/* Results List */}
+            <div className="max-h-[60vh] overflow-y-auto p-3 custom-scrollbar space-y-1">
               {filteredProjects.length > 0 ? (
-                <div className="space-y-1">
-                  <div className="px-4 py-2 text-[10px] font-black font-mono text-muted-foreground uppercase tracking-[0.2em]">{t('cmd.availableModules')}</div>
+                <div>
+                  <div className="px-3 py-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                    {t('cmd.availableModules')} ({filteredProjects.length})
+                  </div>
                   {filteredProjects.map((p) => (
                     <button
                       key={p.slug}
                       onClick={() => navigate(p.slug === 'GTab' ? localizePath('/gtab') : localizePath(`/proje/${p.slug}`))}
-                      className="w-full flex items-center justify-between p-4 rounded-xl hover:bg-foreground/5 transition-all group text-left border border-transparent hover:border-border"
+                      className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-muted/80 transition-all group text-left border border-transparent hover:border-border"
                     >
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-lg bg-lcars-cyan/10 flex items-center justify-center border border-lcars-cyan/20 group-hover:bg-lcars-cyan/20 transition-all">
-                           <FileText className="w-4 h-4 text-lcars-cyan" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-apple-blue shrink-0">
+                          <FileText className="w-4 h-4" />
                         </div>
-                        <div>
-                          <div className="text-sm font-black text-foreground group-hover:text-lcars-cyan transition-colors uppercase tracking-tight">{p.title}</div>
-                          <div className="text-[10px] font-mono text-muted-foreground uppercase">{p.category}</div>
+                        <div className="min-w-0">
+                          <div className="text-sm font-bold text-foreground group-hover:text-apple-blue transition-colors truncate">
+                            {p.title}
+                          </div>
+                          <div className="text-xs text-muted-foreground truncate">
+                            {p.category}
+                          </div>
                         </div>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-muted-foreground/30 group-hover:text-foreground transition-all" />
+                      <ArrowRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0" />
                     </button>
                   ))}
                 </div>
               ) : (
-                <div className="p-12 text-center space-y-4">
-                   <X className="w-12 h-12 text-lcars-red/40 mx-auto" />
-                   <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">No_System_Match_Found</p>
+                <div className="p-12 text-center space-y-2">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {isEn ? 'No matching modules found.' : 'Eşleşen modül bulunamadı.'}
+                  </p>
                 </div>
               )}
             </div>
 
-            <div className="p-4 bg-foreground/[0.02] border-t border-border flex items-center justify-between text-[9px] font-mono text-muted-foreground uppercase tracking-widest">
-               <div className="flex gap-4">
-                  <span>[ENTER] Select</span>
-                  <span>[ESC] Close</span>
-               </div>
-               <div className="text-lcars-cyan">Kernel_Status: Secure</div>
+            {/* Footer */}
+            <div className="px-5 py-3 bg-muted/30 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
+              <div className="flex items-center gap-4">
+                <span><strong className="text-foreground">↑↓</strong> {isEn ? 'Navigate' : 'Gezin'}</span>
+                <span><strong className="text-foreground">↵</strong> {isEn ? 'Select' : 'Seç'}</span>
+              </div>
+              <span className="apple-pill text-[10px] font-mono">SPOTLIGHT</span>
             </div>
           </motion.div>
         </div>

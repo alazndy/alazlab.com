@@ -9,129 +9,101 @@ export async function generateStaticParams() {
   return [{ lang: 'tr' }, { lang: 'en' }];
 }
 
-export default async function TekUIPage() {
+export default async function TekUIPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const isEn = lang === 'en';
   const project = getProjectBySlug('tek-ui');
   const contentHtml = await marked.parse(project?.content || '');
 
   return (
-    <div className="min-h-screen pb-24 animate-in fade-in duration-1000 bg-foreground/5">
+    <div className="min-h-screen pb-24 animate-in fade-in duration-700 space-y-12">
 
-      {/*  HERO  */}
-      <div className="relative pt-20 pb-16 px-6">
-        <div className="max-w-5xl mx-auto space-y-8">
-          <Link href="/#projects" className="inline-flex items-center gap-2 text-foreground/50 hover:text-foreground transition-colors font-mono tracking-widest uppercase text-xs">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Hub
+      {/* HERO */}
+      <div className="relative pt-12 pb-12 px-4 sm:px-6 overflow-hidden apple-card">
+        <div className="absolute top-1/3 right-1/3 w-[500px] h-[500px] bg-orange-500/10 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto relative z-10 space-y-6 text-center flex flex-col items-center">
+          <Link href={`/${lang}`} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/60 hover:bg-muted border border-border text-xs font-mono tracking-wider uppercase text-muted-foreground hover:text-foreground transition-all">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            {isEn ? 'Back to Hub' : 'Ana Sayfaya Dön'}
           </Link>
 
-          <div className="flex flex-col md:flex-row gap-12 items-start">
-            <div className="space-y-6 flex-1">
-              <div className="inline-flex items-center gap-3 px-4 py-2 bg-foreground border border-border rounded-full font-mono text-xs uppercase tracking-widest text-black font-bold">
-                <Palette className="w-4 h-4" />
-                UI Infrastructure
-              </div>
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full font-mono text-xs uppercase tracking-widest text-apple-orange font-bold">
+              <Palette className="w-3.5 h-3.5" />
+              UI Infrastructure
+            </div>
+
+            <h1 className="text-5xl sm:text-7xl font-extrabold uppercase tracking-tight text-foreground">tek-ui</h1>
+            
+            <p className="text-base sm:text-xl text-muted-foreground font-normal leading-relaxed max-w-2xl">
+              {isEn 
+                ? 'Design system and accessible React/Tailwind component library engineered for modular applications.'
+                : 'T-Ecosystem için kurumsal tasarım sistemi ve component kütüphanesi. Radix UI primitives ve Tailwind CSS mimarisi.'}
+            </p>
+          </div>
 
           {/* Project Cover Image */}
           {project?.metadata?.image && (
-            <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
+            <div className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden border border-border mt-6 shadow-xl">
               <img
                 src={project.metadata.image}
                 alt={project.metadata.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
             </div>
           )}
-
-          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-foreground">TEK-UI</h1>
-              <p className="text-xl text-foreground/60 font-light leading-relaxed">
-                T-Ecosystem&apos;in kurumsal tasarım sistemi ve component kütüphanesi. Radix UI primitives ve Tailwind CSS v4 mimarisi.
-              </p>
-            </div>
-
-            {/* Visualizer Block */}
-            <div className="w-full md:w-72 aspect-square glass rounded-3xl border-border p-6 flex flex-col justify-between shadow-2xl bg-black/40">
-               <div className="flex gap-2">
-                 <div className="w-3 h-3 rounded-full bg-lcars-red" />
-                 <div className="w-3 h-3 rounded-full bg-lcars-orange" />
-                 <div className="w-3 h-3 rounded-full bg-lcars-green" />
-               </div>
-               <div className="space-y-2">
-                 <div className="h-2 w-full bg-foreground/10 rounded-full" />
-                 <div className="h-2 w-3/4 bg-foreground/10 rounded-full" />
-                 <div className="h-2 w-1/2 bg-foreground/10 rounded-full" />
-               </div>
-               <div className="w-full py-3 bg-foreground text-black text-center text-xs font-black uppercase rounded-lg">
-                 Primary Action
-               </div>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 space-y-12 relative z-10 mt-12">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-12 relative z-10">
 
-        {/*  CORE PILLARS  */}
+        {/* PILLARS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="glass p-8 rounded-[24px] border-border space-y-4">
-            <Layers className="w-8 h-8 text-foreground" />
-            <h3 className="font-bold text-foreground uppercase tracking-tight">Radix Primitives</h3>
-            <p className="text-sm text-foreground/50 leading-relaxed">
-              Tüm bileşenler erişilebilirlik (a11y) standartlarına tam uyumlu, headless Radix UI temelleri üzerine inşa edildi.
+          <div className="apple-card p-6 space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-apple-orange">
+              <Component className="w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground uppercase">{isEn ? 'Component Library' : 'Bileşen Kütüphanesi'}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Accessible primitives with zero runtime overhead, strictly typed TypeScript contracts, and responsive tokens.
             </p>
           </div>
-          <div className="glass p-8 rounded-[24px] border-border space-y-4">
-            <Terminal className="w-8 h-8 text-foreground" />
-            <h3 className="font-bold text-foreground uppercase tracking-tight">Tailwind CSS v4</h3>
-            <p className="text-sm text-foreground/50 leading-relaxed">
-              shadcn/ui yaklaşımıyla, stil kodlarının projeye import edilmesi yerine doğrudan konfigüre edilebilir utilities (cn) mimarisi.
+
+          <div className="apple-card p-6 space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-apple-blue">
+              <Palette className="w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground uppercase">{isEn ? 'Design Tokens' : 'Tasarım Tokenları'}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Unified colors, radii, elevation materials, and typography curves synchronizing across dark and light palettes.
             </p>
           </div>
-          <div className="glass p-8 rounded-[24px] border-border space-y-4">
-            <Component className="w-8 h-8 text-foreground" />
-            <h3 className="font-bold text-foreground uppercase tracking-tight">Glassmorphism</h3>
-            <p className="text-sm text-foreground/50 leading-relaxed">
-              T-Ecosystem&apos;in imza niteliğindeki &quot;backdrop-blur&quot; ve yarı saydam glass yüzey dokusu.
+
+          <div className="apple-card p-6 space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-apple-purple">
+              <Box className="w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground uppercase">{isEn ? 'NPM Ecosystem' : 'NPM Paketi'}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Tree-shakeable exports published for internal apps, CLI tooling, and web dashboards.
             </p>
           </div>
         </div>
 
-        {/*  TOKENS  */}
-        <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-8">
-          <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
-            <Box className="w-6 h-6" />
-            Design Tokens
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { name: 'Primary', hex: 'hsl(151 86% 39%)', color: 'bg-[hsl(151,86%,39%)]' },
-              { name: 'Background', hex: '#000000', color: 'bg-black border border-border' },
-              { name: 'Glass', hex: 'rgba(255,255,255,0.05)', color: 'bg-foreground/5 border border-border backdrop-blur-md' },
-              { name: 'Text', hex: 'Geist Sans', color: 'bg-foreground text-black' },
-            ].map(token => (
-              <div key={token.name} className="space-y-3">
-                <div className={`w-full h-24 rounded-2xl ${token.color} flex items-center justify-center`}>
-                  {token.name === 'Text' && <span className="font-black text-3xl">Aa</span>}
-                </div>
-                <div>
-                  <div className="font-bold text-foreground text-sm">{token.name}</div>
-                  <div className="font-mono text-[10px] text-foreground/40">{token.hex}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-
-        {/*  DYNAMIC PROJECT DETAILS  */}
-        <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16 max-w-5xl mx-auto px-6 relative z-10 mb-16">
+        {/* DYNAMIC MARKDOWN CONTENT */}
+        <div className="apple-card p-6 sm:p-10">
           <div
-            className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red"
+            className="prose max-w-none"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+
         {project && <ProjectResourceSections project={project.metadata} />}
+
       </div>
+
     </div>
   );
 }

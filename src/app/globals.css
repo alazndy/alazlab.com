@@ -4,15 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── APPLE HIG & LIQUID GLASS DESIGN TOKENS ────────────────────────────────── */
+/* ── APPLE HIG & LIQUID GLASS 2026 DESIGN TOKENS ──────────────────────────── */
 :root {
-  /* Apple Brand Accent */
+  /* Apple Brand & System Accents */
   --accent-primary: #ff9500;
   --accent-primary-dim: #d97706;
 
-  /* Apple System Colors (Light Mode) */
   --apple-blue: #0071e3;
-  --apple-cyan: #32ade6;
+  --apple-cyan: #0098d6;
   --apple-orange: #ff9500;
   --apple-green: #34c759;
   --apple-purple: #af52de;
@@ -20,38 +19,38 @@
   --apple-red: #ff3b30;
   --apple-yellow: #ffcc00;
 
-  /* Light mode Canvas & Surfaces */
-  --background: #f5f5f7;
+  /* Light Mode (Porcelain Canvas & Pure White Floating Cards) */
+  --background: #fbfbfd;
   --foreground: #1d1d1f;
-  --border: rgba(0, 0, 0, 0.08);
-  --muted: #e8e8ed;
-  --muted-foreground: #86868b;
+  --border: rgba(0, 0, 0, 0.07);
+  --muted: #f0f0f4;
+  --muted-foreground: #6e6e73;
   --card: #ffffff;
   --card-foreground: #1d1d1f;
   --primary: #1d1d1f;
   --primary-foreground: #ffffff;
-  --secondary: #e5e5ea;
+  --secondary: #f2f2f7;
   --secondary-foreground: #1d1d1f;
-  --accent: #f0f0f2;
+  --accent: #f2f2f7;
   --accent-foreground: #1d1d1f;
   --destructive: #ff3b30;
   --popover: #ffffff;
   --popover-foreground: #1d1d1f;
-  --input: rgba(0, 0, 0, 0.06);
+  --input: rgba(0, 0, 0, 0.05);
   --ring: #0071e3;
   --radius: 1rem;
 
   /* Sidebar (macOS Light style) */
-  --sidebar: #ebebed;
+  --sidebar: #f5f5f7;
   --sidebar-foreground: #1d1d1f;
   --sidebar-primary: #0071e3;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(0, 0, 0, 0.05);
+  --sidebar-accent: rgba(0, 0, 0, 0.04);
   --sidebar-accent-foreground: #1d1d1f;
-  --sidebar-border: rgba(0, 0, 0, 0.08);
+  --sidebar-border: rgba(0, 0, 0, 0.07);
   --sidebar-ring: #0071e3;
 
-  /* LCARS compatibility mapped to Apple HIG */
+  /* Compatibility Mapping */
   --lcars-orange: #ff9500;
   --lcars-cyan: #0071e3;
   --lcars-green: #34c759;
@@ -60,9 +59,8 @@
   --lcars-red: #ff3b30;
 }
 
-/* Dark mode (OLED Pro Apple Aesthetic) */
+/* Dark Mode (Obsidian OLED Canvas & Deep Glass Floating Cards) */
 .dark {
-  /* Apple System Colors (Dark Mode) */
   --apple-blue: #2997ff;
   --apple-cyan: #64d2ff;
   --apple-orange: #ff9f0a;
@@ -72,33 +70,33 @@
   --apple-red: #ff453a;
   --apple-yellow: #ffd60a;
 
-  --background: #000000;
+  --background: #050507;
   --foreground: #f5f5f7;
-  --border: rgba(255, 255, 255, 0.1);
-  --muted: #1c1c1e;
+  --border: rgba(255, 255, 255, 0.08);
+  --muted: #141416;
   --muted-foreground: #86868b;
-  --card: #161618;
+  --card: #0e0e11;
   --card-foreground: #f5f5f7;
   --primary: #f5f5f7;
   --primary-foreground: #000000;
-  --secondary: #2c2c2e;
+  --secondary: #1a1a1e;
   --secondary-foreground: #f5f5f7;
-  --accent: #2c2c2e;
+  --accent: #1a1a1e;
   --accent-foreground: #f5f5f7;
   --destructive: #ff453a;
-  --popover: #1c1c1e;
+  --popover: #121214;
   --popover-foreground: #f5f5f7;
-  --input: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.08);
   --ring: #2997ff;
 
   /* Sidebar (macOS Dark style) */
-  --sidebar: #121214;
+  --sidebar: #09090b;
   --sidebar-foreground: #f5f5f7;
   --sidebar-primary: #2997ff;
   --sidebar-primary-foreground: #000000;
-  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
   --sidebar-accent-foreground: #f5f5f7;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-border: rgba(255, 255, 255, 0.07);
   --sidebar-ring: #2997ff;
 
   --lcars-orange: #ff9f0a;
@@ -168,7 +166,7 @@
   --radius-3xl: 1.75rem;
 }
 
-/* ── BASE & APPLE HIG GEOMETRY ───────────────────────────────────────────── */
+/* ── BASE & GLOBAL GEOMETRY ──────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -190,10 +188,10 @@
 /* ── APPLE LIQUID GLASS & MATERIAL SYSTEM ────────────────────────────────── */
 /* Liquid Glass Floating Navigation Layer */
 .apple-liquid-glass {
-  background: color-mix(in srgb, var(--background) 72%, transparent);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--background) 78%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border);
 }
 
 /* Apple Card (Content Layer) */
@@ -201,17 +199,17 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 1.5rem;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.28s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease;
 }
 .apple-card:hover {
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.07), 0 6px 14px -2px rgba(0, 0, 0, 0.03);
 }
 .dark .apple-card {
-  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.5);
 }
 .dark .apple-card:hover {
-  box-shadow: 0 12px 40px -4px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 16px 48px -4px rgba(0, 0, 0, 0.75);
 }
 
 /* Apple Pill Badge */
@@ -296,7 +294,7 @@
 }
 
 /* ── SCROLLBAR ───────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--foreground) 15%, transparent); border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--foreground) 30%, transparent); }

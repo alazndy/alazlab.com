@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, LineChart, Cpu, Zap, ActivitySquare, Server, BrainCircuit } from 'lucide-react';
+import { ArrowLeft, LineChart, Cpu, Zap, Activity, Server, BrainCircuit } from 'lucide-react';
 import { getProjectBySlug } from '@/lib/markdown';
 import { marked } from 'marked';
 import { ProjectResourceSections } from '@/components/projects/ProjectResourceSections';
@@ -9,140 +9,101 @@ export async function generateStaticParams() {
   return [{ lang: 'tr' }, { lang: 'en' }];
 }
 
-export default async function AITraderPage() {
+export default async function AITraderPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const isEn = lang === 'en';
   const project = getProjectBySlug('AI_Trader');
   const contentHtml = await marked.parse(project?.content || '');
 
   return (
-    <div className="min-h-screen pb-24 animate-in fade-in duration-1000 bg-black">
+    <div className="min-h-screen pb-24 animate-in fade-in duration-700 space-y-12">
 
-      {/*  HERO  */}
-      <div className="relative pt-20 pb-16 px-6 overflow-hidden">
-        {/* Abstract Grid & Trading Lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      {/* HERO */}
+      <div className="relative pt-12 pb-12 px-4 sm:px-6 overflow-hidden apple-card">
+        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-        <svg className="absolute bottom-0 left-0 w-full h-[60%] opacity-20 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 1000 300">
-          <path d="M0 300 L100 250 L200 280 L300 150 L400 180 L500 50 L600 120 L700 80 L800 160 L900 40 L1000 100 L1000 300 Z" fill="url(#gradient-chart)" />
-          <path d="M0 300 L100 250 L200 280 L300 150 L400 180 L500 50 L600 120 L700 80 L800 160 L900 40 L1000 100" fill="none" stroke="#00ccff" strokeWidth="2" />
-          <defs>
-            <linearGradient id="gradient-chart" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#00ccff" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#00ccff" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-lcars-cyan/10 blur-[120px] rounded-full pointer-events-none" />
-
-        <div className="max-w-5xl mx-auto relative z-10 space-y-8">
-          <Link href="/#projects" className="inline-flex items-center gap-2 text-foreground/50 hover:text-lcars-cyan transition-colors font-mono tracking-widest uppercase text-xs">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Hub
+        <div className="max-w-4xl mx-auto relative z-10 space-y-6 text-center flex flex-col items-center">
+          <Link href={`/${lang}`} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/60 hover:bg-muted border border-border text-xs font-mono tracking-wider uppercase text-muted-foreground hover:text-foreground transition-all">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            {isEn ? 'Back to Hub' : 'Ana Sayfaya Dön'}
           </Link>
 
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-foreground/5 border border-border rounded-full font-mono text-xs uppercase tracking-widest text-lcars-cyan">
-              <BrainCircuit className="w-4 h-4" />
-              Algorithmic Finance
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full font-mono text-xs uppercase tracking-widest text-apple-purple font-bold">
+              <BrainCircuit className="w-3.5 h-3.5" />
+              Algorithmic Intelligence
             </div>
+
+            <h1 className="text-5xl sm:text-7xl font-extrabold uppercase tracking-tight text-foreground">AI Trader</h1>
+            
+            <p className="text-base sm:text-xl text-muted-foreground font-normal leading-relaxed max-w-2xl">
+              {isEn 
+                ? 'High-frequency algorithmic trading pipeline and quantitative risk analysis engine powered by machine learning models.'
+                : 'Yapay zeka modelleri ve kantitatif risk analiz algoritmalarıyla çalışan yüksek frekanslı otomatik alım-satım boru hattı.'}
+            </p>
+          </div>
 
           {/* Project Cover Image */}
           {project?.metadata?.image && (
-            <div className="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden border border-border mb-12 group">
+            <div className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden border border-border mt-6 shadow-xl">
               <img
                 src={project.metadata.image}
                 alt={project.metadata.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
             </div>
           )}
-
-          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-foreground">AI Trader</h1>
-            <p className="text-xl md:text-2xl text-foreground/60 font-light max-w-2xl leading-relaxed">
-              Yapay zeka ve teknik analiz göstergelerini birleştiren araştırma ve piyasa analiz platformu. FastAPI ve Next.js mimarisiyle paper-trading ve backtest süreçlerini yönetir.
-            </p>
-          </div>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 space-y-16 relative z-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-12 relative z-10">
 
-        {/*  CORE ENGINE  */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
-                <span className="w-2 h-6 bg-lcars-green rounded-full" />
-                Data Ingestion
-              </h2>
-              <Server className="w-6 h-6 text-lcars-green" />
+        {/* PILLARS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="apple-card p-6 space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-apple-purple">
+              <LineChart className="w-5 h-5" />
             </div>
-            <p className="text-foreground/60 text-sm leading-relaxed">
-              Piyasa verilerini WebSocket üzerinden asenkron olarak toplayan, OHLCV verisini normalize eden ve time-series optimize edilmiş PostgreSQL & Redis mimarisinde depolayan gerçek zamanlı veri akışı.
+            <h3 className="text-lg font-bold text-foreground uppercase">{isEn ? 'Signal Engine' : 'Sinyal Motoru'}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Real-time market order-book analysis, multi-timeframe RSI/EMA cross-signals, and automated risk parameter calculations.
             </p>
           </div>
 
-          <div className="glass p-8 md:p-12 rounded-[32px] border-border space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
-                <span className="w-2 h-6 bg-lcars-orange rounded-full" />
-                Strategy Engine
-              </h2>
-              <ActivitySquare className="w-6 h-6 text-lcars-orange" />
+          <div className="apple-card p-6 space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-apple-blue">
+              <Activity className="w-5 h-5" />
             </div>
-            <p className="text-foreground/60 text-sm leading-relaxed">
-              Python ve TensorFlow tabanlı izolasyonlu mantık katmanı. LSTM ve Transformer modelleri kullanılarak sinyal tespiti, konfigüre edilebilir risk yönetimi ve backtesting altyapısı.
+            <h3 className="text-lg font-bold text-foreground uppercase">{isEn ? 'Risk Management' : 'Risk Yönetimi'}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Dynamic stop-loss calibration, portfolio drawdown limits, and deterministic execution guards to preserve capital integrity.
+            </p>
+          </div>
+
+          <div className="apple-card p-6 space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-apple-green">
+              <Server className="w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground uppercase">{isEn ? 'Async Pipeline' : 'Asenkron Pipeline'}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Fast WebSocket streams, sub-millisecond tick parsing, and distributed backtesting infrastructure.
             </p>
           </div>
         </div>
 
-        {/*  EXECUTION & TECH STACK  */}
-        <div className="glass rounded-[32px] border-border p-8 md:p-12 space-y-8 bg-foreground/5">
-          <div className="flex flex-col md:flex-row gap-8 items-center justify-between border-b border-border pb-8">
-            <div className="space-y-4 max-w-lg">
-              <h2 className="text-2xl font-black text-foreground uppercase tracking-tight flex items-center gap-3">
-                <Zap className="w-6 h-6 text-lcars-cyan" />
-                Paper-Trading & Backtest Engine
-              </h2>
-              <p className="text-foreground/50 text-sm leading-relaxed">
-                Tarihsel veriler üzerinde strateji testleri ve paper-trading simülasyonları. Risk kontrolü ve sinyal doğruluğunu analiz eden deneysel mimari.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-black/40 p-4 rounded-xl border border-border flex flex-col items-center">
-                <span className="text-lcars-cyan font-mono font-bold">Paper Trade</span>
-                <span className="text-xs text-foreground/40 uppercase mt-1">Simulated</span>
-              </div>
-              <div className="bg-black/40 p-4 rounded-xl border border-border flex flex-col items-center">
-                <span className="text-lcars-orange font-mono font-bold">Backtest</span>
-                <span className="text-xs text-foreground/40 uppercase mt-1">Signals</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="text-[10px] font-mono text-foreground/30 uppercase tracking-widest">Technology Stack</div>
-            <div className="flex flex-wrap gap-2">
-              {['Python', 'FastAPI', 'React 19', 'TypeScript', 'TensorFlow', 'PostgreSQL', 'Redis', 'WebSocket', 'Docker'].map(tech => (
-                <span key={tech} className="px-4 py-2 bg-black border border-border rounded-lg text-xs font-mono text-foreground/70">
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-
-        {/*  DYNAMIC PROJECT DETAILS  */}
-        <div className="glass p-8 md:p-12 rounded-[32px] border-border mt-16 max-w-5xl mx-auto px-6 relative z-10 mb-16">
+        {/* DYNAMIC MARKDOWN CONTENT */}
+        <div className="apple-card p-6 sm:p-10">
           <div
-            className="prose prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-foreground/60 prose-li:text-foreground/60 prose-strong:text-foreground/90 prose-a:text-lcars-red"
+            className="prose max-w-none"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
+
         {project && <ProjectResourceSections project={project.metadata} />}
+
       </div>
+
     </div>
   );
 }
