@@ -16,48 +16,47 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
   const labProjects = projects.filter(p => p.area === 'lab');
 
   return (
-    <section className="space-y-4 pt-2">
-      <div className="flex items-center gap-3">
-        <h2 className="text-xs font-bold font-mono uppercase tracking-widest text-muted-foreground">
-          {isEn ? 'CORE FOCUS AREAS' : 'ANA ODAK ALANLARI'}
+    <section className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+          {isEn ? 'Two Development Tracks' : 'İki Ana Çalışma Alanı'}
         </h2>
-        <div className="flex-1 h-px bg-border/60" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Mühendislik Kapısı */}
         <Link
           href={localizePath('/muhendislik')}
-          className="apple-card p-7 sm:p-9 flex flex-col justify-between space-y-6 group"
+          className="apple-card p-6 sm:p-8 flex flex-col justify-between space-y-6 group"
         >
-          <div className="space-y-5">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-apple-orange group-hover:scale-105 transition-transform">
-                <Wrench className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-apple-orange group-hover:scale-105 transition-transform">
+                <Wrench className="w-5 h-5" />
               </div>
-              <span className="apple-pill border-orange-500/20 bg-orange-500/10 text-apple-orange font-mono">
+              <span className="text-xs font-mono text-muted-foreground bg-muted px-2.5 py-1 rounded-md border border-border">
                 {muhendislikProjects.length} {t('stats.projects')}
               </span>
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground group-hover:text-apple-orange transition-colors flex items-center gap-2">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground group-hover:text-apple-orange transition-colors flex items-center justify-between">
                 {t('cat.engineering')}
-                <ArrowRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                <ArrowRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-apple-orange" />
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {isEn 
-                  ? 'Hardware-linked embedded systems, CAN-bus radar, and HMI control units deployed in heavy vehicles, mines, and industrial sites at ADC Design.'
+                  ? 'Real-world embedded hardware, automotive CAN-bus radar, isolated 24V I/O units, and HMI dashboards deployed in mining and heavy machinery at ADC Design.'
                   : 'ADC Tasarım bünyesinde, gerçek donanıma bağlı, madenlerde ve ağır vasıtalarda sahada çalışan gömülü sistemler, CAN-bus radar ve HMI kontrol üniteleri.'}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-4 border-t border-border/80">
-            {['UniControl', 'RCPS', 'VCT', 'UCC APP'].map((badge) => (
+          <div className="flex flex-wrap gap-2 pt-3 border-t border-border">
+            {['UniControl V2', 'RCPS', 'VCT 360', 'UCC APP'].map((badge) => (
               <span
                 key={badge}
-                className="apple-pill text-xs font-mono font-medium"
+                className="text-xs font-mono px-2.5 py-1 rounded-md bg-muted text-foreground/80 border border-border/80"
               >
                 {badge}
               </span>
@@ -68,36 +67,36 @@ export function TrackDoors({ projects }: TrackDoorsProps) {
         {/* Lab Kapısı */}
         <Link
           href={localizePath('/lab')}
-          className="apple-card p-7 sm:p-9 flex flex-col justify-between space-y-6 group"
+          className="apple-card p-6 sm:p-8 flex flex-col justify-between space-y-6 group"
         >
-          <div className="space-y-5">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-apple-blue group-hover:scale-105 transition-transform">
-                <Terminal className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-apple-blue group-hover:scale-105 transition-transform">
+                <Terminal className="w-5 h-5" />
               </div>
-              <span className="apple-pill border-blue-500/20 bg-blue-500/10 text-apple-blue font-mono">
+              <span className="text-xs font-mono text-muted-foreground bg-muted px-2.5 py-1 rounded-md border border-border">
                 {labProjects.length} {t('stats.projects')}
               </span>
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground group-hover:text-apple-blue transition-colors flex items-center gap-2">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground group-hover:text-apple-blue transition-colors flex items-center justify-between">
                 {t('cat.lab')}
-                <ArrowRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                <ArrowRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-apple-blue" />
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {isEn
-                  ? 'Autonomous software ecosystem developed with AI agents: Rust kernel, modular Android launcher, design systems, and productivity tools.'
-                  : 'Kişisel zamanda AI ajanlarıyla birlikte geliştirilen otonom yazılım ekosistemi: Rust kernel, Android launcher, npm tasarım sistemi ve üretkenlik araçları.'}
+                  ? 'Independent software engineering: Kotlin / Jetpack Compose Android launcher, Rust CLI runners, Chrome extensions, and component libraries.'
+                  : 'Bağımsız yazılım geliştirme: Kotlin ve Jetpack Compose ile Android başlatıcı, Rust CLI araç motoru, Chrome uzantıları ve bileşen kütüphaneleri.'}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-4 border-t border-border/80">
-            {['R-AI-OS', 'GT-Launcher', 'GT-UI', 'GTab'].map((badge) => (
+          <div className="flex flex-wrap gap-2 pt-3 border-t border-border">
+            {['GT-Launcher', 'R-AI-OS', 'GTab', 'tek-ui'].map((badge) => (
               <span
                 key={badge}
-                className="apple-pill text-xs font-mono font-medium"
+                className="text-xs font-mono px-2.5 py-1 rounded-md bg-muted text-foreground/80 border border-border/80"
               >
                 {badge}
               </span>

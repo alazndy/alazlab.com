@@ -28,7 +28,7 @@ interface ProjectHeroProps {
 
 function BrowserFrame({ image, title }: { image: string; title: string }) {
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-border shadow-2xl bg-card">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-border shadow-lg bg-card">
       {/* macOS window chrome */}
       <div className="flex items-center gap-2 px-4 py-3 bg-muted border-b border-border">
         <div className="flex gap-1.5">
@@ -37,7 +37,7 @@ function BrowserFrame({ image, title }: { image: string; title: string }) {
           <div className="w-3 h-3 rounded-full bg-apple-green/80" />
         </div>
         <div className="flex-1 mx-4 h-6 bg-card rounded-md border border-border flex items-center px-3">
-          <span className="text-[10px] font-mono text-muted-foreground">app.preview — {title}</span>
+          <span className="text-[10px] font-mono text-muted-foreground">{title}</span>
         </div>
       </div>
       <img src={image} alt={title} className="w-full object-cover max-h-[420px]" loading="lazy" />
@@ -48,7 +48,7 @@ function BrowserFrame({ image, title }: { image: string; title: string }) {
 function MobileFrame({ image, title }: { image: string; title: string }) {
   return (
     <div className="flex justify-center">
-      <div className="relative w-64 rounded-[2.5rem] overflow-hidden border-4 border-border shadow-2xl bg-card">
+      <div className="relative w-64 rounded-[2.5rem] overflow-hidden border-4 border-border shadow-xl bg-card">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-muted rounded-b-2xl z-10" />
         <img src={image} alt={title} className="w-full object-cover" loading="lazy" />
       </div>
@@ -72,9 +72,6 @@ export function ProjectHero({
     <header className="relative mb-8">
       <div className="apple-card relative overflow-hidden">
 
-        {/* Ambient backdrop glow */}
-        <div className={cn("absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none opacity-20 blur-3xl", glow)} />
-
         {/* Hero background image with subtle gradient overlay */}
         {hasImage && variant !== 'browser' && variant !== 'mobile' && (
           <div className="absolute inset-0">
@@ -93,20 +90,20 @@ export function ProjectHero({
         )}>
 
           {/* Left: Text content */}
-          <div className="space-y-6">
-            {/* Apple Pills */}
+          <div className="space-y-5">
+            {/* Metadata Tags */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="apple-pill font-mono">
-                <Icon className="w-3 h-3 text-apple-blue" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-muted text-foreground/90 border border-border">
+                <Icon className="w-3.5 h-3.5 text-apple-blue" />
                 {category}
               </span>
-              <span className={cn("inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono border", statusClass)}>
+              <span className={cn("inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono border", statusClass)}>
                 <span className={cn("w-1.5 h-1.5 rounded-full", dot)} />
                 {status}
               </span>
               {date && (
-                <span className="apple-pill text-muted-foreground font-mono">
-                  <Calendar className="w-3 h-3" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono text-muted-foreground bg-muted border border-border">
+                  <Calendar className="w-3.5 h-3.5" />
                   {new Date(date).getFullYear()}
                 </span>
               )}
@@ -120,9 +117,6 @@ export function ProjectHero({
               {title}
             </h1>
 
-            {/* Accent line */}
-            <div className={cn("w-12 h-1 rounded-full", accentBg, isLegacy ? "opacity-30" : "")} />
-
             {/* Summary */}
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl font-normal">
               {summary}
@@ -133,16 +127,16 @@ export function ProjectHero({
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 {download && (
                   <a href={download}
-                    className="relative group/dl overflow-hidden inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all bg-apple-orange text-white hover:opacity-90 active:scale-95 shadow-md shadow-orange-500/20"
+                    className="relative group/dl overflow-hidden inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all bg-apple-orange text-white hover:opacity-90 active:scale-95 shadow-md shadow-orange-500/20"
                   >
-                    <Smartphone className="w-4 h-4 animate-pulse" />
+                    <Smartphone className="w-4 h-4" />
                     <span>{t('project.downloadApk')} {version || ''}</span>
                   </a>
                 )}
                 <div className="flex items-center gap-2.5">
                   {live && (
                     <a href={live} target="_blank" rel="noreferrer"
-                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all text-foreground border border-border hover:bg-muted bg-card shadow-2xs"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all text-foreground border border-border hover:bg-muted bg-card shadow-2xs"
                     >
                       <ExternalLink className="w-3.5 h-3.5 text-apple-blue" />
                       {t('project.liveDemo')}
@@ -150,7 +144,7 @@ export function ProjectHero({
                   )}
                   {github && (
                     <a href={github} target="_blank" rel="noreferrer"
-                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground bg-card hover:bg-muted border border-border transition-all shadow-2xs"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground bg-card hover:bg-muted border border-border transition-all shadow-2xs"
                     >
                       <Code2 className="w-3.5 h-3.5" />
                       {t('project.sourceCode')}

@@ -13,23 +13,23 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: {
-    default: 'Göktuğ Turhan — System Architect & Full-Stack Engineer',
-    template: '%s — Göktuğ Turhan',
+    default: 'Göktuğ Turhan | Embedded Hardware & Software Engineer',
+    template: '%s | Göktuğ Turhan',
   },
-  description: 'Personal portfolio of Göktuğ Turhan — system architect, full-stack engineer, and embedded systems developer. Projects span web apps, AI, security, and automotive hardware.',
-  keywords: ['Göktuğ Turhan', 'system architect', 'full-stack engineer', 'embedded systems', 'ESP32', 'Next.js', 'alazlab', 'portfolio'],
+  description: 'Personal portfolio of Göktuğ Turhan. Embedded hardware, CAN-bus radar systems, Android applications, and developer tools.',
+  keywords: ['Göktuğ Turhan', 'Embedded Systems', 'ESP32', 'STM32', 'CAN-bus', 'Kotlin', 'Rust', 'Next.js', 'alazlab'],
   authors: [{ name: 'Göktuğ Turhan', url: 'https://alazlab.com' }],
   creator: 'Göktuğ Turhan',
   metadataBase: new URL('https://alazlab.com'),
   openGraph: {
     type: 'website', locale: 'en_US', url: 'https://alazlab.com', siteName: 'alazlab.com',
-    title: 'Göktuğ Turhan — System Architect & Full-Stack Engineer',
-    description: 'Personal portfolio of Göktuğ Turhan — system architect, full-stack engineer, and embedded systems developer.',
+    title: 'Göktuğ Turhan | Embedded Hardware & Software Engineer',
+    description: 'Personal portfolio of Göktuğ Turhan. Embedded hardware, CAN-bus radar systems, Android applications, and developer tools.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Göktuğ Turhan — System Architect & Full-Stack Engineer',
-    description: 'Personal portfolio of Göktuğ Turhan — system architect, full-stack engineer, and embedded systems developer.',
+    title: 'Göktuğ Turhan | Embedded Hardware & Software Engineer',
+    description: 'Personal portfolio of Göktuğ Turhan. Embedded hardware, CAN-bus radar systems, Android applications, and developer tools.',
     creator: '@alazndy',
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
