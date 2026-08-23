@@ -57,6 +57,10 @@
   - **Apple Kart & Yüzey Sistemi:** `apple-card` geometrisi, continuous squircle kenarlıklar, yumuşak spring mikro etkileşimleri (`active:scale-95`).
   - **Tipografi & Okunabilirlik:** Apple SF Pro / Geist tabanlı, yüksek kontrastlı hiyerarşik tipografi, net metin ölçekleri.
   - **Tam Aydınlık & OLED Karanlık Mod:** Apple Açık Mod (`#f5f5f7` zemin ve beyaz yüzen kartlar) ve Apple Karanlık Mod (`#000000` OLED zemin ve derin cam kartlar) tam uyumlu.
+- **GT-Launcher İnteraktif Vitrin ve Flagship Sayfası (2026-08-23):** GT-Launcher için (`/proje/GT-Launcher`) özel interaktif bir ürün deneyim sayfası inşa edildi:
+  - **Canlı Cihaz Mockup'ı & 6 Modül Demosu:** 5-Tab Card Builder, LCARS Dinamik Renk Motoru, 2D Izgara Boyutlandırma, Sürüş Modu & OBD Telemetrisi, OmniSearch ve Sistem Turu canlı GIF demoları ve teknik metrikleriyle entegre edildi.
+  - **Doğrudan APK İndirme & GitHub Entegrasyonu:** Tek tıkla `GT-Launcher-v4.2.15.apk` (18.2 MB) indirme ve kaynak kod bağlantısı sağlandı.
+  - **Xcode DocC / 9 Rehberlik Wiki Okuyucusu:** `ARCHITECTURE.md`, `Customization.md`, `Engineering-Guide.md`, `Drive-Mode.md` dahil 9 dokümantasyon makalesi anlık arama ve sayfa içi okuyucu ile sunuldu.
 - **Kapsamlı İngilizce Çeviri Entegrasyonu (.en.md) (2026-08-23):** Sitede yer alan 41 projenin tamamı için (`UniControl`, `GT-Launcher`, `R-AI-OS`, `GTab`, `AI-360-VCT`, `AI_Trader`, `tek-ui`, `ENV-I` vb.) birebir profesyonel İngilizce dokümantasyon dosyaları (`.en.md`) oluşturuldu. `markdown.ts` yükleyicisi, `[lang]` rotasına (`/tr` veya `/en`) göre otomatik olarak ilgili dildeki başlık, özet ve teknik içeriği dinamik yükleyecek şekilde entegre edildi.
 - **Aydınlık & Karanlık Mod Tam Uyumluluk Revizyonu (2026-08-23):** Tüm sitedeki sabit karanlık sınıflar (`bg-black`, `bg-[#050505]`, `text-white`, `prose-invert`) temizlendi ve semantik CSS tokenlarına bağlandı.
   - Açık Mod: Saf porselen zemin (`#fbfbfd`), net beyaz kartlar (`#ffffff`), keskin ve okunabilir grafit tipografi (`#111113` / `#55555c`) ile 7:1+ kontrast oranı sağlandı.
