@@ -27,9 +27,6 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
             <Activity className="w-3.5 h-3.5 text-apple-blue" />
             {isEn ? 'SPECIFICATIONS' : 'SİSTEM ÖZELLİKLERİ'}
           </div>
-          <span className="apple-pill text-[10px] font-mono text-apple-green bg-green-500/10 border-green-500/20">
-            VERIFIED
-          </span>
         </div>
 
         <dl className="space-y-3 text-xs">
@@ -86,7 +83,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
             {metadata.techStack.map(tech => (
               <span
                 key={tech}
-                className="apple-pill text-xs font-mono"
+                className="px-2.5 py-1 rounded-lg text-xs font-mono bg-muted text-foreground/85 border border-border"
               >
                 {tech}
               </span>
@@ -110,7 +107,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
                 className="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-muted/70 transition-all group border border-transparent hover:border-border"
               >
                 {r.image ? (
-                  <div className="w-10 h-10 rounded-xl overflow-hidden border border-border shrink-0 bg-black">
+                  <div className="w-10 h-10 rounded-xl overflow-hidden border border-border shrink-0 bg-muted">
                     <img src={r.image} alt={r.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   </div>
                 ) : (

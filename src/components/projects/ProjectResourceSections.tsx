@@ -41,20 +41,20 @@ function ResourceCard({
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-lcars-cyan/40 hover:bg-foreground/[0.03]"
+      className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-4 transition-all hover:border-apple-blue/40 hover:bg-muted/40 shadow-xs"
     >
-      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-lcars-cyan/30 bg-lcars-cyan/10 text-lcars-cyan">
+      <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-apple-blue group-hover:scale-105 transition-transform">
         <Icon className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-2 text-sm font-bold text-foreground transition-colors group-hover:text-lcars-cyan">
+        <span className="flex items-center gap-2 text-sm font-bold text-foreground transition-colors group-hover:text-apple-blue">
           {title}
           {external && <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />}
         </span>
         {description && <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{description}</span>}
-        {meta && <span className="mt-2 block font-mono text-[10px] uppercase tracking-widest text-lcars-cyan">{meta}</span>}
+        {meta && <span className="mt-2 inline-block font-mono text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-muted text-apple-blue border border-border">{meta}</span>}
       </span>
-      <Download className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-lcars-cyan" />
+      <Download className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-apple-blue" />
     </a>
   );
 }
@@ -114,7 +114,7 @@ function GallerySection({ gallery }: { gallery: ProjectGalleryItem[] }) {
       <SectionHeading id="project-gallery" icon={ImageIcon} title={t('project.gallery')} />
       <div className="grid gap-4 sm:grid-cols-2">
         {gallery.map((item) => (
-          <figure key={`${item.src}-${item.alt}`} className="overflow-hidden rounded-2xl border border-border bg-card">
+          <figure key={`${item.src}-${item.alt}`} className="overflow-hidden rounded-2xl border border-border bg-card shadow-xs">
             <Image
               src={item.src}
               alt={item.alt}
@@ -166,9 +166,9 @@ function VideoCard({ video }: { video: ProjectVideo }) {
   const embedUrl = getVideoEmbedUrl(video.src);
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-border bg-card">
+    <article className="overflow-hidden rounded-2xl border border-border bg-card shadow-xs">
       {embedUrl ? (
-        <div className="aspect-video bg-black">
+        <div className="aspect-video bg-muted">
           <iframe
             src={embedUrl}
             title={video.title}
@@ -179,13 +179,13 @@ function VideoCard({ video }: { video: ProjectVideo }) {
           />
         </div>
       ) : isDirectVideo(video.src) ? (
-        <video controls preload="metadata" poster={video.thumbnail} className="aspect-video w-full bg-black">
+        <video controls preload="metadata" poster={video.thumbnail} className="aspect-video w-full bg-muted">
           <source src={video.src} />
           Tarayıcınız video oynatmayı desteklemiyor.
         </video>
       ) : (
-        <a href={video.src} target="_blank" rel="noreferrer" className="flex aspect-video items-center justify-center bg-foreground/5 text-muted-foreground transition-colors hover:text-lcars-cyan">
-          <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest"><Play className="h-4 w-4" /> {t('project.openVideo')}</span>
+        <a href={video.src} target="_blank" rel="noreferrer" className="flex aspect-video items-center justify-center bg-muted/60 text-muted-foreground transition-colors hover:text-apple-blue">
+          <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider"><Play className="h-4 w-4 text-apple-blue" /> {t('project.openVideo')}</span>
         </a>
       )}
       <div className="space-y-1 px-4 py-3">
@@ -220,8 +220,8 @@ function SectionHeading({
   title: string;
 }) {
   return (
-    <h2 id={id} className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-foreground">
-      <Icon className="h-4 w-4 text-lcars-cyan" />
+    <h2 id={id} className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-foreground">
+      <Icon className="h-4 w-4 text-apple-blue" />
       {title}
     </h2>
   );
@@ -229,7 +229,7 @@ function SectionHeading({
 
 export function ProjectResourceSections({ project }: ProjectResourceSectionsProps) {
   const downloads = [
-    ...(project.download ? [{ title: 'Ana indirme', href: project.download }] : []),
+    ...(project.download ? [{ title: 'Ana İndirme Dosyası', href: project.download }] : []),
     ...(project.downloads ?? []),
   ].filter((item, index, items) => items.findIndex((candidate) => candidate.href === item.href) === index);
   const manuals = project.manuals ?? [];
@@ -239,7 +239,7 @@ export function ProjectResourceSections({ project }: ProjectResourceSectionsProp
   if (downloads.length === 0 && manuals.length === 0 && gallery.length === 0 && videos.length === 0) return null;
 
   return (
-    <div className="mt-16 space-y-14 border-t border-border pt-12">
+    <div className="mt-12 space-y-10 border-t border-border pt-10">
       <DownloadsSection downloads={downloads} />
       <ManualsSection manuals={manuals} />
       <GallerySection gallery={gallery} />
