@@ -10,7 +10,7 @@ export async function generateStaticParams() {
 export default async function LabPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const isEn = lang === 'en';
-  const projects = getAllProjects().filter(p => p.area === 'lab');
+  const projects = getAllProjects(lang).filter(p => p.area === 'lab');
 
   return (
     <div className="max-w-7xl mx-auto space-y-10 pb-24 px-2 sm:px-4">

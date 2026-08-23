@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = getProjectBySlug(slug, lang);
   if (!project) return {};
 
   const { title, summary, category, techStack, image } = project.metadata;
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectPage({ params }: Props) {
   const { lang, slug } = await params;
   const isEn = lang === 'en';
-  const project = getProjectBySlug(slug);
+  const project = getProjectBySlug(slug, lang);
   if (!project) notFound();
 
   const { metadata, content } = project;
@@ -64,7 +64,7 @@ export default async function ProjectPage({ params }: Props) {
   const sc = statusConfig[metadata.status] ?? statusConfig['Early'];
 
   // Load project wiki docs if available
-  const rawWikiDocs = getProjectWikiDocs(slug);
+  const rawWikiDocs = getProjectWikiDocs(slug, lang);
   const parsedWikiDocs = await Promise.all(
     rawWikiDocs.map(async (doc) => ({
       ...doc,
@@ -73,7 +73,7 @@ export default async function ProjectPage({ params }: Props) {
   );
 
   // Related projects (same category, different slug)
-  const allProjects = getAllProjects();
+  const allProjects = getAllProjects(lang);
   const related = allProjects
     .filter(p => p.category === metadata.category && p.slug !== slug)
     .slice(0, 3);

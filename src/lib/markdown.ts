@@ -165,29 +165,36 @@ function normalizeMetadata(data: FrontmatterRecord, slug: string): ProjectMetada
   } as ProjectMetadata;
 }
 
-export function getAllProjects(): ProjectMetadata[] {
+export function getAllProjects(lang: string = 'tr'): ProjectMetadata[] {
   if (!fs.existsSync(PROJECTS_PATH)) return [];
 
-  const files = fs.readdirSync(PROJECTS_PATH).filter(f => f.endsWith('.md'));
+  const baseFiles = fs.readdirSync(PROJECTS_PATH).filter(f => f.endsWith('.md') && !f.endsWith('.en.md') && !f.endsWith('.tr.md'));
 
-  return files
+  return baseFiles
     .map(file => {
       const slug = file.replace(/\.md$/, '');
-      const fileContent = fs.readFileSync(path.join(PROJECTS_PATH, file), 'utf8');
-      const { data } = matter(fileContent);
-      return normalizeMetadata(data, slug);
+      const project = getProjectBySlug(slug, lang);
+      return project ? project.metadata : null;
     })
+    .filter((p): p is ProjectMetadata => p !== null)
     .sort((a, b) => {
       if (a.date && b.date) return new Date(b.date).getTime() - new Date(a.date).getTime();
       return (a.title || '').localeCompare(b.title || '');
     });
 }
 
-export function getProjectBySlug(slug: string) {
-  const filePath = path.join(PROJECTS_PATH, `${slug}.md`);
-  if (!fs.existsSync(filePath)) return null;
+export function getProjectBySlug(slug: string, lang: string = 'tr') {
+  const enFilePath = path.join(PROJECTS_PATH, `${slug}.en.md`);
+  const defaultFilePath = path.join(PROJECTS_PATH, `${slug}.md`);
 
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+  let targetPath = defaultFilePath;
+  if (lang === 'en' && fs.existsSync(enFilePath)) {
+    targetPath = enFilePath;
+  } else if (!fs.existsSync(defaultFilePath)) {
+    return null;
+  }
+
+  const fileContent = fs.readFileSync(targetPath, 'utf8');
   const { data, content } = matter(fileContent);
 
   return {
@@ -196,17 +203,25 @@ export function getProjectBySlug(slug: string) {
   };
 }
 
-export function getProjectWikiDocs(slug: string): ProjectWikiDoc[] {
+export function getProjectWikiDocs(slug: string, lang: string = 'tr'): ProjectWikiDoc[] {
   const projectDocsDir = path.join(DOCS_PROJECTS_PATH, slug);
   if (!fs.existsSync(projectDocsDir)) return [];
 
-  const files = fs.readdirSync(projectDocsDir).filter(f => f.endsWith('.md') && !f.startsWith('.'));
+  const allFiles = fs.readdirSync(projectDocsDir).filter(f => f.endsWith('.md') && !f.startsWith('.'));
+  const baseFiles = allFiles.filter(f => !f.endsWith('.en.md') && !f.endsWith('.tr.md'));
 
-  return files.map(file => {
-    const filePath = path.join(projectDocsDir, file);
+  return baseFiles.map(file => {
+    const docSlug = file.replace(/\.md$/, '').toLowerCase();
+    const enFile = file.replace(/\.md$/, '.en.md');
+    let actualFile = file;
+
+    if (lang === 'en' && allFiles.includes(enFile)) {
+      actualFile = enFile;
+    }
+
+    const filePath = path.join(projectDocsDir, actualFile);
     const raw = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(raw);
-    const docSlug = file.replace(/\.md$/, '').toLowerCase();
 
     // Extract first # heading as title, fallback to file name
     const headingMatch = content.match(/^#\s+([^\n\r]+)/m);
@@ -219,7 +234,7 @@ export function getProjectWikiDocs(slug: string): ProjectWikiDoc[] {
 
     return {
       slug: docSlug,
-      filename: file,
+      filename: actualFile,
       title,
       summary,
       content,
@@ -227,8 +242,8 @@ export function getProjectWikiDocs(slug: string): ProjectWikiDoc[] {
   });
 }
 
-export function getProjectsByCategory() {
-  const projects = getAllProjects();
+export function getProjectsByCategory(lang: string = 'tr') {
+  const projects = getAllProjects(lang);
   const categories: Record<string, ProjectMetadata[]> = {};
   projects.forEach(p => {
     if (!categories[p.category]) categories[p.category] = [];
