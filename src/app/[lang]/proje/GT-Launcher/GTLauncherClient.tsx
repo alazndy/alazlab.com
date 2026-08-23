@@ -163,7 +163,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono text-apple-green bg-green-500/10 border border-green-500/20">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              Open Source
+              Google Play Verified
             </span>
           </div>
 
@@ -181,12 +181,22 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
         {/* CTA Buttons */}
         <div className="flex flex-wrap items-center gap-3 pt-2">
           <a
+            href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-apple-blue text-white hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-blue-500/25"
+          >
+            <Smartphone className="w-4 h-4" />
+            <span>{isEn ? 'Get on Google Play' : "Google Play'den İndir"}</span>
+            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+          </a>
+          <a
             href="/GT-Launcher-v4.2.15.apk"
             download
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-apple-orange text-white hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-orange-500/25"
+            className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-apple-orange text-white hover:opacity-90 active:scale-95 transition-all shadow-md shadow-orange-500/20"
           >
             <Download className="w-4 h-4" />
-            <span>{t('project.downloadApk')} (18.2 MB)</span>
+            <span>{isEn ? 'Direct APK (v4.2.15)' : 'Doğrudan APK İndir'}</span>
           </a>
           <a
             href="https://github.com/alazndy/GT-Launcher"
@@ -335,12 +345,22 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <a
-                href="/GT-Launcher-v4.2.15.apk"
-                download
+                href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-foreground text-background hover:opacity-90 active:scale-95 transition-all"
               >
-                <Download className="w-3.5 h-3.5" />
-                {isEn ? 'Install APK' : 'APK Kur'}
+                <Smartphone className="w-3.5 h-3.5" />
+                <span>{isEn ? 'Install on Google Play' : "Google Play'de Aç"}</span>
+                <ExternalLink className="w-3 h-3 ml-0.5 opacity-80" />
+              </a>
+              <a
+                href="/GT-Launcher-v4.2.15.apk"
+                download
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs text-foreground bg-card hover:bg-muted border border-border transition-all"
+              >
+                <Download className="w-3.5 h-3.5 text-apple-orange" />
+                <span>{isEn ? 'Direct APK (18.2 MB)' : 'Doğrudan APK'}</span>
               </a>
               <a
                 href="https://github.com/alazndy/GT-Launcher/tree/master/docs"
