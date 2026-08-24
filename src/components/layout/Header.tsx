@@ -83,7 +83,7 @@ export const Header = memo(function Header() {
   }, []);
 
   return (
-    <header className="h-14 apple-liquid-glass flex items-center justify-between px-4 sm:px-6 z-40 sticky top-0 shrink-0">
+    <header className="h-14 apple-liquid-glass backdrop-blur-xl backdrop-saturate-[1.8] flex items-center justify-between px-4 sm:px-6 z-40 sticky top-0 shrink-0">
 
       {/* Left: Mobile Drawer Trigger & Title */}
       <div className="flex items-center gap-3">

@@ -283,12 +283,19 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           
           {/* Left: Device Mockup Displaying the Live GIF */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="relative w-full max-w-sm rounded-[2.5rem] overflow-hidden border-4 border-border shadow-2xl bg-black">
-              {/* Phone Speaker Notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-muted/80 backdrop-blur rounded-b-2xl z-20 flex items-center justify-center">
-                <div className="w-3 h-3 rounded-full bg-border mr-2" />
-                <div className="w-10 h-1 bg-border rounded-full" />
-              </div>
+            <div
+              className={cn(
+                "relative w-full rounded-[2.5rem] overflow-hidden border-4 border-border shadow-2xl bg-black transition-all duration-500",
+                activeFeature.id === 'drive' ? "max-w-md sm:max-w-lg aspect-[18/10]" : "max-w-xs sm:max-w-sm aspect-[9/19]"
+              )}
+            >
+              {/* Device Notch / Status Pill */}
+              {activeFeature.id !== 'drive' && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-muted/80 backdrop-blur rounded-b-2xl z-20 flex items-center justify-center">
+                  <div className="w-3 h-3 rounded-full bg-border mr-2" />
+                  <div className="w-10 h-1 bg-border rounded-full" />
+                </div>
+              )}
 
               {/* Dynamic GIF Display */}
               <AnimatePresence mode="wait">
@@ -298,7 +305,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.25 }}
-                  className="aspect-[9/19] w-full bg-black flex items-center justify-center"
+                  className="w-full h-full bg-black flex items-center justify-center overflow-hidden"
                 >
                   <img
                     src={activeFeature.gif}
