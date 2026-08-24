@@ -95,7 +95,7 @@ export const Header = memo(function Header() {
           <Menu className="w-5 h-5 text-foreground/70" />
         </button>
         <div className="lg:hidden flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-apple-orange" />
+          <img src="/logo.png" alt="alazlab" className="w-5 h-5 object-contain" />
           <span className="text-sm font-bold tracking-tight text-foreground">alazlab</span>
         </div>
       </div>

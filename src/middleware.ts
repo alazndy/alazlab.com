@@ -16,11 +16,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Bypass static assets, projects public media, api routes, and files with extensions
+  // Bypass static assets, projects public media, api routes, extension-less
+  // metadata file routes (Next's file-convention routes like opengraph-image
+  // have no dot in their path), and files with extensions
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/projects') ||
     pathname.startsWith('/api') ||
+    pathname === '/opengraph-image' ||
+    pathname === '/twitter-image' ||
+    pathname === '/apple-icon' ||
+    pathname === '/icon' ||
     pathname.includes('.')
   ) {
     return NextResponse.next();

@@ -104,8 +104,8 @@ function SidebarContent({ projects, pathname }: { projects: ProjectMetadata[]; p
       {/* macOS Window Header Style Logo */}
       <div className="px-5 py-4 border-b border-border/60 shrink-0 flex items-center justify-between">
         <Link href={localizePath('/')} onClick={close} className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-xl bg-foreground/5 border border-border flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
-            <span className="w-2.5 h-2.5 rounded-full bg-apple-orange" />
+          <div className="w-8 h-8 rounded-xl bg-foreground/5 border border-border flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs overflow-hidden p-1">
+            <img src="/logo.png" alt="alazlab" className="w-full h-full object-contain" />
           </div>
           <div>
             <div className="text-sm font-bold text-foreground tracking-tight">Göktuğ Turhan</div>
