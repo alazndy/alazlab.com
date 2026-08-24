@@ -147,6 +147,45 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   const [activeFeatureId, setActiveFeatureId] = useState(interactiveFeatures[0].id);
   const activeFeature = interactiveFeatures.find((f) => f.id === activeFeatureId) || interactiveFeatures[0];
 
+  const visualStyles = [
+    {
+      id: 'flat',
+      name: 'FLAT',
+      desc: isEn ? 'Solid fill, subtle border' : 'Düz dolgu, ince kenarlık',
+      photo: '/projects/GT-Launcher/assets/customization/styles/flat.jpg',
+    },
+    {
+      id: 'glass',
+      name: 'GLASS',
+      desc: isEn ? 'Frosted translucent surface' : 'Buzlu yarı saydam yüzey',
+      photo: '/projects/GT-Launcher/assets/customization/styles/glass.jpg',
+    },
+    {
+      id: 'neo',
+      name: isEn ? 'NEO (Neobrutalism)' : 'NEO (Neobrütalizm)',
+      desc: isEn ? 'Hard shadow offset, retro feel' : 'Sert gölge kayması, retro his',
+      photo: '/projects/GT-Launcher/assets/customization/styles/neobrutalism.jpg',
+    },
+    {
+      id: 'clay',
+      name: isEn ? 'CLAY (Claymorphism)' : 'CLAY (Kilmorfizm)',
+      desc: isEn ? 'Soft pastel blob with elevation' : 'Kabartmalı yumuşak pastel yüzey',
+      photo: '/projects/GT-Launcher/assets/customization/styles/claymorphism.jpg',
+    },
+    {
+      id: 'minimal',
+      name: 'MINIMAL',
+      desc: isEn ? 'Near-invisible, text-only' : 'Neredeyse görünmez, sade metin',
+      photo: '/projects/GT-Launcher/assets/customization/styles/minimalism.jpg',
+    },
+    {
+      id: 'neon',
+      name: 'NEON',
+      desc: isEn ? 'Glowing outline on a dark surface' : 'Koyu yüzeyde parlayan kenarlık',
+      photo: '/projects/GT-Launcher/assets/customization/styles/neon.jpg',
+    },
+  ];
+
   return (
     <div className="space-y-16">
 
@@ -381,6 +420,39 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* ── VISUAL STYLE GALLERY ── */}
+      <section className="space-y-6">
+        <div className="px-1">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+            {isEn ? 'Visual Style Gallery' : 'Görsel Stil Galerisi'}
+          </h2>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+            {isEn
+              ? 'The same home screen, rendered through each of the 6 card style engines.'
+              : 'Aynı ana ekran, 6 kart görsel stil motorunun her birinden geçirilmiş haliyle.'}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {visualStyles.map((s) => (
+            <div key={s.id} className="apple-card overflow-hidden group">
+              <div className="relative aspect-[9/12] overflow-hidden bg-black">
+                <img
+                  src={s.photo}
+                  alt={`${s.name} — ${s.desc}`}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-3.5 space-y-0.5">
+                <div className="text-xs font-bold text-foreground font-mono">{s.name}</div>
+                <div className="text-[11px] text-muted-foreground leading-snug">{s.desc}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

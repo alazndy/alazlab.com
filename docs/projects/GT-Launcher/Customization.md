@@ -89,6 +89,28 @@ Apply a global card rendering style from **Engineering → APPEARANCE → CARD S
 
 Per-card style override is available in **Card Settings → VISUAL**.
 
+### Style Gallery
+
+Each style applied to the same home screen layout, side by side:
+
+![FLAT — Solid fill, subtle border](assets/customization/styles/flat.jpg)
+**FLAT** — Solid fill, subtle border.
+
+![GLASS — Frosted translucent surface](assets/customization/styles/glass.jpg)
+**GLASS** — Frosted translucent surface.
+
+![NEO (Neobrutalism) — Hard shadow offset, retro feel](assets/customization/styles/neobrutalism.jpg)
+**NEO (Neobrutalism)** — Hard shadow offset, retro feel.
+
+![CLAY (Claymorphism) — Soft pastel blob with elevation](assets/customization/styles/claymorphism.jpg)
+**CLAY (Claymorphism)** — Soft pastel blob with elevation.
+
+![MINIMAL — Near-invisible, text-only](assets/customization/styles/minimalism.jpg)
+**MINIMAL** — Near-invisible, text-only.
+
+![NEON — Glowing outline on a dark surface](assets/customization/styles/neon.jpg)
+**NEON** — Glowing outline on a dark surface.
+
 ---
 
 ##  Theme Engine & Color System
