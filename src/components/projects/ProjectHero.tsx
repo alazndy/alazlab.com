@@ -2,7 +2,7 @@
 
 import { ExternalLink, Code2, Calendar, Smartphone } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { categoryConfig, defaultConfig, type HeroVariant } from '@/lib/project-config';
+import { categoryConfig, defaultConfig, categoryLabel, statusLabel, type HeroVariant } from '@/lib/project-config';
 import { useI18n } from '@/lib/i18n';
 
 interface ProjectHeroProps {
@@ -63,7 +63,7 @@ export function ProjectHero({
 }: ProjectHeroProps) {
   const cat = categoryConfig[category] ?? defaultConfig;
   const Icon = cat.icon;
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   const hasImage = !!image;
   const isLegacy = status === 'Legacy' || status === 'Pending';
@@ -95,11 +95,11 @@ export function ProjectHero({
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-muted text-foreground/90 border border-border">
                 <Icon className="w-3.5 h-3.5 text-apple-blue" />
-                {category}
+                {categoryLabel(category, lang)}
               </span>
               <span className={cn("inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono border", statusClass)}>
                 <span className={cn("w-1.5 h-1.5 rounded-full", dot)} />
-                {status}
+                {statusLabel(status, lang)}
               </span>
               {date && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono text-muted-foreground bg-muted border border-border">

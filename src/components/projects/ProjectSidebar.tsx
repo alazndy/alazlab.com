@@ -4,6 +4,7 @@ import { Tag, ArrowRight, Layers, Cpu, Calendar, Activity } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
+import { categoryLabel, statusLabel } from '@/lib/project-config';
 import type { ProjectMetadata } from '@/lib/markdown';
 
 interface ProjectSidebarProps {
@@ -32,14 +33,14 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
         <dl className="space-y-3 text-xs">
           <div className="flex justify-between items-center gap-2">
             <dt className="text-muted-foreground font-mono shrink-0">{t('project.category')}</dt>
-            <dd className={cn("font-bold text-right", catAccent)}>{metadata.category}</dd>
+            <dd className={cn("font-bold text-right", catAccent)}>{categoryLabel(metadata.category, lang)}</dd>
           </div>
 
           <div className="flex justify-between items-center gap-2">
             <dt className="text-muted-foreground font-mono">{t('project.status')}</dt>
             <dd>
               <span className={cn("px-2.5 py-0.5 rounded-full text-[10px] font-mono border", statusClass)}>
-                {metadata.status}
+                {statusLabel(metadata.status, lang)}
               </span>
             </dd>
           </div>
@@ -120,7 +121,7 @@ export function ProjectSidebar({ metadata, catAccent, statusClass, related }: Pr
                     {r.title}
                   </div>
                   <div className="text-[10px] font-mono text-muted-foreground truncate">
-                    {r.category}
+                    {categoryLabel(r.category, lang)}
                   </div>
                 </div>
                 <ArrowRight className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all" />

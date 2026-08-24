@@ -4,19 +4,19 @@ import { memo, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { ProjectMetadata } from '@/lib/markdown';
-import { categoryConfig, defaultConfig, statusConfig } from '@/lib/project-config';
+import { categoryConfig, defaultConfig, statusConfig, categoryLabel, statusLabel } from '@/lib/project-config';
 import { cn } from '@/lib/utils';
-import { useI18n } from '@/lib/i18n';
+import { useI18n, type Language } from '@/lib/i18n';
 
 interface CategoryGridProps {
   categories: Record<string, ProjectMetadata[]>;
 }
 
 // Memoized project row — skips re-render unless its own props change
-const ProjectRow = memo(function ProjectRow({ 
-  project, idx, localizePath
-}: { 
-  project: ProjectMetadata; idx: number; localizePath: (path: string) => string;
+const ProjectRow = memo(function ProjectRow({
+  project, idx, localizePath, lang
+}: {
+  project: ProjectMetadata; idx: number; localizePath: (path: string) => string; lang: Language;
 }) {
   const cat = categoryConfig[project.category] ?? defaultConfig;
   const Icon = cat.icon;
@@ -46,14 +46,14 @@ const ProjectRow = memo(function ProjectRow({
         <div className="flex items-baseline gap-2">
           <span className="text-sm font-semibold text-foreground/70 group-hover:text-foreground transition-colors">{project.title}</span>
           <span className={cn("hidden sm:inline-flex shrink-0 px-1.5 py-0.5 rounded text-[9px] font-mono border", statusClass)}>
-            {project.status}
+            {statusLabel(project.status, lang)}
           </span>
         </div>
         <p className="text-xs text-foreground/40 truncate mt-0.5">{project.summary}</p>
       </div>
 
       <div className="flex items-center gap-3 shrink-0">
-        <span className="hidden lg:block text-[10px] font-mono text-foreground/30">{project.category}</span>
+        <span className="hidden lg:block text-[10px] font-mono text-foreground/30">{categoryLabel(project.category, lang)}</span>
         <ArrowRight className="w-3.5 h-3.5 text-foreground/10 group-hover:text-foreground/40 group-hover:translate-x-0.5 transition-all" />
       </div>
     </Link>
@@ -62,7 +62,7 @@ const ProjectRow = memo(function ProjectRow({
 
 export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryGridProps) {
   const allProjects = useMemo(() => Object.values(categories).flat(), [categories]);
-  const { t, localizePath } = useI18n();
+  const { t, lang, localizePath } = useI18n();
 
   return (
     <section className="space-y-4">
@@ -74,7 +74,7 @@ export const CategoryGrid = memo(function CategoryGrid({ categories }: CategoryG
 
       <div className="space-y-1">
         {allProjects.map((project, idx) => (
-          <ProjectRow key={project.slug} project={project} idx={idx} localizePath={localizePath} />
+          <ProjectRow key={project.slug} project={project} idx={idx} localizePath={localizePath} lang={lang} />
         ))}
       </div>
     </section>

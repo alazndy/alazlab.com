@@ -1,4 +1,5 @@
-import { Box, Cpu, Globe, Layers, Shield, Puzzle, Smartphone, Music, Zap, Code2, type LucideIcon } from 'lucide-react';
+import { Box, Cpu, Globe, Layers, Shield, Puzzle, Smartphone, Music, Zap, Code2, Database, MessageCircle, MoreHorizontal, type LucideIcon } from 'lucide-react';
+import type { Language } from './i18n';
 
 export type HeroVariant = 'browser' | 'mobile' | 'hardware' | 'data' | 'design' | 'default';
 
@@ -73,7 +74,44 @@ export const categoryConfig: Record<string, CategoryConfig> = {
     glow: 'bg-violet-500/20', badge: 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/30',
     hero: 'design', gradient: 'from-violet-950/70 via-background/60 to-transparent',
   },
+  'AI & Veri': {
+    icon: Database, accent: 'text-indigo-600 dark:text-indigo-400', accentBg: 'bg-indigo-500',
+    glow: 'bg-indigo-500/20', badge: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30',
+    hero: 'data', gradient: 'from-indigo-950/80 via-background/60 to-transparent',
+  },
+  'İletişim & Sosyal': {
+    icon: MessageCircle, accent: 'text-teal-600 dark:text-teal-400', accentBg: 'bg-teal-500',
+    glow: 'bg-teal-500/20', badge: 'bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30',
+    hero: 'default', gradient: 'from-teal-950/70 via-background/60 to-transparent',
+  },
+  'Diğer': {
+    icon: MoreHorizontal, accent: 'text-slate-600 dark:text-slate-400', accentBg: 'bg-slate-500',
+    glow: 'bg-slate-500/20', badge: 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/30',
+    hero: 'default', gradient: 'from-slate-950/70 via-background/60 to-transparent',
+  },
 };
+
+export const categoryLabels: Record<string, { tr: string; en: string }> = {
+  'AI & Finance': { tr: 'AI & Finans', en: 'AI & Finance' },
+  'AI & Veri': { tr: 'AI & Veri', en: 'AI & Data' },
+  'Browser Extensions': { tr: 'Tarayıcı Uzantıları', en: 'Browser Extensions' },
+  'Diğer': { tr: 'Diğer', en: 'Other' },
+  'Hardware & Embedded': { tr: 'Donanım & Gömülü Sistemler', en: 'Hardware & Embedded' },
+  'İletişim & Sosyal': { tr: 'İletişim & Sosyal', en: 'Communication & Social' },
+  'Kişisel Üretkenlik': { tr: 'Kişisel Üretkenlik', en: 'Personal Productivity' },
+  'Medya & Ses': { tr: 'Medya & Ses', en: 'Media & Audio' },
+  'Security': { tr: 'Güvenlik', en: 'Security' },
+  'Tasarım & Geliştirici Araçları': { tr: 'Tasarım & Geliştirici Araçları', en: 'Design & Developer Tools' },
+  'UI Altyapısı': { tr: 'UI Altyapısı', en: 'UI Infrastructure' },
+  'UI Infrastructure': { tr: 'UI Altyapısı', en: 'UI Infrastructure' },
+  'Web & Apps': { tr: 'Web & Uygulamalar', en: 'Web & Apps' },
+  'Mobil & Oyun': { tr: 'Mobil & Oyun', en: 'Mobile & Gaming' },
+  'Web Platformları': { tr: 'Web Platformları', en: 'Web Platforms' },
+};
+
+export function categoryLabel(category: string, lang: Language): string {
+  return categoryLabels[category]?.[lang] ?? category;
+}
 
 export const defaultConfig: CategoryConfig = {
   icon: Globe, accent: 'text-muted-foreground', accentBg: 'bg-foreground/30',
@@ -82,19 +120,38 @@ export const defaultConfig: CategoryConfig = {
 };
 
 export const statusConfig: Record<string, string> = {
-  'Live':    'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
-  'Active':  'bg-cyan-500/10 text-sky-600 dark:text-cyan-400 border-cyan-500/30',
-  'Stable':  'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30',
-  'Early':   'bg-foreground/5 text-muted-foreground border-border',
-  'Pending': 'bg-foreground/5 text-muted-foreground/70 border-border',
-  'Legacy':  'bg-foreground/[0.03] text-muted-foreground/50 border-border/60',
+  'Live':     'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+  'Active':   'bg-cyan-500/10 text-sky-600 dark:text-cyan-400 border-cyan-500/30',
+  'Stable':   'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30',
+  'Early':    'bg-foreground/5 text-muted-foreground border-border',
+  'Pending':  'bg-foreground/5 text-muted-foreground/70 border-border',
+  'Legacy':   'bg-foreground/[0.03] text-muted-foreground/50 border-border/60',
+  'Concept':  'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30',
+  'Archived': 'bg-foreground/[0.03] text-muted-foreground/40 border-border/50',
 };
 
 export const statusDot: Record<string, string> = {
-  'Live':    'bg-emerald-500 animate-pulse',
-  'Active':  'bg-cyan-500',
-  'Stable':  'bg-orange-500',
-  'Early':   'bg-muted-foreground',
-  'Pending': 'bg-muted-foreground/60',
-  'Legacy':  'bg-muted-foreground/40',
+  'Live':     'bg-emerald-500 animate-pulse',
+  'Active':   'bg-cyan-500',
+  'Stable':   'bg-orange-500',
+  'Early':    'bg-muted-foreground',
+  'Pending':  'bg-muted-foreground/60',
+  'Legacy':   'bg-muted-foreground/40',
+  'Concept':  'bg-purple-500',
+  'Archived': 'bg-muted-foreground/30',
 };
+
+export const statusLabels: Record<string, { tr: string; en: string }> = {
+  'Live':     { tr: 'Canlı', en: 'Live' },
+  'Active':   { tr: 'Aktif', en: 'Active' },
+  'Stable':   { tr: 'Kararlı', en: 'Stable' },
+  'Early':    { tr: 'Erken Aşama', en: 'Early' },
+  'Pending':  { tr: 'Beklemede', en: 'Pending' },
+  'Legacy':   { tr: 'Eski Sürüm', en: 'Legacy' },
+  'Concept':  { tr: 'Konsept', en: 'Concept' },
+  'Archived': { tr: 'Arşivlendi', en: 'Archived' },
+};
+
+export function statusLabel(status: string, lang: Language): string {
+  return statusLabels[status]?.[lang] ?? status;
+}

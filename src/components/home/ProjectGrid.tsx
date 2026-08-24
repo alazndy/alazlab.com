@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Search, Sparkles } from 'lucide-react';
 import type { ProjectMetadata } from '@/lib/markdown';
-import { categoryConfig, defaultConfig, statusConfig, statusDot } from '@/lib/project-config';
+import { categoryConfig, defaultConfig, statusConfig, statusDot, categoryLabel, statusLabel } from '@/lib/project-config';
 import { cn } from '@/lib/utils';
-import { useI18n } from '@/lib/i18n';
+import { useI18n, type Language } from '@/lib/i18n';
 
 // SCORE
 const S: Record<string, number> = { Live: 10, Active: 8, Stable: 6, Early: 4, Pending: 2, Legacy: 0 };
@@ -35,8 +35,8 @@ const ROW: Record<Size, string> = {
 };
 
 // APPLE BENTO CARD
-const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath }: {
-  project: ProjectMetadata; size: Size; idx: number; localizePath: (path: string) => string;
+const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath, lang }: {
+  project: ProjectMetadata; size: Size; idx: number; localizePath: (path: string) => string; lang: Language;
 }) {
   const cat  = categoryConfig[project.category] ?? defaultConfig;
   const sc   = statusConfig[project.status] ?? statusConfig['Early'];
@@ -72,7 +72,7 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
 
           <div className="flex-1 min-w-0 space-y-0.5 mt-2">
             <p className="text-xs font-bold text-foreground group-hover:text-apple-blue transition-colors truncate">{project.title}</p>
-            <p className="text-[10px] font-mono text-muted-foreground truncate">{project.category}</p>
+            <p className="text-[10px] font-mono text-muted-foreground truncate">{categoryLabel(project.category, lang)}</p>
           </div>
         </Link>
       </motion.div>
@@ -105,10 +105,10 @@ const ProjectCard = memo(function ProjectCard({ project, size, idx, localizePath
             <div className="flex items-center gap-2 flex-wrap">
               <span className={cn("inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono border bg-background/80 backdrop-blur-sm", sc)}>
                 <span className={cn("w-1.5 h-1.5 rounded-full", dot)} />
-                {project.status}
+                {statusLabel(project.status, lang)}
               </span>
               <span className="apple-pill text-[10px] font-mono text-muted-foreground">
-                {project.category}
+                {categoryLabel(project.category, lang)}
               </span>
             </div>
 
@@ -235,7 +235,7 @@ export function ProjectGrid({ projects }: { projects: ProjectMetadata[] }) {
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} size={getSize(score(p))} idx={i} localizePath={localizePath} />
+            <ProjectCard key={p.slug} project={p} size={getSize(score(p))} idx={i} localizePath={localizePath} lang={lang} />
           ))}
         </AnimatePresence>
       </motion.div>
