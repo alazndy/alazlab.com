@@ -1,4 +1,6 @@
-const CHANGELOG_URL = 'https://raw.githubusercontent.com/alazndy/GT-Launcher/master/CHANGELOG.md';
+import 'server-only';
+
+const CHANGELOG_URL = 'https://api.github.com/repos/alazndy/GT-Launcher/contents/CHANGELOG.md';
 const REVALIDATE_SECONDS = 60 * 60;
 const MAX_CHANGELOG_LENGTH = 250_000;
 
@@ -19,14 +21,23 @@ export interface GtLauncherChangelog {
 }
 
 /**
- * Fetches the public GT Launcher release notes on the server. The URL is intentionally fixed so
- * this module cannot become an SSRF proxy, and the output is parsed into text before it reaches a
- * client component.
+ * Fetches GT Launcher release notes on the server. The URL is intentionally fixed so this module
+ * cannot become an SSRF proxy. The private-repository token is read only at runtime and never
+ * reaches a client component; output is parsed into text before rendering.
  */
 export async function getGtLauncherChangelog(): Promise<GtLauncherChangelog> {
+  const accessToken = process.env.GT_LAUNCHER_CHANGELOG_TOKEN?.trim();
+  if (!accessToken) return unavailableChangelog();
+
   try {
     const response = await fetch(CHANGELOG_URL, {
       cache: 'force-cache',
+      headers: {
+        Accept: 'application/vnd.github.raw+json',
+        Authorization: `Bearer ${accessToken}`,
+        'User-Agent': 'alazlab.com GT Launcher changelog reader',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
       next: {
         revalidate: REVALIDATE_SECONDS,
         tags: ['gt-launcher-changelog'],
