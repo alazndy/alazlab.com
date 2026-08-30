@@ -6,8 +6,10 @@ import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { GTLauncherClient } from './GTLauncherClient';
+import { GTLauncherChangelog } from './GTLauncherChangelog';
 import { ProjectSidebar } from '@/components/projects/ProjectSidebar';
 import { ProjectViewTabs } from '@/components/projects/ProjectViewTabs';
+import { getGtLauncherChangelog } from '@/lib/gt-launcher-changelog';
 
 interface Props {
   params: Promise<{ lang: string }>;
@@ -16,6 +18,8 @@ interface Props {
 export async function generateStaticParams() {
   return [{ lang: 'tr' }, { lang: 'en' }];
 }
+
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
@@ -54,7 +58,10 @@ export default async function GTLauncherPage({ params }: Props) {
   if (!project) notFound();
 
   const { metadata, content } = project;
-  const contentHtml = await marked.parse(content);
+  const [contentHtml, changelog] = await Promise.all([
+    marked.parse(content),
+    getGtLauncherChangelog(),
+  ]);
   const cat = categoryConfig[metadata.category] ?? defaultConfig;
   const sc = statusConfig[metadata.status] ?? statusConfig['Active'];
 
@@ -89,6 +96,11 @@ export default async function GTLauncherPage({ params }: Props) {
 
       {/* Flagship Interactive Mockup & Demos */}
       <GTLauncherClient version={metadata.version || 'v4.2.15'} />
+
+      <GTLauncherChangelog
+        releases={changelog.releases}
+        isAvailable={changelog.isAvailable}
+      />
 
       {/* Technical Architecture, Wiki Reader & System Sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-border">

@@ -137,4 +137,5 @@
 | 2026-08-20 | Codex Kaira | GT-Launcher proje sayfasına gerçek etkileşim demoları ve radial menü galerisi eklendi | Sidebar, OmniSearch ve Theme Creator GIF’leri ile radial-menu.jpg mevcut proje içeriğine bağlandı; content lint ve canlı route doğrulandı |
 | 2026-08-22 | Antigravity | GT-Launcher 22 canlı GIF ve eksiksiz yetenek mimarisi vitrine işlendi | Card Builder, Stacking, Photo/Wallpaper, 6 Style, Theme Creator, Grid cascade, Sidebar, OmniSearch ve Drive Mode canlı demoları bağlandı |
 ## Instincts
+- Dış depodaki yayın notlarını portfolyoda göstermek için sabit allowlist URL ile server-side fetch kullan; response boyutunu sınırla, Markdownı yapılandırılmış metne ayrıştır ve cache ile ziyaretçiyi GitHub bağımlılığından ayır.
 - Before a signed commit, verify that a local GPG secret key exists for the configured author email; if absent, preserve staged changes and request key setup instead of creating an unsigned commit.

@@ -29,6 +29,10 @@ videos:
 
 The shared route at `/proje/[slug]` renders these sections only when real data exists. Local files belong under `public/projects/<slug>/`; YouTube and Vimeo embeds are supported through the allowlisted video URL parser. Legacy single-file `download` metadata remains supported for backwards compatibility.
 
+### GT Launcher release history
+
+`/tr/proje/GT-Launcher` and `/en/proje/GT-Launcher` fetch the public GT Launcher `CHANGELOG.md` on the server, cache it for one hour, and render parsed text-only release entries on alazlab.com. Visitors do not need to open GitHub, and source Markdown/HTML is never rendered directly in the browser.
+
 ## Getting Started
 
 First, run the development server:
