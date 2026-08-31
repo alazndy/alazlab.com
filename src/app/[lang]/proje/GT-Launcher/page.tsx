@@ -61,7 +61,7 @@ export default async function GTLauncherPage({ params }: Props) {
   const { metadata, content } = project;
   const [contentHtml, changelog] = await Promise.all([
     marked.parse(content),
-    getGtLauncherChangelog(),
+    getGtLauncherChangelog(lang === 'tr' ? 'tr' : 'en'),
   ]);
   const cat = categoryConfig[metadata.category] ?? defaultConfig;
   const sc = statusConfig[metadata.status] ?? statusConfig['Active'];

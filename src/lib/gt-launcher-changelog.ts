@@ -1,6 +1,9 @@
 import 'server-only';
 
-const CHANGELOG_URL = 'https://api.github.com/repos/alazndy/GT-Launcher/contents/CHANGELOG.md';
+const CHANGELOG_URLS = {
+  en: 'https://api.github.com/repos/alazndy/GT-Launcher/contents/CHANGELOG.md',
+  tr: 'https://api.github.com/repos/alazndy/GT-Launcher/contents/CHANGELOG.tr.md',
+} as const;
 const REVALIDATE_SECONDS = 60 * 60;
 const MAX_CHANGELOG_LENGTH = 250_000;
 
@@ -21,16 +24,26 @@ export interface GtLauncherChangelog {
 }
 
 /**
- * Fetches GT Launcher release notes on the server. The URL is intentionally fixed so this module
- * cannot become an SSRF proxy. The private-repository token is read only at runtime and never
- * reaches a client component; output is parsed into text before rendering.
+ * Fetches GT Launcher release notes on the server, in the given language. The URLs are
+ * intentionally fixed so this module cannot become an SSRF proxy. The private-repository token
+ * is read only at runtime and never reaches a client component; output is parsed into text
+ * before rendering. Falls back to the English changelog if the Turkish one is unavailable (e.g.
+ * a release lands before its translation does), so a TR visitor still sees content rather than
+ * an empty state.
  */
-export async function getGtLauncherChangelog(): Promise<GtLauncherChangelog> {
+export async function getGtLauncherChangelog(lang: 'tr' | 'en' = 'en'): Promise<GtLauncherChangelog> {
+  const primary = await fetchChangelog(CHANGELOG_URLS[lang]);
+  if (primary.isAvailable) return primary;
+  if (lang === 'en') return primary;
+  return fetchChangelog(CHANGELOG_URLS.en);
+}
+
+async function fetchChangelog(url: string): Promise<GtLauncherChangelog> {
   const accessToken = process.env.GT_LAUNCHER_CHANGELOG_TOKEN?.trim();
   if (!accessToken) return unavailableChangelog();
 
   try {
-    const response = await fetch(CHANGELOG_URL, {
+    const response = await fetch(url, {
       cache: 'force-cache',
       headers: {
         Accept: 'application/vnd.github.raw+json',
