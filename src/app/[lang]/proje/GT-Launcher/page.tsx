@@ -96,7 +96,9 @@ export default async function GTLauncherPage({ params }: Props) {
       </div>
 
       {/* Flagship Interactive Mockup & Demos */}
-      <GTLauncherClient version={metadata.version || 'v4.2.15'} />
+      <GTLauncherClient
+        version={changelog.releases[0]?.version ? `v${changelog.releases[0].version}` : metadata.version || 'v4.13.0'}
+      />
 
       <GTLauncherChangelog
         releases={changelog.releases}
@@ -107,7 +109,7 @@ export default async function GTLauncherPage({ params }: Props) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-border">
 
         {/* Main Content Tabs (Overview, Wiki Docs, Gallery, Downloads) */}
-        <div className="lg:col-span-8 order-2 lg:order-1">
+        <div className="lg:col-span-8 order-1">
           <ProjectViewTabs
             metadata={metadata}
             overviewHtml={contentHtml}
@@ -117,7 +119,7 @@ export default async function GTLauncherPage({ params }: Props) {
             extraTab={{
               id: 'pricing',
               label: isEn ? 'Pricing' : 'Fiyatlandırma',
-              content: <GTLauncherPricingTab lang={lang as 'tr' | 'en'} />,
+              content: <GTLauncherPricingTab key="pricing-tab" lang={lang as 'tr' | 'en'} />,
             }}
           />
         </div>
