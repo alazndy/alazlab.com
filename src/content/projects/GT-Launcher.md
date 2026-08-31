@@ -200,7 +200,7 @@ GT-Launcher, her biri bağımsız Compose render sözleşmesine sahip 6 görsel 
 ##  4. Komuta Güvertesi: OmniSearch & Slide List
 
 - **Omni-Terminal Hibrit Arama:** Web araması (Google, Maps, Play Store), kurulu uygulamalar, rehber kişileri ve sistem ayarları tek komuta arama alanından filtrelenir.
-- **Slide List Çekmece:** Niagara tarzı akıcı alfabetik liste ile klasik LCARS departman filtrelemesini (`COMMAND`, `ENGINEERING`, `SCIENCE`, `OPERATIONS`) birleştirir.
+- **Slide List Çekmece:** Akıcı, sıçramasız alfabetik liste ile klasik LCARS departman filtrelemesini (`COMMAND`, `ENGINEERING`, `SCIENCE`, `OPERATIONS`) birleştirir.
 - **Taktiksel Yan Menü (Sidebar Rail):** Tek dokunuş (`Tap`), yukarı kaydırma (`Swipe Up`) ve aşağı kaydırma (`Swipe Down`) jestleriyle sistem eylemlerine (Geri, Son Uygulamalar) ve favori araçlara erişim.
 
 <div class="my-8 grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose">
