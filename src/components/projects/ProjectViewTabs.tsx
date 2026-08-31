@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, type ReactNode } from 'react';
+import { useState, useMemo, useEffect, type ReactNode } from 'react';
 import {
   LayoutDashboard,
   BookOpen,
@@ -56,6 +56,17 @@ export function ProjectViewTabs({
   const [activeDocSlug, setActiveDocSlug] = useState<string>(wikiDocs[0]?.slug || '');
   const [wikiSearch, setWikiSearch] = useState('');
 
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    const validIds = ['overview', ...(hasWiki ? ['wiki'] : []), ...(hasGallery ? ['gallery'] : []), ...(hasResources ? ['resources'] : []), ...(extraTab ? [extraTab.id] : [])];
+    if (validIds.includes(hash)) {
+      setActiveTab(hash);
+      document.getElementById('project-tabs')?.scrollIntoView({ block: 'start' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const selectedDoc = useMemo(() => {
     return wikiDocs.find(d => d.slug === activeDocSlug) || wikiDocs[0];
   }, [wikiDocs, activeDocSlug]);
@@ -100,7 +111,7 @@ export function ProjectViewTabs({
   ];
 
   return (
-    <div className="space-y-8">
+    <div id="project-tabs" className="space-y-8">
 
       {/* ── APPLE SEGMENTED CONTROL TABS ── */}
       {tabs.length > 1 && (
