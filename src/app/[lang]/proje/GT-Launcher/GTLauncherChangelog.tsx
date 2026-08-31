@@ -14,7 +14,7 @@ export function GTLauncherChangelog({ releases, isAvailable }: GTLauncherChangel
   const isEn = lang === 'en';
 
   return (
-    <section className="apple-card p-6 sm:p-8 space-y-5" aria-labelledby="gt-launcher-changelog-title">
+    <section id="changelog" className="apple-card p-6 sm:p-8 space-y-5" aria-labelledby="gt-launcher-changelog-title">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-2 text-apple-blue">
