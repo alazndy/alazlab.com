@@ -21,6 +21,7 @@ import {
   ChevronRight,
   Play,
   RotateCcw,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
@@ -140,6 +141,42 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
         { label: isEn ? 'Gesture Engine' : 'Jest Motoru', val: 'Multi-Directional' },
         { label: isEn ? 'Haptic' : 'Titreşim', val: 'Tactile Feedback' },
         { label: isEn ? 'Profiles' : 'Profiller', val: 'Export & Import JSON' },
+      ],
+    },
+    {
+      id: 'card-art',
+      title: isEn ? 'Card Art & Color Wheel' : 'Kart İçi Sanat & Renk Çarkı',
+      badge: isEn ? 'Per-Card Background & Tint' : 'Kart İçi Görsel & Renk Teorisi',
+      desc: isEn
+        ? 'Embed bespoke photographs into individual widget cards with opacity tuning, text color overrides, custom icon glyphs, and harmonic 360° color-theory wheel palettes.'
+        : 'Her widget kartının içine bağımsız fotoğraf yerleştirin; opaklık katmanları, metin rengi geçersiz kılma, özel ikonlar ve renk teorisi armonileri sunan 360° renk çarkı ile kişiselleştirin.',
+      gif: '/projects/GT-Launcher/card-customization-demo.gif',
+      icon: ImageIcon,
+      color: 'text-pink-400',
+      bg: 'bg-pink-500/10',
+      border: 'border-pink-500/20',
+      specs: [
+        { label: isEn ? 'Backdrop Engine' : 'Görsel Katmanı', val: 'Per-Card Surface UV' },
+        { label: isEn ? 'Color Theory' : 'Renk Teorisi', val: 'Analogous / Triadic / Hex' },
+        { label: isEn ? 'Layer Controls' : 'Katman Ayarları', val: 'Opacity + Tint Filter' },
+      ],
+    },
+    {
+      id: 'foreground-slice',
+      title: isEn ? 'Foreground Photo Mosaic' : 'Ön Plan Fotoğraf Mozaiği',
+      badge: isEn ? 'Multi-Card UV Grid Slicer' : 'Çoklu Kart UV Izgara Dilimleyici',
+      desc: isEn
+        ? 'Position an overarching photograph over the active launcher layout. The system computes exact cell UV bounds, slicing the image across cards into an interactive dynamic mosaic.'
+        : 'Tüm ızgaranın üzerine tek bir fotoğraf konumlandırın; sistem her kartın koordinatını hesaplayarak görseli kartlar arasında etkileşimli bir mozaik gibi dilimler.',
+      gif: '/projects/GT-Launcher/foreground-image-slice.gif',
+      icon: Sparkles,
+      color: 'text-apple-cyan',
+      bg: 'bg-cyan-500/10',
+      border: 'border-cyan-500/20',
+      specs: [
+        { label: isEn ? 'Slicing Algorithm' : 'Dilimleme Algoritması', val: 'Global Grid UV Matrix' },
+        { label: isEn ? 'Resolution' : 'Önizleme Çözünürlüğü', val: 'Zero-Lag Hardware Cache' },
+        { label: isEn ? 'Source Picker' : 'Görsel Kaynağı', val: 'System SAF & Gallery' },
       ],
     },
   ];
@@ -290,7 +327,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
         </div>
 
         {/* Feature Selector Tabs */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {interactiveFeatures.map((f) => {
             const Icon = f.icon;
             const isSelected = f.id === activeFeatureId;

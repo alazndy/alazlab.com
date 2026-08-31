@@ -7,6 +7,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { GTLauncherClient } from './GTLauncherClient';
 import { GTLauncherChangelog } from './GTLauncherChangelog';
+import { GTLauncherPricingTab } from './GTLauncherPricingTab';
 import { ProjectSidebar } from '@/components/projects/ProjectSidebar';
 import { ProjectViewTabs } from '@/components/projects/ProjectViewTabs';
 import { getGtLauncherChangelog } from '@/lib/gt-launcher-changelog';
@@ -113,6 +114,11 @@ export default async function GTLauncherPage({ params }: Props) {
             wikiDocs={parsedWikiDocs}
             accentColor={cat.accent}
             accentBg={cat.accentBg}
+            extraTab={{
+              id: 'pricing',
+              label: isEn ? 'Pricing' : 'Fiyatlandırma',
+              content: <GTLauncherPricingTab lang={lang as 'tr' | 'en'} />,
+            }}
           />
         </div>
 

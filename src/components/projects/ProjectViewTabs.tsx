@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, type ReactNode } from 'react';
 import {
   LayoutDashboard,
   BookOpen,
@@ -10,6 +10,7 @@ import {
   Search,
   ChevronRight,
   Sparkles,
+  Tag,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
@@ -20,12 +21,20 @@ interface ParsedWikiDoc extends ProjectWikiDoc {
   html: string;
 }
 
+interface ExtraTab {
+  id: string;
+  label: string;
+  content: ReactNode;
+}
+
 interface ProjectViewTabsProps {
   metadata: ProjectMetadata;
   overviewHtml: string;
   wikiDocs: ParsedWikiDoc[];
   accentColor: string;
   accentBg: string;
+  /** Optional project-specific tab (e.g. GT-Launcher's Pricing tab) appended after the standard ones. */
+  extraTab?: ExtraTab;
 }
 
 export function ProjectViewTabs({
@@ -34,6 +43,7 @@ export function ProjectViewTabs({
   wikiDocs,
   accentColor,
   accentBg,
+  extraTab,
 }: ProjectViewTabsProps) {
   const { t, lang } = useI18n();
   const isEn = lang === 'en';
@@ -42,7 +52,7 @@ export function ProjectViewTabs({
   const hasGallery = (metadata.gallery && metadata.gallery.length > 0) || (metadata.videos && metadata.videos.length > 0);
   const hasResources = (metadata.downloads && metadata.downloads.length > 0) || (metadata.manuals && metadata.manuals.length > 0) || !!metadata.download;
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'wiki' | 'gallery' | 'resources'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'wiki' | 'gallery' | 'resources' | string>('overview');
   const [activeDocSlug, setActiveDocSlug] = useState<string>(wikiDocs[0]?.slug || '');
   const [wikiSearch, setWikiSearch] = useState('');
 
@@ -80,6 +90,12 @@ export function ProjectViewTabs({
       label: isEn ? 'Resources' : 'Kaynaklar',
       icon: Download,
       count: (metadata.downloads?.length || 0) + (metadata.manuals?.length || 0) + (metadata.download ? 1 : 0),
+    }] : []),
+    ...(extraTab ? [{
+      id: extraTab.id,
+      label: extraTab.label,
+      icon: Tag,
+      count: undefined,
     }] : []),
   ];
 
@@ -263,6 +279,9 @@ export function ProjectViewTabs({
           <ProjectResourceSections project={metadata} />
         </div>
       )}
+
+      {/* ── TAB 5: PROJECT-SPECIFIC EXTRA TAB ── */}
+      {extraTab && activeTab === extraTab.id && extraTab.content}
 
     </div>
   );
