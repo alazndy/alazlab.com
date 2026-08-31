@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Check, Sparkles, Smartphone, ExternalLink, Globe } from 'lucide-react';
+import { Check, X, Sparkles, Smartphone, ExternalLink, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Language } from '@/lib/i18n';
 import { getRegionalPricing } from '@/data/gt-launcher-pricing';
@@ -46,20 +46,24 @@ export function GTLauncherPricingTab({ lang }: GTLauncherPricingTabProps) {
 
   const pricing = getRegionalPricing(countryCode);
 
-  const features = isEn
+  type Row = { label: string; free: string | boolean; premium: string | boolean };
+
+  const comparisonRows: Row[] = isEn
     ? [
-        'All visual style presets (Glass, Neobrutalism, Claymorphism, Neon, Pixel & more)',
-        'Drive Mode — OBD-II vehicle HUD',
-        'Unlimited module stacking per card',
-        'Breathing & flashing notification animations',
-        'Up to 12 saved custom style slots',
+        { label: 'All 8 visual style presets (Flat, Glass, Neobrutalism, Claymorphism, Minimalism, Neon, Dot, Pixel)', free: true, premium: true },
+        { label: 'Card Builder, OmniSearch, App List card, Sidebar, Slide List drawer, theming, header widgets', free: true, premium: true },
+        { label: 'Saved custom style slots', free: '1', premium: '12' },
+        { label: 'Modules stacked per card', free: 'Up to 2', premium: 'Unlimited' },
+        { label: 'Notification color animation', free: 'Static only', premium: 'Breathing & flashing' },
+        { label: 'Drive Mode — OBD-II vehicle HUD', free: false, premium: true },
       ]
     : [
-        'Tüm görsel stil presetleri (Glass, Neobrutalism, Claymorphism, Neon, Pixel ve daha fazlası)',
-        'Drive Mode — OBD-II araç HUD',
-        'Kart başına sınırsız modül stackleme',
-        'Nefes alma ve yanıp sönme bildirim animasyonları',
-        "12'ye kadar özel stil slotu kaydetme",
+        { label: '8 görsel stil presetinin tamamı (Flat, Glass, Neobrutalism, Claymorphism, Minimalism, Neon, Dot, Pixel)', free: true, premium: true },
+        { label: 'Card Builder, OmniSearch, App List kartı, Sidebar, Slide List çekmecesi, temalama, header widget\'ları', free: true, premium: true },
+        { label: 'Kaydedilen özel stil slotu', free: '1', premium: '12' },
+        { label: 'Kart başına stacklenen modül', free: '2\'ye kadar', premium: 'Sınırsız' },
+        { label: 'Bildirim renk animasyonu', free: 'Sadece statik', premium: 'Nefes alma & yanıp sönme' },
+        { label: 'Drive Mode — OBD-II araç HUD', free: false, premium: true },
       ];
 
   const plans = [
@@ -153,19 +157,64 @@ export function GTLauncherPricingTab({ lang }: GTLauncherPricingTabProps) {
         ))}
       </div>
 
-      {/* Feature checklist */}
-      <div className="apple-card p-6 sm:p-8 space-y-3">
+      {/* Free vs Premium comparison */}
+      <div className="apple-card p-6 sm:p-8 space-y-4">
         <div className="text-xs font-bold uppercase tracking-wider text-apple-blue">
-          {isEn ? "What's included" : 'Nelere sahip oluyorsun'}
+          {isEn ? 'Free vs. Premium' : 'Ücretsiz ve Premium'}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
-          {features.map((f) => (
-            <div key={f} className="flex items-start gap-2.5">
-              <Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-apple-blue" />
-              <span className="text-xs text-muted-foreground leading-relaxed">{f}</span>
-            </div>
-          ))}
+
+        <div className="overflow-x-auto -mx-2 px-2">
+          <table className="w-full min-w-[420px] text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left font-semibold text-muted-foreground pb-3 pr-4 w-1/2">
+                  {isEn ? 'Feature' : 'Özellik'}
+                </th>
+                <th className="text-center font-bold text-foreground pb-3 px-2">
+                  {isEn ? 'Free' : 'Ücretsiz'}
+                </th>
+                <th className="text-center font-bold text-apple-blue pb-3 pl-2">
+                  {isEn ? 'Premium' : 'Premium'}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisonRows.map((row) => (
+                <tr key={row.label} className="border-b border-border/60 last:border-0">
+                  <td className="py-3 pr-4 text-muted-foreground leading-snug">{row.label}</td>
+                  <td className="py-3 px-2 text-center">
+                    {typeof row.free === 'boolean' ? (
+                      row.free ? (
+                        <Check className="w-4 h-4 mx-auto text-apple-green" />
+                      ) : (
+                        <X className="w-4 h-4 mx-auto text-muted-foreground/40" />
+                      )
+                    ) : (
+                      <span className="text-foreground/80 font-mono text-[11px]">{row.free}</span>
+                    )}
+                  </td>
+                  <td className="py-3 pl-2 text-center">
+                    {typeof row.premium === 'boolean' ? (
+                      row.premium ? (
+                        <Check className="w-4 h-4 mx-auto text-apple-blue" />
+                      ) : (
+                        <X className="w-4 h-4 mx-auto text-muted-foreground/40" />
+                      )
+                    ) : (
+                      <span className="text-apple-blue font-mono text-[11px] font-bold">{row.premium}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+
+        <p className="text-[11px] text-muted-foreground/70 leading-relaxed pt-1">
+          {isEn
+            ? 'Everything else in the app — the full card system, search, drawer styles, and theming — is free for everyone with no cap.'
+            : 'Uygulamadaki her şey — tam kart sistemi, arama, çekmece stilleri ve temalama — herkes için ücretsiz ve sınırsız.'}
+        </p>
       </div>
 
       <p className="text-[11px] text-muted-foreground/70 leading-relaxed">
