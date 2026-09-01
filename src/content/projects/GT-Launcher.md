@@ -46,25 +46,25 @@ Android cihazınızı 24. Yüzyıl teknolojisine yükseltin: Star Trek "The Next
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-10 not-prose">
   <div class="p-6 rounded-2xl bg-white/[0.025] border border-white/8 hover:bg-white/[0.04] transition-colors">
-    <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20 mb-4 text-orange-400 font-mono text-lg font-bold">01</div>
+    <div class="inline-flex px-2.5 py-1 rounded-full bg-orange-500/10 items-center justify-center border border-orange-500/20 mb-4 text-orange-400 font-mono text-[11px] font-bold tracking-widest">UCCS</div>
     <h3 class="text-base font-bold text-white uppercase tracking-wide mb-2">Kapasite Tabanlı Kartlar</h3>
     <p class="text-xs text-white/50 leading-relaxed">Her kart tek bir sabit tipe değil; birleştirilebilir bağımsız yeteneklere (UCCS) dayanır. Uyumsuz modül kombinasyonları editör içinde çakışma korumasıyla engellenir.</p>
   </div>
 
   <div class="p-6 rounded-2xl bg-white/[0.025] border border-white/8 hover:bg-white/[0.04] transition-colors">
-    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-4 text-cyan-400 font-mono text-lg font-bold">02</div>
+    <div class="inline-flex px-2.5 py-1 rounded-full bg-cyan-500/10 items-center justify-center border border-cyan-500/20 mb-4 text-cyan-400 font-mono text-[11px] font-bold tracking-widest">OMNI</div>
     <h3 class="text-base font-bold text-white uppercase tracking-wide mb-2">OmniSearch Komutası</h3>
     <p class="text-xs text-white/50 leading-relaxed">Web araması, Google Play, kurulu uygulamalar, rehber kişileri ve sistem ayarları tek komuta arama alanından canlı LCARS kartları olarak listelenir.</p>
   </div>
 
   <div class="p-6 rounded-2xl bg-white/[0.025] border border-white/8 hover:bg-white/[0.04] transition-colors">
-    <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 mb-4 text-amber-400 font-mono text-lg font-bold">03</div>
+    <div class="inline-flex px-2.5 py-1 rounded-full bg-amber-500/10 items-center justify-center border border-amber-500/20 mb-4 text-amber-400 font-mono text-[11px] font-bold tracking-widest">SKIN</div>
     <h3 class="text-base font-bold text-white uppercase tracking-wide mb-2">6 Görsel Stil & Temalar</h3>
     <p class="text-xs text-white/50 leading-relaxed">Flat, Glass, Neo, Clay, Minimal ve Neon sözleşmeleri; 12 Starfleet paleti, HSV renk çarkı ve saat/pil/hava durumuna göre canlı tema otomasyonu.</p>
   </div>
 
   <div class="p-6 rounded-2xl bg-white/[0.025] border border-white/8 hover:bg-white/[0.04] transition-colors">
-    <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-4 text-red-400 font-mono text-lg font-bold">04</div>
+    <div class="inline-flex px-2.5 py-1 rounded-full bg-red-500/10 items-center justify-center border border-red-500/20 mb-4 text-red-400 font-mono text-[11px] font-bold tracking-widest">DRV</div>
     <h3 class="text-base font-bold text-white uppercase tracking-wide mb-2">Drive Mode Interceptor</h3>
     <p class="text-xs text-white/50 leading-relaxed">OBD-II BLE canlı telemetrisi, GPS hız göstergesi, ses spektrumu ve OCR yakıt fişi taramasıyla sürüşü yıldız gemisi kokpitine çeviren yatay mod.</p>
   </div>

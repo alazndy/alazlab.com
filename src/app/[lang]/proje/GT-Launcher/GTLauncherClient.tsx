@@ -257,7 +257,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
             href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-apple-blue text-white hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-blue-500/25"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-lcars-orange text-black hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-orange-500/25"
           >
             <Smartphone className="w-4 h-4" />
             <span>{isEn ? 'Get on Google Play' : "Google Play'den İndir"}</span>
@@ -268,7 +268,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
         {/* Hardware & Engineering Performance Pillars */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-border text-xs">
           <div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-apple-blue font-mono">&lt; 180 ms</div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-lcars-gold font-mono">&lt; 180 ms</div>
             <div className="text-muted-foreground mt-0.5">{isEn ? 'Cold Startup' : 'Soğuk Başlatma'}</div>
           </div>
           <div>
@@ -317,7 +317,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                 className={cn(
                   "p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer",
                   isSelected
-                    ? "apple-card border-apple-blue ring-2 ring-apple-blue/20 bg-card shadow-md scale-[1.02]"
+                    ? "apple-card border-lcars-orange ring-2 ring-lcars-orange/20 bg-card shadow-md scale-[1.02]"
                     : "border-border bg-card/60 hover:bg-muted/70 text-muted-foreground hover:text-foreground"
                 )}
               >
