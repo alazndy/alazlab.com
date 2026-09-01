@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Smartphone,
@@ -44,6 +44,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-blue',
       bg: 'bg-blue-500/10',
       border: 'border-blue-500/20',
+      solid: 'bg-blue-500 text-white',
+      iconBg: 'bg-white/15',
       specs: [
         { label: isEn ? 'Card Capabilities' : 'Modül Yetenekleri', val: '19+ UCCS Nodes' },
         { label: isEn ? 'Visual Styles' : 'Görsel Stiller', val: '6 Engine Modes' },
@@ -62,6 +64,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-orange',
       bg: 'bg-orange-500/10',
       border: 'border-orange-500/20',
+      solid: 'bg-orange-500 text-black',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Color Channels' : 'Renk Kanalları', val: '7 LCARS Hues' },
         { label: isEn ? 'Wallpaper Slicer' : 'Duvar Kağıdı Dilimleme', val: 'Pinch-to-Crop UV' },
@@ -80,6 +84,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-green',
       bg: 'bg-green-500/10',
       border: 'border-green-500/20',
+      solid: 'bg-green-500 text-black',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Measure Phase' : 'Hesaplama Fazı', val: '< 1.2 ms per frame' },
         { label: isEn ? 'Re-flow' : 'Akış Düzeni', val: 'Non-destructive' },
@@ -98,6 +104,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-purple',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20',
+      solid: 'bg-purple-500 text-white',
+      iconBg: 'bg-white/15',
       specs: [
         { label: isEn ? 'Protocol' : 'Protokol', val: 'ELM327 BLE / CAN' },
         { label: isEn ? 'Refresh Rate' : 'Yenileme Hızı', val: '20 Hz Sensor Loop' },
@@ -116,6 +124,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-cyan',
       bg: 'bg-cyan-500/10',
       border: 'border-cyan-500/20',
+      solid: 'bg-cyan-500 text-black',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Lookup Latency' : 'Arama Gecikmesi', val: '< 0.8 ms instant' },
         { label: isEn ? 'Categories' : 'Kategoriler', val: 'Smart Clustering' },
@@ -134,6 +144,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-orange',
       bg: 'bg-orange-500/10',
       border: 'border-orange-500/20',
+      solid: 'bg-orange-500 text-black',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Gesture Engine' : 'Jest Motoru', val: 'Multi-Directional' },
         { label: isEn ? 'Haptic' : 'Titreşim', val: 'Tactile Feedback' },
@@ -152,6 +164,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-pink-400',
       bg: 'bg-pink-500/10',
       border: 'border-pink-500/20',
+      solid: 'bg-pink-500 text-black',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Backdrop Engine' : 'Görsel Katmanı', val: 'Per-Card Surface UV' },
         { label: isEn ? 'Color Theory' : 'Renk Teorisi', val: 'Analogous / Triadic / Hex' },
@@ -170,6 +184,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-cyan',
       bg: 'bg-cyan-500/10',
       border: 'border-cyan-500/20',
+      solid: 'bg-cyan-500 text-black',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Slicing Algorithm' : 'Dilimleme Algoritması', val: 'Global Grid UV Matrix' },
         { label: isEn ? 'Resolution' : 'Önizleme Çözünürlüğü', val: 'Zero-Lag Hardware Cache' },
@@ -180,6 +196,37 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
 
   const [activeFeatureId, setActiveFeatureId] = useState(interactiveFeatures[0].id);
   const activeFeature = interactiveFeatures.find((f) => f.id === activeFeatureId) || interactiveFeatures[0];
+
+  // ── SIDEBAR RAIL: scroll-spy across the flagship block's own sections ──
+  const railSections = [
+    { id: 'gt-home', icon: Smartphone, label: isEn ? 'Home' : 'Ana Ekran' },
+    { id: 'gt-modules', icon: Layers, label: isEn ? 'Modules' : 'Modüller' },
+    { id: 'gt-styles', icon: Palette, label: isEn ? 'Styles' : 'Stiller' },
+  ];
+  const [activeRailId, setActiveRailId] = useState(railSections[0].id);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const targets = railSections
+      .map((r) => document.getElementById(r.id))
+      .filter((el): el is HTMLElement => !!el);
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveRailId(visible.target.id);
+      },
+      { root: null, rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const visualStyles = [
     {
@@ -221,10 +268,47 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   ];
 
   return (
-    <div className="dark bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border p-3 sm:p-5 space-y-10">
+    <div ref={rootRef} className="dark bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border p-3 sm:p-5 flex gap-3 sm:gap-5">
+
+      {/* ── SIDEBAR RAIL (mirrors the app's own icon rail) ── */}
+      <nav className="hidden sm:flex flex-col items-center gap-2 shrink-0 sticky top-4 self-start">
+        {railSections.map((r) => {
+          const RailIcon = r.icon;
+          const isActive = r.id === activeRailId;
+          return (
+            <a
+              key={r.id}
+              href={`#${r.id}`}
+              aria-label={r.label}
+              title={r.label}
+              className={cn(
+                "w-11 h-11 rounded-2xl flex items-center justify-center transition-all",
+                isActive
+                  ? "bg-lcars-orange text-black shadow-md scale-105"
+                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}
+            >
+              <RailIcon className="w-4.5 h-4.5" />
+            </a>
+          );
+        })}
+        <a
+          href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
+          target="_blank"
+          rel="noreferrer"
+          aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
+          title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
+          className="w-11 h-11 rounded-2xl flex items-center justify-center bg-card border border-border text-muted-foreground hover:text-lcars-orange hover:border-lcars-orange/40 transition-all mt-2"
+        >
+          <Play className="w-4 h-4" />
+        </a>
+      </nav>
+
+      {/* ── MAIN CONTENT COLUMN ── */}
+      <div className="flex-1 min-w-0 space-y-10">
 
       {/* ── HERO BANNER ── */}
-      <section className="apple-card p-8 sm:p-12 md:p-14 space-y-8 relative overflow-hidden">
+      <section id="gt-home" className="apple-card p-8 sm:p-12 md:p-14 space-y-8 relative overflow-hidden">
         <div className="max-w-3xl space-y-4">
           <div className="flex items-center gap-2.5 flex-wrap">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-bold bg-blue-500/10 text-apple-blue border border-blue-500/20">
@@ -287,7 +371,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       </section>
 
       {/* ── INTERACTIVE WORKSPACE PREVIEW ── */}
-      <section className="space-y-6">
+      <section id="gt-modules" className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
@@ -315,18 +399,17 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                 key={f.id}
                 onClick={() => setActiveFeatureId(f.id)}
                 className={cn(
-                  "p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer",
-                  isSelected
-                    ? "apple-card border-lcars-orange ring-2 ring-lcars-orange/20 bg-card shadow-md scale-[1.02]"
-                    : "border-border bg-card/60 hover:bg-muted/70 text-muted-foreground hover:text-foreground"
+                  "p-3.5 rounded-2xl text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer",
+                  f.solid,
+                  isSelected ? "ring-2 ring-white/80 shadow-lg scale-[1.03]" : "opacity-75 hover:opacity-100 hover:scale-[1.015]"
                 )}
               >
-                <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center border", f.bg, f.border, f.color)}>
+                <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", f.iconBg)}>
                   <Icon className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-foreground line-clamp-1">{f.title.split('&')[0].trim()}</div>
-                  <div className="text-[10px] font-mono text-muted-foreground line-clamp-1">{f.badge.split('·')[0].trim()}</div>
+                  <div className="text-xs font-bold line-clamp-1">{f.title.split('&')[0].trim()}</div>
+                  <div className="text-[10px] font-mono opacity-70 line-clamp-1">{f.badge.split('·')[0].trim()}</div>
                 </div>
               </button>
             );
@@ -410,7 +493,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       </section>
 
       {/* ── VISUAL STYLE GALLERY ── */}
-      <section className="space-y-6">
+      <section id="gt-styles" className="space-y-6">
         <div className="px-1">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
             {isEn ? 'Visual Style Gallery' : 'Görsel Stil Galerisi'}
@@ -441,6 +524,9 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           ))}
         </div>
       </section>
+
+      </div>
+      {/* end main content column */}
 
     </div>
   );
