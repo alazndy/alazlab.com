@@ -39,6 +39,8 @@ import {
   SkipForward,
   Pause,
   Minus,
+  Plus,
+  SearchX,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
@@ -574,7 +576,18 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
     ? ['SUBSPACE AUDIO', 'BRIDGE AMBIENCE', 'WARP CORE HUM']
     : ['SUBSPACE AUDIO', 'KÖPRÜ ORTAM SESİ', 'WARP ÇEKİRDEĞİ UĞULTUSU'];
 
-  const [selectedModuleIdx, setSelectedModuleIdx] = useState(0);
+  const [modSearch, setModSearch] = useState('');
+  const [modGroupFilter, setModGroupFilter] = useState<CapGroup | null>(null);
+  const filteredModules = MODULE_CATALOG
+    .map((m, i) => ({ ...m, i }))
+    .filter((m) => modGroupFilter === null || m.group === modGroupFilter)
+    .filter((m) => {
+      if (!modSearch.trim()) return true;
+      const q = modSearch.toLowerCase();
+      const title = m.label.replace('\n', ' ').toLowerCase();
+      const desc = (isEn ? m.descEn : m.descTr).toLowerCase();
+      return title.includes(q) || desc.includes(q);
+    });
 
   // Card types + default icons copied from the app's own
   // ui/screens/CardRegistry.kt (MUSIC_CONTROL→Music, COMMS→Chat,
@@ -1047,72 +1060,103 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           </div>
         </div>
 
-        {/* MODULE CATALOG — the app's real CAPABILITY system (data/CardCapability.kt,
-            CardCapabilityRegistry), grouped exactly as CapabilityPickerScreen groups them:
-            PRIMARY/COMMUNICATION/ACTION/UTILITY, one shared color per group. Capabilities
-            in the same group with a ⚠ badge below can't stack on one card — the rest can,
-            same as picking multiple modules for one card in the real 5-tab builder. */}
-        <div className="pt-2">
-          <div className="px-1 mb-3">
+        {/* MODULE CATALOG — 1:1 with the app's real Capability Picker
+            (ui/screens/CapabilityPickerScreen.kt): a search field, an ALL + 4
+            group filter chip row, then a scrollable list of rows — NOT a grid
+            of solid-color tiles. Each row is a neutral surface with a small
+            circular icon badge tinted at the group's color (CapabilityPickerRow),
+            title + description, and a trailing add icon — color is used
+            sparingly (badge, chip, add icon), not as the row's whole fill. */}
+        <div className="pt-2 space-y-2.5">
+          <div className="px-1 mb-1">
             <h3 className="text-sm font-bold text-foreground">
-              {isEn ? 'Module Capabilities' : 'Modül Yetenekleri'}
+              {isEn ? 'Add a Module' : 'Modül Ekle'}
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {isEn
-                ? `All ${MODULE_CATALOG.length} capabilities a card can be built from, grouped exactly like the app's own Capability Picker. Several can stack on one card — a few pairs can't (marked below).`
-                : `Bir kartın inşa edilebileceği tüm ${MODULE_CATALOG.length} yetenek, uygulamanın kendi Yetenek Seçici'siyle aynı şekilde gruplanmış. Birkaçı aynı kartta üst üste yığılabilir — bazı çiftler ise yığılamaz (altta işaretli).`}
+              {filteredModules.length} {isEn ? 'capabilities' : 'yetenek'}
             </p>
           </div>
 
-          {(['PRIMARY', 'COMMUNICATION', 'ACTION', 'UTILITY'] as const).map((group) => {
-            const members = MODULE_CATALOG
-              .map((m, i) => ({ ...m, i }))
-              .filter((m) => m.group === group);
-            return (
-              <div key={group} className="mb-3.5">
-                <div className="text-[10px] font-black uppercase tracking-widest mb-1.5" style={{ color: GROUP_COLOR[group] }}>
-                  {isEn ? GROUP_LABEL[group].en : GROUP_LABEL[group].tr}
-                </div>
-                <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 gap-1.5">
-                  {members.map((m) => {
-                    const ModIcon = m.icon;
-                    const isSelected = m.i === selectedModuleIdx;
-                    return (
-                      <button
-                        key={m.label}
-                        type="button"
-                        onClick={() => setSelectedModuleIdx(m.i)}
-                        title={isEn ? m.descEn : m.descTr}
-                        style={cardStyleFor(recipe, GROUP_COLOR[m.group])}
-                        className={cn(
-                          "aspect-square w-full p-1.5 flex flex-col items-center justify-center gap-0.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
-                          isSelected && "ring-2 ring-white/80 scale-[1.05]"
-                        )}
-                      >
-                        <ModIcon className="w-3 h-3 shrink-0" />
-                        <div className="text-[7px] font-bold leading-[1.1] whitespace-pre-line">{m.label}</div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+          <input
+            type="text"
+            value={modSearch}
+            onChange={(e) => setModSearch(e.target.value)}
+            placeholder={isEn ? 'Search modules…' : 'Modül ara…'}
+            className="w-full px-3.5 py-2.5 rounded-xl bg-transparent border border-lcars-orange/40 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-lcars-orange transition-colors"
+          />
 
-          {/* Description (+ real default on-screen text / conflicts, when we have them) of whichever module is selected */}
-          <div className="mt-1 px-1 text-xs text-muted-foreground">
-            <span className="font-bold text-foreground">{MODULE_CATALOG[selectedModuleIdx].label.replace('\n', ' ')}</span>
-            {' — '}
-            {isEn ? MODULE_CATALOG[selectedModuleIdx].descEn : MODULE_CATALOG[selectedModuleIdx].descTr}
-            {MODULE_CATALOG[selectedModuleIdx].state && (
-              <span className="font-mono opacity-70"> ({MODULE_CATALOG[selectedModuleIdx].state})</span>
-            )}
-            {MODULE_CATALOG[selectedModuleIdx].conflicts && (
-              <div className="mt-1 text-[10px] font-mono opacity-70">
-                ⚠ {isEn ? "Can't combine with:" : 'Birlikte kullanılamaz:'} {MODULE_CATALOG[selectedModuleIdx].conflicts!.join(', ')}
-              </div>
-            )}
+          <div className="flex flex-wrap gap-1.5">
+            <button
+              type="button"
+              onClick={() => setModGroupFilter(null)}
+              className="px-3 py-1.5 rounded-full text-[10px] font-bold transition-colors"
+              style={{
+                color: modGroupFilter === null ? '#9a9aa2' : 'rgba(154,154,162,0.6)',
+                backgroundColor: modGroupFilter === null ? 'rgba(154,154,162,0.25)' : 'transparent',
+              }}
+            >
+              {isEn ? 'ALL' : 'TÜMÜ'}
+            </button>
+            {(['PRIMARY', 'COMMUNICATION', 'ACTION', 'UTILITY'] as const).map((g) => {
+              const active = modGroupFilter === g;
+              return (
+                <button
+                  key={g}
+                  type="button"
+                  onClick={() => setModGroupFilter((f) => (f === g ? null : g))}
+                  className="px-3 py-1.5 rounded-full text-[10px] font-bold transition-colors"
+                  style={{
+                    color: active ? GROUP_COLOR[g] : 'rgba(154,154,162,0.6)',
+                    backgroundColor: active ? `${GROUP_COLOR[g]}33` : 'transparent',
+                  }}
+                >
+                  {isEn ? GROUP_LABEL[g].en : GROUP_LABEL[g].tr}
+                </button>
+              );
+            })}
           </div>
+
+          {filteredModules.length === 0 ? (
+            <div className="flex flex-col items-center gap-2 py-8 text-center">
+              <SearchX className="w-5 h-5 text-lcars-orange" />
+              <div className="text-xs font-bold text-lcars-orange">
+                {isEn ? 'No modules found' : 'Modül bulunamadı'}
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-1.5">
+              {filteredModules.map((m) => {
+                const ModIcon = m.icon;
+                const accent = GROUP_COLOR[m.group];
+                return (
+                  <div
+                    key={m.label}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-card"
+                  >
+                    <div
+                      className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${accent}33` }}
+                    >
+                      <ModIcon className="w-[18px] h-[18px]" style={{ color: accent }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold text-foreground">{m.label.replace('\n', ' ')}</div>
+                      <div className="text-[10px] text-muted-foreground leading-snug">
+                        {isEn ? m.descEn : m.descTr}
+                        {m.state && <span className="font-mono opacity-70"> ({m.state})</span>}
+                      </div>
+                      {m.conflicts && (
+                        <div className="text-[9px] font-mono text-muted-foreground/70 mt-0.5">
+                          ⚠ {isEn ? "won't combine with" : 'birlikte kullanılamaz'}: {m.conflicts.join(', ')}
+                        </div>
+                      )}
+                    </div>
+                    <Plus className="w-4 h-4 shrink-0" style={{ color: accent }} />
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
