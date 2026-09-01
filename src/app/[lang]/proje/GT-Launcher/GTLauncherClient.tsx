@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, type CSSProperties } from 'react';
+import { useState, useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Smartphone,
@@ -30,17 +30,82 @@ interface GTLauncherClientProps {
   version: string;
 }
 
+// ── Full StyleRecipe model — ported field-for-field from the app's
+// ui/theme/StyleRecipe.kt + ui/theme/StyleLibrary.kt. Every slider/switch
+// below is a real, independently adjustable field in the app's own Style
+// Studio (ui/screens/style/StyleEffectGroups.kt) — same ranges, same
+// defaults, same enable toggles. Not a fixed set of 6 looks: a recipe.
+
+type CornerType = 'SHARP' | 'ROUNDED' | 'CUT' | 'PIXELATED';
+type FillGradient = 'NONE' | 'VERTICAL' | 'DIAGONAL';
+type BorderGradient = 'NONE' | 'SWEEP' | 'PULSE';
+type BorderColorSrc = 'ACCENT' | 'LIGHT' | 'CONTRAST';
+type ShadowDir = 'BR' | 'BL' | 'TR' | 'TL' | 'B' | 'R' | 'T' | 'L';
+type ShadowColorMode = 'CONTRAST_BG' | 'ACCENT' | 'DARK' | 'LIGHT';
+type PatternShapeT = 'DOT' | 'BLOCK';
 type StyleRecipeId = 'FLAT' | 'GLASS' | 'NEOBRUTALISM' | 'CLAYMORPHISM' | 'MINIMALISM' | 'NEON';
 
-// Values copied verbatim from the app's ui/theme/StyleLibrary.kt
-// (StyleRecipe.BUILTIN) — corner radius in dp, fill/border alpha 0..1.
-const STYLE_RECIPES: Record<StyleRecipeId, { corner: number; fillAlpha: number; borderPx: number; borderAlpha: number }> = {
-  FLAT: { corner: 14, fillAlpha: 1.00, borderPx: 1, borderAlpha: 0.50 },
-  GLASS: { corner: 22, fillAlpha: 0.18, borderPx: 1.5, borderAlpha: 0.90 },
-  NEOBRUTALISM: { corner: 4, fillAlpha: 0.92, borderPx: 3, borderAlpha: 0.96 },
-  CLAYMORPHISM: { corner: 28, fillAlpha: 0.92, borderPx: 0.6, borderAlpha: 0.20 },
-  MINIMALISM: { corner: 8, fillAlpha: 0.10, borderPx: 0.8, borderAlpha: 0.28 },
-  NEON: { corner: 14, fillAlpha: 0.08, borderPx: 1.5, borderAlpha: 0.95 },
+interface StyleRecipe {
+  cornerType: CornerType;
+  cornerSize: number;
+  fillEnabled: boolean;
+  fillAlpha: number;
+  fillGradient: FillGradient;
+  fillGradientStrength: number;
+  borderEnabled: boolean;
+  borderWidth: number;
+  borderAlpha: number;
+  borderGradient: BorderGradient;
+  borderColorSrc: BorderColorSrc;
+  hardShadowEnabled: boolean;
+  hardShadowSize: number;
+  hardShadowAlpha: number;
+  hardShadowDir: ShadowDir;
+  hardShadowColorMode: ShadowColorMode;
+  softShadowEnabled: boolean;
+  softShadowElevation: number;
+  softShadowAlpha: number;
+  glowEnabled: boolean;
+  glowRadius: number;
+  glowAlpha: number;
+  frost: number;
+  shimmer: number;
+  highlight: number;
+  innerGlow: number;
+  patternEnabled: boolean;
+  patternShape: PatternShapeT;
+  patternSize: number;
+  patternSpacing: number;
+  patternAlpha: number;
+  patternNoise: number;
+  patternColorSrc: BorderColorSrc;
+}
+
+// Mirrors StyleRecipe()'s Kotlin default constructor values.
+const RECIPE_DEFAULTS: StyleRecipe = {
+  cornerType: 'ROUNDED', cornerSize: 14,
+  fillEnabled: true, fillAlpha: 1, fillGradient: 'NONE', fillGradientStrength: 0,
+  borderEnabled: true, borderWidth: 1, borderAlpha: 0.5, borderGradient: 'NONE', borderColorSrc: 'ACCENT',
+  hardShadowEnabled: false, hardShadowSize: 8, hardShadowAlpha: 0.85, hardShadowDir: 'BR', hardShadowColorMode: 'CONTRAST_BG',
+  softShadowEnabled: false, softShadowElevation: 14, softShadowAlpha: 0.32,
+  glowEnabled: false, glowRadius: 8, glowAlpha: 0.80,
+  frost: 0, shimmer: 0, highlight: 0, innerGlow: 0,
+  patternEnabled: false, patternShape: 'DOT', patternSize: 3, patternSpacing: 6, patternAlpha: 0.35, patternNoise: 0, patternColorSrc: 'CONTRAST',
+};
+
+// Presets — only the overrides StyleLibrary.kt actually specifies; every
+// other field falls back to RECIPE_DEFAULTS, exactly as in Kotlin.
+const STYLE_PRESETS: Record<StyleRecipeId, StyleRecipe> = {
+  FLAT: { ...RECIPE_DEFAULTS, cornerSize: 14, fillAlpha: 1.0, fillGradient: 'VERTICAL', fillGradientStrength: 0, borderWidth: 1, borderAlpha: 0.50 },
+  GLASS: { ...RECIPE_DEFAULTS, cornerSize: 22, fillAlpha: 0.18, fillGradient: 'DIAGONAL', fillGradientStrength: 1, borderWidth: 1.5, borderAlpha: 0.90, borderGradient: 'SWEEP', frost: 0.22, shimmer: 0.13, innerGlow: 0.07 },
+  NEOBRUTALISM: { ...RECIPE_DEFAULTS, cornerSize: 4, fillAlpha: 0.92, borderWidth: 3, borderAlpha: 0.96, hardShadowEnabled: true },
+  CLAYMORPHISM: { ...RECIPE_DEFAULTS, cornerSize: 28, fillAlpha: 0.92, fillGradient: 'VERTICAL', borderWidth: 0.6, borderAlpha: 0.20, borderColorSrc: 'LIGHT', softShadowEnabled: true, highlight: 0.20, shimmer: 0.20 },
+  MINIMALISM: { ...RECIPE_DEFAULTS, cornerSize: 8, fillAlpha: 0.10, borderWidth: 0.8, borderAlpha: 0.28 },
+  NEON: { ...RECIPE_DEFAULTS, cornerSize: 14, fillAlpha: 0.08, borderWidth: 1.5, borderAlpha: 0.95, borderGradient: 'PULSE', glowEnabled: true },
+};
+
+const SHADOW_VEC: Record<ShadowDir, [number, number]> = {
+  BR: [1, 1], BL: [-1, 1], TR: [1, -1], TL: [-1, -1], B: [0, 1], R: [1, 0], T: [0, -1], L: [-1, 0],
 };
 
 function hexToRgb(hex: string) {
@@ -48,29 +113,165 @@ function hexToRgb(hex: string) {
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
 
-function cardStyleFor(recipeId: StyleRecipeId, hex: string): CSSProperties {
-  const r = STYLE_RECIPES[recipeId];
-  const { r: rr, g: gg, b: bb } = hexToRgb(hex);
-  const rgb = `${rr}, ${gg}, ${bb}`;
-  const isSolid = r.fillAlpha >= 0.5;
-  const style: CSSProperties = {
-    borderRadius: `${r.corner}px`,
-    backgroundColor: `rgba(${rgb}, ${r.fillAlpha})`,
-    border: `${r.borderPx}px solid rgba(${rgb}, ${r.borderAlpha})`,
-    color: isSolid ? '#000000' : hex,
-  };
-  if (recipeId === 'NEOBRUTALISM') {
-    style.boxShadow = `6px 6px 0 0 rgba(0,0,0,0.85)`;
-  } else if (recipeId === 'CLAYMORPHISM') {
-    style.backgroundImage = `linear-gradient(180deg, rgba(${rgb}, ${r.fillAlpha}), rgba(${rgb}, ${r.fillAlpha * 0.72}))`;
-    style.boxShadow = `0 14px 28px -8px rgba(0,0,0,0.32)`;
-  } else if (recipeId === 'GLASS') {
-    style.backgroundImage = `linear-gradient(135deg, rgba(${rgb}, ${r.fillAlpha}), rgba(${rgb}, ${r.fillAlpha * 0.4}))`;
-    style.backdropFilter = 'blur(10px)';
-  } else if (recipeId === 'NEON') {
-    style.boxShadow = `0 0 16px rgba(${rgb}, 0.80), 0 0 2px rgba(${rgb}, 0.9)`;
+function cardStyleFor(recipe: StyleRecipe, hex: string): CSSProperties {
+  const { r, g, b } = hexToRgb(hex);
+  const rgb = `${r}, ${g}, ${b}`;
+  const isSolid = recipe.fillEnabled && recipe.fillAlpha >= 0.5;
+  const style: CSSProperties = { color: isSolid ? '#000000' : hex, position: 'relative' };
+
+  // Corners
+  if (recipe.cornerType === 'SHARP') {
+    style.borderRadius = 0;
+  } else if (recipe.cornerType === 'ROUNDED') {
+    style.borderRadius = `${recipe.cornerSize}px`;
+  } else if (recipe.cornerType === 'CUT') {
+    const c = recipe.cornerSize;
+    style.clipPath = `polygon(${c}px 0, calc(100% - ${c}px) 0, 100% ${c}px, 100% calc(100% - ${c}px), calc(100% - ${c}px) 100%, ${c}px 100%, 0 calc(100% - ${c}px), 0 ${c}px)`;
+  } else {
+    const c = Math.max(4, recipe.cornerSize) / 2;
+    style.clipPath = `polygon(${c}px 0, calc(100% - ${c}px) 0, calc(100% - ${c}px) ${c}px, 100% ${c}px, 100% calc(100% - ${c}px), calc(100% - ${c}px) calc(100% - ${c}px), calc(100% - ${c}px) 100%, ${c}px 100%, ${c}px calc(100% - ${c}px), 0 calc(100% - ${c}px), 0 ${c}px, ${c}px ${c}px)`;
   }
+
+  // Fill + highlight + pattern, stacked as background-image layers (front → back)
+  const bgLayers: string[] = [];
+  const bgSizes: string[] = [];
+  if (recipe.highlight > 0) {
+    bgLayers.push(`linear-gradient(180deg, rgba(255,255,255,${recipe.highlight}), transparent 55%)`);
+    bgSizes.push('auto');
+  }
+  if (recipe.patternEnabled) {
+    const patRgb = recipe.patternColorSrc === 'LIGHT' ? '255,255,255' : recipe.patternColorSrc === 'ACCENT' ? rgb : '0,0,0';
+    const cell = recipe.patternSize * 2 + recipe.patternSpacing;
+    if (recipe.patternShape === 'DOT') {
+      bgLayers.push(`radial-gradient(circle, rgba(${patRgb}, ${recipe.patternAlpha}) ${recipe.patternSize}px, transparent ${recipe.patternSize}px)`);
+      bgSizes.push(`${cell}px ${cell}px`);
+    } else {
+      bgLayers.push(`linear-gradient(rgba(${patRgb}, ${recipe.patternAlpha}) ${recipe.patternSize}px, transparent ${recipe.patternSize}px)`);
+      bgSizes.push(`${cell}px ${cell}px`);
+      bgLayers.push(`linear-gradient(90deg, rgba(${patRgb}, ${recipe.patternAlpha}) ${recipe.patternSize}px, transparent ${recipe.patternSize}px)`);
+      bgSizes.push(`${cell}px ${cell}px`);
+    }
+  }
+  if (recipe.fillEnabled && recipe.fillGradient !== 'NONE') {
+    const endAlpha = recipe.fillGradient === 'VERTICAL'
+      ? recipe.fillAlpha * (1 - recipe.fillGradientStrength * 0.5)
+      : recipe.fillAlpha * 0.4;
+    const angle = recipe.fillGradient === 'VERTICAL' ? '180deg' : '135deg';
+    bgLayers.push(`linear-gradient(${angle}, rgba(${rgb}, ${recipe.fillAlpha}), rgba(${rgb}, ${endAlpha}))`);
+    bgSizes.push('auto');
+  }
+  if (bgLayers.length) {
+    style.backgroundImage = bgLayers.join(', ');
+    style.backgroundSize = bgSizes.join(', ');
+  }
+  style.backgroundColor = recipe.fillEnabled
+    ? `rgba(${rgb}, ${recipe.fillGradient === 'NONE' ? recipe.fillAlpha : 0})`
+    : 'transparent';
+
+  // Border
+  if (recipe.borderEnabled && recipe.borderWidth > 0) {
+    const borderRgb = recipe.borderColorSrc === 'LIGHT' ? '255, 255, 255' : recipe.borderColorSrc === 'CONTRAST' ? '0, 0, 0' : rgb;
+    style.border = `${recipe.borderWidth}px solid rgba(${borderRgb}, ${recipe.borderAlpha})`;
+  } else {
+    style.border = 'none';
+  }
+  if (recipe.borderGradient === 'PULSE') style.animation = 'gt-border-pulse 1.6s ease-in-out infinite';
+
+  // Shadows + glow — independently toggleable, combined into one box-shadow list
+  const shadows: string[] = [];
+  if (recipe.hardShadowEnabled) {
+    const [dx, dy] = SHADOW_VEC[recipe.hardShadowDir];
+    const shadowRgb = recipe.hardShadowColorMode === 'ACCENT' ? rgb : recipe.hardShadowColorMode === 'LIGHT' ? '255,255,255' : '0,0,0';
+    shadows.push(`${dx * recipe.hardShadowSize}px ${dy * recipe.hardShadowSize}px 0 0 rgba(${shadowRgb}, ${recipe.hardShadowAlpha})`);
+  }
+  if (recipe.softShadowEnabled) {
+    shadows.push(`0 ${recipe.softShadowElevation}px ${recipe.softShadowElevation * 2}px -8px rgba(0,0,0, ${recipe.softShadowAlpha})`);
+  }
+  if (recipe.glowEnabled) {
+    shadows.push(`0 0 ${recipe.glowRadius * 2}px rgba(${rgb}, ${recipe.glowAlpha})`);
+  }
+  if (recipe.innerGlow > 0) {
+    shadows.push(`inset 0 0 12px rgba(${rgb}, ${recipe.innerGlow})`);
+  }
+  if (shadows.length) style.boxShadow = shadows.join(', ');
+
+  if (recipe.frost > 0) style.backdropFilter = `blur(${recipe.frost * 24}px)`;
+
   return style;
+}
+
+function EngSlider({ label, value, min, max, step = 0.01, onChange, accent }: {
+  label: string; value: number; min: number; max: number; step?: number; onChange: (v: number) => void; accent: string;
+}) {
+  return (
+    <label className="block space-y-1">
+      <div className="text-[10px] font-mono text-muted-foreground">{label}</div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        className="w-full h-1 rounded-full cursor-pointer"
+        style={{ accentColor: accent }}
+      />
+    </label>
+  );
+}
+
+function EnumPills<T extends string>({ options, value, onChange, accent }: {
+  options: readonly T[]; value: T; onChange: (v: T) => void; accent: string;
+}) {
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {options.map((opt) => {
+        const active = opt === value;
+        return (
+          <button
+            key={opt}
+            type="button"
+            onClick={() => onChange(opt)}
+            className="px-2 py-1 rounded-md text-[9px] font-mono font-bold transition-all"
+            style={{
+              color: active ? accent : 'rgba(154,154,162,1)',
+              backgroundColor: active ? `${accent}33` : 'transparent',
+              border: `1px solid ${active ? accent : `${accent}40`}`,
+            }}
+          >
+            {opt}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function EffectGroup({ title, summary, accent, expanded, onToggle, master, onMasterChange, children }: {
+  title: string; summary: string; accent: string; expanded: boolean; onToggle: () => void;
+  master?: boolean; onMasterChange?: (v: boolean) => void; children: ReactNode;
+}) {
+  return (
+    <div className="rounded-xl p-3 space-y-2.5" style={{ border: `1px solid ${accent}33`, backgroundColor: 'rgba(255,255,255,0.02)' }}>
+      <button type="button" onClick={onToggle} className="w-full flex items-center gap-2 text-left cursor-pointer">
+        <span style={{ color: accent }} className="text-xs">{expanded ? '▾' : '▸'}</span>
+        <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: accent }}>{title}</span>
+        <span className="flex-1" />
+        {!expanded && <span className="text-[10px] text-muted-foreground">{summary}</span>}
+        {master !== undefined && onMasterChange && (
+          <input
+            type="checkbox"
+            checked={master}
+            onChange={(e) => onMasterChange(e.target.checked)}
+            onClick={(e) => e.stopPropagation()}
+            className="w-3.5 h-3.5"
+            style={{ accentColor: accent }}
+          />
+        )}
+      </button>
+      {expanded && <div className="space-y-3 pt-1">{children}</div>}
+    </div>
+  );
 }
 
 export function GTLauncherClient({ version }: GTLauncherClientProps) {
@@ -287,7 +488,18 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
     { id: 'minimal', recipeId: 'MINIMALISM' as const, name: 'MINIMAL', desc: isEn ? 'Near-invisible, text-only' : 'Neredeyse görünmez, sade metin' },
     { id: 'neon', recipeId: 'NEON' as const, name: 'NEON', desc: isEn ? 'Glowing outline on a dark surface' : 'Koyu yüzeyde parlayan kenarlık' },
   ];
-  const [activeStyleId, setActiveStyleId] = useState<StyleRecipeId>('FLAT');
+  const [activePresetId, setActivePresetId] = useState<StyleRecipeId>('FLAT');
+  const [recipe, setRecipe] = useState<StyleRecipe>(STYLE_PRESETS.FLAT);
+  const patch = (p: Partial<StyleRecipe>) => setRecipe((r) => ({ ...r, ...p }));
+  const studioAccent = '#FF9900';
+
+  const [shapeOpen, setShapeOpen] = useState(true);
+  const [fillOpen, setFillOpen] = useState(false);
+  const [borderOpen, setBorderOpen] = useState(false);
+  const [shadowOpen, setShadowOpen] = useState(false);
+  const [glowOpen, setGlowOpen] = useState(false);
+  const [textureOpen, setTextureOpen] = useState(false);
+  const [patternOpen, setPatternOpen] = useState(false);
 
   const demoCards: { label: string; hex: string; icon: typeof Play }[] = [
     { label: 'MEDIA', hex: '#FF9900', icon: Play },
@@ -536,27 +748,28 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
         </div>
       </section>
 
-      {/* ── VISUAL STYLE STUDIO — live, driven by the app's own StyleRecipe values ── */}
+      {/* ── VISUAL STYLE STUDIO — live, driven by the app's own StyleRecipe fields ── */}
       <section id="gt-styles" className="space-y-6">
+        <style>{`@keyframes gt-border-pulse{0%,100%{opacity:1}50%{opacity:.35}}`}</style>
         <div className="px-1">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
             {isEn ? 'Visual Style Studio' : 'Görsel Stil Stüdyosu'}
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             {isEn
-              ? 'Pick an engine — the demo cards re-render live using the same corner radius, fill and border values as the app.'
-              : 'Bir motor seç — demo kartlar, uygulamadaki aynı köşe yarıçapı, dolgu ve kenarlık değerleriyle anında yeniden çizilir.'}
+              ? 'The real Style Studio, ported: pick a preset, then every corner, fill, border, shadow, glow, texture and pattern control below is live and adjustable — same fields the app itself exposes.'
+              : 'Gerçek Stil Stüdyosu birebir taşındı: bir hazır ayar seç, ardından aşağıdaki her köşe, dolgu, kenarlık, gölge, parlama, doku ve desen kontrolü canlı ve ayarlanabilir — uygulamanın kendisinin sunduğu aynı alanlar.'}
           </p>
         </div>
 
-        {/* Style pill selector */}
+        {/* Preset pills — load a full recipe, then tweak freely below */}
         <div className="flex flex-wrap gap-2">
           {visualStyles.map((s) => {
-            const isActive = s.recipeId === activeStyleId;
+            const isActive = s.recipeId === activePresetId;
             return (
               <button
                 key={s.id}
-                onClick={() => setActiveStyleId(s.recipeId)}
+                onClick={() => { setActivePresetId(s.recipeId); setRecipe(STYLE_PRESETS[s.recipeId]); }}
                 className={cn(
                   "px-3.5 py-2 rounded-full text-xs font-bold font-mono transition-all",
                   isActive
@@ -570,38 +783,146 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           })}
         </div>
 
-        {/* Live demo panel */}
-        <div className="apple-card p-6 sm:p-8 space-y-6">
-          <div className="flex items-start justify-between flex-wrap gap-3">
-            <div>
-              <div className="text-sm font-bold text-foreground">
-                {visualStyles.find((s) => s.recipeId === activeStyleId)?.name}
-              </div>
-              <div className="text-xs text-muted-foreground mt-0.5">
-                {visualStyles.find((s) => s.recipeId === activeStyleId)?.desc}
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* Live preview */}
+          <div className="lg:col-span-5 apple-card p-6 sm:p-8 space-y-4 lg:sticky lg:top-4 self-start">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
+              {demoCards.map((c) => {
+                const CardIcon = c.icon;
+                return (
+                  <div
+                    key={c.label}
+                    style={cardStyleFor(recipe, c.hex)}
+                    className="aspect-square p-4 flex flex-col justify-between transition-[background-color,border-color,box-shadow,border-radius,clip-path] duration-300"
+                  >
+                    <CardIcon className="w-5 h-5" />
+                    <div className="text-sm font-extrabold tracking-wide">{c.label}</div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="flex gap-4 text-[10px] font-mono text-muted-foreground">
-              <span>{isEn ? 'CORNER' : 'KÖŞE'} {STYLE_RECIPES[activeStyleId].corner}dp</span>
-              <span>{isEn ? 'FILL' : 'DOLGU'} {Math.round(STYLE_RECIPES[activeStyleId].fillAlpha * 100)}%</span>
-              <span>{isEn ? 'BORDER' : 'KENARLIK'} {STYLE_RECIPES[activeStyleId].borderPx}px</span>
+            <div className="text-[10px] font-mono text-muted-foreground text-center">
+              {isEn ? 'Live preview — every control on the right updates it instantly' : 'Canlı önizleme — sağdaki her kontrol anında yansır'}
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
-            {demoCards.map((c) => {
-              const CardIcon = c.icon;
-              return (
-                <div
-                  key={c.label}
-                  style={cardStyleFor(activeStyleId, c.hex)}
-                  className="aspect-square p-4 flex flex-col justify-between transition-[background-color,border-color,box-shadow,border-radius] duration-300"
-                >
-                  <CardIcon className="w-5 h-5" />
-                  <div className="text-sm font-extrabold tracking-wide">{c.label}</div>
-                </div>
-              );
-            })}
+          {/* Effect groups — direct port of ui/screens/style/StyleEffectGroups.kt */}
+          <div className="lg:col-span-7 space-y-2.5">
+            <EffectGroup
+              title={isEn ? 'SHAPE' : 'ŞEKİL'}
+              summary={`${recipe.cornerType} ${recipe.cornerSize}dp`}
+              accent={studioAccent}
+              expanded={shapeOpen}
+              onToggle={() => setShapeOpen((v) => !v)}
+            >
+              <EnumPills options={['SHARP', 'ROUNDED', 'CUT', 'PIXELATED'] as const} value={recipe.cornerType} onChange={(v) => patch({ cornerType: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'CORNER SIZE' : 'KÖŞE BOYUTU'}: ${recipe.cornerSize}dp`} value={recipe.cornerSize} min={0} max={40} step={1} onChange={(v) => patch({ cornerSize: v })} accent={studioAccent} />
+            </EffectGroup>
+
+            <EffectGroup
+              title={isEn ? 'FILL' : 'DOLGU'}
+              summary={`${Math.round(recipe.fillAlpha * 100)}% ${recipe.fillGradient}`}
+              accent={studioAccent}
+              expanded={fillOpen}
+              onToggle={() => setFillOpen((v) => !v)}
+              master={recipe.fillEnabled}
+              onMasterChange={(v) => patch({ fillEnabled: v })}
+            >
+              <EngSlider label={`${isEn ? 'FILL OPACITY' : 'DOLGU OPAKLIĞI'}: ${Math.round(recipe.fillAlpha * 100)}%`} value={recipe.fillAlpha} min={0} max={1} onChange={(v) => patch({ fillAlpha: v })} accent={studioAccent} />
+              <EnumPills options={['NONE', 'VERTICAL', 'DIAGONAL'] as const} value={recipe.fillGradient} onChange={(v) => patch({ fillGradient: v })} accent={studioAccent} />
+              {recipe.fillGradient === 'VERTICAL' && (
+                <EngSlider label={`${isEn ? 'TONE SHIFT' : 'TON KAYMASI'}: ${Math.round(recipe.fillGradientStrength * 100)}%`} value={recipe.fillGradientStrength} min={0} max={1} onChange={(v) => patch({ fillGradientStrength: v })} accent={studioAccent} />
+              )}
+            </EffectGroup>
+
+            <EffectGroup
+              title={isEn ? 'BORDER' : 'KENARLIK'}
+              summary={`${recipe.borderWidth}px ${Math.round(recipe.borderAlpha * 100)}%`}
+              accent={studioAccent}
+              expanded={borderOpen}
+              onToggle={() => setBorderOpen((v) => !v)}
+              master={recipe.borderEnabled}
+              onMasterChange={(v) => patch({ borderEnabled: v })}
+            >
+              <EngSlider label={`${isEn ? 'WIDTH' : 'KALINLIK'}: ${recipe.borderWidth.toFixed(1)}px`} value={recipe.borderWidth} min={0} max={6} step={0.1} onChange={(v) => patch({ borderWidth: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'OPACITY' : 'OPAKLIK'}: ${Math.round(recipe.borderAlpha * 100)}%`} value={recipe.borderAlpha} min={0} max={1} onChange={(v) => patch({ borderAlpha: v })} accent={studioAccent} />
+              <EnumPills options={['NONE', 'SWEEP', 'PULSE'] as const} value={recipe.borderGradient} onChange={(v) => patch({ borderGradient: v })} accent={studioAccent} />
+              <EnumPills options={['ACCENT', 'LIGHT', 'CONTRAST'] as const} value={recipe.borderColorSrc} onChange={(v) => patch({ borderColorSrc: v })} accent={studioAccent} />
+            </EffectGroup>
+
+            <EffectGroup
+              title={isEn ? 'SHADOW' : 'GÖLGE'}
+              summary={[recipe.hardShadowEnabled && (isEn ? 'hard' : 'sert'), recipe.softShadowEnabled && (isEn ? 'soft' : 'yumuşak')].filter(Boolean).join(' + ') || (isEn ? 'off' : 'kapalı')}
+              accent={studioAccent}
+              expanded={shadowOpen}
+              onToggle={() => setShadowOpen((v) => !v)}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono text-muted-foreground">{isEn ? 'HARD SHADOW' : 'SERT GÖLGE'}</span>
+                <input type="checkbox" checked={recipe.hardShadowEnabled} onChange={(e) => patch({ hardShadowEnabled: e.target.checked })} className="w-3.5 h-3.5" style={{ accentColor: studioAccent }} />
+              </div>
+              {recipe.hardShadowEnabled && (
+                <>
+                  <EngSlider label={`${isEn ? 'SIZE' : 'BOYUT'}: ${recipe.hardShadowSize}dp`} value={recipe.hardShadowSize} min={2} max={20} step={1} onChange={(v) => patch({ hardShadowSize: v })} accent={studioAccent} />
+                  <EngSlider label={`${isEn ? 'INTENSITY' : 'YOĞUNLUK'}: ${Math.round(recipe.hardShadowAlpha * 100)}%`} value={recipe.hardShadowAlpha} min={0.1} max={1} onChange={(v) => patch({ hardShadowAlpha: v })} accent={studioAccent} />
+                  <EnumPills options={['BR', 'BL', 'TR', 'TL', 'B', 'R', 'T', 'L'] as const} value={recipe.hardShadowDir} onChange={(v) => patch({ hardShadowDir: v })} accent={studioAccent} />
+                  <EnumPills options={['CONTRAST_BG', 'ACCENT', 'DARK', 'LIGHT'] as const} value={recipe.hardShadowColorMode} onChange={(v) => patch({ hardShadowColorMode: v })} accent={studioAccent} />
+                </>
+              )}
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-[10px] font-mono text-muted-foreground">{isEn ? 'SOFT SHADOW' : 'YUMUŞAK GÖLGE'}</span>
+                <input type="checkbox" checked={recipe.softShadowEnabled} onChange={(e) => patch({ softShadowEnabled: e.target.checked })} className="w-3.5 h-3.5" style={{ accentColor: studioAccent }} />
+              </div>
+              {recipe.softShadowEnabled && (
+                <>
+                  <EngSlider label={`${isEn ? 'ELEVATION' : 'YÜKSEKLİK'}: ${recipe.softShadowElevation}dp`} value={recipe.softShadowElevation} min={0} max={28} step={1} onChange={(v) => patch({ softShadowElevation: v })} accent={studioAccent} />
+                  <EngSlider label={`${isEn ? 'INTENSITY' : 'YOĞUNLUK'}: ${Math.round(recipe.softShadowAlpha * 100)}%`} value={recipe.softShadowAlpha} min={0.05} max={0.7} onChange={(v) => patch({ softShadowAlpha: v })} accent={studioAccent} />
+                </>
+              )}
+            </EffectGroup>
+
+            <EffectGroup
+              title={isEn ? 'GLOW' : 'PARLAMA'}
+              summary={`${recipe.glowRadius}dp ${Math.round(recipe.glowAlpha * 100)}%`}
+              accent={studioAccent}
+              expanded={glowOpen}
+              onToggle={() => setGlowOpen((v) => !v)}
+              master={recipe.glowEnabled}
+              onMasterChange={(v) => patch({ glowEnabled: v })}
+            >
+              <EngSlider label={`${isEn ? 'RADIUS' : 'YARIÇAP'}: ${recipe.glowRadius}dp`} value={recipe.glowRadius} min={2} max={20} step={1} onChange={(v) => patch({ glowRadius: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'INTENSITY' : 'YOĞUNLUK'}: ${Math.round(recipe.glowAlpha * 100)}%`} value={recipe.glowAlpha} min={0.2} max={1} onChange={(v) => patch({ glowAlpha: v })} accent={studioAccent} />
+            </EffectGroup>
+
+            <EffectGroup
+              title={isEn ? 'TEXTURE' : 'DOKU'}
+              summary={isEn ? 'frost / shimmer / highlight' : 'buz / parıltı / vurgu'}
+              accent={studioAccent}
+              expanded={textureOpen}
+              onToggle={() => setTextureOpen((v) => !v)}
+            >
+              <EngSlider label={`${isEn ? 'FROST' : 'BUZ'}: ${Math.round(recipe.frost * 100)}%`} value={recipe.frost} min={0} max={0.6} onChange={(v) => patch({ frost: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'SHIMMER' : 'PARILTI'}: ${Math.round(recipe.shimmer * 100)}%`} value={recipe.shimmer} min={0} max={0.4} onChange={(v) => patch({ shimmer: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'HIGHLIGHT' : 'VURGU'}: ${Math.round(recipe.highlight * 100)}%`} value={recipe.highlight} min={0} max={0.5} onChange={(v) => patch({ highlight: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'INNER GLOW' : 'İÇ PARLAMA'}: ${Math.round(recipe.innerGlow * 100)}%`} value={recipe.innerGlow} min={0} max={0.5} onChange={(v) => patch({ innerGlow: v })} accent={studioAccent} />
+            </EffectGroup>
+
+            <EffectGroup
+              title={isEn ? 'PATTERN' : 'DESEN'}
+              summary={recipe.patternEnabled ? recipe.patternShape : (isEn ? 'off' : 'kapalı')}
+              accent={studioAccent}
+              expanded={patternOpen}
+              onToggle={() => setPatternOpen((v) => !v)}
+              master={recipe.patternEnabled}
+              onMasterChange={(v) => patch({ patternEnabled: v })}
+            >
+              <EnumPills options={['DOT', 'BLOCK'] as const} value={recipe.patternShape} onChange={(v) => patch({ patternShape: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'SIZE' : 'BOYUT'}: ${recipe.patternSize}dp`} value={recipe.patternSize} min={1} max={12} step={1} onChange={(v) => patch({ patternSize: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'SPACING' : 'ARALIK'}: ${recipe.patternSpacing}dp`} value={recipe.patternSpacing} min={0} max={20} step={1} onChange={(v) => patch({ patternSpacing: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'OPACITY' : 'OPAKLIK'}: ${Math.round(recipe.patternAlpha * 100)}%`} value={recipe.patternAlpha} min={0} max={1} onChange={(v) => patch({ patternAlpha: v })} accent={studioAccent} />
+              <EngSlider label={`${isEn ? 'NOISE' : 'GÜRÜLTÜ'}: ${Math.round(recipe.patternNoise * 100)}%`} value={recipe.patternNoise} min={0} max={0.5} onChange={(v) => patch({ patternNoise: v })} accent={studioAccent} />
+              <EnumPills options={['ACCENT', 'LIGHT', 'CONTRAST'] as const} value={recipe.patternColorSrc} onChange={(v) => patch({ patternColorSrc: v })} accent={studioAccent} />
+            </EffectGroup>
           </div>
         </div>
       </section>
