@@ -134,27 +134,30 @@ const SHADOW_VEC: Record<ShadowDir, [number, number]> = {
 // module stays icon+label only rather than inventing content we haven't seen.
 interface ModuleCatalogEntry {
   label: string; hex: string; icon: typeof Music; descTr: string; descEn: string; state?: string;
+  // Real defaultGridSpanX/Y from CardRegistry.kt — the actual footprint each
+  // card occupies on the app's grid (class default is 3x2 when unspecified).
+  spanX: number; spanY: number;
 }
 const MODULE_CATALOG: ModuleCatalogEntry[] = [
-  { label: 'APP\nLAUNCHER', hex: '#FF9900', icon: LayoutGrid, descTr: 'Tek bir uygulamayı doğrudan başlatan hızlı erişim kartı.', descEn: 'Launches a single app directly with one tap.' },
-  { label: 'APP\nDRAWER', hex: '#9999CC', icon: Grid3x3, descTr: 'Tüm uygulamaları alfabetik Slide List çekmecesinde listeler.', descEn: 'Lists every app in the alphabetical Slide List drawer.' },
-  { label: 'MEDIA\nCONTROL', hex: '#FF7700', icon: Music, descTr: 'Aktif medya oturumunu kontrol eder: çal/duraklat, önceki/sonraki.', descEn: 'Controls the active media session: play/pause, previous/next.' },
-  { label: 'IMAGE\nLOGS', hex: '#CC99CC', icon: Compass, descTr: 'Galeri fotoğraflarından dönen bir görsel karuseli gösterir.', descEn: 'Rotates through your gallery photos as a carousel.' },
-  { label: 'SYSTEM\nSTATUS', hex: '#FFCC66', icon: Wrench, descTr: 'RAM, depolama ve pil durumunu canlı izler.', descEn: 'Live RAM, storage and battery telemetry.' },
-  { label: 'ANDROID\nWIDGET', hex: '#9977AA', icon: LayoutTemplate, descTr: "Android'in yerel AppWidgetHost'u üzerinden üçüncü parti widget barındırır.", descEn: 'Hosts a native third-party widget via AppWidgetHost.' },
-  { label: 'NOTIF\nCARD', hex: '#00D4FF', icon: Bell, descTr: 'Son bildirimleri rozet sayaçlarıyla yansıtır.', descEn: 'Mirrors recent notifications with badge counts.' },
-  { label: 'COMM\nLINKS', hex: '#9999CC', icon: MessageSquare, descTr: 'Arama, mesaj ve haberleşme uygulamalarına tek dokunuşluk erişim.', descEn: 'One-tap access to calling, messaging and comms apps.' },
-  { label: 'CAMERA\nCONTROL', hex: '#14B8A6', icon: Camera, descTr: '8 hızlı çekim moduyla doğrudan kameraya geçer.', descEn: 'Jumps straight into the camera with 8 quick capture modes.' },
-  { label: 'DECK\nROTATOR', hex: '#FF7700', icon: LayoutGrid, descTr: 'Birden çok kartı 3D bir yığın halinde döndürerek gösterir.', descEn: 'Rotates several cards through a 3D stack.' },
-  { label: 'CHRONO\nMETER', hex: '#FFCC66', icon: Clock, descTr: 'Dijital saat ve stardate gösterge kartı.', descEn: 'Digital clock with a stardate readout.' },
-  { label: 'WEATHER', hex: '#4DA6FF', icon: Cloud, descTr: 'Konum bazlı sıcaklık ve atmosfer telemetrisi.', descEn: 'Location-based temperature and atmosphere telemetry.', state: '--°C PENDING' },
-  { label: 'CALENDAR', hex: '#9999CC', icon: Calendar, descTr: 'Yaklaşan ajanda etkinliklerini listeler.', descEn: 'Lists upcoming calendar events.' },
-  { label: 'COUNTDOWN\nTIMER', hex: '#FF7700', icon: Timer, descTr: 'Geri sayım zamanlayıcısı başlatır.', descEn: 'Starts a countdown timer.' },
-  { label: 'QUICK\nNOTE', hex: '#FFFF99', icon: StickyNote, descTr: 'Hızlı, taktiksel not almak için serbest metin alanı.', descEn: 'A free-text field for a quick tactical note.', state: 'This is a fast Notes card' },
-  { label: 'FLASH\nLIGHT', hex: '#FFDD44', icon: Flashlight, descTr: 'Cihaz fenerini tek dokunuşla açar/kapatır.', descEn: 'Toggles the device flashlight with one tap.' },
-  { label: 'STEP\nCOUNTER', hex: '#00CC00', icon: Footprints, descTr: 'Donanımsal adımsayar verisini gösterir.', descEn: 'Reads the hardware step-counter sensor.' },
-  { label: 'FINANCE', hex: '#00CC00', icon: TrendingUp, descTr: 'Canlı kripto/hisse fiyatı ve kâr-zarar takibi.', descEn: 'Live crypto/stock price and P&L tracking.', state: 'DEMO: —' },
-  { label: 'APP\nLIST', hex: '#9333EA', icon: LayoutGrid, descTr: 'Seçilen uygulamaları dikey bir liste kartında gösterir.', descEn: 'Shows selected apps as a vertical list card.' },
+  { label: 'APP\nLAUNCHER', hex: '#FF9900', icon: LayoutGrid, spanX: 3, spanY: 2, descTr: 'Tek bir uygulamayı doğrudan başlatan hızlı erişim kartı.', descEn: 'Launches a single app directly with one tap.' },
+  { label: 'APP\nDRAWER', hex: '#9999CC', icon: Grid3x3, spanX: 2, spanY: 2, descTr: 'Tüm uygulamaları alfabetik Slide List çekmecesinde listeler.', descEn: 'Lists every app in the alphabetical Slide List drawer.' },
+  { label: 'MEDIA\nCONTROL', hex: '#FF7700', icon: Music, spanX: 3, spanY: 2, descTr: 'Aktif medya oturumunu kontrol eder: çal/duraklat, önceki/sonraki.', descEn: 'Controls the active media session: play/pause, previous/next.' },
+  { label: 'IMAGE\nLOGS', hex: '#CC99CC', icon: Compass, spanX: 3, spanY: 2, descTr: 'Galeri fotoğraflarından dönen bir görsel karuseli gösterir.', descEn: 'Rotates through your gallery photos as a carousel.' },
+  { label: 'SYSTEM\nSTATUS', hex: '#FFCC66', icon: Wrench, spanX: 3, spanY: 2, descTr: 'RAM, depolama ve pil durumunu canlı izler.', descEn: 'Live RAM, storage and battery telemetry.' },
+  { label: 'ANDROID\nWIDGET', hex: '#9977AA', icon: LayoutTemplate, spanX: 3, spanY: 2, descTr: "Android'in yerel AppWidgetHost'u üzerinden üçüncü parti widget barındırır.", descEn: 'Hosts a native third-party widget via AppWidgetHost.' },
+  { label: 'NOTIF\nCARD', hex: '#00D4FF', icon: Bell, spanX: 3, spanY: 3, descTr: 'Son bildirimleri rozet sayaçlarıyla yansıtır.', descEn: 'Mirrors recent notifications with badge counts.' },
+  { label: 'COMM\nLINKS', hex: '#9999CC', icon: MessageSquare, spanX: 3, spanY: 2, descTr: 'Arama, mesaj ve haberleşme uygulamalarına tek dokunuşluk erişim.', descEn: 'One-tap access to calling, messaging and comms apps.' },
+  { label: 'CAMERA\nCONTROL', hex: '#14B8A6', icon: Camera, spanX: 2, spanY: 2, descTr: '8 hızlı çekim moduyla doğrudan kameraya geçer.', descEn: 'Jumps straight into the camera with 8 quick capture modes.' },
+  { label: 'DECK\nROTATOR', hex: '#FF7700', icon: LayoutGrid, spanX: 3, spanY: 2, descTr: 'Birden çok kartı 3D bir yığın halinde döndürerek gösterir.', descEn: 'Rotates several cards through a 3D stack.' },
+  { label: 'CHRONO\nMETER', hex: '#FFCC66', icon: Clock, spanX: 2, spanY: 2, descTr: 'Dijital saat ve stardate gösterge kartı.', descEn: 'Digital clock with a stardate readout.' },
+  { label: 'WEATHER', hex: '#4DA6FF', icon: Cloud, spanX: 2, spanY: 2, descTr: 'Konum bazlı sıcaklık ve atmosfer telemetrisi.', descEn: 'Location-based temperature and atmosphere telemetry.', state: '--°C PENDING' },
+  { label: 'CALENDAR', hex: '#9999CC', icon: Calendar, spanX: 3, spanY: 3, descTr: 'Yaklaşan ajanda etkinliklerini listeler.', descEn: 'Lists upcoming calendar events.' },
+  { label: 'COUNTDOWN\nTIMER', hex: '#FF7700', icon: Timer, spanX: 2, spanY: 2, descTr: 'Geri sayım zamanlayıcısı başlatır.', descEn: 'Starts a countdown timer.' },
+  { label: 'QUICK\nNOTE', hex: '#FFFF99', icon: StickyNote, spanX: 3, spanY: 3, descTr: 'Hızlı, taktiksel not almak için serbest metin alanı.', descEn: 'A free-text field for a quick tactical note.', state: 'This is a fast Notes card' },
+  { label: 'FLASH\nLIGHT', hex: '#FFDD44', icon: Flashlight, spanX: 2, spanY: 2, descTr: 'Cihaz fenerini tek dokunuşla açar/kapatır.', descEn: 'Toggles the device flashlight with one tap.' },
+  { label: 'STEP\nCOUNTER', hex: '#00CC00', icon: Footprints, spanX: 2, spanY: 2, descTr: 'Donanımsal adımsayar verisini gösterir.', descEn: 'Reads the hardware step-counter sensor.' },
+  { label: 'FINANCE', hex: '#00CC00', icon: TrendingUp, spanX: 3, spanY: 2, descTr: 'Canlı kripto/hisse fiyatı ve kâr-zarar takibi.', descEn: 'Live crypto/stock price and P&L tracking.', state: 'DEMO: —' },
+  { label: 'APP\nLIST', hex: '#9333EA', icon: LayoutGrid, spanX: 3, spanY: 4, descTr: 'Seçilen uygulamaları dikey bir liste kartında gösterir.', descEn: 'Shows selected apps as a vertical list card.' },
 ];
 
 function hexToRgb(hex: string) {
@@ -1045,7 +1048,9 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                 : `Kart üreticisinin geldiği tüm ${MODULE_CATALOG.length} modül tipi — uygulamanın kendi modül seçicisiyle aynı etiket, ikon ve vurgu renkleri.`}
             </p>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5">
+          {/* items-start: each tile keeps its own real spanX/spanY aspect ratio
+              instead of stretching to match the tallest tile in its row. */}
+          <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 items-start gap-1.5">
             {MODULE_CATALOG.map((m, i) => {
               const ModIcon = m.icon;
               const isSelected = i === selectedModuleIdx;
@@ -1055,25 +1060,27 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                   type="button"
                   onClick={() => setSelectedModuleIdx(i)}
                   title={isEn ? m.descEn : m.descTr}
-                  style={cardStyleFor(recipe, m.hex)}
+                  style={{ ...cardStyleFor(recipe, m.hex), aspectRatio: `${m.spanX} / ${m.spanY}` }}
                   className={cn(
-                    "aspect-square p-2.5 flex flex-col items-center justify-center gap-1 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
-                    isSelected && "ring-2 ring-white/80 scale-[1.04]"
+                    "w-full p-1.5 flex flex-col items-center justify-center gap-0.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
+                    isSelected && "ring-2 ring-white/80 scale-[1.05]"
                   )}
                 >
-                  <ModIcon className="w-4 h-4 shrink-0" />
-                  <div className="text-[9px] font-bold leading-tight whitespace-pre-line">{m.label}</div>
-                  {m.state && <div className="text-[7px] font-mono opacity-70 leading-tight">{m.state}</div>}
+                  <ModIcon className="w-3 h-3 shrink-0" />
+                  <div className="text-[7px] font-bold leading-[1.1] whitespace-pre-line">{m.label}</div>
                 </button>
               );
             })}
           </div>
 
-          {/* Description of whichever module is selected */}
+          {/* Description (+ real default on-screen text, when we have it) of whichever module is selected */}
           <div className="mt-3 px-1 text-xs text-muted-foreground">
             <span className="font-bold text-foreground">{MODULE_CATALOG[selectedModuleIdx].label.replace('\n', ' ')}</span>
             {' — '}
             {isEn ? MODULE_CATALOG[selectedModuleIdx].descEn : MODULE_CATALOG[selectedModuleIdx].descTr}
+            {MODULE_CATALOG[selectedModuleIdx].state && (
+              <span className="font-mono opacity-70"> ({MODULE_CATALOG[selectedModuleIdx].state})</span>
+            )}
           </div>
         </div>
       </section>
