@@ -20,8 +20,9 @@ import {
   RotateCcw,
   Image as ImageIcon,
   MessageSquare,
-  Wallet,
-  Car,
+  Music,
+  TrendingUp,
+  Cloud,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
@@ -501,11 +502,14 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   const [textureOpen, setTextureOpen] = useState(false);
   const [patternOpen, setPatternOpen] = useState(false);
 
-  const demoCards: { label: string; hex: string; icon: typeof Play }[] = [
-    { label: 'MEDIA', hex: '#FF9900', icon: Play },
+  // Card types + default icons copied from the app's own
+  // ui/screens/CardRegistry.kt (MUSIC_CONTROL→Music, COMMS→Chat,
+  // FINANCE→TrendingUp, WEATHER→Weather/Cloud) — not generic icon picks.
+  const demoCards: { label: string; hex: string; icon: typeof Music }[] = [
+    { label: 'MEDIA', hex: '#FF9900', icon: Music },
     { label: 'COMM', hex: '#FF7700', icon: MessageSquare },
-    { label: 'FINANCE', hex: '#9999CC', icon: Wallet },
-    { label: 'NAV', hex: '#FFCC66', icon: Car },
+    { label: 'FINANCE', hex: '#9999CC', icon: TrendingUp },
+    { label: 'WEATHER', hex: '#FFCC66', icon: Cloud },
   ];
 
   return (
