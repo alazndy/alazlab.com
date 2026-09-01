@@ -23,6 +23,21 @@ import {
   Music,
   TrendingUp,
   Cloud,
+  LayoutGrid,
+  Grid3x3,
+  Wrench,
+  LayoutTemplate,
+  Bell,
+  Camera,
+  Calendar,
+  Timer,
+  StickyNote,
+  Flashlight,
+  Footprints,
+  Clock,
+  SkipBack,
+  SkipForward,
+  Pause,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
@@ -108,6 +123,33 @@ const STYLE_PRESETS: Record<StyleRecipeId, StyleRecipe> = {
 const SHADOW_VEC: Record<ShadowDir, [number, number]> = {
   BR: [1, 1], BL: [-1, 1], TR: [1, -1], TL: [-1, -1], B: [0, 1], R: [1, 0], T: [0, -1], L: [-1, 0],
 };
+
+// The app's full module catalog — ui/screens/CardRegistry.kt (CardRegistry.all),
+// its single source of truth for card-type metadata ("Adding a new card type =
+// add one CardDescriptor here"). gridLabel, accentColor and defaultIconName are
+// copied verbatim (accentColor resolved from ui/theme/GtColors.kt); iconName is
+// mapped to its closest Lucide equivalent since the app draws Material icons.
+const MODULE_CATALOG: { label: string; hex: string; icon: typeof Music }[] = [
+  { label: 'APP\nLAUNCHER', hex: '#FF9900', icon: LayoutGrid },
+  { label: 'APP\nDRAWER', hex: '#9999CC', icon: Grid3x3 },
+  { label: 'MEDIA\nCONTROL', hex: '#FF7700', icon: Music },
+  { label: 'IMAGE\nLOGS', hex: '#CC99CC', icon: Compass },
+  { label: 'SYSTEM\nSTATUS', hex: '#FFCC66', icon: Wrench },
+  { label: 'ANDROID\nWIDGET', hex: '#9977AA', icon: LayoutTemplate },
+  { label: 'NOTIF\nCARD', hex: '#00D4FF', icon: Bell },
+  { label: 'COMM\nLINKS', hex: '#9999CC', icon: MessageSquare },
+  { label: 'CAMERA\nCONTROL', hex: '#14B8A6', icon: Camera },
+  { label: 'DECK\nROTATOR', hex: '#FF7700', icon: LayoutGrid },
+  { label: 'CHRONO\nMETER', hex: '#FFCC66', icon: Clock },
+  { label: 'WEATHER', hex: '#4DA6FF', icon: Cloud },
+  { label: 'CALENDAR', hex: '#9999CC', icon: Calendar },
+  { label: 'COUNTDOWN\nTIMER', hex: '#FF7700', icon: Timer },
+  { label: 'QUICK\nNOTE', hex: '#FFFF99', icon: StickyNote },
+  { label: 'FLASH\nLIGHT', hex: '#FFDD44', icon: Flashlight },
+  { label: 'STEP\nCOUNTER', hex: '#00CC00', icon: Footprints },
+  { label: 'FINANCE', hex: '#00CC00', icon: TrendingUp },
+  { label: 'APP\nLIST', hex: '#9333EA', icon: LayoutGrid },
+];
 
 function hexToRgb(hex: string) {
   const n = parseInt(hex.slice(1), 16);
@@ -502,11 +544,19 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   const [textureOpen, setTextureOpen] = useState(false);
   const [patternOpen, setPatternOpen] = useState(false);
 
+  // Media card state — the app's MusicControlPlugin exposes real
+  // onPlayPause/onNext/onPrevious controls (CardPlugins.kt); mirrored here
+  // as an actually-clickable transport instead of a static icon.
+  const [mediaPlaying, setMediaPlaying] = useState(false);
+  const [mediaTrack, setMediaTrack] = useState(0);
+  const demoTracks = isEn
+    ? ['SUBSPACE AUDIO', 'BRIDGE AMBIENCE', 'WARP CORE HUM']
+    : ['SUBSPACE AUDIO', 'KÖPRÜ ORTAM SESİ', 'WARP ÇEKİRDEĞİ UĞULTUSU'];
+
   // Card types + default icons copied from the app's own
   // ui/screens/CardRegistry.kt (MUSIC_CONTROL→Music, COMMS→Chat,
   // FINANCE→TrendingUp, WEATHER→Weather/Cloud) — not generic icon picks.
   const demoCards: { label: string; hex: string; icon: typeof Music }[] = [
-    { label: 'MEDIA', hex: '#FF9900', icon: Music },
     { label: 'COMM', hex: '#FF7700', icon: MessageSquare },
     { label: 'FINANCE', hex: '#9999CC', icon: TrendingUp },
     { label: 'WEATHER', hex: '#FFCC66', icon: Cloud },
@@ -791,6 +841,50 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           {/* Live preview */}
           <div className="lg:col-span-5 apple-card p-6 sm:p-8 space-y-4 lg:sticky lg:top-4 self-start">
             <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
+              {/* MEDIA — 1:1 with the app's real MusicControlPlugin card:
+                  a play/pause transport plus prev/next, not a static icon. */}
+              <div
+                style={cardStyleFor(recipe, '#FF9900')}
+                className="aspect-square p-3 flex flex-col justify-between transition-[background-color,border-color,box-shadow,border-radius,clip-path] duration-300"
+              >
+                <div className="flex items-start justify-between gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setMediaPlaying((p) => !p)}
+                    aria-label={mediaPlaying ? (isEn ? 'Pause' : 'Duraklat') : (isEn ? 'Play' : 'Oynat')}
+                    className="w-8 h-8 rounded-lg flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors text-white"
+                  >
+                    {mediaPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                  </button>
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setMediaTrack((t) => (t + demoTracks.length - 1) % demoTracks.length)}
+                      aria-label={isEn ? 'Previous track' : 'Önceki parça'}
+                      className="w-6 h-6 rounded-md flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors text-white"
+                    >
+                      <SkipBack className="w-3 h-3" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMediaTrack((t) => (t + 1) % demoTracks.length)}
+                      aria-label={isEn ? 'Next track' : 'Sonraki parça'}
+                      className="w-6 h-6 rounded-md flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors text-white"
+                    >
+                      <SkipForward className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm font-extrabold tracking-wide leading-tight">
+                    {mediaPlaying ? demoTracks[mediaTrack] : (isEn ? 'NO MEDIA' : 'MEDYA YOK')}
+                  </div>
+                  <div className="text-[10px] font-mono opacity-70 mt-0.5">
+                    {mediaPlaying ? (isEn ? 'PLAYING' : 'ÇALIYOR') : 'STANDBY'}
+                  </div>
+                </div>
+              </div>
+
               {demoCards.map((c) => {
                 const CardIcon = c.icon;
                 return (
@@ -927,6 +1021,36 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
               <EngSlider label={`${isEn ? 'NOISE' : 'GÜRÜLTÜ'}: ${Math.round(recipe.patternNoise * 100)}%`} value={recipe.patternNoise} min={0} max={0.5} onChange={(v) => patch({ patternNoise: v })} accent={studioAccent} />
               <EnumPills options={['ACCENT', 'LIGHT', 'CONTRAST'] as const} value={recipe.patternColorSrc} onChange={(v) => patch({ patternColorSrc: v })} accent={studioAccent} />
             </EffectGroup>
+          </div>
+        </div>
+
+        {/* MODULE CATALOG — all 19 real card types from CardRegistry.kt, restyled
+            live through the same recipe as the preview above. */}
+        <div className="pt-2">
+          <div className="px-1 mb-3">
+            <h3 className="text-sm font-bold text-foreground">
+              {isEn ? 'Module Catalog' : 'Modül Kataloğu'}
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {isEn
+                ? `All ${MODULE_CATALOG.length} card types the builder ships with — same labels, icons and accent colors as the app's own module picker.`
+                : `Kart üreticisinin geldiği tüm ${MODULE_CATALOG.length} modül tipi — uygulamanın kendi modül seçicisiyle aynı etiket, ikon ve vurgu renkleri.`}
+            </p>
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5">
+            {MODULE_CATALOG.map((m) => {
+              const ModIcon = m.icon;
+              return (
+                <div
+                  key={m.label}
+                  style={cardStyleFor(recipe, m.hex)}
+                  className="aspect-square p-2.5 flex flex-col items-center justify-center gap-1.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path] duration-300"
+                >
+                  <ModIcon className="w-4 h-4 shrink-0" />
+                  <div className="text-[9px] font-bold leading-tight whitespace-pre-line">{m.label}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
