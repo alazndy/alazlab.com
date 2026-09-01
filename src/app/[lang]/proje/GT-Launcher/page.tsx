@@ -6,6 +6,7 @@ import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { GTLauncherClient } from './GTLauncherClient';
+import { GTLauncherSidebar } from './GTLauncherSidebar';
 import { GTLauncherChangelog } from './GTLauncherChangelog';
 import { GTLauncherPricingTab } from './GTLauncherPricingTab';
 import { ProjectSidebar } from '@/components/projects/ProjectSidebar';
@@ -95,42 +96,50 @@ export default async function GTLauncherPage({ params }: Props) {
         </Link>
       </div>
 
-      {/* Flagship Interactive Mockup & Demos */}
-      <GTLauncherClient
-        version={changelog.releases[0]?.version ? `v${changelog.releases[0].version}` : metadata.version || 'v4.13.0'}
-      />
+      {/* Page-wide icon rail (GTLauncherSidebar) alongside everything it indexes:
+          flagship block, changelog, and the wiki/media/downloads tabs below. */}
+      <div className="flex gap-3 sm:gap-5 items-start">
+        <GTLauncherSidebar />
 
-      <GTLauncherChangelog
-        releases={changelog.releases}
-        isAvailable={changelog.isAvailable}
-      />
-
-      {/* Technical Architecture, Wiki Reader & System Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-border">
-
-        {/* Main Content Tabs (Overview, Wiki Docs, Gallery, Downloads) */}
-        <div className="lg:col-span-8 order-1">
-          <ProjectViewTabs
-            metadata={metadata}
-            overviewHtml={contentHtml}
-            wikiDocs={parsedWikiDocs}
-            accentColor={cat.accent}
-            accentBg={cat.accentBg}
-            extraTab={{
-              id: 'pricing',
-              label: isEn ? 'Pricing' : 'Fiyatlandırma',
-              content: <GTLauncherPricingTab key="pricing-tab" lang={lang as 'tr' | 'en'} />,
-            }}
+        <div className="flex-1 min-w-0 space-y-12">
+          {/* Flagship Interactive Mockup & Demos */}
+          <GTLauncherClient
+            version={changelog.releases[0]?.version ? `v${changelog.releases[0].version}` : metadata.version || 'v4.13.0'}
           />
-        </div>
 
-        {/* Project Telemetry Sidebar */}
-        <ProjectSidebar
-          metadata={metadata}
-          catAccent={cat.accent}
-          statusClass={sc}
-          related={related}
-        />
+          <GTLauncherChangelog
+            releases={changelog.releases}
+            isAvailable={changelog.isAvailable}
+          />
+
+          {/* Technical Architecture, Wiki Reader & System Sidebar */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-border">
+
+            {/* Main Content Tabs (Overview, Wiki Docs, Gallery, Downloads) */}
+            <div className="lg:col-span-8 order-1">
+              <ProjectViewTabs
+                metadata={metadata}
+                overviewHtml={contentHtml}
+                wikiDocs={parsedWikiDocs}
+                accentColor={cat.accent}
+                accentBg={cat.accentBg}
+                extraTab={{
+                  id: 'pricing',
+                  label: isEn ? 'Pricing' : 'Fiyatlandırma',
+                  content: <GTLauncherPricingTab key="pricing-tab" lang={lang as 'tr' | 'en'} />,
+                }}
+              />
+            </div>
+
+            {/* Project Telemetry Sidebar */}
+            <ProjectSidebar
+              metadata={metadata}
+              catAccent={cat.accent}
+              statusClass={sc}
+              related={related}
+            />
+          </div>
+        </div>
       </div>
 
     </article>

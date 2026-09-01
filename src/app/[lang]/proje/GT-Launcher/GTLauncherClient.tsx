@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
+import { useState, type CSSProperties, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Smartphone,
@@ -510,39 +510,6 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   const [activeFeatureId, setActiveFeatureId] = useState(interactiveFeatures[0].id);
   const activeFeature = interactiveFeatures.find((f) => f.id === activeFeatureId) || interactiveFeatures[0];
 
-  // ── SIDEBAR RAIL: scroll-spy across the flagship block's own sections ──
-  // Mirrors the real app's rail: a "HOME" flag tab + a tight stack of solid,
-  // permanently-colored icon squares (not a uniform nav that only colors on hover).
-  const railSections = [
-    { id: 'gt-home', icon: Smartphone, label: isEn ? 'Home' : 'Ana Ekran' },
-    { id: 'gt-modules', icon: Layers, label: isEn ? 'Modules' : 'Modüller', solid: 'bg-[#FF9900] text-black' },
-    { id: 'gt-styles', icon: Palette, label: isEn ? 'Styles' : 'Stiller', solid: 'bg-[#9999CC] text-black' },
-  ];
-  const [activeRailId, setActiveRailId] = useState(railSections[0].id);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    const targets = railSections
-      .map((r) => document.getElementById(r.id))
-      .filter((el): el is HTMLElement => !!el);
-    if (targets.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActiveRailId(visible.target.id);
-      },
-      { root: null, rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Recipe values copied verbatim from the app's own
   // ui/theme/StyleLibrary.kt (StyleRecipe.BUILTIN) — corner radius (dp),
   // fill alpha, border width/alpha. Not eyeballed from screenshots.
@@ -599,59 +566,9 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   ];
 
   return (
-    <div ref={rootRef} className="dark bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border p-3 sm:p-5 flex gap-3 sm:gap-5">
-
-      {/* ── SIDEBAR RAIL (mirrors the app's own icon rail: HOME flag + stacked solid-color squares) ── */}
-      <nav className="hidden sm:flex flex-col shrink-0 sticky top-4 self-start w-14 sm:w-16">
-        {/* HOME flag tab — light, flat-bottomed, like the app's status flag */}
-        <a
-          href="#gt-home"
-          aria-label={railSections[0].label}
-          title={railSections[0].label}
-          className={cn(
-            "rounded-tl-[4px] rounded-tr-[20px] text-center text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-[#FFEECC] text-[#553311] transition-opacity",
-            activeRailId === 'gt-home' ? "opacity-100" : "opacity-80 hover:opacity-100"
-          )}
-        >
-          {isEn ? 'HOME' : 'ANA'}
-        </a>
-
-        {/* Stacked solid-color icon squares */}
-        <div className="flex flex-col gap-1.5 mt-1.5">
-          {railSections.slice(1).map((r) => {
-            const RailIcon = r.icon;
-            const isActive = r.id === activeRailId;
-            return (
-              <a
-                key={r.id}
-                href={`#${r.id}`}
-                aria-label={r.label}
-                title={r.label}
-                className={cn(
-                  "w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center transition-all",
-                  r.solid,
-                  isActive ? "ring-2 ring-white/80 scale-105 shadow-lg" : "opacity-85 hover:opacity-100"
-                )}
-              >
-                <RailIcon className="w-6 h-6" />
-              </a>
-            );
-          })}
-          <a
-            href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
-            target="_blank"
-            rel="noreferrer"
-            aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
-            title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center bg-[#AA4444] text-black opacity-85 hover:opacity-100 transition-all"
-          >
-            <Play className="w-6 h-6" />
-          </a>
-        </div>
-      </nav>
-
-      {/* ── MAIN CONTENT COLUMN ── */}
-      <div className="flex-1 min-w-0 space-y-10">
+    <div className="dark bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border p-3 sm:p-5 space-y-10">
+      {/* Sidebar rail now lives page-wide in GTLauncherSidebar.tsx, rendered
+          alongside this block by page.tsx — not scoped to just this component. */}
 
       {/* ── HERO BANNER ── */}
       <section id="gt-home" className="apple-card p-8 sm:p-12 md:p-14 space-y-8 relative overflow-hidden">
@@ -1159,9 +1076,6 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           )}
         </div>
       </section>
-
-      </div>
-      {/* end main content column */}
 
     </div>
   );

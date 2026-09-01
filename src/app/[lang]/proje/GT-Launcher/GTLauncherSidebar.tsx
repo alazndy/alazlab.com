@@ -1,0 +1,93 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Smartphone, Layers, Palette, History, BookOpen, Play } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useI18n } from '@/lib/i18n';
+
+// Page-wide rail — mirrors the app's own icon rail (HOME flag tab + a tight
+// stack of solid, permanently-colored icon squares), but scoped to the whole
+// GT-Launcher page (flagship block, changelog, wiki/media/downloads tabs)
+// instead of just the flagship block's own three sections.
+const RAIL_SECTIONS: { id: string; icon: typeof Smartphone; labelTr: string; labelEn: string; solid?: string }[] = [
+  { id: 'gt-home', icon: Smartphone, labelTr: 'Ana Ekran', labelEn: 'Home' },
+  { id: 'gt-modules', icon: Layers, labelTr: 'Modüller', labelEn: 'Modules', solid: 'bg-[#FF9900] text-black' },
+  { id: 'gt-styles', icon: Palette, labelTr: 'Stiller', labelEn: 'Styles', solid: 'bg-[#9999CC] text-black' },
+  { id: 'changelog', icon: History, labelTr: 'Sürüm Geçmişi', labelEn: 'Changelog', solid: 'bg-[#FFCC66] text-black' },
+  { id: 'project-tabs', icon: BookOpen, labelTr: 'Wiki & Kaynaklar', labelEn: 'Wiki & Resources', solid: 'bg-[#9977AA] text-black' },
+];
+
+export function GTLauncherSidebar() {
+  const { lang } = useI18n();
+  const isEn = lang === 'en';
+  const [activeRailId, setActiveRailId] = useState<string>(RAIL_SECTIONS[0].id);
+
+  useEffect(() => {
+    const targets = RAIL_SECTIONS
+      .map((r) => document.getElementById(r.id))
+      .filter((el): el is HTMLElement => !!el);
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveRailId(visible.target.id);
+      },
+      { root: null, rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <nav className="dark hidden sm:flex flex-col shrink-0 sticky top-4 self-start w-14 sm:w-16 h-fit">
+      {/* HOME flag tab — light, flat-bottomed, like the app's status flag */}
+      <a
+        href={`#${RAIL_SECTIONS[0].id}`}
+        aria-label={isEn ? RAIL_SECTIONS[0].labelEn : RAIL_SECTIONS[0].labelTr}
+        title={isEn ? RAIL_SECTIONS[0].labelEn : RAIL_SECTIONS[0].labelTr}
+        className={cn(
+          "rounded-tl-[4px] rounded-tr-[20px] text-center text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-[#FFEECC] text-[#553311] transition-opacity",
+          activeRailId === RAIL_SECTIONS[0].id ? "opacity-100" : "opacity-80 hover:opacity-100"
+        )}
+      >
+        {isEn ? 'HOME' : 'ANA'}
+      </a>
+
+      {/* Stacked solid-color icon squares — one per page section */}
+      <div className="flex flex-col gap-1.5 mt-1.5">
+        {RAIL_SECTIONS.slice(1).map((r) => {
+          const RailIcon = r.icon;
+          const isActive = r.id === activeRailId;
+          return (
+            <a
+              key={r.id}
+              href={`#${r.id}`}
+              aria-label={isEn ? r.labelEn : r.labelTr}
+              title={isEn ? r.labelEn : r.labelTr}
+              className={cn(
+                "w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center transition-all",
+                r.solid,
+                isActive ? "ring-2 ring-white/80 scale-105 shadow-lg" : "opacity-85 hover:opacity-100"
+              )}
+            >
+              <RailIcon className="w-6 h-6" />
+            </a>
+          );
+        })}
+        <a
+          href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
+          target="_blank"
+          rel="noreferrer"
+          aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
+          title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center bg-[#AA4444] text-black opacity-85 hover:opacity-100 transition-all"
+        >
+          <Play className="w-6 h-6" />
+        </a>
+      </div>
+    </nav>
+  );
+}
