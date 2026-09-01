@@ -38,6 +38,7 @@ import {
   SkipBack,
   SkipForward,
   Pause,
+  Minus,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
@@ -124,40 +125,51 @@ const SHADOW_VEC: Record<ShadowDir, [number, number]> = {
   BR: [1, 1], BL: [-1, 1], TR: [1, -1], TL: [-1, -1], B: [0, 1], R: [1, 0], T: [0, -1], L: [-1, 0],
 };
 
-// The app's full module catalog — ui/screens/CardRegistry.kt (CardRegistry.all),
-// its single source of truth for card-type metadata ("Adding a new card type =
-// add one CardDescriptor here"). gridLabel, accentColor and defaultIconName are
-// copied verbatim (accentColor resolved from ui/theme/GtColors.kt); iconName is
-// mapped to its closest Lucide equivalent since the app draws Material icons.
-// `state` is only set for the modules whose empty/default on-screen text we
-// have direct screenshot evidence for (FINANCE, WEATHER, NOTE) — every other
-// module stays icon+label only rather than inventing content we haven't seen.
+// The app's real CAPABILITY system — data/CardCapability.kt (CardCapabilityRegistry),
+// not the card-type picker. This is the layer that actually governs how a "module"
+// affects a card: each capability belongs to one of 4 groups (CapabilityGroup, colored
+// per group in ui/screens/CapabilityHelpers.kt — groupColor()), carries the app's own
+// authored description, and some pairs are mutually exclusive on the same card
+// (conflictsWith, from CardCapabilityRegistry.definitions) — e.g. WIDGET/GALLERY/CAMERA/
+// APP_DRAWER can't share a card because they all claim the same tap target. Multiple
+// non-conflicting capabilities CAN stack on one card (COMMS defaults to COMMS +
+// NOTIFICATIONS together — CardModuleRegistry.kt) — that's the real "module stacking"
+// feature, not a flat list of 19 unrelated card types.
+type CapGroup = 'PRIMARY' | 'COMMUNICATION' | 'ACTION' | 'UTILITY';
+const GROUP_COLOR: Record<CapGroup, string> = {
+  PRIMARY: '#4DA6FF', COMMUNICATION: '#9999CC', ACTION: '#FF7700', UTILITY: '#FFCC66',
+};
+const GROUP_LABEL: Record<CapGroup, { tr: string; en: string }> = {
+  PRIMARY: { tr: 'ANA', en: 'PRIMARY' },
+  COMMUNICATION: { tr: 'HABERLEŞME', en: 'COMMUNICATION' },
+  ACTION: { tr: 'EYLEM', en: 'ACTION' },
+  UTILITY: { tr: 'YARDIMCI', en: 'UTILITY' },
+};
 interface ModuleCatalogEntry {
-  label: string; hex: string; icon: typeof Music; descTr: string; descEn: string; state?: string;
-  // Real defaultGridSpanX/Y from CardRegistry.kt — the actual footprint each
-  // card occupies on the app's grid (class default is 3x2 when unspecified).
-  spanX: number; spanY: number;
+  label: string; icon: typeof Music; group: CapGroup; descTr: string; descEn: string;
+  state?: string; conflicts?: string[];
 }
 const MODULE_CATALOG: ModuleCatalogEntry[] = [
-  { label: 'APP\nLAUNCHER', hex: '#FF9900', icon: LayoutGrid, spanX: 3, spanY: 2, descTr: 'Tek bir uygulamayı doğrudan başlatan hızlı erişim kartı.', descEn: 'Launches a single app directly with one tap.' },
-  { label: 'APP\nDRAWER', hex: '#9999CC', icon: Grid3x3, spanX: 2, spanY: 2, descTr: 'Tüm uygulamaları alfabetik Slide List çekmecesinde listeler.', descEn: 'Lists every app in the alphabetical Slide List drawer.' },
-  { label: 'MEDIA\nCONTROL', hex: '#FF7700', icon: Music, spanX: 3, spanY: 2, descTr: 'Aktif medya oturumunu kontrol eder: çal/duraklat, önceki/sonraki.', descEn: 'Controls the active media session: play/pause, previous/next.' },
-  { label: 'IMAGE\nLOGS', hex: '#CC99CC', icon: Compass, spanX: 3, spanY: 2, descTr: 'Galeri fotoğraflarından dönen bir görsel karuseli gösterir.', descEn: 'Rotates through your gallery photos as a carousel.' },
-  { label: 'SYSTEM\nSTATUS', hex: '#FFCC66', icon: Wrench, spanX: 3, spanY: 2, descTr: 'RAM, depolama ve pil durumunu canlı izler.', descEn: 'Live RAM, storage and battery telemetry.' },
-  { label: 'ANDROID\nWIDGET', hex: '#9977AA', icon: LayoutTemplate, spanX: 3, spanY: 2, descTr: "Android'in yerel AppWidgetHost'u üzerinden üçüncü parti widget barındırır.", descEn: 'Hosts a native third-party widget via AppWidgetHost.' },
-  { label: 'NOTIF\nCARD', hex: '#00D4FF', icon: Bell, spanX: 3, spanY: 3, descTr: 'Son bildirimleri rozet sayaçlarıyla yansıtır.', descEn: 'Mirrors recent notifications with badge counts.' },
-  { label: 'COMM\nLINKS', hex: '#9999CC', icon: MessageSquare, spanX: 3, spanY: 2, descTr: 'Arama, mesaj ve haberleşme uygulamalarına tek dokunuşluk erişim.', descEn: 'One-tap access to calling, messaging and comms apps.' },
-  { label: 'CAMERA\nCONTROL', hex: '#14B8A6', icon: Camera, spanX: 2, spanY: 2, descTr: '8 hızlı çekim moduyla doğrudan kameraya geçer.', descEn: 'Jumps straight into the camera with 8 quick capture modes.' },
-  { label: 'DECK\nROTATOR', hex: '#FF7700', icon: LayoutGrid, spanX: 3, spanY: 2, descTr: 'Birden çok kartı 3D bir yığın halinde döndürerek gösterir.', descEn: 'Rotates several cards through a 3D stack.' },
-  { label: 'CHRONO\nMETER', hex: '#FFCC66', icon: Clock, spanX: 2, spanY: 2, descTr: 'Dijital saat ve stardate gösterge kartı.', descEn: 'Digital clock with a stardate readout.' },
-  { label: 'WEATHER', hex: '#4DA6FF', icon: Cloud, spanX: 2, spanY: 2, descTr: 'Konum bazlı sıcaklık ve atmosfer telemetrisi.', descEn: 'Location-based temperature and atmosphere telemetry.', state: '--°C PENDING' },
-  { label: 'CALENDAR', hex: '#9999CC', icon: Calendar, spanX: 3, spanY: 3, descTr: 'Yaklaşan ajanda etkinliklerini listeler.', descEn: 'Lists upcoming calendar events.' },
-  { label: 'COUNTDOWN\nTIMER', hex: '#FF7700', icon: Timer, spanX: 2, spanY: 2, descTr: 'Geri sayım zamanlayıcısı başlatır.', descEn: 'Starts a countdown timer.' },
-  { label: 'QUICK\nNOTE', hex: '#FFFF99', icon: StickyNote, spanX: 3, spanY: 3, descTr: 'Hızlı, taktiksel not almak için serbest metin alanı.', descEn: 'A free-text field for a quick tactical note.', state: 'This is a fast Notes card' },
-  { label: 'FLASH\nLIGHT', hex: '#FFDD44', icon: Flashlight, spanX: 2, spanY: 2, descTr: 'Cihaz fenerini tek dokunuşla açar/kapatır.', descEn: 'Toggles the device flashlight with one tap.' },
-  { label: 'STEP\nCOUNTER', hex: '#00CC00', icon: Footprints, spanX: 2, spanY: 2, descTr: 'Donanımsal adımsayar verisini gösterir.', descEn: 'Reads the hardware step-counter sensor.' },
-  { label: 'FINANCE', hex: '#00CC00', icon: TrendingUp, spanX: 3, spanY: 2, descTr: 'Canlı kripto/hisse fiyatı ve kâr-zarar takibi.', descEn: 'Live crypto/stock price and P&L tracking.', state: 'DEMO: —' },
-  { label: 'APP\nLIST', hex: '#9333EA', icon: LayoutGrid, spanX: 3, spanY: 4, descTr: 'Seçilen uygulamaları dikey bir liste kartında gösterir.', descEn: 'Shows selected apps as a vertical list card.' },
+  { label: 'APP\nLAUNCH', icon: LayoutGrid, group: 'ACTION', descTr: 'Bir uygulamayı açmak için birincil dokunma hedefi.', descEn: 'Primary tap target for opening an app.' },
+  { label: 'SYSTEM\nSTATUS', icon: Wrench, group: 'UTILITY', descTr: 'Pil, RAM, depolama ve hızlı eylemler.', descEn: 'Battery, RAM, storage and quick actions.' },
+  { label: 'ANDROID\nWIDGET', icon: LayoutTemplate, group: 'PRIMARY', descTr: 'Platformun widget yüzeyini karta gömer.', descEn: 'Embeds a platform widget surface.', conflicts: ['GALLERY', 'CAMERA', 'MEDIA', 'APP DRAWER'] },
+  { label: 'GALLERY', icon: Compass, group: 'PRIMARY', descTr: 'Bir görsel akışı veya albüm karuseli gösterir.', descEn: 'Displays an image feed or album carousel.', conflicts: ['ANDROID WIDGET', 'CAMERA', 'APP DRAWER'] },
+  { label: 'NOTIF\nCATIONS', icon: Bell, group: 'COMMUNICATION', descTr: 'Uygulama bildirimlerini kart içinde izler.', descEn: 'Monitors app notifications inside the card.' },
+  { label: 'COMMS', icon: MessageSquare, group: 'COMMUNICATION', descTr: 'Odaklanmış haberleşme kaynakları ve uyarı kanalları.', descEn: 'Focused communication sources and alert channels.' },
+  { label: 'CAMERA', icon: Camera, group: 'ACTION', descTr: 'Kamera kısayolu ve jestle tetiklenen çekim eylemleri.', descEn: 'Camera shortcut and gesture-driven capture actions.', conflicts: ['ANDROID WIDGET', 'GALLERY', 'MEDIA', 'APP DRAWER'] },
+  { label: 'MEDIA', icon: Music, group: 'PRIMARY', descTr: 'Medya oturumları için oynatma kontrolleri.', descEn: 'Playback controls for media sessions.', conflicts: ['ANDROID WIDGET', 'CAMERA'] },
+  { label: 'APP\nDRAWER', icon: Grid3x3, group: 'PRIMARY', descTr: 'Uygulama ızgarasını açar veya temsil eder.', descEn: 'Opens or represents the app grid.', conflicts: ['ANDROID WIDGET', 'GALLERY', 'CAMERA'] },
+  { label: 'SPACER', icon: Minus, group: 'UTILITY', descTr: 'Ayrılmış boş yuva.', descEn: 'Reserved empty slot.' },
+  { label: 'DECK\nROTATOR', icon: LayoutGrid, group: 'UTILITY', descTr: 'Aynı kart üzerindeki diğer modüller arasında 3D çevirerek geçiş yapar.', descEn: 'Swipe to 3D-flip between other capabilities on this card.' },
+  { label: 'CHRONO\nMETER', icon: Clock, group: 'PRIMARY', descTr: 'Büyük saat göstergesi, dokununca sistem alarmlarını açar.', descEn: 'Large clock display, taps through to system alarms.' },
+  { label: 'WEATHER', icon: Cloud, group: 'PRIMARY', descTr: 'Konumun güncel sıcaklık ve hava koşulları.', descEn: 'Current temperature and conditions for your location.', state: '--°C PENDING' },
+  { label: 'CALENDAR', icon: Calendar, group: 'UTILITY', descTr: 'Cihaz takviminden yaklaşan etkinlikler.', descEn: 'Upcoming events from your device calendar.' },
+  { label: 'COUNTDOWN\nTIMER', icon: Timer, group: 'UTILITY', descTr: 'Basit bir geri sayım — kart görünür olduğu sürece çalışır.', descEn: 'Simple countdown timer, runs while the card is visible.' },
+  { label: 'QUICK\nNOTE', icon: StickyNote, group: 'UTILITY', descTr: 'Kart üzerinde saklanan serbest metin notu.', descEn: 'Freeform text note stored on the card.', state: 'This is a fast Notes card' },
+  { label: 'FLASH\nLIGHT', icon: Flashlight, group: 'ACTION', descTr: 'Kamera fenerini açıp kapatır.', descEn: 'Toggles the camera torch.' },
+  { label: 'STEP\nCOUNTER', icon: Footprints, group: 'UTILITY', descTr: 'Günlük hedefe karşı bugünkü adım sayısı.', descEn: "Today's step count against a daily goal." },
+  { label: 'FINANCE', icon: TrendingUp, group: 'PRIMARY', descTr: 'Portföy takibi — kripto, döviz ve hisseler, canlı kâr/zararla.', descEn: 'Portfolio tracker — crypto, FX and stocks with live P&L.', state: 'DEMO: —' },
+  { label: 'APP\nLIST', icon: LayoutGrid, group: 'PRIMARY', descTr: 'Tüm uygulamalarının kaydırılabilir alfabetik listesi, doğrudan kart üzerinde.', descEn: 'Scrollable alphabetical list of all your apps, right on the card.', conflicts: ['ANDROID WIDGET', 'GALLERY', 'CAMERA', 'APP DRAWER'] },
 ];
 
 function hexToRgb(hex: string) {
@@ -1035,51 +1047,70 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           </div>
         </div>
 
-        {/* MODULE CATALOG — all 19 real card types from CardRegistry.kt, restyled
-            live through the same recipe as the preview above. */}
+        {/* MODULE CATALOG — the app's real CAPABILITY system (data/CardCapability.kt,
+            CardCapabilityRegistry), grouped exactly as CapabilityPickerScreen groups them:
+            PRIMARY/COMMUNICATION/ACTION/UTILITY, one shared color per group. Capabilities
+            in the same group with a ⚠ badge below can't stack on one card — the rest can,
+            same as picking multiple modules for one card in the real 5-tab builder. */}
         <div className="pt-2">
           <div className="px-1 mb-3">
             <h3 className="text-sm font-bold text-foreground">
-              {isEn ? 'Module Catalog' : 'Modül Kataloğu'}
+              {isEn ? 'Module Capabilities' : 'Modül Yetenekleri'}
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
               {isEn
-                ? `All ${MODULE_CATALOG.length} card types the builder ships with — same labels, icons and accent colors as the app's own module picker.`
-                : `Kart üreticisinin geldiği tüm ${MODULE_CATALOG.length} modül tipi — uygulamanın kendi modül seçicisiyle aynı etiket, ikon ve vurgu renkleri.`}
+                ? `All ${MODULE_CATALOG.length} capabilities a card can be built from, grouped exactly like the app's own Capability Picker. Several can stack on one card — a few pairs can't (marked below).`
+                : `Bir kartın inşa edilebileceği tüm ${MODULE_CATALOG.length} yetenek, uygulamanın kendi Yetenek Seçici'siyle aynı şekilde gruplanmış. Birkaçı aynı kartta üst üste yığılabilir — bazı çiftler ise yığılamaz (altta işaretli).`}
             </p>
           </div>
-          {/* items-start: each tile keeps its own real spanX/spanY aspect ratio
-              instead of stretching to match the tallest tile in its row. */}
-          <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 gap-1.5">
-            {MODULE_CATALOG.map((m, i) => {
-              const ModIcon = m.icon;
-              const isSelected = i === selectedModuleIdx;
-              return (
-                <button
-                  key={m.label}
-                  type="button"
-                  onClick={() => setSelectedModuleIdx(i)}
-                  title={isEn ? m.descEn : m.descTr}
-                  style={cardStyleFor(recipe, m.hex)}
-                  className={cn(
-                    "aspect-square w-full p-1.5 flex flex-col items-center justify-center gap-0.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
-                    isSelected && "ring-2 ring-white/80 scale-[1.05]"
-                  )}
-                >
-                  <ModIcon className="w-3 h-3 shrink-0" />
-                  <div className="text-[7px] font-bold leading-[1.1] whitespace-pre-line">{m.label}</div>
-                </button>
-              );
-            })}
-          </div>
 
-          {/* Description (+ real default on-screen text, when we have it) of whichever module is selected */}
-          <div className="mt-3 px-1 text-xs text-muted-foreground">
+          {(['PRIMARY', 'COMMUNICATION', 'ACTION', 'UTILITY'] as const).map((group) => {
+            const members = MODULE_CATALOG
+              .map((m, i) => ({ ...m, i }))
+              .filter((m) => m.group === group);
+            return (
+              <div key={group} className="mb-3.5">
+                <div className="text-[10px] font-black uppercase tracking-widest mb-1.5" style={{ color: GROUP_COLOR[group] }}>
+                  {isEn ? GROUP_LABEL[group].en : GROUP_LABEL[group].tr}
+                </div>
+                <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 gap-1.5">
+                  {members.map((m) => {
+                    const ModIcon = m.icon;
+                    const isSelected = m.i === selectedModuleIdx;
+                    return (
+                      <button
+                        key={m.label}
+                        type="button"
+                        onClick={() => setSelectedModuleIdx(m.i)}
+                        title={isEn ? m.descEn : m.descTr}
+                        style={cardStyleFor(recipe, GROUP_COLOR[m.group])}
+                        className={cn(
+                          "aspect-square w-full p-1.5 flex flex-col items-center justify-center gap-0.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
+                          isSelected && "ring-2 ring-white/80 scale-[1.05]"
+                        )}
+                      >
+                        <ModIcon className="w-3 h-3 shrink-0" />
+                        <div className="text-[7px] font-bold leading-[1.1] whitespace-pre-line">{m.label}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Description (+ real default on-screen text / conflicts, when we have them) of whichever module is selected */}
+          <div className="mt-1 px-1 text-xs text-muted-foreground">
             <span className="font-bold text-foreground">{MODULE_CATALOG[selectedModuleIdx].label.replace('\n', ' ')}</span>
             {' — '}
             {isEn ? MODULE_CATALOG[selectedModuleIdx].descEn : MODULE_CATALOG[selectedModuleIdx].descTr}
             {MODULE_CATALOG[selectedModuleIdx].state && (
               <span className="font-mono opacity-70"> ({MODULE_CATALOG[selectedModuleIdx].state})</span>
+            )}
+            {MODULE_CATALOG[selectedModuleIdx].conflicts && (
+              <div className="mt-1 text-[10px] font-mono opacity-70">
+                ⚠ {isEn ? "Can't combine with:" : 'Birlikte kullanılamaz:'} {MODULE_CATALOG[selectedModuleIdx].conflicts!.join(', ')}
+              </div>
             )}
           </div>
         </div>
