@@ -98,7 +98,7 @@ export default async function GTLauncherPage({ params }: Props) {
 
       {/* Page-wide icon rail (GTLauncherSidebar) alongside everything it indexes:
           flagship block, changelog, and the wiki/media/downloads tabs below. */}
-      <div className="flex gap-3 sm:gap-5 items-start">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 sm:items-start">
         <GTLauncherSidebar />
 
         <div className="flex-1 min-w-0 space-y-12">
