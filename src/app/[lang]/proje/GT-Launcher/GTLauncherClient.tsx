@@ -44,8 +44,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-blue',
       bg: 'bg-blue-500/10',
       border: 'border-blue-500/20',
-      solid: 'bg-blue-500 text-white',
-      iconBg: 'bg-white/15',
+      solid: 'bg-[#FF9900] text-black border border-black/40',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Card Capabilities' : 'Modül Yetenekleri', val: '19+ UCCS Nodes' },
         { label: isEn ? 'Visual Styles' : 'Görsel Stiller', val: '6 Engine Modes' },
@@ -64,7 +64,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-orange',
       bg: 'bg-orange-500/10',
       border: 'border-orange-500/20',
-      solid: 'bg-orange-500 text-black',
+      solid: 'bg-[#FFCC66] text-black border border-black/40',
       iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Color Channels' : 'Renk Kanalları', val: '7 LCARS Hues' },
@@ -84,7 +84,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-green',
       bg: 'bg-green-500/10',
       border: 'border-green-500/20',
-      solid: 'bg-green-500 text-black',
+      solid: 'bg-[#00CC00] text-black border border-black/40',
       iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Measure Phase' : 'Hesaplama Fazı', val: '< 1.2 ms per frame' },
@@ -104,8 +104,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-purple',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20',
-      solid: 'bg-purple-500 text-white',
-      iconBg: 'bg-white/15',
+      solid: 'bg-[#CC6666] text-black border border-black/40',
+      iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Protocol' : 'Protokol', val: 'ELM327 BLE / CAN' },
         { label: isEn ? 'Refresh Rate' : 'Yenileme Hızı', val: '20 Hz Sensor Loop' },
@@ -124,7 +124,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-cyan',
       bg: 'bg-cyan-500/10',
       border: 'border-cyan-500/20',
-      solid: 'bg-cyan-500 text-black',
+      solid: 'bg-[#9999CC] text-black border border-black/40',
       iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Lookup Latency' : 'Arama Gecikmesi', val: '< 0.8 ms instant' },
@@ -144,7 +144,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-orange',
       bg: 'bg-orange-500/10',
       border: 'border-orange-500/20',
-      solid: 'bg-orange-500 text-black',
+      solid: 'bg-[#FF7700] text-black border border-black/40',
       iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Gesture Engine' : 'Jest Motoru', val: 'Multi-Directional' },
@@ -164,7 +164,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-pink-400',
       bg: 'bg-pink-500/10',
       border: 'border-pink-500/20',
-      solid: 'bg-pink-500 text-black',
+      solid: 'bg-[#9977AA] text-black border border-black/40',
       iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Backdrop Engine' : 'Görsel Katmanı', val: 'Per-Card Surface UV' },
@@ -184,7 +184,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
       color: 'text-apple-cyan',
       bg: 'bg-cyan-500/10',
       border: 'border-cyan-500/20',
-      solid: 'bg-cyan-500 text-black',
+      solid: 'bg-[#CC99CC] text-black border border-black/40',
       iconBg: 'bg-black/10',
       specs: [
         { label: isEn ? 'Slicing Algorithm' : 'Dilimleme Algoritması', val: 'Global Grid UV Matrix' },
@@ -202,8 +202,8 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   // permanently-colored icon squares (not a uniform nav that only colors on hover).
   const railSections = [
     { id: 'gt-home', icon: Smartphone, label: isEn ? 'Home' : 'Ana Ekran' },
-    { id: 'gt-modules', icon: Layers, label: isEn ? 'Modules' : 'Modüller', solid: 'bg-orange-500 text-black' },
-    { id: 'gt-styles', icon: Palette, label: isEn ? 'Styles' : 'Stiller', solid: 'bg-teal-500 text-black' },
+    { id: 'gt-modules', icon: Layers, label: isEn ? 'Modules' : 'Modüller', solid: 'bg-[#FF9900] text-black' },
+    { id: 'gt-styles', icon: Palette, label: isEn ? 'Styles' : 'Stiller', solid: 'bg-[#9999CC] text-black' },
   ];
   const [activeRailId, setActiveRailId] = useState(railSections[0].id);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -280,7 +280,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           aria-label={railSections[0].label}
           title={railSections[0].label}
           className={cn(
-            "rounded-t-xl text-center text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-amber-50 text-amber-900 transition-opacity",
+            "rounded-tl-[4px] rounded-tr-[20px] text-center text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-[#FFEECC] text-[#553311] transition-opacity",
             activeRailId === 'gt-home' ? "opacity-100" : "opacity-80 hover:opacity-100"
           )}
         >
@@ -299,7 +299,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                 aria-label={r.label}
                 title={r.label}
                 className={cn(
-                  "w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all",
+                  "w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center transition-all",
                   r.solid,
                   isActive ? "ring-2 ring-white/80 scale-105 shadow-lg" : "opacity-85 hover:opacity-100"
                 )}
@@ -314,7 +314,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
             rel="noreferrer"
             aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
             title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center bg-red-700 text-white opacity-85 hover:opacity-100 transition-all"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center bg-[#AA4444] text-black opacity-85 hover:opacity-100 transition-all"
           >
             <Play className="w-6 h-6" />
           </a>
@@ -416,7 +416,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                 key={f.id}
                 onClick={() => setActiveFeatureId(f.id)}
                 className={cn(
-                  "p-3.5 rounded-2xl text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer",
+                  "p-3.5 rounded-[14px] text-left transition-all flex flex-col justify-between space-y-3 cursor-pointer",
                   f.solid,
                   isSelected ? "ring-2 ring-white/80 shadow-lg scale-[1.03]" : "opacity-75 hover:opacity-100 hover:scale-[1.015]"
                 )}
