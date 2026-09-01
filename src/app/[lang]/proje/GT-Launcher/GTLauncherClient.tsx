@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type CSSProperties } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Smartphone,
@@ -19,12 +19,58 @@ import {
   Play,
   RotateCcw,
   Image as ImageIcon,
+  MessageSquare,
+  Wallet,
+  Car,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/lib/i18n';
 
 interface GTLauncherClientProps {
   version: string;
+}
+
+type StyleRecipeId = 'FLAT' | 'GLASS' | 'NEOBRUTALISM' | 'CLAYMORPHISM' | 'MINIMALISM' | 'NEON';
+
+// Values copied verbatim from the app's ui/theme/StyleLibrary.kt
+// (StyleRecipe.BUILTIN) — corner radius in dp, fill/border alpha 0..1.
+const STYLE_RECIPES: Record<StyleRecipeId, { corner: number; fillAlpha: number; borderPx: number; borderAlpha: number }> = {
+  FLAT: { corner: 14, fillAlpha: 1.00, borderPx: 1, borderAlpha: 0.50 },
+  GLASS: { corner: 22, fillAlpha: 0.18, borderPx: 1.5, borderAlpha: 0.90 },
+  NEOBRUTALISM: { corner: 4, fillAlpha: 0.92, borderPx: 3, borderAlpha: 0.96 },
+  CLAYMORPHISM: { corner: 28, fillAlpha: 0.92, borderPx: 0.6, borderAlpha: 0.20 },
+  MINIMALISM: { corner: 8, fillAlpha: 0.10, borderPx: 0.8, borderAlpha: 0.28 },
+  NEON: { corner: 14, fillAlpha: 0.08, borderPx: 1.5, borderAlpha: 0.95 },
+};
+
+function hexToRgb(hex: string) {
+  const n = parseInt(hex.slice(1), 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+function cardStyleFor(recipeId: StyleRecipeId, hex: string): CSSProperties {
+  const r = STYLE_RECIPES[recipeId];
+  const { r: rr, g: gg, b: bb } = hexToRgb(hex);
+  const rgb = `${rr}, ${gg}, ${bb}`;
+  const isSolid = r.fillAlpha >= 0.5;
+  const style: CSSProperties = {
+    borderRadius: `${r.corner}px`,
+    backgroundColor: `rgba(${rgb}, ${r.fillAlpha})`,
+    border: `${r.borderPx}px solid rgba(${rgb}, ${r.borderAlpha})`,
+    color: isSolid ? '#000000' : hex,
+  };
+  if (recipeId === 'NEOBRUTALISM') {
+    style.boxShadow = `6px 6px 0 0 rgba(0,0,0,0.85)`;
+  } else if (recipeId === 'CLAYMORPHISM') {
+    style.backgroundImage = `linear-gradient(180deg, rgba(${rgb}, ${r.fillAlpha}), rgba(${rgb}, ${r.fillAlpha * 0.72}))`;
+    style.boxShadow = `0 14px 28px -8px rgba(0,0,0,0.32)`;
+  } else if (recipeId === 'GLASS') {
+    style.backgroundImage = `linear-gradient(135deg, rgba(${rgb}, ${r.fillAlpha}), rgba(${rgb}, ${r.fillAlpha * 0.4}))`;
+    style.backdropFilter = 'blur(10px)';
+  } else if (recipeId === 'NEON') {
+    style.boxShadow = `0 0 16px rgba(${rgb}, 0.80), 0 0 2px rgba(${rgb}, 0.9)`;
+  }
+  return style;
 }
 
 export function GTLauncherClient({ version }: GTLauncherClientProps) {
@@ -230,43 +276,24 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Recipe values copied verbatim from the app's own
+  // ui/theme/StyleLibrary.kt (StyleRecipe.BUILTIN) — corner radius (dp),
+  // fill alpha, border width/alpha. Not eyeballed from screenshots.
   const visualStyles = [
-    {
-      id: 'flat',
-      name: 'FLAT',
-      desc: isEn ? 'Solid fill, subtle border' : 'Düz dolgu, ince kenarlık',
-      photo: '/projects/GT-Launcher/assets/customization/styles/flat.jpg',
-    },
-    {
-      id: 'glass',
-      name: 'GLASS',
-      desc: isEn ? 'Frosted translucent surface' : 'Buzlu yarı saydam yüzey',
-      photo: '/projects/GT-Launcher/assets/customization/styles/glass.jpg',
-    },
-    {
-      id: 'neo',
-      name: isEn ? 'NEO (Neobrutalism)' : 'NEO (Neobrütalizm)',
-      desc: isEn ? 'Hard shadow offset, retro feel' : 'Sert gölge kayması, retro his',
-      photo: '/projects/GT-Launcher/assets/customization/styles/neobrutalism.jpg',
-    },
-    {
-      id: 'clay',
-      name: isEn ? 'CLAY (Claymorphism)' : 'CLAY (Kilmorfizm)',
-      desc: isEn ? 'Soft pastel blob with elevation' : 'Kabartmalı yumuşak pastel yüzey',
-      photo: '/projects/GT-Launcher/assets/customization/styles/claymorphism.jpg',
-    },
-    {
-      id: 'minimal',
-      name: 'MINIMAL',
-      desc: isEn ? 'Near-invisible, text-only' : 'Neredeyse görünmez, sade metin',
-      photo: '/projects/GT-Launcher/assets/customization/styles/minimalism.jpg',
-    },
-    {
-      id: 'neon',
-      name: 'NEON',
-      desc: isEn ? 'Glowing outline on a dark surface' : 'Koyu yüzeyde parlayan kenarlık',
-      photo: '/projects/GT-Launcher/assets/customization/styles/neon.jpg',
-    },
+    { id: 'flat', recipeId: 'FLAT' as const, name: 'FLAT', desc: isEn ? 'Solid fill, subtle border' : 'Düz dolgu, ince kenarlık' },
+    { id: 'glass', recipeId: 'GLASS' as const, name: 'GLASS', desc: isEn ? 'Frosted translucent surface' : 'Buzlu yarı saydam yüzey' },
+    { id: 'neo', recipeId: 'NEOBRUTALISM' as const, name: isEn ? 'NEO (Neobrutalism)' : 'NEO (Neobrütalizm)', desc: isEn ? 'Hard shadow offset, retro feel' : 'Sert gölge kayması, retro his' },
+    { id: 'clay', recipeId: 'CLAYMORPHISM' as const, name: isEn ? 'CLAY (Claymorphism)' : 'CLAY (Kilmorfizm)', desc: isEn ? 'Soft pastel blob with elevation' : 'Kabartmalı yumuşak pastel yüzey' },
+    { id: 'minimal', recipeId: 'MINIMALISM' as const, name: 'MINIMAL', desc: isEn ? 'Near-invisible, text-only' : 'Neredeyse görünmez, sade metin' },
+    { id: 'neon', recipeId: 'NEON' as const, name: 'NEON', desc: isEn ? 'Glowing outline on a dark surface' : 'Koyu yüzeyde parlayan kenarlık' },
+  ];
+  const [activeStyleId, setActiveStyleId] = useState<StyleRecipeId>('FLAT');
+
+  const demoCards: { label: string; hex: string; icon: typeof Play }[] = [
+    { label: 'MEDIA', hex: '#FF9900', icon: Play },
+    { label: 'COMM', hex: '#FF7700', icon: MessageSquare },
+    { label: 'FINANCE', hex: '#9999CC', icon: Wallet },
+    { label: 'NAV', hex: '#FFCC66', icon: Car },
   ];
 
   return (
@@ -509,36 +536,73 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
         </div>
       </section>
 
-      {/* ── VISUAL STYLE GALLERY ── */}
+      {/* ── VISUAL STYLE STUDIO — live, driven by the app's own StyleRecipe values ── */}
       <section id="gt-styles" className="space-y-6">
         <div className="px-1">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-            {isEn ? 'Visual Style Gallery' : 'Görsel Stil Galerisi'}
+            {isEn ? 'Visual Style Studio' : 'Görsel Stil Stüdyosu'}
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             {isEn
-              ? 'The same home screen, rendered through each of the 6 card style engines.'
-              : 'Aynı ana ekran, 6 kart görsel stil motorunun her birinden geçirilmiş haliyle.'}
+              ? 'Pick an engine — the demo cards re-render live using the same corner radius, fill and border values as the app.'
+              : 'Bir motor seç — demo kartlar, uygulamadaki aynı köşe yarıçapı, dolgu ve kenarlık değerleriyle anında yeniden çizilir.'}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {visualStyles.map((s) => (
-            <div key={s.id} className="apple-card overflow-hidden group">
-              <div className="relative aspect-[9/12] overflow-hidden bg-black">
-                <img
-                  src={s.photo}
-                  alt={`${s.name} — ${s.desc}`}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+        {/* Style pill selector */}
+        <div className="flex flex-wrap gap-2">
+          {visualStyles.map((s) => {
+            const isActive = s.recipeId === activeStyleId;
+            return (
+              <button
+                key={s.id}
+                onClick={() => setActiveStyleId(s.recipeId)}
+                className={cn(
+                  "px-3.5 py-2 rounded-full text-xs font-bold font-mono transition-all",
+                  isActive
+                    ? "bg-lcars-orange text-black"
+                    : "bg-card border border-border text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {s.name}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Live demo panel */}
+        <div className="apple-card p-6 sm:p-8 space-y-6">
+          <div className="flex items-start justify-between flex-wrap gap-3">
+            <div>
+              <div className="text-sm font-bold text-foreground">
+                {visualStyles.find((s) => s.recipeId === activeStyleId)?.name}
               </div>
-              <div className="p-3.5 space-y-0.5">
-                <div className="text-xs font-bold text-foreground font-mono">{s.name}</div>
-                <div className="text-[11px] text-muted-foreground leading-snug">{s.desc}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">
+                {visualStyles.find((s) => s.recipeId === activeStyleId)?.desc}
               </div>
             </div>
-          ))}
+            <div className="flex gap-4 text-[10px] font-mono text-muted-foreground">
+              <span>{isEn ? 'CORNER' : 'KÖŞE'} {STYLE_RECIPES[activeStyleId].corner}dp</span>
+              <span>{isEn ? 'FILL' : 'DOLGU'} {Math.round(STYLE_RECIPES[activeStyleId].fillAlpha * 100)}%</span>
+              <span>{isEn ? 'BORDER' : 'KENARLIK'} {STYLE_RECIPES[activeStyleId].borderPx}px</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto">
+            {demoCards.map((c) => {
+              const CardIcon = c.icon;
+              return (
+                <div
+                  key={c.label}
+                  style={cardStyleFor(activeStyleId, c.hex)}
+                  className="aspect-square p-4 flex flex-col justify-between transition-[background-color,border-color,box-shadow,border-radius] duration-300"
+                >
+                  <CardIcon className="w-5 h-5" />
+                  <div className="text-sm font-extrabold tracking-wide">{c.label}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
