@@ -42,14 +42,14 @@ export function GTLauncherSidebar() {
   }, []);
 
   return (
-    <nav className="dark hidden sm:flex flex-col shrink-0 sticky top-4 self-start w-14 sm:w-16 h-fit">
+    <nav className="dark flex flex-col shrink-0 sticky top-4 self-start w-11 sm:w-14 md:w-16 h-fit">
       {/* HOME flag tab — light, flat-bottomed, like the app's status flag */}
       <a
         href={`#${RAIL_SECTIONS[0].id}`}
         aria-label={isEn ? RAIL_SECTIONS[0].labelEn : RAIL_SECTIONS[0].labelTr}
         title={isEn ? RAIL_SECTIONS[0].labelEn : RAIL_SECTIONS[0].labelTr}
         className={cn(
-          "rounded-tl-[4px] rounded-tr-[20px] text-center text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-[#FFEECC] text-[#553311] transition-opacity",
+          "rounded-tl-[4px] rounded-tr-[20px] text-center text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-[#FFEECC] text-[#553311] transition-opacity",
           activeRailId === RAIL_SECTIONS[0].id ? "opacity-100" : "opacity-80 hover:opacity-100"
         )}
       >
@@ -68,12 +68,12 @@ export function GTLauncherSidebar() {
               aria-label={isEn ? r.labelEn : r.labelTr}
               title={isEn ? r.labelEn : r.labelTr}
               className={cn(
-                "w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center transition-all",
+                "w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-[10px] border border-black/40 flex items-center justify-center transition-all",
                 r.solid,
                 isActive ? "ring-2 ring-white/80 scale-105 shadow-lg" : "opacity-85 hover:opacity-100"
               )}
             >
-              <RailIcon className="w-6 h-6" />
+              <RailIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 md:w-6 md:h-6" />
             </a>
           );
         })}
@@ -83,9 +83,9 @@ export function GTLauncherSidebar() {
           rel="noreferrer"
           aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
           title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
-          className="w-14 h-14 sm:w-16 sm:h-16 rounded-[10px] border border-black/40 flex items-center justify-center bg-[#AA4444] text-black opacity-85 hover:opacity-100 transition-all"
+          className="w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-[10px] border border-black/40 flex items-center justify-center bg-[#AA4444] text-black opacity-85 hover:opacity-100 transition-all"
         >
-          <Play className="w-6 h-6" />
+          <Play className="w-4.5 h-4.5 sm:w-5 sm:h-5 md:w-6 md:h-6" />
         </a>
       </div>
     </nav>
