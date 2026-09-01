@@ -1050,7 +1050,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
           </div>
           {/* items-start: each tile keeps its own real spanX/spanY aspect ratio
               instead of stretching to match the tallest tile in its row. */}
-          <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 items-start gap-1.5">
+          <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-9 gap-1.5">
             {MODULE_CATALOG.map((m, i) => {
               const ModIcon = m.icon;
               const isSelected = i === selectedModuleIdx;
@@ -1060,9 +1060,9 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
                   type="button"
                   onClick={() => setSelectedModuleIdx(i)}
                   title={isEn ? m.descEn : m.descTr}
-                  style={{ ...cardStyleFor(recipe, m.hex), aspectRatio: `${m.spanX} / ${m.spanY}` }}
+                  style={cardStyleFor(recipe, m.hex)}
                   className={cn(
-                    "w-full p-1.5 flex flex-col items-center justify-center gap-0.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
+                    "aspect-square w-full p-1.5 flex flex-col items-center justify-center gap-0.5 text-center transition-[background-color,border-color,box-shadow,border-radius,clip-path,transform] duration-300",
                     isSelected && "ring-2 ring-white/80 scale-[1.05]"
                   )}
                 >
