@@ -221,7 +221,7 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   ];
 
   return (
-    <div className="space-y-16">
+    <div className="dark bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border p-3 sm:p-5 space-y-10">
 
       {/* ── HERO BANNER ── */}
       <section className="apple-card p-8 sm:p-12 md:p-14 space-y-8 relative overflow-hidden">
