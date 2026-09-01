@@ -198,10 +198,12 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   const activeFeature = interactiveFeatures.find((f) => f.id === activeFeatureId) || interactiveFeatures[0];
 
   // ── SIDEBAR RAIL: scroll-spy across the flagship block's own sections ──
+  // Mirrors the real app's rail: a "HOME" flag tab + a tight stack of solid,
+  // permanently-colored icon squares (not a uniform nav that only colors on hover).
   const railSections = [
     { id: 'gt-home', icon: Smartphone, label: isEn ? 'Home' : 'Ana Ekran' },
-    { id: 'gt-modules', icon: Layers, label: isEn ? 'Modules' : 'Modüller' },
-    { id: 'gt-styles', icon: Palette, label: isEn ? 'Styles' : 'Stiller' },
+    { id: 'gt-modules', icon: Layers, label: isEn ? 'Modules' : 'Modüller', solid: 'bg-orange-500 text-black' },
+    { id: 'gt-styles', icon: Palette, label: isEn ? 'Styles' : 'Stiller', solid: 'bg-teal-500 text-black' },
   ];
   const [activeRailId, setActiveRailId] = useState(railSections[0].id);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -270,38 +272,53 @@ export function GTLauncherClient({ version }: GTLauncherClientProps) {
   return (
     <div ref={rootRef} className="dark bg-background rounded-[2rem] sm:rounded-[2.5rem] border border-border p-3 sm:p-5 flex gap-3 sm:gap-5">
 
-      {/* ── SIDEBAR RAIL (mirrors the app's own icon rail) ── */}
-      <nav className="hidden sm:flex flex-col items-center gap-2 shrink-0 sticky top-4 self-start">
-        {railSections.map((r) => {
-          const RailIcon = r.icon;
-          const isActive = r.id === activeRailId;
-          return (
-            <a
-              key={r.id}
-              href={`#${r.id}`}
-              aria-label={r.label}
-              title={r.label}
-              className={cn(
-                "w-11 h-11 rounded-2xl flex items-center justify-center transition-all",
-                isActive
-                  ? "bg-lcars-orange text-black shadow-md scale-105"
-                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
-              )}
-            >
-              <RailIcon className="w-4.5 h-4.5" />
-            </a>
-          );
-        })}
+      {/* ── SIDEBAR RAIL (mirrors the app's own icon rail: HOME flag + stacked solid-color squares) ── */}
+      <nav className="hidden sm:flex flex-col shrink-0 sticky top-4 self-start w-14 sm:w-16">
+        {/* HOME flag tab — light, flat-bottomed, like the app's status flag */}
         <a
-          href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
-          target="_blank"
-          rel="noreferrer"
-          aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
-          title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
-          className="w-11 h-11 rounded-2xl flex items-center justify-center bg-card border border-border text-muted-foreground hover:text-lcars-orange hover:border-lcars-orange/40 transition-all mt-2"
+          href="#gt-home"
+          aria-label={railSections[0].label}
+          title={railSections[0].label}
+          className={cn(
+            "rounded-t-xl text-center text-[10px] font-extrabold uppercase tracking-wider py-1.5 bg-amber-50 text-amber-900 transition-opacity",
+            activeRailId === 'gt-home' ? "opacity-100" : "opacity-80 hover:opacity-100"
+          )}
         >
-          <Play className="w-4 h-4" />
+          {isEn ? 'HOME' : 'ANA'}
         </a>
+
+        {/* Stacked solid-color icon squares */}
+        <div className="flex flex-col gap-1.5 mt-1.5">
+          {railSections.slice(1).map((r) => {
+            const RailIcon = r.icon;
+            const isActive = r.id === activeRailId;
+            return (
+              <a
+                key={r.id}
+                href={`#${r.id}`}
+                aria-label={r.label}
+                title={r.label}
+                className={cn(
+                  "w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all",
+                  r.solid,
+                  isActive ? "ring-2 ring-white/80 scale-105 shadow-lg" : "opacity-85 hover:opacity-100"
+                )}
+              >
+                <RailIcon className="w-6 h-6" />
+              </a>
+            );
+          })}
+          <a
+            href="https://play.google.com/store/apps/details?id=com.alazndy.gtlauncher"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
+            title={isEn ? 'Get on Google Play' : "Google Play'den İndir"}
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center bg-red-700 text-white opacity-85 hover:opacity-100 transition-all"
+          >
+            <Play className="w-6 h-6" />
+          </a>
+        </div>
       </nav>
 
       {/* ── MAIN CONTENT COLUMN ── */}
